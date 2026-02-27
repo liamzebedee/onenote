@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Notebook bar -->
+    <div id="notebook-bar">
+      <div id="notebooks-list"></div>
+      <button id="add-notebook-btn" class="nb-add-btn" title="New notebook">+</button>
+    </div>
+
+    <!-- Main three-column area -->
+    <div id="main">
+
+      <!-- Sections panel -->
+      <div id="sections-panel" class="panel">
+        <div class="panel-label">Sections</div>
+        <div id="sections-list" class="panel-list"></div>
+        <div class="panel-footer">
+          <button class="add-btn" id="add-section-btn">+ Section</button>
+        </div>
+      </div>
+
+      <!-- Pages panel -->
+      <div id="pages-panel" class="panel">
+        <div class="panel-label">Pages</div>
+        <div id="pages-list" class="panel-list"></div>
+        <div class="panel-footer">
+          <button class="add-btn" id="add-page-btn">+ Page</button>
+        </div>
+      </div>
+
+      <!-- Canvas area -->
+      <div id="canvas-area">
+        <!-- Format toolbar -->
+        <div id="format-toolbar">
+          <button class="fmt-btn" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+          <button class="fmt-btn" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+          <button class="fmt-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+          <button class="fmt-btn" data-cmd="strikethrough" title="Strikethrough"><s>S</s></button>
+          <span class="fmt-sep"></span>
+          <button class="fmt-btn" data-cmd="h1" title="Heading 1">H1</button>
+          <button class="fmt-btn" data-cmd="h2" title="Heading 2">H2</button>
+          <button class="fmt-btn" data-cmd="h3" title="Heading 3">H3</button>
+          <button class="fmt-btn" data-cmd="p" title="Body text">P</button>
+          <span class="fmt-sep"></span>
+          <button class="fmt-btn" data-cmd="ul" title="Bullet list">• List</button>
+          <button class="fmt-btn" data-cmd="ol" title="Numbered list">1. List</button>
+          <button class="fmt-btn" data-cmd="link" title="Insert link">Link</button>
+          <span class="fmt-sep"></span>
+          <button class="fmt-btn" id="add-block-btn" title="Add text block">+ Block</button>
+          <span class="canvas-hint">Click canvas to add block · Drag to pan · Ctrl+scroll to zoom · Ctrl+Z undo</span>
+        </div>
+
+        <!-- Page title bar -->
+        <div id="page-title-bar">
+          <div id="page-title" contenteditable="true" placeholder="Page title"></div>
+        </div>
+
+        <!-- Canvas container -->
+        <div id="canvas-container">
+          <div id="canvas-inner"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Status bar -->
+    <div id="status-bar">
+      <span id="storage-status">Starting…</span>
+      <div class="status-right">
+        <button class="status-btn" id="open-folder-btn" title="Open or create a notes folder on disk">Open Folder</button>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

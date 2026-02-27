@@ -1,0 +1,11 @@
+{
+  "name": "onenote-v4",
+  "scripts": {
+    "dev": "bun build --watch src/main.jsx --outfile dist/bundle.js --sourcemap=inline",
+    "build": "bun build src/main.jsx --outfile dist/bundle.js --minify"
+  },
+  "dependencies": {
+    "preact": "^10.25.0",
+    "@preact/signals": "^1.3.0"
+  }
+}
