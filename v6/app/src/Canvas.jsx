@@ -429,15 +429,25 @@ export function Canvas({ page }) {
   function handleWheel(e) {
     e.preventDefault();
     const { panX, panY, zoom } = viewRef.current;
+
+    // Normalize delta to pixels across platforms/input devices.
+    // macOS trackpad: deltaMode=0 with small values (~1–5px per tick).
+    // Linux mouse: often deltaMode=1 (lines) or deltaMode=0 with ~100px per tick.
+    let dx = e.deltaX, dy = e.deltaY;
+    if (e.deltaMode === 1) { dx *= 16; dy *= 16; }   // line mode → px
+    if (e.deltaMode === 2) { dx *= 400; dy *= 400; }  // page mode → px
+    // Amplify small pixel-mode deltas (macOS trackpad sends ~1–20px per event)
+    if (e.deltaMode === 0 && Math.abs(dy) < 50 && Math.abs(dx) < 50) { dx *= 3; dy *= 3; }
+
     if (e.ctrlKey || e.metaKey) {
-      const factor = e.deltaY < 0 ? 1.1 : 0.9;
+      const factor = dy < 0 ? 1.1 : 0.9;
       const rect = containerRef.current.getBoundingClientRect();
       const mx = e.clientX - rect.left, my = e.clientY - rect.top;
       const cx = mx / zoom + panX, cy = my / zoom + panY;
       const nz = Math.max(0.2, Math.min(4, zoom * factor));
       viewRef.current = { panX: Math.max(0, cx - mx/nz), panY: Math.max(0, cy - my/nz), zoom: nz };
     } else {
-      viewRef.current = { panX: Math.max(0, panX + e.deltaX/zoom), panY: Math.max(0, panY + e.deltaY/zoom), zoom };
+      viewRef.current = { panX: Math.max(0, panX + dx/zoom), panY: Math.max(0, panY + dy/zoom), zoom };
     }
     applyTransform();
     updatePageView(viewRef.current.panX, viewRef.current.panY, viewRef.current.zoom);
