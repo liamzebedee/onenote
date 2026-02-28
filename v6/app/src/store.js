@@ -110,6 +110,7 @@ function persistUiState() {
     window.notebook.saveUiState(_notebookPath, {
       sectionId: ui.sectionId,
       pageId: ui.pageId,
+      lastPagePerSection: Object.fromEntries(lastPagePerSection),
     });
   }, 500);
 }
@@ -385,6 +386,13 @@ export function updateBlockSrc(blockId, src) {
   sendOp({ type: 'block-update-src', pageId, blockId, src });
 }
 
+export function updatePageTree(sectionId, pages) {
+  function toStructure(ps) {
+    return ps.map(p => ({ id: p.id, children: toStructure(p.children ?? []) }));
+  }
+  sendOp({ type: 'page-tree-update', sectionId, pages: toStructure(pages) });
+}
+
 export function jumpToPage(sectionId, pageId) {
   lastPagePerSection.set(sectionId, pageId);
   update(s => { s.ui.sectionId = sectionId; s.ui.pageId = pageId; });
@@ -446,6 +454,12 @@ export async function openNotebook(notebookPath) {
         sectionId: sec?.id ?? nb.sections[0]?.id ?? null,
         pageId: page?.id ?? sec?.pages[0]?.id ?? null,
       };
+      // Restore last-page-per-section map
+      if (saved.lastPagePerSection) {
+        for (const [secId, pgId] of Object.entries(saved.lastPagePerSection)) {
+          lastPagePerSection.set(secId, pgId);
+        }
+      }
     } else if (!state.ui) {
       state.ui = {
         notebookId: nb?.id ?? null,
@@ -614,6 +628,12 @@ if (hasIPC) {
                 sectionId: sec?.id ?? nb.sections[0]?.id ?? null,
                 pageId: page?.id ?? sec?.pages[0]?.id ?? null,
               };
+              // Restore last-page-per-section map
+              if (saved.lastPagePerSection) {
+                for (const [secId, pgId] of Object.entries(saved.lastPagePerSection)) {
+                  lastPagePerSection.set(secId, pgId);
+                }
+              }
               restored = true;
             }
           }
