@@ -73,7 +73,7 @@ function createWindow() {
     autoHideMenuBar: true,
     width: 1200,
     height: 800,
-    icon: nativeImage.createFromPath(path.join(__dirname, 'app', 'icon-256.png')),
+    icon: nativeImage.createFromPath(path.join(__dirname, process.platform === 'darwin' ? 'icon.icns' : 'app/icon-256.png')),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
