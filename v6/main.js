@@ -13,6 +13,18 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
     ],
   },
   {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'selectAll' },
+    ],
+  },
+  {
     label: 'Help',
     submenu: [
       {
@@ -122,13 +134,14 @@ function createWindow() {
   // Set up IPC handlers (pass configPath so IPC can read/write config)
   setupIPC(mainWindow, configPath, deviceId);
 
-  // If config has a notebook path, open it eagerly; otherwise renderer shows welcome screen
-  if (config.notebookPath) {
-    openDefault(mainWindow, config.notebookPath, deviceId);
-  }
-
   mainWindow.on('close', shutdown);
+  // Load the page first so the window appears immediately (shows spinner while notebook loads)
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
+
+  // Defer notebook open so the renderer can start painting before synchronous I/O begins
+  if (config.notebookPath) {
+    setImmediate(() => openDefault(mainWindow, config.notebookPath, deviceId));
+  }
 }
 
 app.whenReady().then(createWindow);

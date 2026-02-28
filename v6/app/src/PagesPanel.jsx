@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
-import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree } from './store.js';
+import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage } from './store.js';
 import { openContextMenu } from './ContextMenu.jsx';
 
 // ── Helpers for collecting page IDs from tree ──────
@@ -46,6 +46,7 @@ function deletePageWithChildren(page) {
   }
   promoteChildren(sec.pages);
   appState.value = { ...appState.value };
+  updatePageTree(sec.id, sec.pages);
 }
 
 function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingId, onStartEditing, selected, onSelect, onBulkDelete }) {
@@ -123,6 +124,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         const target = m.findInTree(sec.pages, page.id);
         if (target) { target.children = target.children ?? []; target.children.push(extracted); }
         m.appState.value = { ...m.appState.value };
+        m.updatePageTree(sec.id, sec.pages);
       });
     } else {
       import('./store.js').then(m => {
@@ -149,6 +151,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         }
         insertBefore(sec.pages);
         m.appState.value = { ...m.appState.value };
+        m.updatePageTree(sec.id, sec.pages);
       });
     }
   }
@@ -213,8 +216,9 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
           isOver && !isOverAsChild && 'page-item--drop-before',
           isOverAsChild && 'page-item--drop-child',
         ].filter(Boolean).join(' ')}
-        style={{ paddingLeft: (12 + depth * 16) + 'px' }}
+        style={{ paddingLeft: (depth * 12) + 'px' }}
         draggable
+        onMouseEnter={() => preloadPage(page)}
         onDragStart={onDragStart}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}

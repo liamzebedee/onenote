@@ -46,6 +46,47 @@ export const connected = signal(false);
 export const initializing = signal(true); // true until we know whether a notebook will load
 export const showSwitcher = signal(false);
 export const recentNotebooks = signal([]);
+export const preloadCache = signal(new Map()); // pageId → page, for keep-alive pre-rendering
+
+export function preloadPage(page) {
+  if (!page || preloadCache.value.has(page.id)) return;
+  const m = new Map(preloadCache.value);
+  m.set(page.id, page);
+  preloadCache.value = m;
+}
+
+export function preloadPages(pages) {
+  const m = new Map(preloadCache.value);
+  let changed = false;
+  for (const page of pages) {
+    if (page && !m.has(page.id)) { m.set(page.id, page); changed = true; }
+  }
+  if (changed) preloadCache.value = m;
+}
+
+// Returns pages worth preloading at startup: current section (all) + last visited in each other section
+export function getPreloadCandidates() {
+  const { ui, notebooks } = appState.value;
+  const nb = notebooks.find(n => n.id === ui.notebookId);
+  if (!nb) return [];
+  const results = [];
+  function addTree(pages) {
+    for (const p of pages) {
+      if (p.id !== ui.pageId) results.push(p);
+      if (p.children?.length) addTree(p.children);
+    }
+  }
+  for (const sec of nb.sections) {
+    if (sec.id === ui.sectionId) {
+      addTree(sec.pages);
+    } else {
+      const lastId = lastPagePerSection.get(sec.id);
+      const pg = lastId ? findInTree(sec.pages, lastId) : sec.pages[0];
+      if (pg) results.push(pg);
+    }
+  }
+  return results;
+}
 
 export function toggleSwitcher() { showSwitcher.value = !showSwitcher.value; }
 export function closeSwitcher() { showSwitcher.value = false; }
@@ -64,7 +105,10 @@ if (hasIPC) {
 
 // Immutable update — triggers Preact re-render
 function update(fn) {
+  const t0 = performance.now();
   const draft = structuredClone(appState.value);
+  const t1 = performance.now();
+  window.log(`[perf] structuredClone: ${(t1 - t0).toFixed(2)}ms`);
   fn(draft);
   appState.value = draft;
 }
@@ -144,6 +188,7 @@ export function setActiveSection(id) {
 }
 
 export function setActivePage(id) {
+  performance.mark('page-switch-start');
   const { sectionId } = appState.value.ui;
   if (sectionId) lastPagePerSection.set(sectionId, id);
   update(s => { s.ui.pageId = id; });
@@ -384,6 +429,60 @@ export function updateBlockSrc(blockId, src) {
     if (blk) blk.src = src;
   });
   sendOp({ type: 'block-update-src', pageId, blockId, src });
+}
+
+export function updateBlockCrop(blockId, crop) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.crop = crop;
+  });
+  sendOp({ type: 'block-update-crop', pageId, blockId, crop });
+}
+
+export function addImageFromFile(file, x, y) {
+  const objectUrl = URL.createObjectURL(file);
+  const blk = addBlock(x, y, 300, 'image', { src: objectUrl });
+  if (window.notebook) {
+    file.arrayBuffer().then(buffer => {
+      const meta = {
+        filename: file.name || null,
+        mimeType: file.type || null,
+        size: file.size || null,
+        lastModified: file.lastModified || null,
+      };
+      return window.notebook.saveBlob(buffer, meta);
+    }).then(hash => {
+      if (hash) updateBlockSrc(blk.id, 'blob:' + hash);
+      URL.revokeObjectURL(objectUrl);
+    });
+  }
+}
+
+export async function addImageFromUrl(url, x, y) {
+  const placeholder = addBlock(x, y, 300, 'loading');
+  try {
+    const { buffer, contentType, size } = await window.notebook.fetchImage(url);
+    const filename = url.split('/').pop().split('?')[0];
+    const meta = { filename, mimeType: contentType, size, lastModified: null };
+    deleteBlock(placeholder.id);
+    const hash = await window.notebook.saveBlob(buffer, meta);
+    if (hash) { addBlock(x, y, 300, 'image', { src: 'blob:' + hash }); return; }
+  } catch (err) {
+    deleteBlock(placeholder.id);
+    (window.log || console.log)('[addImageFromUrl] error:', err.message);
+  }
+}
+
+export function updateBlockZ(blockId, z) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.z = z;
+  });
+  sendOp({ type: 'block-z', pageId, blockId, z });
 }
 
 export function updatePageTree(sectionId, pages) {

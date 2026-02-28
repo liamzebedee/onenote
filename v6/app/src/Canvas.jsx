@@ -1,9 +1,10 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat } from './store.js';
+import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache } from './store.js';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
+import { initPasteHandler } from './clipboard.js';
 
 export const CanvasCtx = createContext(null);
 
@@ -93,6 +94,14 @@ export function Canvas({ page }) {
   const spaceHeld = useRef(false);
   const scrollSaveTimer = useRef(null);
 
+  // Keep-alive cache: pageId → page object. Grows as pages are visited.
+  // Blocks are never unmounted — inactive pages are hidden with display:none.
+  // preloadCache (signal) holds pages pre-rendered before the user visits them.
+  // pageCacheRef holds visited pages; it overrides preloadCache for the same pageId.
+  const pageCacheRef = useRef(new Map());
+  if (page) pageCacheRef.current.set(page.id, page);
+  const cachedPages = [...new Map([...preloadCache.value, ...pageCacheRef.current]).values()];
+
   // Selected block IDs
   const [selectedIds, setSelectedIds] = useState(new Set());
   const selectedRef = useRef(selectedIds);
@@ -132,6 +141,14 @@ export function Canvas({ page }) {
 
   useEffect(() => {
     if (!page || !containerRef.current || !innerRef.current) return;
+
+    // ── Memory estimate ───────────────────────────────────
+    const cachedPageCount = pageCacheRef.current.size;
+    const dataUrlBytes = [...innerRef.current.querySelectorAll('img[src^="data:"]')]
+      .reduce((sum, img) => sum + img.src.length, 0);
+    const domNodes = innerRef.current.querySelectorAll('*').length;
+    const heapMB = performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1024 / 1024) : '?';
+    window.log(`[mem] cached pages: ${cachedPageCount} | dom nodes: ${domNodes} | img data: ${(dataUrlBytes / 1024 / 1024).toFixed(1)}MB | heap: ${heapMB}MB`);
     const zoom = page.zoom ?? 1;
     viewRef.current = { zoom };
     innerRef.current.style.transform = `scale(${zoom})`;
@@ -143,6 +160,11 @@ export function Canvas({ page }) {
       if (!containerRef.current) return;
       containerRef.current.scrollLeft = targetLeft;
       containerRef.current.scrollTop  = targetTop;
+      performance.mark('raf-done');
+      try {
+        const m = performance.measure('canvas-render→raf-done', 'canvas-effect', 'raf-done');
+        window.log(`[perf] render→rAF (scroll restore): ${m.duration.toFixed(2)}ms`);
+      } catch {}
     });
     setSelected(new Set());
   }, [page?.id]);
@@ -467,6 +489,16 @@ export function Canvas({ page }) {
         e.preventDefault();
         e.shiftKey ? doRedo() : doUndo();
       }
+      if ((e.key === '[' || e.key === ']') && selectedRef.current.size && !e.target.isContentEditable) {
+        e.preventDefault();
+        const pg = getActivePage();
+        if (!pg) return;
+        for (const id of selectedRef.current) {
+          const blk = pg.blocks.find(b => b.id === id);
+          if (!blk) continue;
+          updateBlockZ(id, (blk.z ?? 0) + (e.key === ']' ? 1 : -1));
+        }
+      }
     }
     function onKeyUp(e) {
       if (e.code === 'Space') {
@@ -474,28 +506,16 @@ export function Canvas({ page }) {
         if (containerRef.current) containerRef.current.style.cursor = '';
       }
     }
-    function onPaste(e) {
-      if (e.target.isContentEditable) return;
-      const items = [...(e.clipboardData?.items || [])];
-      const imageItem = items.find(item => item.type.startsWith('image/'));
-      if (!imageItem) return;
-      e.preventDefault();
-      const file = imageItem.getAsFile();
-      if (!file) return;
-      const { zoom } = viewRef.current;
-      const rect = containerRef.current?.getBoundingClientRect();
-      const cx = rect ? (rect.width  / 2 + containerRef.current.scrollLeft) / zoom : 100;
-      const cy = rect ? (rect.height / 2 + containerRef.current.scrollTop)  / zoom : 100;
-      addImageFromFile(file, cx, cy);
-    }
-
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
-    document.addEventListener('paste', onPaste);
+    const cleanupPaste = initPasteHandler({
+      getContainer: () => containerRef.current,
+      getView: () => viewRef.current,
+    });
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       document.removeEventListener('keyup', onKeyUp);
-      document.removeEventListener('paste', onPaste);
+      cleanupPaste();
     };
   }, []);
 
@@ -513,42 +533,6 @@ export function Canvas({ page }) {
     if (!pg) return;
     if (!applyRedo(pg.id, pg)) return;
     appState.value = { ...appState.value };
-  }
-
-  // ── Image drop ───────────────────────────────────────────
-
-  function addImageFromFile(file, x, y) {
-    const objectUrl = URL.createObjectURL(file);
-    const blk = addBlock(x, y, 300, 'image', { src: objectUrl });
-    if (window.notebook) {
-      file.arrayBuffer().then(buffer => {
-        const meta = {
-          filename: file.name || null,
-          mimeType: file.type || null,
-          size: file.size || null,
-          lastModified: file.lastModified || null,
-        };
-        return window.notebook.saveBlob(buffer, meta);
-      }).then(hash => {
-        if (hash) updateBlockSrc(blk.id, 'blob:' + hash);
-        URL.revokeObjectURL(objectUrl);
-      });
-    }
-  }
-
-  async function addImageFromUrl(url, x, y) {
-    const placeholder = addBlock(x, y, 300, 'loading');
-    try {
-      const { buffer, contentType, size } = await window.notebook.fetchImage(url);
-      const filename = url.split('/').pop().split('?')[0];
-      const meta = { filename, mimeType: contentType, size, lastModified: null };
-      deleteBlock(placeholder.id);
-      const hash = await window.notebook.saveBlob(buffer, meta);
-      if (hash) { addBlock(x, y, 300, 'image', { src: 'blob:' + hash }); return; }
-    } catch (err) {
-      deleteBlock(placeholder.id);
-      (window.log || console.log)('[addImageFromUrl] error:', err.message);
-    }
   }
 
   const IMAGE_URL_RE = /\.(png|jpe?g|gif|webp|svg|bmp|ico|avif)(\?|$)/i;
@@ -594,6 +578,7 @@ export function Canvas({ page }) {
     onBlockBlur: (id) => {},
     undo: doUndo,
     redo: doRedo,
+    getZoom: () => viewRef.current.zoom,
   };
 
   return (
@@ -611,7 +596,11 @@ export function Canvas({ page }) {
           >
             <div ref={sizerRef} id="canvas-sizer">
               <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
-                {page?.blocks.map(b => <Block key={b.id} block={b} page={page} />)}
+                {cachedPages.map(p => (
+                  <div key={p.id} style={p.id !== page?.id ? { display: 'none' } : undefined}>
+                    {p.blocks.map(b => <Block key={b.id} block={b} page={p} />)}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

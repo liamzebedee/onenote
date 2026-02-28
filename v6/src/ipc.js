@@ -262,12 +262,17 @@ function openDefault(win, notebookPath, deviceId) {
     }
   });
 
-  // Once the renderer is ready, push the initial state
-  win.webContents.on('did-finish-load', () => {
-    if (manager.state) {
+  // Push initial state — handle both "still loading" and "already loaded" cases
+  const pushInitialState = () => {
+    if (manager.state && win && !win.isDestroyed()) {
       win.webContents.send('notebook:state-changed', manager.state);
     }
-  });
+  };
+  if (win.webContents.isLoading()) {
+    win.webContents.once('did-finish-load', pushInitialState);
+  } else {
+    pushInitialState();
+  }
 }
 
 function closeNotebook() {

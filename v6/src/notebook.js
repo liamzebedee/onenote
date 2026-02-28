@@ -90,9 +90,8 @@ class NotebookManager {
       this.state = defaultState();
     }
 
-    // Initialize WAL
+    // Initialize WAL (CRDTs are lazy — created on first edit)
     this.wal = new WAL();
-    this._initCrdts();
     this.wal.startAutoSeal(this.deviceId, walDir);
 
     // Start sync engine (file watcher)
@@ -197,39 +196,37 @@ class NotebookManager {
     this.deviceId = null;
   }
 
-  _initCrdts() {
-    this.crdts.clear();
-    const walkPages = (pages) => {
-      for (const page of pages) {
-        for (const blk of (page.blocks || [])) {
-          if (blk.type === 'image' || blk.type === 'loading') continue;
-          let crdt;
-          if (blk.crdt) {
-            crdt = TextCRDT.fromSnapshot(blk.crdt);
-          } else {
-            crdt = new TextCRDT(this.deviceId);
-            if (blk.html) {
-              const text = blk.html.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
-              if (text) crdt.insertTextAt(0, text);
-            }
-          }
-          this.crdts.set(blk.id, crdt);
-        }
-        if (page.children?.length) walkPages(page.children);
-      }
-    };
+  // Lazily initialize a block's CRDT on first edit
+  _getOrInitCrdt(blockId) {
+    let crdt = this.crdts.get(blockId);
+    if (crdt) return crdt;
+
+    // Find block to seed the CRDT from its current content
+    let blk = null;
     for (const nb of this.state.notebooks) {
-      for (const sec of nb.sections) walkPages(sec.pages);
+      for (const sec of nb.sections) {
+        blk = this._findBlockInPages(sec.pages, blockId);
+        if (blk) break;
+      }
+      if (blk) break;
     }
+
+    if (blk?.crdt) {
+      crdt = TextCRDT.fromSnapshot(blk.crdt);
+    } else {
+      crdt = new TextCRDT(this.deviceId);
+      if (blk?.html) {
+        const text = blk.html.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+        if (text) crdt.insertTextAt(0, text);
+      }
+    }
+    this.crdts.set(blockId, crdt);
+    return crdt;
   }
 
   _applyBlockTextDiff(diffOp) {
     const { pageId, blockId, diffs } = diffOp;
-    let crdt = this.crdts.get(blockId);
-    if (!crdt) {
-      crdt = new TextCRDT(this.deviceId);
-      this.crdts.set(blockId, crdt);
-    }
+    let crdt = this._getOrInitCrdt(blockId);
     const crdtOps = [];
     for (const diff of diffs) {
       if (diff.type === 'insert') {
@@ -263,11 +260,7 @@ class NotebookManager {
   }
 
   _applyBlockTextOp(op) {
-    let crdt = this.crdts.get(op.blockId);
-    if (!crdt) {
-      crdt = new TextCRDT(this.deviceId);
-      this.crdts.set(op.blockId, crdt);
-    }
+    let crdt = this._getOrInitCrdt(op.blockId);
     const oldText = crdt.getText();
     for (const crdtOp of (op.crdtOps || [])) crdt.apply(crdtOp);
     const newText = crdt.getText();

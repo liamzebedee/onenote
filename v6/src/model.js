@@ -232,12 +232,28 @@ function applyOp(state, op) {
     }
 
     case 'page-tree-update': {
-      // Direct tree mutation for drag-and-drop reordering
-      // op.sectionId, op.pages = new pages array (full tree)
+      // Restructure pages (drag-and-drop / delete-with-promote).
+      // op.pages carries only { id, children } structure — block content
+      // is preserved by merging with existing pages looked up by id.
+      let targetSec = null;
       for (const nb of state.notebooks) {
-        const sec = nb.sections.find(s => s.id === op.sectionId);
-        if (sec) { sec.pages = op.pages; break; }
+        targetSec = nb.sections.find(s => s.id === op.sectionId);
+        if (targetSec) break;
       }
+      if (!targetSec) return state;
+      const byId = new Map();
+      function collect(pages) {
+        for (const p of pages) { byId.set(p.id, p); collect(p.children ?? []); }
+      }
+      collect(targetSec.pages);
+      function rebuild(pages) {
+        return pages.map(p => {
+          const ex = byId.get(p.id);
+          if (!ex) return null;
+          return { ...ex, children: rebuild(p.children ?? []) };
+        }).filter(Boolean);
+      }
+      targetSec.pages = rebuild(op.pages);
       return state;
     }
 
@@ -298,11 +314,27 @@ function applyOp(state, op) {
       return state;
     }
 
+    case 'block-update-crop': {
+      const result = findPageInState(state, op.pageId);
+      if (!result) return state;
+      const blk = result.page.blocks.find(b => b.id === op.blockId);
+      if (blk) blk.crop = op.crop;
+      return state;
+    }
+
     case 'block-style': {
       const result = findPageInState(state, op.pageId);
       if (!result) return state;
       const blk = result.page.blocks.find(b => b.id === op.blockId);
       if (blk) Object.assign(blk.styles || (blk.styles = {}), op.styles);
+      return state;
+    }
+
+    case 'block-z': {
+      const result = findPageInState(state, op.pageId);
+      if (!result) return state;
+      const blk = result.page.blocks.find(b => b.id === op.blockId);
+      if (blk) blk.z = op.z;
       return state;
     }
 

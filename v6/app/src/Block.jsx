@@ -1,7 +1,7 @@
 import { useRef, useEffect, useContext, useState } from 'preact/hooks';
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
-import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage } from './store.js';
+import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
 
@@ -21,71 +21,6 @@ function computeTextDiff(oldText, newText) {
   return diffs;
 }
 
-// ─── HTML paste sanitizer ───────────────────────────────
-// Walks the DOM tree, keeping only the tags and attributes we care about.
-// Everything else is either unwrapped (unknown tags → keep children) or dropped.
-
-const ALLOWED_TAGS = new Set([
-  'b', 'strong', 'i', 'em', 'u', 's', 'strike', 'del',
-  'br', 'p', 'div',
-  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-  'ul', 'ol', 'li',
-  'table', 'thead', 'tbody', 'tr', 'td', 'th',
-  'a', 'img',
-  'code', 'pre', 'blockquote',
-]);
-
-const ALLOWED_ATTRS = {
-  a:   ['href', 'title'],
-  img: ['src', 'alt', 'width', 'height'],
-  td:  ['colspan', 'rowspan'],
-  th:  ['colspan', 'rowspan'],
-};
-
-function sanitizeNode(node) {
-  if (node.nodeType === Node.TEXT_NODE) return node.cloneNode();
-  if (node.nodeType !== Node.ELEMENT_NODE) return null;
-
-  const tag = node.tagName.toLowerCase();
-
-  if (!ALLOWED_TAGS.has(tag)) {
-    // Drop the tag but keep its children (unwrap)
-    const frag = document.createDocumentFragment();
-    for (const child of node.childNodes) {
-      const s = sanitizeNode(child);
-      if (s) frag.appendChild(s);
-    }
-    return frag;
-  }
-
-  const el = document.createElement(tag);
-
-  for (const attr of (ALLOWED_ATTRS[tag] || [])) {
-    if (!node.hasAttribute(attr)) continue;
-    const val = node.getAttribute(attr);
-    if (attr === 'href' && /^javascript:/i.test(val.trim())) continue;
-    if (attr === 'src'  && !/^(https?:|data:|blob:|\/)/i.test(val.trim())) continue;
-    el.setAttribute(attr, val);
-  }
-
-  for (const child of node.childNodes) {
-    const s = sanitizeNode(child);
-    if (s) el.appendChild(s);
-  }
-  return el;
-}
-
-function sanitizeHtml(html) {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const frag = document.createDocumentFragment();
-  for (const child of doc.body.childNodes) {
-    const s = sanitizeNode(child);
-    if (s) frag.appendChild(s);
-  }
-  const tmp = document.createElement('div');
-  tmp.appendChild(frag);
-  return tmp.innerHTML;
-}
 
 // ─── Link context menu state ────────────────────────────
 const linkMenu = signal(null); // { x, y, href, anchorEl, blockId }
@@ -142,10 +77,70 @@ if (typeof document !== 'undefined') {
   document.addEventListener('mousedown', () => { linkMenu.value = null; });
 }
 
+// ─── HTML paste sanitizer ────────────────────────────────
+const PASTE_ALLOWED = new Set([
+  'p','br','h1','h2','h3','h4','h5','h6',
+  'ul','ol','li',
+  'b','strong','i','em','u','s','del','strike',
+  'code','pre','blockquote',
+  'a',
+]);
+
+function sanitizePastedHtml(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+
+  function walk(node) {
+    if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.textContent);
+    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+
+    const tag = node.tagName.toLowerCase();
+    const children = document.createDocumentFragment();
+    for (const child of [...node.childNodes]) {
+      const r = walk(child);
+      if (r) children.appendChild(r);
+    }
+
+    if (!PASTE_ALLOWED.has(tag)) return children; // unwrap unknown tags
+
+    const out = document.createElement(
+      tag === 'strong' ? 'b' : tag === 'em' ? 'i' : tag === 'strike' ? 's' : tag
+    );
+    if (tag === 'a') {
+      const href = node.getAttribute('href');
+      if (href) out.setAttribute('href', href);
+    }
+    out.appendChild(children);
+    return out;
+  }
+
+  const frag = document.createDocumentFragment();
+  for (const child of [...doc.body.childNodes]) {
+    const r = walk(child);
+    if (r) frag.appendChild(r);
+  }
+  const div = document.createElement('div');
+  div.appendChild(frag);
+  return div.innerHTML;
+}
+
+let _mountCount = 0;
+let _mountTimer = null;
+
 export function Block({ block, page }) {
   const ctx = useContext(CanvasCtx);
   const contentRef = useRef(null);
   const isDefault = block.id === page.defaultBlockId;
+
+  useEffect(() => {
+    const t = performance.now();
+    _mountCount++;
+    clearTimeout(_mountTimer);
+    _mountTimer = setTimeout(() => {
+      window.log(`[perf] Block mounts this switch: ${_mountCount}`);
+      _mountCount = 0;
+    }, 100);
+    return () => {};
+  }, []);
   const isImage   = block.type === 'image';
   const isLoading = block.type === 'loading';
   const isSelected = ctx.selectedIds.has(block.id);
@@ -155,12 +150,25 @@ export function Block({ block, page }) {
   const isNotebookBlob = (s) => s.startsWith('blob:') && !s.includes('/');
   const rawSrc = block.src || '';
   const [resolvedSrc, setResolvedSrc] = useState(isNotebookBlob(rawSrc) ? null : rawSrc);
+
+  // Image crop state
+  const [naturalSize, setNaturalSize] = useState(null);
+  const [cropping, setCropping] = useState(false);
+  const [pendingCrop, setPendingCrop] = useState(null);
+  const pendingCropRef = useRef(null);
+  // Effective natural size: prefer freshly loaded, fall back to stored dims in crop data
+  const nw = naturalSize?.w ?? block.crop?.nw ?? null;
+  const nh = naturalSize?.h ?? block.crop?.nh ?? null;
   useEffect(() => {
     if (!isImage) return;
     if (isNotebookBlob(rawSrc)) {
       const hash = rawSrc.slice(5);
+      const t0 = performance.now();
       window.notebook.getBlob(hash).then(dataUrl => {
-        if (dataUrl) setResolvedSrc(dataUrl);
+        const elapsed = (performance.now() - t0).toFixed(2);
+        const kb = dataUrl ? Math.round(dataUrl.length / 1024) : 0;
+        window.log(`[perf] getBlob: ${elapsed}ms, ${kb}KB data URL`);
+        if (dataUrl) { imgDecodeStart.current = performance.now(); setResolvedSrc(dataUrl); }
       });
     } else {
       setResolvedSrc(rawSrc);
@@ -229,10 +237,8 @@ export function Block({ block, page }) {
   const handleContentClick = (e) => {
     const anchor = e.target.closest('a[href]');
     if (!anchor) return;
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      if (window.notebook?.openExternal) window.notebook.openExternal(anchor.href);
-    }
+    e.preventDefault();
+    if (window.notebook?.openExternal) window.notebook.openExternal(anchor.href);
   };
 
   const handleContentContextMenu = (e) => {
@@ -244,20 +250,15 @@ export function Block({ block, page }) {
   };
 
   const handlePaste = (e) => {
+    if ([...(e.clipboardData?.items || [])].some(i => i.type.startsWith('image/'))) return;
     e.preventDefault();
-    const html  = e.clipboardData?.getData('text/html') || '';
-    const plain = e.clipboardData?.getData('text/plain') || '';
-
+    const html = e.clipboardData?.getData('text/html');
     if (html) {
-      const sanitized = sanitizeHtml(html);
-      if (sanitized.trim()) {
-        document.execCommand('insertHTML', false, sanitized);
-        return;
-      }
+      document.execCommand('insertHTML', false, sanitizePastedHtml(html));
+      return;
     }
-    if (plain) {
-      document.execCommand('insertText', false, plain);
-    }
+    const text = e.clipboardData?.getData('text/plain') || '';
+    if (text) document.execCommand('insertText', false, text);
   };
 
   const handleBlur = () => {
@@ -282,11 +283,88 @@ export function Block({ block, page }) {
     ctx.onBlockBlur?.(block.id);
   };
 
+  // ── Image crop ───────────────────────────────────────────
+
+  const imgDecodeStart = useRef(null);
+
+  const handleImgLoad = (e) => {
+    setNaturalSize({ w: e.target.naturalWidth, h: e.target.naturalHeight });
+    if (imgDecodeStart.current) {
+      window.log(`[perf] img decode+load: ${(performance.now() - imgDecodeStart.current).toFixed(2)}ms (${e.target.naturalWidth}×${e.target.naturalHeight})`);
+      imgDecodeStart.current = null;
+    }
+  };
+
+  const handleImgDoubleClick = (e) => {
+    if (!nw || !nh) return;
+    e.stopPropagation();
+    const initCrop = block.crop
+      ? { x: block.crop.x, y: block.crop.y, w: block.crop.w, h: block.crop.h }
+      : { x: 0, y: 0, w: nw, h: nh };
+    pendingCropRef.current = initCrop;
+    setPendingCrop(initCrop);
+    setCropping(true);
+  };
+
+  // Escape cancels crop mode
+  useEffect(() => {
+    if (!cropping) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setCropping(false); setPendingCrop(null); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [cropping]);
+
+  const startCropDrag = (e, dir) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const zoom = ctx.getZoom();
+    const imgScale = block.w / nw; // canvas px per natural px
+    const startX = e.clientX, startY = e.clientY;
+    const origCrop = { ...pendingCropRef.current };
+
+    function onMove(e2) {
+      const dx = (e2.clientX - startX) / zoom / imgScale;
+      const dy = (e2.clientY - startY) / zoom / imgScale;
+      let { x, y, w, h } = origCrop;
+      if (dir.includes('e')) w = Math.max(20, Math.min(nw - x, w + dx));
+      if (dir.includes('w')) {
+        const d = Math.max(-x, Math.min(w - 20, dx));
+        x += d; w -= d;
+      }
+      if (dir.includes('s')) h = Math.max(20, Math.min(nh - y, h + dy));
+      if (dir.includes('n')) {
+        const d = Math.max(-y, Math.min(h - 20, dy));
+        y += d; h -= d;
+      }
+      const nc = { x, y, w, h };
+      pendingCropRef.current = nc;
+      setPendingCrop(nc);
+    }
+
+    function onUp() {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      const fc = pendingCropRef.current;
+      const isFullImage = fc.x <= 2 && fc.y <= 2 && fc.w >= nw - 2 && fc.h >= nh - 2;
+      const cropToSave = isFullImage ? null : { ...fc, nw, nh };
+      const pg = getActivePage();
+      if (pg) pushUndo(pg.id, { type: 'crop', id: block.id, crop: block.crop ?? null });
+      updateBlockCrop(block.id, cropToSave);
+      setCropping(false);
+    }
+
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+  };
+
   // Clicking anywhere on the block (outside content) starts a drag/select
   // and crucially STOPS propagation so canvas doesn't create a new block
   const handleBlockPointerDown = (e) => {
     // Always stop propagation — no canvas actions should fire from block interactions
     e.stopPropagation();
+    if (cropping) return;
 
     // If click lands outside content/handles, initiate drag+select
     const onContent = e.target.closest('.block-content, .block-handle, .block-resize, .img-resize, .block-drag-overlay');
@@ -299,7 +377,7 @@ export function Block({ block, page }) {
     <div
       class={['block', isDefault && 'block--default', isImage && 'block--image', isLoading && 'block--loading', isSelected && 'block--selected'].filter(Boolean).join(' ')}
       data-block-id={block.id}
-      style={{ left: block.x + 'px', top: block.y + 'px', width: block.w + 'px' }}
+      style={{ left: block.x + 'px', top: block.y + 'px', width: block.w + 'px', zIndex: block.z ?? 0 }}
       onPointerDown={handleBlockPointerDown}
     >
       {/* Drag handle — hidden for default block and image blocks */}
@@ -322,18 +400,67 @@ export function Block({ block, page }) {
         <div class="block-loading"><div class="block-loading-spinner" /></div>
       ) : isImage ? (
         <>
-          <img src={resolvedSrc || ''} draggable={false} style={{ width: '100%', display: 'block' }} />
-          {['nw', 'ne', 'sw', 'se'].map(dir => (
+          {/* Image frame — handles crop rendering */}
+          <div
+            class="img-frame"
+            style={(!cropping && block.crop && nw) ? {
+              position: 'relative', overflow: 'hidden',
+              height: `${block.crop.h * block.w / block.crop.w}px`,
+            } : { position: 'relative', overflow: cropping ? 'hidden' : undefined }}
+          >
+            <img
+              src={resolvedSrc || ''}
+              draggable={false}
+              onLoad={handleImgLoad}
+              style={(!cropping && block.crop && nw) ? {
+                position: 'absolute',
+                width: `${nw * block.w / block.crop.w}px`,
+                maxWidth: 'none',
+                left: `${-block.crop.x * block.w / block.crop.w}px`,
+                top: `${-block.crop.y * block.w / block.crop.w}px`,
+              } : { width: '100%', display: 'block' }}
+            />
+            {/* Crop overlay — shown while in crop mode */}
+            {cropping && pendingCrop && nw && nh && (
+              <div class="crop-overlay">
+                <div
+                  class="crop-box"
+                  style={{
+                    left:   `${pendingCrop.x * (block.w / nw)}px`,
+                    top:    `${pendingCrop.y * (block.w / nw)}px`,
+                    width:  `${pendingCrop.w * (block.w / nw)}px`,
+                    height: `${pendingCrop.h * (block.w / nw)}px`,
+                  }}
+                >
+                  {['n','s','e','w','ne','nw','se','sw'].map(dir => (
+                    <div
+                      key={dir}
+                      class={`crop-handle crop-handle--${dir}`}
+                      onPointerDown={(e) => startCropDrag(e, dir)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Corner resize handles — hidden during crop */}
+          {!cropping && ['nw', 'ne', 'sw', 'se'].map(dir => (
             <div
               key={dir}
               class={`img-resize img-resize--${dir}`}
               onPointerDown={(e) => { e.stopPropagation(); ctx.onImgResizeStart(e, block.id, dir); }}
             />
           ))}
-          <div
-            class="block-drag-overlay"
-            onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
-          />
+
+          {/* Drag overlay — hidden during crop; dblclick enters crop mode */}
+          {!cropping && (
+            <div
+              class="block-drag-overlay"
+              onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
+              onDblClick={handleImgDoubleClick}
+            />
+          )}
         </>
       ) : (
         <div

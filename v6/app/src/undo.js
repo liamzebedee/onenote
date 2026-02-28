@@ -92,5 +92,13 @@ function apply(page, delta) {
     return { type: 'delete', blocks: removed };
   }
 
+  if (delta.type === 'crop') {
+    const b = blocks.find(b => b.id === delta.id);
+    if (!b) return null;
+    const rev = { type: 'crop', id: b.id, crop: b.crop ?? null };
+    b.crop = delta.crop;
+    return rev;
+  }
+
   return null;
 }

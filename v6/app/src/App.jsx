@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
-import { appState, connected, initializing, getActivePage, findInTree, setActiveSection, setActivePage } from './store.js';
+import { appState, connected, initializing, getActivePage, findInTree, setActiveSection, setActivePage, preloadPages, getPreloadCandidates } from './store.js';
 import { NotebookBar } from './NotebookBar.jsx';
 import { SectionPanel } from './SectionPanel.jsx';
 import { PagesPanel } from './PagesPanel.jsx';
@@ -29,6 +29,12 @@ function flatPages(pages) {
 
 export function App() {
   const [showJump, setShowJump] = useState(false);
+
+  // Preload neighbouring pages once the app is idle after initial render
+  useEffect(() => {
+    const id = requestIdleCallback(() => preloadPages(getPreloadCandidates()), { timeout: 2000 });
+    return () => cancelIdleCallback(id);
+  }, [connected.value]);
 
   useEffect(() => {
     function onKey(e) {
