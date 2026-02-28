@@ -103,12 +103,9 @@ if (hasIPC) {
   initializing.value = false;
 }
 
-// Immutable update — triggers Preact re-render
+// Shallow clone — new top-level reference triggers Preact signal, fn mutates nested objects in place
 function update(fn) {
-  const t0 = performance.now();
-  const draft = structuredClone(appState.value);
-  const t1 = performance.now();
-  window.log(`[perf] structuredClone: ${(t1 - t0).toFixed(2)}ms`);
+  const draft = { ...appState.value };
   fn(draft);
   appState.value = draft;
 }
@@ -188,7 +185,6 @@ export function setActiveSection(id) {
 }
 
 export function setActivePage(id) {
-  performance.mark('page-switch-start');
   const { sectionId } = appState.value.ui;
   if (sectionId) lastPagePerSection.set(sectionId, id);
   update(s => { s.ui.pageId = id; });

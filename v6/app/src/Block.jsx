@@ -123,24 +123,10 @@ function sanitizePastedHtml(html) {
   return div.innerHTML;
 }
 
-let _mountCount = 0;
-let _mountTimer = null;
-
 export function Block({ block, page }) {
   const ctx = useContext(CanvasCtx);
   const contentRef = useRef(null);
   const isDefault = block.id === page.defaultBlockId;
-
-  useEffect(() => {
-    const t = performance.now();
-    _mountCount++;
-    clearTimeout(_mountTimer);
-    _mountTimer = setTimeout(() => {
-      window.log(`[perf] Block mounts this switch: ${_mountCount}`);
-      _mountCount = 0;
-    }, 100);
-    return () => {};
-  }, []);
   const isImage   = block.type === 'image';
   const isLoading = block.type === 'loading';
   const isSelected = ctx.selectedIds.has(block.id);
@@ -163,12 +149,8 @@ export function Block({ block, page }) {
     if (!isImage) return;
     if (isNotebookBlob(rawSrc)) {
       const hash = rawSrc.slice(5);
-      const t0 = performance.now();
       window.notebook.getBlob(hash).then(dataUrl => {
-        const elapsed = (performance.now() - t0).toFixed(2);
-        const kb = dataUrl ? Math.round(dataUrl.length / 1024) : 0;
-        window.log(`[perf] getBlob: ${elapsed}ms, ${kb}KB data URL`);
-        if (dataUrl) { imgDecodeStart.current = performance.now(); setResolvedSrc(dataUrl); }
+        if (dataUrl) setResolvedSrc(dataUrl);
       });
     } else {
       setResolvedSrc(rawSrc);
@@ -285,14 +267,8 @@ export function Block({ block, page }) {
 
   // ── Image crop ───────────────────────────────────────────
 
-  const imgDecodeStart = useRef(null);
-
   const handleImgLoad = (e) => {
     setNaturalSize({ w: e.target.naturalWidth, h: e.target.naturalHeight });
-    if (imgDecodeStart.current) {
-      window.log(`[perf] img decode+load: ${(performance.now() - imgDecodeStart.current).toFixed(2)}ms (${e.target.naturalWidth}×${e.target.naturalHeight})`);
-      imgDecodeStart.current = null;
-    }
   };
 
   const handleImgDoubleClick = (e) => {

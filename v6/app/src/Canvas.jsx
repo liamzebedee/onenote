@@ -141,14 +141,6 @@ export function Canvas({ page }) {
 
   useEffect(() => {
     if (!page || !containerRef.current || !innerRef.current) return;
-
-    // ── Memory estimate ───────────────────────────────────
-    const cachedPageCount = pageCacheRef.current.size;
-    const dataUrlBytes = [...innerRef.current.querySelectorAll('img[src^="data:"]')]
-      .reduce((sum, img) => sum + img.src.length, 0);
-    const domNodes = innerRef.current.querySelectorAll('*').length;
-    const heapMB = performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1024 / 1024) : '?';
-    window.log(`[mem] cached pages: ${cachedPageCount} | dom nodes: ${domNodes} | img data: ${(dataUrlBytes / 1024 / 1024).toFixed(1)}MB | heap: ${heapMB}MB`);
     const zoom = page.zoom ?? 1;
     viewRef.current = { zoom };
     innerRef.current.style.transform = `scale(${zoom})`;
@@ -160,11 +152,6 @@ export function Canvas({ page }) {
       if (!containerRef.current) return;
       containerRef.current.scrollLeft = targetLeft;
       containerRef.current.scrollTop  = targetTop;
-      performance.mark('raf-done');
-      try {
-        const m = performance.measure('canvas-render→raf-done', 'canvas-effect', 'raf-done');
-        window.log(`[perf] render→rAF (scroll restore): ${m.duration.toFixed(2)}ms`);
-      } catch {}
     });
     setSelected(new Set());
   }, [page?.id]);
