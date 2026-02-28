@@ -10,7 +10,7 @@ function mkBlock(x = 0, y = 0, w = 480) {
 
 function mkPage(title = 'Untitled Page') {
   const db = mkBlock(0, 0, 480);
-  return { id: uid(), title, children: [], defaultBlockId: db.id, blocks: [db], panX: 0, panY: 0, zoom: 1 };
+  return { id: uid(), title, children: [], defaultBlockId: db.id, blocks: [db], panX: 0, panY: 0, zoom: 1, createdAt: Date.now() };
 }
 
 function mkSection(title = 'New Section') {

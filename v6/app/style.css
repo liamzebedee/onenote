@@ -57,13 +57,13 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 #section-tabs {
   display: flex;
   align-items: flex-end;
-  height: 30px;
+  height: 34px;
   padding: 0 4px 0 36px;
-  gap: 2px;
+  gap: 0;
   overflow-x: auto;
   overflow-y: hidden;
   background: #eaeaea;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #ababab;
   flex-shrink: 0;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
@@ -78,26 +78,54 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 #section-tabs::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.35); }
 
 .sec-tab {
-  padding: 4px 14px;
+  padding: 0 14px 0 10px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   user-select: none;
-  border: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 3px 3px 0 0;
+  border: none;
   margin-bottom: -1px;
+  margin-right: -1px;
   white-space: nowrap;
-  background: #d4d4d4;
   position: relative;
+  height: 25px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  background: none;
 }
-.sec-tab:hover { background: #c8c8c8; }
+.sec-tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 3px 14px 0 0;
+  border: 1px solid #aaa;
+  border-bottom: none;
+  box-shadow: inset 0 -4px 6px -4px rgba(0,0,0,.15);
+}
+.sec-tab:hover::before { filter: brightness(0.95); }
 .sec-tab--active {
   color: var(--text);
-  background: #fff;
-  border-color: var(--border);
+  height: 32px;
   font-weight: 500;
+  z-index: 2;
 }
+.sec-tab--active::before {
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+  box-shadow: none;
+}
+
+/* Section tab colours — cycling palette inspired by OneNote */
+.sec-tab:nth-child(8n+1)::before { background: #fce4b8; }
+.sec-tab:nth-child(8n+2)::before { background: #b8d4f0; }
+.sec-tab:nth-child(8n+3)::before { background: #c8e6c0; }
+.sec-tab:nth-child(8n+4)::before { background: #f0c0c0; }
+.sec-tab:nth-child(8n+5)::before { background: #d8c8f0; }
+.sec-tab:nth-child(8n+6)::before { background: #f0d8b0; }
+.sec-tab:nth-child(8n+7)::before { background: #b8e0e0; }
+.sec-tab:nth-child(8n+8)::before { background: #f0c8e0; }
 
 .sec-add {
   padding: 2px 8px;
@@ -303,6 +331,67 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   background: transparent;
 }
 
+/* ── Bulk select & confirm dialog ─────────────────── */
+.panel-item--selected {
+  background: #d3e3fd;
+  border-left-color: var(--active-color);
+}
+.panel-item--selected:hover { background: #c2d7f7; }
+
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.confirm-dialog {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  min-width: 280px;
+  max-width: 360px;
+}
+.confirm-dialog p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.confirm-sub {
+  font-weight: 400 !important;
+  color: var(--muted);
+  font-size: 13px !important;
+  margin-bottom: 16px !important;
+}
+.confirm-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.confirm-cancel {
+  padding: 6px 16px;
+  font-size: 13px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.confirm-cancel:hover { background: var(--hover-bg); }
+.confirm-delete {
+  padding: 6px 16px;
+  font-size: 13px;
+  background: #d93025;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.confirm-delete:hover { background: #c5221f; }
+
 /* ── Canvas area ──────────────────────────────────── */
 
 #canvas-area {
@@ -328,14 +417,21 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   font-weight: 600;
   outline: none;
   display: inline-block;
-  min-width: 120px;
-  border-bottom: 2px solid var(--text);
-  padding-bottom: 2px;
+  min-width: 300px;
+  border: 1.5px dotted #bbb;
+  border-radius: 6px;
+  padding: 4px 12px;
   line-height: 1.2;
   white-space: nowrap;
   cursor: text;
 }
 #page-title:empty::before { content: 'Page title'; color: #ccc; pointer-events: none; }
+.page-date {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  padding-left: 4px;
+}
 
 /* ── Canvas container ─────────────────────────────── */
 

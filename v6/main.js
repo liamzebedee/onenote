@@ -5,7 +5,18 @@ const path = require('path');
 const crypto = require('crypto');
 const { setupIPC, closeNotebook, openDefault } = require('./src/ipc');
 
-Menu.setApplicationMenu(null);
+Menu.setApplicationMenu(Menu.buildFromTemplate([
+  {
+    label: 'Help',
+    submenu: [
+      {
+        label: 'Toggle DevTools',
+        accelerator: 'F12',
+        click: (_, win) => { if (win) win.webContents.toggleDevTools(); },
+      },
+    ],
+  },
+]));
 
 let mainWindow = null;
 let closed = false;

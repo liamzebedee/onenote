@@ -1,6 +1,24 @@
-import { useState, useRef, useEffect } from 'preact/hooks';
+import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
 import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree } from './store.js';
 import { openContextMenu } from './ContextMenu.jsx';
+
+// ── Helpers for collecting page IDs from tree ──────
+function flattenPageIds(pages) {
+  const ids = [];
+  for (const p of pages) {
+    ids.push(p.id);
+    if (p.children?.length) ids.push(...flattenPageIds(p.children));
+  }
+  return ids;
+}
+
+function getPageRange(pages, idA, idB) {
+  const flat = flattenPageIds(pages);
+  const a = flat.indexOf(idA), b = flat.indexOf(idB);
+  if (a === -1 || b === -1) return [idB];
+  const lo = Math.min(a, b), hi = Math.max(a, b);
+  return flat.slice(lo, hi + 1);
+}
 
 // ── Drag state (module-level so siblings can share) ──────
 const drag = { pageId: null, over: null, mode: null }; // mode: 'before' | 'child'
@@ -30,7 +48,7 @@ function deletePageWithChildren(page) {
   appState.value = { ...appState.value };
 }
 
-function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingId, onStartEditing }) {
+function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingId, onStartEditing, selected, onSelect, onBulkDelete }) {
   const [open, setOpen] = useState(true);
   const hasKids = page.children?.length > 0;
   const isOver = dragState.over === page.id;
@@ -38,6 +56,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
   const isEditing = editingId === page.id;
   const editRef = useRef(null);
   const [editVal, setEditVal] = useState(page.title);
+  const isSelected = selected?.has(page.id);
 
   useEffect(() => {
     if (isEditing) {
@@ -136,6 +155,19 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
 
   function openPageContextMenu(e) {
     e.preventDefault();
+
+    // If this page is part of a bulk selection, show bulk menu
+    if (selected?.size > 1 && selected.has(page.id)) {
+      openContextMenu(e.clientX, e.clientY, [
+        {
+          type: 'confirm', label: `Delete ${selected.size} pages`,
+          confirmLabel: `Delete ${selected.size} pages?`,
+          action: onBulkDelete,
+        },
+      ]);
+      return;
+    }
+
     const nb = appState.value.notebooks.find(n => n.id === appState.value.ui.notebookId);
     const sections = nb?.sections ?? [];
 
@@ -176,7 +208,8 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
       <div
         class={[
           'panel-item page-item',
-          page.id === activeId && 'panel-item--active',
+          page.id === activeId && !selected?.size && 'panel-item--active',
+          isSelected && 'panel-item--selected',
           isOver && !isOverAsChild && 'page-item--drop-before',
           isOverAsChild && 'page-item--drop-child',
         ].filter(Boolean).join(' ')}
@@ -186,7 +219,15 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
-        onClick={() => setActivePage(page.id)}
+        onClick={e => {
+          if (e.ctrlKey || e.metaKey || e.shiftKey) {
+            e.preventDefault();
+            onSelect(page.id, e);
+          } else {
+            if (selected?.size) onSelect(null); // clear selection on plain click
+            setActivePage(page.id);
+          }
+        }}
         onDblClick={e => {
           e.stopPropagation();
           onStartEditing(page.id);
@@ -218,7 +259,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
       {hasKids && open && (
         <div class="subpages">
           {page.children.map(c => (
-            <PageItem key={c.id} page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={onStartEditing} />
+            <PageItem key={c.id} page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={onStartEditing} selected={selected} onSelect={onSelect} onBulkDelete={onBulkDelete} />
           ))}
         </div>
       )}
@@ -234,8 +275,58 @@ export function PagesPanel() {
 
   const [dragOver, setDragOver] = useState({ id: null, mode: null });
   const [editingId, setEditingId] = useState(null);
+  const [selected, setSelected] = useState(new Set());
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const lastSelectedRef = useRef(null);
+
+  // Clear selection when section changes
+  useEffect(() => { setSelected(new Set()); lastSelectedRef.current = null; }, [ui.sectionId]);
 
   function onDragChange(id, mode) { setDragOver({ id, mode }); }
+
+  const onSelect = useCallback((pageId, e) => {
+    if (pageId === null) { setSelected(new Set()); lastSelectedRef.current = null; return; }
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (e?.shiftKey && lastSelectedRef.current) {
+        const range = getPageRange(pages, lastSelectedRef.current, pageId);
+        for (const id of range) next.add(id);
+      } else if (e?.ctrlKey || e?.metaKey) {
+        if (next.has(pageId)) next.delete(pageId); else next.add(pageId);
+      } else {
+        next.clear();
+        next.add(pageId);
+      }
+      lastSelectedRef.current = pageId;
+      return next;
+    });
+  }, [pages]);
+
+  function doBulkDelete() {
+    for (const id of selected) {
+      const pg = findInTree(pages, id);
+      if (pg) deletePageWithChildren(pg);
+      else deletePage(id);
+    }
+    setSelected(new Set());
+    setConfirmDelete(false);
+  }
+
+  // Keyboard: Delete/Backspace to confirm, Escape to clear
+  useEffect(() => {
+    function onKey(e) {
+      if (selected.size && (e.key === 'Delete' || e.key === 'Backspace') && !editingId) {
+        e.preventDefault();
+        setConfirmDelete(true);
+      }
+      if (e.key === 'Escape') {
+        if (confirmDelete) setConfirmDelete(false);
+        else if (selected.size) setSelected(new Set());
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selected, editingId, confirmDelete]);
 
   const dragState = { over: dragOver.id, mode: dragOver.mode };
 
@@ -246,9 +337,21 @@ export function PagesPanel() {
       </div>
       <div class="panel-list">
         {pages.map(pg => (
-          <PageItem key={pg.id} page={pg} activeId={ui.pageId} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={setEditingId} />
+          <PageItem key={pg.id} page={pg} activeId={ui.pageId} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={setEditingId} selected={selected} onSelect={onSelect} onBulkDelete={doBulkDelete} />
         ))}
       </div>
+      {confirmDelete && (
+        <div class="confirm-overlay" onClick={() => setConfirmDelete(false)}>
+          <div class="confirm-dialog" onClick={e => e.stopPropagation()}>
+            <p>Delete {selected.size} page{selected.size > 1 ? 's' : ''}?</p>
+            <p class="confirm-sub">This cannot be undone. Subpages will be promoted.</p>
+            <div class="confirm-buttons">
+              <button class="confirm-cancel" onClick={() => setConfirmDelete(false)}>Cancel</button>
+              <button class="confirm-delete" onClick={doBulkDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

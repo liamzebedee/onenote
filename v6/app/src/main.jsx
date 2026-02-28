@@ -6,4 +6,7 @@ document.getElementById('app').addEventListener('contextmenu', e => {
   e.preventDefault();
 });
 
+// Disable middle-click paste
+document.addEventListener('mousedown', e => { if (e.button === 1) e.preventDefault(); });
+
 render(<App />, document.getElementById('app'));

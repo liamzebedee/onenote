@@ -49,6 +49,10 @@ function PageTitle({ page, onEnter }) {
 
   if (!page) return <div id="page-title-bar" />;
 
+  const dateStr = page.createdAt
+    ? new Date(page.createdAt).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    : null;
+
   return (
     <div id="page-title-bar" onClick={() => ref.current?.focus()}>
       <div
@@ -65,6 +69,7 @@ function PageTitle({ page, onEnter }) {
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onEnter?.(); } }}
         onInput={e => { updatePageTitle(page.id, e.target.textContent); }}
       />
+      {dateStr && <div class="page-date">{dateStr}</div>}
     </div>
   );
 }
