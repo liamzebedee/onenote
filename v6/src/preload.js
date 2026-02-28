@@ -42,6 +42,9 @@ contextBridge.exposeInMainWorld('notebook', {
   // Save/restore UI navigation state per notebook
   saveUiState: (notebookPath, uiState) => ipcRenderer.invoke('notebook:save-ui-state', notebookPath, uiState),
 
+  // Save per-page pan/zoom to local config (device-local, not synced)
+  savePageView: (notebookPath, pageId, panX, panY, zoom) => ipcRenderer.invoke('notebook:save-page-view', notebookPath, pageId, panX, panY, zoom),
+
   // Open URL in system browser
   openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
 

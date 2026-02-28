@@ -165,7 +165,12 @@ export function handleInlineCode(el) {
 // ── List key handling ─────────────────────────────────────
 
 export function handleListKey(e) {
-  const li = window.getSelection()?.getRangeAt(0)?.startContainer?.parentElement?.closest('li');
+  const container = window.getSelection()?.getRangeAt(0)?.startContainer;
+  const li = container && (
+    container.nodeType === Node.ELEMENT_NODE
+      ? container.closest('li')
+      : container.parentElement?.closest('li')
+  );
   if (!li) return false;
 
   if (e.key === 'Tab') {

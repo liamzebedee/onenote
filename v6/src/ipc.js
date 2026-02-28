@@ -230,6 +230,16 @@ function setupIPC(win, configPath, deviceId) {
     try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
   });
 
+  // Save per-page view state (pan/zoom) to local config, keyed by notebookPath → pageId
+  ipcMain.handle('notebook:save-page-view', async (event, notebookPath, pageId, panX, panY, zoom) => {
+    let config = {};
+    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
+    if (!config.pageViews) config.pageViews = {};
+    if (!config.pageViews[notebookPath]) config.pageViews[notebookPath] = {};
+    config.pageViews[notebookPath][pageId] = { panX, panY, zoom };
+    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+  });
+
   // Get config (for renderer to check if first-run)
   ipcMain.handle('notebook:get-config', async () => {
     try { return JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch { return {}; }

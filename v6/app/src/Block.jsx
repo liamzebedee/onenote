@@ -245,18 +245,18 @@ export function Block({ block, page }) {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const html  = e.clipboardData.getData('text/html');
-    const plain = e.clipboardData.getData('text/plain');
+    const html  = e.clipboardData?.getData('text/html') || '';
+    const plain = e.clipboardData?.getData('text/plain') || '';
 
     if (html) {
-      document.execCommand('insertHTML', false, sanitizeHtml(html));
-    } else if (plain) {
-      const escaped = plain
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/\n/g, '<br>');
-      document.execCommand('insertHTML', false, escaped);
+      const sanitized = sanitizeHtml(html);
+      if (sanitized.trim()) {
+        document.execCommand('insertHTML', false, sanitized);
+        return;
+      }
+    }
+    if (plain) {
+      document.execCommand('insertText', false, plain);
     }
   };
 

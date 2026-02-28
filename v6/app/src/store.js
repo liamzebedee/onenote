@@ -397,7 +397,10 @@ export function updatePageView(panX, panY, zoom) {
     const pg = getActivePage(s);
     if (pg) { pg.panX = panX; pg.panY = panY; pg.zoom = zoom; }
   });
-  sendOp({ type: 'page-view', pageId, panX, panY, zoom });
+  // Persist to local config (device-local, never synced)
+  if (hasIPC && _notebookPath && pageId) {
+    window.notebook.savePageView(_notebookPath, pageId, panX, panY, zoom);
+  }
 }
 
 export function updatePageTitle(pageId, title) {
@@ -624,6 +627,30 @@ if (hasIPC) {
         };
       }
     }
+    // Restore per-page pan/zoom from local config into the state
+    if (_notebookPath) {
+      try {
+        const cfg = await window.notebook.getConfig();
+        const views = cfg.pageViews?.[_notebookPath];
+        if (views) {
+          function applyViews(pages) {
+            for (const pg of pages) {
+              if (views[pg.id]) {
+                const { panX, panY, zoom } = views[pg.id];
+                if (panX != null) pg.panX = panX;
+                if (panY != null) pg.panY = panY;
+                if (zoom != null) pg.zoom = zoom;
+              }
+              if (pg.children?.length) applyViews(pg.children);
+            }
+          }
+          for (const nb of state.notebooks) {
+            for (const sec of nb.sections) applyViews(sec.pages);
+          }
+        }
+      } catch {}
+    }
+
     appState.value = { ...state };
     connected.value = true;
     initializing.value = false;
