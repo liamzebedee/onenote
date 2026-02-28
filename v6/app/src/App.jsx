@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
-import { appState, connected, getActivePage, findInTree, setActiveSection, setActivePage } from './store.js';
+import { appState, connected, initializing, getActivePage, findInTree, setActiveSection, setActivePage } from './store.js';
 import { NotebookBar } from './NotebookBar.jsx';
 import { SectionPanel } from './SectionPanel.jsx';
 import { PagesPanel } from './PagesPanel.jsx';
@@ -79,9 +79,8 @@ export function App() {
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
-  if (!connected.value) {
-    return <WelcomeScreen />;
-  }
+  if (initializing.value) return null;
+  if (!connected.value) return <WelcomeScreen />;
 
   const state = appState.value;
   const { notebooks, ui } = state;

@@ -43,17 +43,23 @@ function defaultState() {
 
 export const appState = signal(defaultState());
 export const connected = signal(false);
+export const initializing = signal(true); // true until we know whether a notebook will load
 export const showSwitcher = signal(false);
 export const recentNotebooks = signal([]);
 
 export function toggleSwitcher() { showSwitcher.value = !showSwitcher.value; }
 export function closeSwitcher() { showSwitcher.value = false; }
 
-// Load recents from config on init
+// Load recents from config on init; also determine if a notebook will be opened
 if (hasIPC) {
   window.notebook.getConfig().then(cfg => {
     if (Array.isArray(cfg.recentNotebooks)) recentNotebooks.value = cfg.recentNotebooks;
+    // If there's no saved notebook path, nothing will load — stop initializing now
+    if (!cfg.notebookPath) initializing.value = false;
+    // If there is a path, initializing stays true until onStateChanged fires
   });
+} else {
+  initializing.value = false;
 }
 
 // Immutable update — triggers Preact re-render
@@ -611,5 +617,6 @@ if (hasIPC) {
     }
     appState.value = { ...state };
     connected.value = true;
+    initializing.value = false;
   });
 }

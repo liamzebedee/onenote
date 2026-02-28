@@ -228,6 +228,9 @@ export function onBlockKeyDown(e, el) {
   if (handleCodeTab(e, el)) return true;
   if (handleListKey(e)) return true;
 
+  // Prevent Tab from escaping the block (scrollable containers are implicitly focusable)
+  if (e.key === 'Tab') { e.preventDefault(); return true; }
+
   // Backtick → inline code (check after char is inserted)
   if (e.key === '`') {
     setTimeout(() => handleInlineCode(el), 0);
