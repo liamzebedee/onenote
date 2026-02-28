@@ -7,6 +7,12 @@ const { setupIPC, closeNotebook, openDefault } = require('./src/ipc');
 
 Menu.setApplicationMenu(Menu.buildFromTemplate([
   {
+    label: app.name,
+    submenu: [
+      { role: 'quit' },
+    ],
+  },
+  {
     label: 'Help',
     submenu: [
       {

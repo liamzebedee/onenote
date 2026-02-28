@@ -371,6 +371,11 @@ export function updateBlockSrc(blockId, src) {
   sendOp({ type: 'block-update-src', pageId, blockId, src });
 }
 
+export function jumpToPage(sectionId, pageId) {
+  update(s => { s.ui.sectionId = sectionId; s.ui.pageId = pageId; });
+  persistUiState();
+}
+
 export function updatePageView(panX, panY, zoom) {
   const pageId = appState.value.ui.pageId;
   silent(s => {
