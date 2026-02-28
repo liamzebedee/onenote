@@ -177,6 +177,27 @@ export function Block({ block, page }) {
     linkMenu.value = { x: e.clientX, y: e.clientY, href: anchor.href, anchorEl: anchor, blockId: block.id };
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const html = e.clipboardData.getData('text/html');
+    const plain = e.clipboardData.getData('text/plain');
+
+    if (html) {
+      // Sanitize: parse the HTML fragment, keep only safe inline/block tags
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      // Insert the cleaned HTML
+      document.execCommand('insertHTML', false, doc.body.innerHTML);
+    } else if (plain) {
+      // Convert newlines to <br> for plain text
+      const escaped = plain
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
+      document.execCommand('insertHTML', false, escaped);
+    }
+  };
+
   const handleBlur = () => {
     clearTimeout(undoTimer.current);
     const el = contentRef.current;
@@ -264,6 +285,7 @@ export function Block({ block, page }) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onClick={handleContentClick}
+          onPaste={handlePaste}
           onContextMenu={handleContentContextMenu}
           onPointerDown={(e) => e.stopPropagation()}
           suppressContentEditableWarning

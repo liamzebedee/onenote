@@ -58,3 +58,15 @@ contextBridge.exposeInMainWorld('notebook', {
   },
 
 });
+
+contextBridge.exposeInMainWorld('claude', {
+  start: (pageId) => ipcRenderer.invoke('claude:start', pageId),
+  message: (text) => ipcRenderer.invoke('claude:message', text),
+  stop: () => ipcRenderer.invoke('claude:stop'),
+  onStream: (cb) => {
+    ipcRenderer.on('claude:stream', (event, data) => cb(data));
+  },
+  offStream: () => {
+    ipcRenderer.removeAllListeners('claude:stream');
+  },
+});

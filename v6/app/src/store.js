@@ -454,6 +454,113 @@ export async function createAndOpenNotebook() {
   if (dir) await openNotebook(dir);
 }
 
+// ─── Claude Chat ─────────────────────────────────────────
+
+const hasClaude = typeof window !== 'undefined' && window.claude;
+
+export const claudeChat = signal({
+  active: false,
+  messages: [],
+  streaming: false,
+  position: { x: 100, y: 100 },
+  error: null,
+});
+
+function updateChat(fn) {
+  const draft = structuredClone(claudeChat.value);
+  fn(draft);
+  claudeChat.value = draft;
+}
+
+export async function startClaudeChat(x, y) {
+  if (!hasClaude) return;
+  // Close any existing session first
+  if (claudeChat.value.active) {
+    try { await window.claude.stop(); } catch {}
+    window.claude.offStream();
+  }
+
+  try {
+    const pageId = appState.value.ui?.pageId;
+    await window.claude.start(pageId);
+  } catch (err) {
+    console.error('[claude] start failed:', err);
+    return;
+  }
+
+  // Set up stream listener
+  window.claude.onStream((data) => {
+    if (data.type === 'text') {
+      updateChat(c => {
+        // Append to last assistant message
+        const last = c.messages[c.messages.length - 1];
+        if (last && last.role === 'assistant') {
+          last.content = data.content;
+        }
+      });
+    } else if (data.type === 'done') {
+      updateChat(c => {
+        c.streaming = false;
+        // Update last assistant message with final result
+        const last = c.messages[c.messages.length - 1];
+        if (last && last.role === 'assistant' && data.result) {
+          last.content = data.result;
+        }
+      });
+    } else if (data.type === 'error') {
+      updateChat(c => {
+        c.streaming = false;
+        c.error = data.message;
+      });
+    }
+  });
+
+  claudeChat.value = {
+    active: true,
+    messages: [],
+    streaming: false,
+    position: { x: x ?? 100, y: y ?? 100 },
+    error: null,
+  };
+}
+
+export function sendClaudeMessage(text) {
+  if (!hasClaude || !claudeChat.value.active) return;
+
+  updateChat(c => {
+    c.messages.push({ role: 'user', content: text });
+    c.messages.push({ role: 'assistant', content: '' });
+    c.streaming = true;
+    c.error = null;
+  });
+
+  window.claude.message(text).catch(err => {
+    updateChat(c => {
+      c.streaming = false;
+      c.error = err.message;
+    });
+  });
+}
+
+export function closeClaudeChat() {
+  if (hasClaude) {
+    window.claude.stop().catch(() => {});
+    window.claude.offStream();
+  }
+  claudeChat.value = {
+    active: false,
+    messages: [],
+    streaming: false,
+    position: { x: 100, y: 100 },
+    error: null,
+  };
+}
+
+export function updateClaudeChatPosition(x, y) {
+  const c = claudeChat.value;
+  claudeChat.value = { ...c, position: { x, y } };
+}
+
 // ─── Listen for state changes (initial push + remote sync) ──
 
 if (hasIPC) {

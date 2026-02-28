@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, screen } = require('electron');
+const { app, BrowserWindow, Menu, screen, nativeImage } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -67,7 +67,7 @@ function createWindow() {
     autoHideMenuBar: true,
     width: 1200,
     height: 800,
-    icon: path.join(__dirname, 'app', 'icon.png'),
+    icon: nativeImage.createFromPath(path.join(__dirname, 'app', 'icon-256.png')),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

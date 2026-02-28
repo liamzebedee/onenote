@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>February 2026 — What I Shipped</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --accent: #7c6aef;
+    --accent-glow: rgba(124, 106, 239, 0.25);
+    --pink: #e06c9a;
+    --green: #5ae0a0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 72px;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--pink));
+    border-radius: 2px;
+    margin-top: 32px;
+  }
+
+  .date-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: inline-block;
+    background: var(--accent-glow);
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, #c0b8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    margin-top: 16px;
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 520px;
+  }
+
+  /* Sections */
+  .entry {
+    margin-bottom: 72px;
+    position: relative;
+  }
+
+  .entry-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .entry-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .entry h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .entry p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  .entry .highlight {
+    color: var(--text);
+  }
+
+  /* Image gallery */
+  .img-frame {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 20px 0;
+    background: var(--surface);
+    position: relative;
+  }
+
+  .img-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(160deg, rgba(124,106,239,0.2), transparent 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .img-frame img {
+    width: 100%;
+    display: block;
+  }
+
+  .img-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    background: var(--surface);
+  }
+
+  .tag.accent {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  .tag.pink {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: rgba(224, 108, 154, 0.1);
+  }
+
+  .tag.green {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(90, 224, 160, 0.1);
+  }
+
+  /* Callout box */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+
+  .callout strong {
+    color: var(--text);
+  }
+
+  /* Spotify goodbye */
+  .goodbye-banner {
+    text-align: center;
+    padding: 40px 24px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin: 20px 0;
+  }
+
+  .goodbye-banner .emoji {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .goodbye-banner .bye-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #1DB954, var(--text-dim));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .goodbye-banner .bye-sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 96px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .entry {
+      animation: fadeUp 0.6s ease both;
+    }
+    .entry:nth-child(2) { animation-delay: 0.1s; }
+    .entry:nth-child(3) { animation-delay: 0.2s; }
+    .entry:nth-child(4) { animation-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="date-tag">Feb 2026</div>
+    <h1>What I Shipped<br>This Month</h1>
+    <p class="subtitle">Building an agent runtime, going full retro-digital, and breaking up with Spotify.</p>
+  </header>
+
+  <!-- Entry 1: Agent Runtime -->
+  <section class="entry">
+    <div class="entry-number">01 &mdash; INFRA</div>
+    <h2>Created an agent runtime and programming layer</h2>
+    <p>A programmable substrate for agents &mdash; not just wrappers around prompts, but a <span class="highlight">real runtime with its own execution model.</span></p>
+    <div class="img-frame">
+      <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/182967b5da308405087bb3771d8c8da5243524172d51fde7baa694e97425dee9" alt="Agent runtime screenshot" />
+    </div>
+    <div class="img-row">
+      <div class="img-frame">
+        <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/a96d238377509646916d43fe71c52b58378f650fe559a51b8efc4f8519b90a4f" alt="Programming layer detail" />
+      </div>
+      <div class="img-frame">
+        <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/605b4ab69d06c52133338261b5b32e0f640efd15cd3857cbae0889e9ecda3986" alt="Programming layer detail" />
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag accent">agents</span>
+      <span class="tag">runtime</span>
+      <span class="tag">infra</span>
+    </div>
+  </section>
+
+  <!-- Entry 2: iPod Manager -->
+  <section class="entry">
+    <div class="entry-number">02 &mdash; APP</div>
+    <h2>Wrote an iTunes clone for Linux</h2>
+    <p>Started going all digital again. <span class="highlight">2000's tech energy.</span></p>
+    <p>Built a fully functional iPod Manager for Linux using Claude. Local music library, sync, the whole deal.</p>
+    <div class="img-frame">
+      <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/9a3244b8a7409b313b4353ff12469e480a7fddcbbc3eeaf34eaad263acfa488c" alt="iPod Manager for Linux" />
+    </div>
+    <div class="callout">
+      <strong>Why retro?</strong> Owning your music library means no algorithms deciding what you hear, no songs vanishing overnight, and no subscriptions. Just files you control.
+    </div>
+    <div class="tags">
+      <span class="tag green">shipped</span>
+      <span class="tag">linux</span>
+      <span class="tag">music</span>
+      <span class="tag pink">vibe-coded</span>
+    </div>
+  </section>
+
+  <!-- Entry 3: Goodbye Spotify -->
+  <section class="entry">
+    <div class="entry-number">03 &mdash; LIFE</div>
+    <h2>Said goodbye to Spotify</h2>
+    <p>Cancelled the subscription. Moved to local-first music with the iPod Manager. <span class="highlight">Own your media.</span></p>
+    <div class="goodbye-banner">
+      <div class="emoji">&#x1F44B;</div>
+      <div class="bye-text">goodbye, spotify</div>
+      <div class="bye-sub">it was fun until it wasn't</div>
+    </div>
+    <div class="img-row">
+      <div class="img-frame">
+        <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/2a3a9fa93ea1eb0285bf6b3c6f5837f6bcbadfd3a3ca35ff641ebbde50893b30" alt="Goodbye Spotify" />
+      </div>
+      <div class="img-frame">
+        <img src="/tmp/notebound-project-23d28dfd-c12b-4d1f-a528-a9c75089ee65/.blobs/cf74d4e4d32ba32092fc3e36a163abe19c4ecc1e387cdf7dd3772c1fe76ac509" alt="New setup" />
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag pink">de-enshittified</span>
+      <span class="tag">local-first</span>
+      <span class="tag">ownership</span>
+    </div>
+  </section>
+
+  <footer>
+    feb 2026 &middot; shipped with intent
+  </footer>
+
+</div>
+
+</body>
+</html>

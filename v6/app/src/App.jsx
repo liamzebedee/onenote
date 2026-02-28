@@ -7,6 +7,7 @@ import { ContextMenu } from './ContextMenu.jsx';
 import { WelcomeScreen } from './WelcomeScreen.jsx';
 import { NotebookSwitcher } from './NotebookSwitcher.jsx';
 import { LinkContextMenu } from './Block.jsx';
+import { ClaudeChat } from './ClaudeChat.jsx';
 
 export function App() {
   if (!connected.value) {
@@ -35,6 +36,7 @@ export function App() {
       <ContextMenu />
       <NotebookSwitcher />
       <LinkContextMenu />
+      <ClaudeChat />
     </>
   );
 }

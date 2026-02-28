@@ -1,41 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7B1FA2"/>
-      <stop offset="100%" stop-color="#512DA8"/>
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="100%" stop-color="#0f2440"/>
+    </linearGradient>
+    <linearGradient id="cover" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5c3a1a"/>
+      <stop offset="100%" stop-color="#3e2510"/>
     </linearGradient>
     <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fff"/>
-      <stop offset="100%" stop-color="#f0eef5"/>
+      <stop offset="0%" stop-color="#fffef8"/>
+      <stop offset="100%" stop-color="#f5efe4"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4a44a"/>
+      <stop offset="100%" stop-color="#b8892e"/>
     </linearGradient>
   </defs>
-  <!-- Rounded square background -->
+  <!-- Rounded square background — deep navy blue -->
   <rect width="512" height="512" rx="100" fill="url(#bg)"/>
-  <!-- Notebook binding strip -->
-  <rect x="120" y="80" width="36" height="352" rx="4" fill="rgba(255,255,255,0.25)"/>
-  <!-- Page -->
-  <rect x="156" y="80" width="240" height="352" rx="6" fill="url(#page)"/>
-  <!-- Ruled lines -->
-  <line x1="176" y1="150" x2="376" y2="150" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="190" x2="376" y2="190" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="230" x2="376" y2="230" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="270" x2="376" y2="270" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="310" x2="376" y2="310" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="350" x2="376" y2="350" stroke="#d0c8e0" stroke-width="1.5"/>
-  <line x1="176" y1="390" x2="376" y2="390" stroke="#d0c8e0" stroke-width="1.5"/>
-  <!-- "N" letter -->
-  <text x="256" y="300" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="200" font-weight="bold" fill="#7B1FA2" opacity="0.15">N</text>
-  <!-- Pen icon -->
-  <g transform="translate(330, 340) rotate(-45)">
-    <rect x="-6" y="-60" width="12" height="50" rx="2" fill="#FFD54F"/>
-    <polygon points="-6,-10 6,-10 0,6" fill="#FFD54F"/>
-    <polygon points="-3,-2 3,-2 0,6" fill="#333"/>
-    <rect x="-6" y="-62" width="12" height="8" rx="1" fill="#E0A0C0"/>
-  </g>
-  <!-- Binding rings -->
-  <circle cx="138" cy="120" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
-  <circle cx="138" cy="180" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
-  <circle cx="138" cy="240" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
-  <circle cx="138" cy="300" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
-  <circle cx="138" cy="360" r="8" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
+  <!-- Leather book cover -->
+  <rect x="90" y="70" width="332" height="372" rx="10" fill="url(#cover)"/>
+  <!-- Gold border inset on cover -->
+  <rect x="100" y="80" width="312" height="352" rx="6" fill="none" stroke="url(#gold)" stroke-width="2.5"/>
+  <!-- Spine -->
+  <rect x="90" y="70" width="44" height="372" rx="10" fill="#4a2e12"/>
+  <rect x="112" y="70" width="2" height="372" fill="rgba(212,164,74,0.4)"/>
+  <!-- Spine ridges -->
+  <line x1="92" y1="110" x2="132" y2="110" stroke="rgba(212,164,74,0.35)" stroke-width="2"/>
+  <line x1="92" y1="150" x2="132" y2="150" stroke="rgba(212,164,74,0.35)" stroke-width="2"/>
+  <line x1="92" y1="360" x2="132" y2="360" stroke="rgba(212,164,74,0.35)" stroke-width="2"/>
+  <line x1="92" y1="400" x2="132" y2="400" stroke="rgba(212,164,74,0.35)" stroke-width="2"/>
+  <!-- Page peek -->
+  <rect x="130" y="85" width="280" height="342" rx="4" fill="url(#page)"/>
+  <!-- Ruled lines on page -->
+  <line x1="150" y1="150" x2="395" y2="150" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="180" x2="395" y2="180" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="210" x2="395" y2="210" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="240" x2="395" y2="240" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="270" x2="395" y2="270" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="300" x2="395" y2="300" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="330" x2="395" y2="330" stroke="#ddd4c4" stroke-width="1"/>
+  <line x1="150" y1="360" x2="395" y2="360" stroke="#ddd4c4" stroke-width="1"/>
+  <!-- "NB" monogram — gold, centered on cover -->
+  <text x="275" y="290" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="160" font-weight="bold" fill="url(#gold)" opacity="0.9" letter-spacing="-8">NB</text>
+  <!-- Subtle page text lines (faux writing) -->
+  <line x1="155" y1="162" x2="250" y2="162" stroke="#c8bfad" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="155" y1="192" x2="300" y2="192" stroke="#c8bfad" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="155" y1="222" x2="270" y2="222" stroke="#c8bfad" stroke-width="1.5" stroke-linecap="round"/>
 </svg>

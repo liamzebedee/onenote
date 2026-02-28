@@ -601,6 +601,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .block--image .block-handle { display: none; }
 .block--image .block-resize { display: none; }
 .block--image::before { display: none; }
+.block--image.block--selected::before { display: block; pointer-events: none; }
 .block--image img { display: block; max-width: 100%; user-select: none; pointer-events: none; border-radius: 2px; }
 .block-drag-overlay { position: absolute; inset: 0; cursor: grab; }
 
@@ -891,3 +892,185 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 .link-menu-btn--danger { color: #c62828; }
 .link-menu-btn--danger:hover { background: #ffebee; }
+
+/* ── Claude Chat Window ──────────────────────────── */
+
+.fmt-btn--wand { font-size: 14px; cursor: grab; }
+.fmt-btn--wand:active { cursor: grabbing; }
+
+.claude-chat {
+  position: fixed;
+  width: 360px;
+  height: 460px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 8000;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.cc-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: grab;
+  flex-shrink: 0;
+  user-select: none;
+}
+.cc-titlebar:active { cursor: grabbing; }
+
+.cc-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+}
+
+.cc-close {
+  width: 20px; height: 20px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.cc-close:hover { background: #e0e0e0; color: #333; }
+
+.cc-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scrollbar-width: thin;
+}
+
+.cc-msg { display: flex; }
+.cc-msg--user { justify-content: flex-end; }
+.cc-msg--assistant { justify-content: flex-start; }
+
+.cc-bubble {
+  max-width: 85%;
+  padding: 8px 12px;
+  border-radius: 16px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.cc-bubble--user {
+  background: #007aff;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.cc-bubble--assistant {
+  background: #e9e9eb;
+  color: #1c1c1e;
+  border-bottom-left-radius: 4px;
+}
+
+.cc-bubble--assistant code {
+  background: rgba(0,0,0,.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+  font-size: 12px;
+}
+
+.cc-bubble--assistant pre.cc-code-block {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 6px 0;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.cc-bubble--assistant pre.cc-code-block code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.cc-bubble--assistant strong { font-weight: 600; }
+.cc-bubble--assistant ul, .cc-bubble--assistant ol { padding-left: 16px; margin: 4px 0; }
+.cc-bubble--assistant li { margin: 2px 0; }
+
+.cc-typing {
+  display: flex;
+  gap: 4px;
+  padding: 4px 0;
+  align-items: center;
+}
+.cc-typing-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #999;
+  animation: cc-bounce 1.4s infinite ease-in-out;
+}
+.cc-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.cc-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes cc-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.cc-error {
+  color: #c62828;
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #ffebee;
+  border-radius: 6px;
+}
+
+.cc-input-bar {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  border-top: 1px solid #e0e0e0;
+  background: #fafafa;
+  flex-shrink: 0;
+}
+
+.cc-input {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 18px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  resize: none;
+  line-height: 1.4;
+  max-height: 80px;
+  overflow-y: auto;
+}
+.cc-input:focus { border-color: #007aff; }
+.cc-input:disabled { opacity: 0.6; }
+
+.cc-send {
+  padding: 6px 14px;
+  background: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cc-send:hover { background: #0066d6; }
+.cc-send:disabled { opacity: 0.5; cursor: default; }

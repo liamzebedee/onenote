@@ -7,11 +7,24 @@ const os = require('os');
 const path = require('path');
 const { NotebookManager } = require('./notebook');
 const blobs = require('./blobs');
+const { createVFS, cleanupVFS } = require('./claude-vfs');
+const { ClaudeAgent } = require('./claude-agent');
 
 let manager = null;
 let mainWindow = null;
 let _configPath = null;
 let _deviceId = null;
+let _claudeAgent = null;
+let _claudeVfsPath = null;
+let _claudePageMap = null;
+
+function _findPage(pages, id) {
+  for (const p of pages) {
+    if (p.id === id) return p;
+    if (p.children?.length) { const f = _findPage(p.children, id); if (f) return f; }
+  }
+  return null;
+}
 
 function setupIPC(win, configPath, deviceId) {
   mainWindow = win;
@@ -148,6 +161,59 @@ function setupIPC(win, configPath, deviceId) {
     try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
   });
 
+  // ── Claude agent IPC ─────────────────────────────────
+  ipcMain.handle('claude:start', async (event, pageId) => {
+    // Kill existing session
+    if (_claudeAgent) { _claudeAgent.kill(); _claudeAgent = null; }
+    if (_claudeVfsPath) { cleanupVFS(_claudeVfsPath); _claudeVfsPath = null; }
+    _claudePageMap = null;
+
+    if (!manager || !manager.state) throw new Error('No notebook open');
+
+    const { sessionId, basePath, pageMap } = createVFS(manager.state, manager.notebookPath);
+    _claudeVfsPath = basePath;
+    _claudePageMap = pageMap;
+    const cwd = (pageId && pageMap.get(pageId)) || basePath;
+
+    // Build context string describing the user's current location
+    const state = manager.state;
+    const nb = state.notebooks?.[0];
+    let context = 'You are a helpful assistant with read-only access to a Notebound notebook.';
+    if (nb) {
+      context += `\nNotebook: "${nb.title}"`;
+      if (pageId) {
+        for (const sec of nb.sections || []) {
+          const page = _findPage(sec.pages, pageId);
+          if (page) {
+            context += `\nCurrent section: "${sec.title}"`;
+            context += `\nCurrent page: "${page.title}"`;
+            break;
+          }
+        }
+      }
+    }
+    context += '\nYour working directory contains the notebook content as HTML files organized by section.';
+
+    _claudeAgent = new ClaudeAgent(cwd, context);
+    console.log('[claude] started session, VFS at', basePath, 'cwd:', cwd);
+    return { sessionId };
+  });
+
+  ipcMain.handle('claude:message', async (event, text) => {
+    if (!_claudeAgent) throw new Error('No Claude session');
+    _claudeAgent.sendMessage(text, (data) => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('claude:stream', data);
+      }
+    });
+  });
+
+  ipcMain.handle('claude:stop', async () => {
+    if (_claudeAgent) { _claudeAgent.kill(); _claudeAgent = null; }
+    if (_claudeVfsPath) { cleanupVFS(_claudeVfsPath); _claudeVfsPath = null; }
+    console.log('[claude] session stopped');
+  });
+
   // Open a URL in the system browser
   ipcMain.handle('shell:open-external', async (event, url) => {
     if (typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://'))) {
@@ -196,6 +262,9 @@ function openDefault(win, notebookPath, deviceId) {
 
 function closeNotebook() {
   console.log('[notebound] closeNotebook called, manager exists:', !!manager, 'path:', manager?.notebookPath);
+  // Clean up Claude session
+  if (_claudeAgent) { _claudeAgent.kill(); _claudeAgent = null; }
+  if (_claudeVfsPath) { cleanupVFS(_claudeVfsPath); _claudeVfsPath = null; }
   if (manager) {
     manager.close();
     console.log('[notebound] notebook closed, WAL sealed + snapshot written');

@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage } from './store.js';
+import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat } from './store.js';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
 
@@ -32,6 +32,13 @@ export function FormatToolbar() {
         ? <span key={i} class="fmt-sep" />
         : <button key={b.cmd} class="fmt-btn" title={b.title} onMouseDown={e => { e.preventDefault(); execFmt(b.cmd); }}>{b.node}</button>
       )}
+      <span class="fmt-sep" />
+      <button
+        class="fmt-btn fmt-btn--wand"
+        title="Drag onto canvas to chat with Claude"
+        draggable
+        onDragStart={e => { e.dataTransfer.setData('application/x-notebound-claude', '1'); }}
+      >✨</button>
       <span class="canvas-hint">Click to add block · Space+drag to pan · Ctrl+scroll zoom</span>
     </div>
   );
@@ -555,6 +562,13 @@ export function Canvas({ page }) {
 
   function handleDrop(e) {
     e.preventDefault();
+
+    // Check for Claude chat drop
+    if (e.dataTransfer.types.includes('application/x-notebound-claude')) {
+      startClaudeChat(e.clientX - 180, e.clientY - 20);
+      return;
+    }
+
     const pos = toCanvas(e.clientX, e.clientY);
 
     // Check for image URL in text/uri-list first
@@ -601,7 +615,7 @@ export function Canvas({ page }) {
           id="canvas-container"
           onPointerDown={handlePointerDown}
           onWheel={handleWheel}
-          onDragOver={e => { if (e.dataTransfer.types.includes('Files')) e.preventDefault(); }}
+          onDragOver={e => { if (e.dataTransfer.types.includes('Files') || e.dataTransfer.types.includes('application/x-notebound-claude')) e.preventDefault(); }}
           onDrop={handleDrop}
         >
           <div ref={marqueeRef} id="marquee-rect" />
