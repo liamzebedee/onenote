@@ -1,5 +1,5 @@
 import { useRef } from 'preact/hooks';
-import { appState, setActiveNotebook, addNotebook, renameNotebook, deleteNotebook, reorderNotebooks } from './store.js';
+import { appState, setActiveNotebook, addNotebook, renameNotebook, deleteNotebook, reorderNotebooks, toggleSwitcher } from './store.js';
 import { openContextMenu, openRenameMenu } from './ContextMenu.jsx';
 
 export function NotebookBar() {
@@ -43,6 +43,12 @@ export function NotebookBar() {
         >{nb.title}</div>
       ))}
       <button class="nb-add" onClick={addNotebook} title="New notebook">+</button>
+      <div style="flex:1" />
+      <button class="nb-switch" onClick={toggleSwitcher} title="Switch notebook file">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h3.879a1.5 1.5 0 0 1 1.06.44l1.122 1.12A1.5 1.5 0 0 0 9.62 4H13.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9z"/>
+        </svg>
+      </button>
     </div>
   );
 }

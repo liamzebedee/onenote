@@ -1,7 +1,7 @@
 // IPC handlers for Electron main process
 // Bridges renderer to the notebook manager
 
-const { ipcMain, dialog, app } = require('electron');
+const { ipcMain, dialog, app, shell } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -132,11 +132,35 @@ function setupIPC(win, configPath, deviceId) {
     return { buffer, contentType, size: buffer.length };
   });
 
-  // Save notebook path to config (merges with existing config)
-  ipcMain.handle('notebook:save-config', async (event, notebookPath) => {
+  // Save notebook path to config (merges with existing config, maintains recents)
+  ipcMain.handle('notebook:save-config', async (event, info) => {
     let config = {};
     try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
+    const notebookPath = typeof info === 'string' ? info : info.path;
+    const name = (typeof info === 'object' && info.name) || path.basename(notebookPath, '.notebound');
     config.notebookPath = notebookPath;
+    // Maintain recentNotebooks array
+    const recents = Array.isArray(config.recentNotebooks) ? config.recentNotebooks : [];
+    const entry = { path: notebookPath, name, lastOpened: Date.now() };
+    const filtered = recents.filter(r => r.path !== notebookPath);
+    filtered.unshift(entry);
+    config.recentNotebooks = filtered.slice(0, 10);
+    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+  });
+
+  // Open a URL in the system browser
+  ipcMain.handle('shell:open-external', async (event, url) => {
+    if (typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://'))) {
+      shell.openExternal(url);
+    }
+  });
+
+  // Save UI navigation state per notebook path
+  ipcMain.handle('notebook:save-ui-state', async (event, notebookPath, uiState) => {
+    let config = {};
+    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
+    if (!config.uiPositions) config.uiPositions = {};
+    config.uiPositions[notebookPath] = uiState;
     try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
   });
 

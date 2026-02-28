@@ -1,6 +1,6 @@
-import { useState, useRef } from 'preact/hooks';
+import { useState, useRef, useEffect } from 'preact/hooks';
 import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree } from './store.js';
-import { openContextMenu, openRenameMenu } from './ContextMenu.jsx';
+import { openContextMenu } from './ContextMenu.jsx';
 
 // ── Drag state (module-level so siblings can share) ──────
 const drag = { pageId: null, over: null, mode: null }; // mode: 'before' | 'child'
@@ -30,11 +30,30 @@ function deletePageWithChildren(page) {
   appState.value = { ...appState.value };
 }
 
-function PageItem({ page, activeId, depth = 0, dragState, onDragChange }) {
+function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingId, onStartEditing }) {
   const [open, setOpen] = useState(true);
   const hasKids = page.children?.length > 0;
   const isOver = dragState.over === page.id;
   const isOverAsChild = isOver && dragState.mode === 'child';
+  const isEditing = editingId === page.id;
+  const editRef = useRef(null);
+  const [editVal, setEditVal] = useState(page.title);
+
+  useEffect(() => {
+    if (isEditing) {
+      setEditVal(page.title);
+      if (editRef.current) {
+        editRef.current.focus();
+        editRef.current.select();
+      }
+    }
+  }, [isEditing]);
+
+  function commitEdit() {
+    const v = editVal.trim() || 'Untitled Page';
+    if (v !== page.title) renamePage(page.id, v);
+    onStartEditing(null);
+  }
 
   function onDragStart(e) {
     e.stopPropagation();
@@ -125,7 +144,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange }) {
       .map(s => ({ label: s.title, action: () => movePage(page.id, s.id) }));
 
     const items = [
-      { label: 'Rename', action: () => openRenameMenu(e.clientX, e.clientY, page.title, t => renamePage(page.id, t)) },
+      { label: 'Rename', action: () => onStartEditing(page.id) },
       { label: 'Add Subpage', action: () => addPage(page.id) },
     ];
 
@@ -170,7 +189,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange }) {
         onClick={() => setActivePage(page.id)}
         onDblClick={e => {
           e.stopPropagation();
-          openRenameMenu(e.clientX, e.clientY, page.title, t => renamePage(page.id, t));
+          onStartEditing(page.id);
         }}
         onContextMenu={openPageContextMenu}
       >
@@ -179,12 +198,27 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange }) {
           style={{ visibility: hasKids ? 'visible' : 'hidden' }}
           onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
         >{open ? '▾' : '▸'}</span>
-        <span class="page-title-text">{page.title}</span>
+        {isEditing ? (
+          <input
+            ref={editRef}
+            class="page-title-edit"
+            value={editVal}
+            onInput={e => setEditVal(e.target.value)}
+            onBlur={commitEdit}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { e.preventDefault(); commitEdit(); }
+              if (e.key === 'Escape') { e.preventDefault(); onStartEditing(null); }
+            }}
+            onClick={e => e.stopPropagation()}
+          />
+        ) : (
+          <span class="page-title-text">{page.title}</span>
+        )}
       </div>
       {hasKids && open && (
         <div class="subpages">
           {page.children.map(c => (
-            <PageItem key={c.id} page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} />
+            <PageItem key={c.id} page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={onStartEditing} />
           ))}
         </div>
       )}
@@ -199,6 +233,7 @@ export function PagesPanel() {
   const pages = sec?.pages ?? [];
 
   const [dragOver, setDragOver] = useState({ id: null, mode: null });
+  const [editingId, setEditingId] = useState(null);
 
   function onDragChange(id, mode) { setDragOver({ id, mode }); }
 
@@ -211,7 +246,7 @@ export function PagesPanel() {
       </div>
       <div class="panel-list">
         {pages.map(pg => (
-          <PageItem key={pg.id} page={pg} activeId={ui.pageId} dragState={dragState} onDragChange={onDragChange} />
+          <PageItem key={pg.id} page={pg} activeId={ui.pageId} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={setEditingId} />
         ))}
       </div>
     </div>

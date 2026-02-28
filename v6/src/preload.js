@@ -36,8 +36,14 @@ contextBridge.exposeInMainWorld('notebook', {
   fetchImage: (url) => ipcRenderer.invoke('notebook:fetch-image', url),
 
   // Config (notebook path + window state)
-  saveConfig: (notebookPath) => ipcRenderer.invoke('notebook:save-config', notebookPath),
+  saveConfig: (info) => ipcRenderer.invoke('notebook:save-config', info),
   getConfig: () => ipcRenderer.invoke('notebook:get-config'),
+
+  // Save/restore UI navigation state per notebook
+  saveUiState: (notebookPath, uiState) => ipcRenderer.invoke('notebook:save-ui-state', notebookPath, uiState),
+
+  // Open URL in system browser
+  openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
 
   // Listen for state changes from sync
   onStateChanged: (callback) => {
@@ -50,4 +56,5 @@ contextBridge.exposeInMainWorld('notebook', {
   offStateChanged: () => {
     ipcRenderer.removeAllListeners('notebook:state-changed');
   },
+
 });

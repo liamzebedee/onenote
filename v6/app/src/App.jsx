@@ -5,6 +5,8 @@ import { PagesPanel } from './PagesPanel.jsx';
 import { Canvas, FormatToolbar } from './Canvas.jsx';
 import { ContextMenu } from './ContextMenu.jsx';
 import { WelcomeScreen } from './WelcomeScreen.jsx';
+import { NotebookSwitcher } from './NotebookSwitcher.jsx';
+import { LinkContextMenu } from './Block.jsx';
 
 export function App() {
   if (!connected.value) {
@@ -31,6 +33,8 @@ export function App() {
         </div>
       </div>
       <ContextMenu />
+      <NotebookSwitcher />
+      <LinkContextMenu />
     </>
   );
 }

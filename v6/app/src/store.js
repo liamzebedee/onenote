@@ -43,6 +43,18 @@ function defaultState() {
 
 export const appState = signal(defaultState());
 export const connected = signal(false);
+export const showSwitcher = signal(false);
+export const recentNotebooks = signal([]);
+
+export function toggleSwitcher() { showSwitcher.value = !showSwitcher.value; }
+export function closeSwitcher() { showSwitcher.value = false; }
+
+// Load recents from config on init
+if (hasIPC) {
+  window.notebook.getConfig().then(cfg => {
+    if (Array.isArray(cfg.recentNotebooks)) recentNotebooks.value = cfg.recentNotebooks;
+  });
+}
 
 // Immutable update — triggers Preact re-render
 function update(fn) {
@@ -79,6 +91,23 @@ export function getActivePage(s = appState.value) {
 
 export { findInTree, removeFromTree };
 
+// ─── UI state persistence ────────────────────────────────
+
+let _notebookPath = null;
+let _uiSaveTimer = null;
+
+function persistUiState() {
+  if (!hasIPC || !_notebookPath) return;
+  clearTimeout(_uiSaveTimer);
+  _uiSaveTimer = setTimeout(() => {
+    const { ui } = appState.value;
+    window.notebook.saveUiState(_notebookPath, {
+      sectionId: ui.sectionId,
+      pageId: ui.pageId,
+    });
+  }, 500);
+}
+
 // ─── Navigation ──────────────────────────────────────────
 
 export function setActiveNotebook(id) {
@@ -88,6 +117,7 @@ export function setActiveNotebook(id) {
     s.ui.sectionId = nb?.sections[0]?.id ?? null;
     s.ui.pageId = nb?.sections[0]?.pages[0]?.id ?? null;
   });
+  persistUiState();
 }
 
 export function setActiveSection(id) {
@@ -97,10 +127,12 @@ export function setActiveSection(id) {
     const sec = nb?.sections.find(sec => sec.id === id);
     s.ui.pageId = sec?.pages[0]?.id ?? null;
   });
+  persistUiState();
 }
 
 export function setActivePage(id) {
   update(s => { s.ui.pageId = id; });
+  persistUiState();
 }
 
 // ─── Notebook CRUD ───────────────────────────────────────
@@ -375,18 +407,38 @@ export async function openNotebook(notebookPath) {
   if (!hasIPC) return;
   const state = await window.notebook.open(notebookPath);
   if (state) {
-    if (!state.ui) {
-      const nb = state.notebooks[0];
+    _notebookPath = notebookPath;
+
+    // Try to restore saved UI position
+    const cfg = await window.notebook.getConfig();
+    const saved = cfg.uiPositions?.[notebookPath];
+    const nb = state.notebooks[0];
+
+    if (saved && nb) {
+      // Validate saved IDs still exist in the state
+      const sec = nb.sections.find(s => s.id === saved.sectionId);
+      const page = sec ? findInTree(sec.pages, saved.pageId) : null;
+      state.ui = {
+        notebookId: nb.id,
+        sectionId: sec?.id ?? nb.sections[0]?.id ?? null,
+        pageId: page?.id ?? sec?.pages[0]?.id ?? null,
+      };
+    } else if (!state.ui) {
       state.ui = {
         notebookId: nb?.id ?? null,
         sectionId: nb?.sections[0]?.id ?? null,
         pageId: nb?.sections[0]?.pages[0]?.id ?? null,
       };
     }
+
     appState.value = state;
     connected.value = true;
-    // Persist the notebook path for future launches
-    window.notebook.saveConfig(notebookPath);
+    closeSwitcher();
+    // Persist with notebook title for recents
+    const title = nb?.title || 'Untitled';
+    window.notebook.saveConfig({ path: notebookPath, name: title });
+    // Refresh recents
+    if (Array.isArray(cfg.recentNotebooks)) recentNotebooks.value = cfg.recentNotebooks;
   }
 }
 
@@ -405,7 +457,7 @@ export async function createAndOpenNotebook() {
 // ─── Listen for state changes (initial push + remote sync) ──
 
 if (hasIPC) {
-  window.notebook.onStateChanged((state) => {
+  window.notebook.onStateChanged(async (state) => {
     if (!state || !state.notebooks) return;
 
     // Check if current UI IDs are valid in the incoming state
@@ -415,13 +467,35 @@ if (hasIPC) {
       // UI IDs are still valid — preserve navigation
       state.ui = ui;
     } else {
-      // First load or state changed drastically — derive UI from state
+      // First load — try to restore saved UI position
       const nb = state.notebooks[0];
-      state.ui = {
-        notebookId: nb?.id ?? null,
-        sectionId: nb?.sections[0]?.id ?? null,
-        pageId: nb?.sections[0]?.pages[0]?.id ?? null,
-      };
+      let restored = false;
+      if (!_notebookPath) {
+        try {
+          const cfg = await window.notebook.getConfig();
+          if (cfg.notebookPath) {
+            _notebookPath = cfg.notebookPath;
+            const saved = cfg.uiPositions?.[cfg.notebookPath];
+            if (saved && nb) {
+              const sec = nb.sections.find(s => s.id === saved.sectionId);
+              const page = sec ? findInTree(sec.pages, saved.pageId) : null;
+              state.ui = {
+                notebookId: nb.id,
+                sectionId: sec?.id ?? nb.sections[0]?.id ?? null,
+                pageId: page?.id ?? sec?.pages[0]?.id ?? null,
+              };
+              restored = true;
+            }
+          }
+        } catch {}
+      }
+      if (!restored) {
+        state.ui = {
+          notebookId: nb?.id ?? null,
+          sectionId: nb?.sections[0]?.id ?? null,
+          pageId: nb?.sections[0]?.pages[0]?.id ?? null,
+        };
+      }
     }
     appState.value = { ...state };
     connected.value = true;

@@ -1,4 +1,5 @@
 import { useRef, useEffect, useContext, useState } from 'preact/hooks';
+import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
 import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
@@ -18,6 +19,61 @@ function computeTextDiff(oldText, newText) {
   const ins = newText.slice(p, newEnd);
   if (ins) diffs.push({ type: 'insert', pos: p, text: ins });
   return diffs;
+}
+
+// ─── Link context menu state ────────────────────────────
+const linkMenu = signal(null); // { x, y, href, anchorEl, blockId }
+
+export function LinkContextMenu() {
+  const m = linkMenu.value;
+  if (!m) return null;
+
+  const close = () => { linkMenu.value = null; };
+
+  const openLink = () => {
+    if (window.notebook?.openExternal) window.notebook.openExternal(m.href);
+    close();
+  };
+
+  const editLink = () => {
+    const url = prompt('Edit URL:', m.href);
+    if (url != null) {
+      m.anchorEl.href = url;
+      // persist html change
+      const blockEl = m.anchorEl.closest('.block-content');
+      if (blockEl) {
+        updateBlockHtml(m.blockId, blockEl.innerHTML);
+      }
+    }
+    close();
+  };
+
+  const removeLink = () => {
+    const parent = m.anchorEl.parentNode;
+    while (m.anchorEl.firstChild) parent.insertBefore(m.anchorEl.firstChild, m.anchorEl);
+    parent.removeChild(m.anchorEl);
+    const blockEl = parent.closest('.block-content');
+    if (blockEl) {
+      updateBlockHtml(m.blockId, blockEl.innerHTML);
+    }
+    close();
+  };
+
+  return (
+    <div class="link-menu" style={{ left: m.x + 'px', top: m.y + 'px' }} onMouseDown={e => e.stopPropagation()}>
+      <div class="link-menu-url" title={m.href}>{m.href.length > 40 ? m.href.slice(0, 37) + '...' : m.href}</div>
+      <div class="link-menu-actions">
+        <button class="link-menu-btn" onClick={openLink}>Open</button>
+        <button class="link-menu-btn" onClick={editLink}>Edit</button>
+        <button class="link-menu-btn link-menu-btn--danger" onClick={removeLink}>Remove</button>
+      </div>
+    </div>
+  );
+}
+
+// Close link menu on any click outside
+if (typeof document !== 'undefined') {
+  document.addEventListener('mousedown', () => { linkMenu.value = null; });
 }
 
 export function Block({ block, page }) {
@@ -102,6 +158,23 @@ export function Block({ block, page }) {
     htmlAtFocus.current = block.html;
     prevTextRef.current = contentRef.current?.innerText || '';
     ctx.onBlockFocus?.(block.id);
+  };
+
+  const handleContentClick = (e) => {
+    const anchor = e.target.closest('a[href]');
+    if (!anchor) return;
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      if (window.notebook?.openExternal) window.notebook.openExternal(anchor.href);
+    }
+  };
+
+  const handleContentContextMenu = (e) => {
+    const anchor = e.target.closest('a[href]');
+    if (!anchor) return;
+    e.preventDefault();
+    e.stopPropagation();
+    linkMenu.value = { x: e.clientX, y: e.clientY, href: anchor.href, anchorEl: anchor, blockId: block.id };
   };
 
   const handleBlur = () => {
@@ -190,6 +263,8 @@ export function Block({ block, page }) {
           onInput={handleInput}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onClick={handleContentClick}
+          onContextMenu={handleContentContextMenu}
           onPointerDown={(e) => e.stopPropagation()}
           suppressContentEditableWarning
         />

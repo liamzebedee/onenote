@@ -45,7 +45,7 @@ function PageTitle({ page, onEnter }) {
 
   useEffect(() => {
     if (ref.current && !editing.current) ref.current.textContent = page?.title ?? '';
-  }, [page?.id]);
+  }, [page?.id, page?.title]);
 
   if (!page) return <div id="page-title-bar" />;
 
