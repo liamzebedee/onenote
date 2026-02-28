@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, screen } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const crypto = require('crypto');
 const { setupIPC, closeNotebook, openDefault } = require('./src/ipc');
 
 Menu.setApplicationMenu(null);
@@ -17,6 +18,14 @@ function loadConfig() {
   } catch {
     return {};
   }
+}
+
+function getOrCreateDeviceId() {
+  const config = loadConfig();
+  if (config.deviceId) return config.deviceId;
+  const deviceId = crypto.randomUUID();
+  try { fs.writeFileSync(configPath, JSON.stringify({ ...config, deviceId })); } catch {}
+  return deviceId;
 }
 
 function saveConfig(extra = {}) {
@@ -91,12 +100,14 @@ function createWindow() {
     }
   });
 
+  const deviceId = getOrCreateDeviceId();
+
   // Set up IPC handlers (pass configPath so IPC can read/write config)
-  setupIPC(mainWindow, configPath);
+  setupIPC(mainWindow, configPath, deviceId);
 
   // If config has a notebook path, open it eagerly; otherwise renderer shows welcome screen
   if (config.notebookPath) {
-    openDefault(mainWindow, config.notebookPath);
+    openDefault(mainWindow, config.notebookPath, deviceId);
   }
 
   mainWindow.on('close', shutdown);
@@ -106,7 +117,7 @@ function createWindow() {
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  app.quit();
 });
 
 app.on('before-quit', shutdown);

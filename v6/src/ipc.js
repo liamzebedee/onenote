@@ -11,10 +11,12 @@ const blobs = require('./blobs');
 let manager = null;
 let mainWindow = null;
 let _configPath = null;
+let _deviceId = null;
 
-function setupIPC(win, configPath) {
+function setupIPC(win, configPath, deviceId) {
   mainWindow = win;
   _configPath = configPath;
+  _deviceId = deviceId;
   manager = new NotebookManager();
 
   // Forward renderer logs to main process stdout
@@ -34,7 +36,7 @@ function setupIPC(win, configPath) {
       notebookPath = path.join(dropbox, 'My Notebook.notebound');
     }
 
-    const state = manager.open(notebookPath);
+    const state = manager.open(notebookPath, _deviceId);
 
     // Set up state change listener to push to renderer
     manager.onStateChange((newState) => {
@@ -145,12 +147,13 @@ function setupIPC(win, configPath) {
 }
 
 // Open default notebook eagerly from main process (no IPC round-trip)
-function openDefault(win, notebookPath) {
+function openDefault(win, notebookPath, deviceId) {
   mainWindow = win;
+  _deviceId = deviceId;
   console.log('[notebound] openDefault called, path:', notebookPath, 'manager:', !!manager);
   if (!manager) manager = new NotebookManager();
   if (manager.notebookPath) manager.close();
-  manager.open(notebookPath);
+  manager.open(notebookPath, deviceId);
   console.log('[notebound] notebook opened, state notebooks:', manager.state?.notebooks?.length);
 
   manager.onStateChange((newState) => {

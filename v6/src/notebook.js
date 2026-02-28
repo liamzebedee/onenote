@@ -47,7 +47,7 @@ class NotebookManager {
   }
 
   // Open an existing .notebound directory (or create if it doesn't exist)
-  open(dirPath) {
+  open(dirPath, deviceId) {
     this.notebookPath = dirPath;
 
     // Create if doesn't exist
@@ -68,21 +68,12 @@ class NotebookManager {
 
     // Load or create meta
     const metaPath = path.join(dirPath, META_FILE);
-    let meta;
-    if (fs.existsSync(metaPath)) {
-      meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-      // Each device gets its own deviceId on first open
-      // But we store ONE deviceId per meta.json — for multi-device,
-      // each device should store its own ID separately
-      if (!meta.deviceId) {
-        meta.deviceId = crypto.randomUUID();
-        fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
-      }
-    } else {
-      meta = this.create(dirPath);
+    if (!fs.existsSync(metaPath)) {
+      this.create(dirPath);
     }
 
-    this.deviceId = meta.deviceId;
+    // deviceId is per-machine, passed in from local config (not from shared meta.json)
+    this.deviceId = deviceId || crypto.randomUUID();
 
     // Rebuild state from snapshots + WAL
     const snapshotsDir = path.join(dirPath, 'snapshots');
