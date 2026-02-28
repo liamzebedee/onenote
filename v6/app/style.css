@@ -435,43 +435,43 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 /* ── Canvas container ─────────────────────────────── */
 
-#canvas-container {
+/* Wrapper: clips overflow and anchors the marquee overlay */
+#canvas-wrapper {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: #fff;
-  cursor: default;
+  min-width: 0;
+  min-height: 0;
 }
 
+/* Scroll container: fills wrapper, handles native pan */
+#canvas-container {
+  position: absolute;
+  inset: 0;
+  overflow: scroll;
+  overscroll-behavior: none; /* no macOS elastic bounce */
+  background: #fff;
+  cursor: default;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,.18) transparent;
+}
+#canvas-container::-webkit-scrollbar { width: 5px; height: 5px; }
+#canvas-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 3px; }
+
+/* Sizer: establishes scrollable area = canvas content * zoom */
+#canvas-sizer {
+  position: relative; /* contains canvas-inner */
+}
+
+/* Inner: blocks are absolutely positioned here; scaled for zoom */
 #canvas-inner {
   position: absolute;
   top: 0; left: 0;
-  width: 1px; height: 1px;
+  width: 0; height: 0;
   transform-origin: 0 0;
 }
 
-/* Canvas scrollbar indicators */
-.canvas-scroll-thumb {
-  position: absolute;
-  border-radius: 3px;
-  background: rgba(0,0,0,.18);
-  opacity: 0;
-  transition: opacity .4s;
-  z-index: 100;
-  pointer-events: none;
-}
-.canvas-scroll-thumb-h {
-  bottom: 3px;
-  height: 5px;
-}
-.canvas-scroll-thumb-v {
-  right: 3px;
-  width: 5px;
-}
-#canvas-container.scrollbar-active .canvas-scroll-thumb { opacity: 1; }
-#canvas-container:hover .canvas-scroll-thumb { opacity: 0.35; }
-#canvas-container.scrollbar-active:hover .canvas-scroll-thumb { opacity: 1; }
-
+/* Marquee: overlays the wrapper in screen space, unaffected by scroll */
 #marquee-rect {
   position: absolute;
   display: none;

@@ -84,105 +84,81 @@ function PageTitle({ page, onEnter }) {
 // ─── Canvas ──────────────────────────────────────────────
 
 export function Canvas({ page }) {
-  const containerRef = useRef(null);
-  const innerRef = useRef(null);
+  const containerRef = useRef(null);   // scroll container
+  const sizerRef = useRef(null);       // sets scrollable extent
+  const innerRef = useRef(null);       // scaled content div
   const marqueeRef = useRef(null);
-  const hScrollRef = useRef(null);
-  const vScrollRef = useRef(null);
-  const scrollHideTimer = useRef(null);
-  const viewRef = useRef({ panX: 0, panY: 0, zoom: 1 });
+  const viewRef = useRef({ zoom: 1 }); // only zoom; pan lives in scrollLeft/scrollTop
+  const pageRef = useRef(page);
   const spaceHeld = useRef(false);
+  const scrollSaveTimer = useRef(null);
 
-  // Selected block IDs — stored in state so blocks re-render with selection style
+  // Selected block IDs
   const [selectedIds, setSelectedIds] = useState(new Set());
   const selectedRef = useRef(selectedIds);
+
+  // Keep pageRef current on every render
+  useEffect(() => { pageRef.current = page; });
 
   function setSelected(ids) {
     selectedRef.current = ids;
     setSelectedIds(new Set(ids));
   }
 
-  // Sync view when page changes
-  useEffect(() => {
-    if (!page) return;
-    viewRef.current = { panX: page.panX ?? 0, panY: page.panY ?? 0, zoom: page.zoom ?? 1 };
-    applyTransform();
-    setSelected(new Set());
-  }, [page?.id]);
+  // ── Sizer: sets scrollable area to match scaled content ──
 
-  function applyTransform() {
-    if (!innerRef.current) return;
-    const { panX, panY, zoom } = viewRef.current;
-    innerRef.current.style.transform = `translate(${-panX * zoom}px, ${-panY * zoom}px) scale(${zoom})`;
-    updateScrollbars();
-  }
-
-  function updateScrollbars() {
-    if (!containerRef.current) return;
-
-    const { panX, panY, zoom } = viewRef.current;
-    const rect = containerRef.current.getBoundingClientRect();
-    const viewW = rect.width / zoom;
-    const viewH = rect.height / zoom;
-
-    // Total world = union of content bounds and current viewport
+  function updateSizer(targetScrollLeft, targetScrollTop) {
+    if (!sizerRef.current || !containerRef.current) return;
+    const pg = pageRef.current;
+    const { zoom } = viewRef.current;
     let maxX = 0, maxY = 0;
-    if (page?.blocks?.length) {
-      for (const b of page.blocks) {
+    if (pg?.blocks?.length) {
+      for (const b of pg.blocks) {
         maxX = Math.max(maxX, b.x + (b.w || 480));
         maxY = Math.max(maxY, b.y + 300);
       }
     }
-    const totalW = Math.max(maxX + 100, panX + viewW);
-    const totalH = Math.max(maxY + 100, panY + viewH);
-
-    // Only show if panned away from origin (there's something to scroll back to)
-    const showH = panX > 1 || maxX + 100 > viewW;
-    const showV = panY > 1 || maxY + 100 > viewH;
-
-    if (showH || showV) {
-      containerRef.current.classList.add('scrollbar-active');
-      clearTimeout(scrollHideTimer.current);
-      scrollHideTimer.current = setTimeout(() => {
-        containerRef.current?.classList.remove('scrollbar-active');
-      }, 1200);
-    }
-
-    // Horizontal thumb
-    if (hScrollRef.current) {
-      if (!showH) {
-        hScrollRef.current.style.display = 'none';
-      } else {
-        hScrollRef.current.style.display = '';
-        const trackW = rect.width - 14;
-        const ratio = viewW / totalW;
-        const thumbW = Math.max(30, ratio * trackW);
-        const thumbX = (panX / totalW) * trackW;
-        hScrollRef.current.style.width = thumbW + 'px';
-        hScrollRef.current.style.left = Math.max(4, thumbX + 4) + 'px';
-      }
-    }
-
-    // Vertical thumb
-    if (vScrollRef.current) {
-      if (!showV) {
-        vScrollRef.current.style.display = 'none';
-      } else {
-        vScrollRef.current.style.display = '';
-        const trackH = rect.height - 14;
-        const ratio = viewH / totalH;
-        const thumbH = Math.max(30, ratio * trackH);
-        const thumbY = (panY / totalH) * trackH;
-        vScrollRef.current.style.height = thumbH + 'px';
-        vScrollRef.current.style.top = Math.max(4, thumbY + 4) + 'px';
-      }
-    }
+    const rect = containerRef.current.getBoundingClientRect();
+    const sl = targetScrollLeft ?? containerRef.current.scrollLeft;
+    const st = targetScrollTop  ?? containerRef.current.scrollTop;
+    // Total world size must accommodate: all blocks + enough to scroll to target position
+    const totalW = Math.max(maxX + 200, (sl + rect.width)  / zoom + 200);
+    const totalH = Math.max(maxY + 200, (st + rect.height) / zoom + 200);
+    sizerRef.current.style.width  = (totalW * zoom) + 'px';
+    sizerRef.current.style.height = (totalH * zoom) + 'px';
   }
+
+  // ── Sync view when page changes ──────────────────────────
+
+  useEffect(() => {
+    if (!page || !containerRef.current || !innerRef.current) return;
+    const zoom = page.zoom ?? 1;
+    viewRef.current = { zoom };
+    innerRef.current.style.transform = `scale(${zoom})`;
+    updateSizer();
+    // Set scroll after sizer is sized (rAF ensures layout is flushed)
+    const targetLeft = (page.panX ?? 0) * zoom;
+    const targetTop  = (page.panY ?? 0) * zoom;
+    requestAnimationFrame(() => {
+      if (!containerRef.current) return;
+      containerRef.current.scrollLeft = targetLeft;
+      containerRef.current.scrollTop  = targetTop;
+    });
+    setSelected(new Set());
+  }, [page?.id]);
+
+  // Recompute sizer whenever blocks change (add/resize/move)
+  useEffect(() => { updateSizer(); }, [page?.blocks]);
+
+  // ── Coordinate helpers ───────────────────────────────────
 
   function toCanvas(clientX, clientY) {
     const rect = containerRef.current.getBoundingClientRect();
-    const { panX, panY, zoom } = viewRef.current;
-    return { x: (clientX - rect.left) / zoom + panX, y: (clientY - rect.top) / zoom + panY };
+    const { zoom } = viewRef.current;
+    return {
+      x: (clientX - rect.left + containerRef.current.scrollLeft) / zoom,
+      y: (clientY - rect.top  + containerRef.current.scrollTop)  / zoom,
+    };
   }
 
   function toScreen(clientX, clientY) {
@@ -200,7 +176,6 @@ export function Canvas({ page }) {
     const pg = getActivePage();
     if (!pg) return;
 
-    // Default block cannot be moved
     if (pg.defaultBlockId === blockId) return;
 
     if (!selectedRef.current.has(blockId)) {
@@ -212,7 +187,6 @@ export function Canvas({ page }) {
       ? [...selectedRef.current]
       : [blockId];
 
-    // Snapshot original positions from DOM
     const origPos = new Map();
     for (const id of ids) {
       const el = innerRef.current?.querySelector(`[data-block-id="${id}"]`);
@@ -229,12 +203,11 @@ export function Canvas({ page }) {
         const el = innerRef.current?.querySelector(`[data-block-id="${id}"]`);
         if (!el) continue;
         el.style.left = Math.max(0, orig.x + dx) + 'px';
-        el.style.top = Math.max(0, orig.y + dy) + 'px';
+        el.style.top  = Math.max(0, orig.y + dy) + 'px';
       }
     }
 
     function onUp() {
-      // Save old positions as undo delta, then commit new positions
       const moves = [];
       for (const [id, orig] of origPos) {
         moves.push({ id, x: orig.x, y: orig.y });
@@ -303,19 +276,18 @@ export function Canvas({ page }) {
     document.addEventListener('pointerup', onUp);
   }, []);
 
-  // ── Pan ───────────────────────────────────────────────────
+  // ── Pan (space+drag / middle-click) ──────────────────────
 
-  function startPan(startX, startY) {
-    const origPan = { ...viewRef.current };
+  function startPan(startClientX, startClientY) {
+    const origLeft = containerRef.current.scrollLeft;
+    const origTop  = containerRef.current.scrollTop;
     function onMove(e) {
-      const dx = (e.clientX - startX) / viewRef.current.zoom;
-      const dy = (e.clientY - startY) / viewRef.current.zoom;
-      viewRef.current.panX = Math.max(0, origPan.panX - dx);
-      viewRef.current.panY = Math.max(0, origPan.panY - dy);
-      applyTransform();
+      const dx = e.clientX - startClientX;
+      const dy = e.clientY - startClientY;
+      containerRef.current.scrollLeft = Math.max(0, origLeft - dx);
+      containerRef.current.scrollTop  = Math.max(0, origTop  - dy);
     }
     function onUp() {
-      updatePageView(viewRef.current.panX, viewRef.current.panY, viewRef.current.zoom);
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
     }
@@ -326,11 +298,11 @@ export function Canvas({ page }) {
   // ── Marquee ───────────────────────────────────────────────
 
   function startMarquee(startClientX, startClientY) {
-    const startScreen = toScreen(startClientX, startClientY);
-    const startCanvas = toCanvas(startClientX, startClientY);
+    const startScreen  = toScreen(startClientX, startClientY);
+    const startCanvas  = toCanvas(startClientX, startClientY);
 
     const mq = marqueeRef.current;
-    if (mq) { mq.style.display = 'block'; mq.style.cssText += '; left:0;top:0;width:0;height:0'; }
+    if (mq) { mq.style.display = 'block'; mq.style.left = '0'; mq.style.top = '0'; mq.style.width = '0'; mq.style.height = '0'; }
 
     function onMove(e) {
       const cur = toScreen(e.clientX, e.clientY);
@@ -372,7 +344,6 @@ export function Canvas({ page }) {
   // ── Canvas pointer down ───────────────────────────────────
 
   function handlePointerDown(e) {
-    // Middle button or space held → pan
     if (e.button === 1 || (e.button === 0 && spaceHeld.current)) {
       e.preventDefault();
       startPan(e.clientX, e.clientY);
@@ -380,12 +351,10 @@ export function Canvas({ page }) {
     }
     if (e.button !== 0) return;
 
-    // Blur any focused block so marquee selection + Delete key works
     if (document.activeElement && document.activeElement !== document.body) {
       document.activeElement.blur();
     }
 
-    // Left click on empty canvas — might be marquee or create-block
     e.preventDefault();
     const startX = e.clientX, startY = e.clientY;
     let moved = false;
@@ -404,11 +373,9 @@ export function Canvas({ page }) {
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
       if (!marqueeActive) {
-        // Clean single click → create block
         setSelected(new Set());
         const pos = toCanvas(startX, startY);
         addBlock(pos.x, pos.y);
-        // Focus the new block after Preact renders it
         requestAnimationFrame(() => {
           const pg = getActivePage();
           if (!pg) return;
@@ -424,36 +391,58 @@ export function Canvas({ page }) {
     document.addEventListener('pointerup', onUp);
   }
 
-  // ── Wheel ─────────────────────────────────────────────────
+  // ── Scroll: save pan state (debounced) ───────────────────
 
-  function handleWheel(e) {
-    e.preventDefault();
-    const { panX, panY, zoom } = viewRef.current;
-
-    // Normalize delta to pixels across platforms/input devices.
-    // macOS trackpad: deltaMode=0 with small values (~1–5px per tick).
-    // Linux mouse: often deltaMode=1 (lines) or deltaMode=0 with ~100px per tick.
-    let dx = e.deltaX, dy = e.deltaY;
-    if (e.deltaMode === 1) { dx *= 16; dy *= 16; }   // line mode → px
-    if (e.deltaMode === 2) { dx *= 400; dy *= 400; }  // page mode → px
-    // Amplify small pixel-mode deltas (macOS trackpad sends ~1–20px per event)
-    if (e.deltaMode === 0 && Math.abs(dy) < 50 && Math.abs(dx) < 50) { dx *= 3; dy *= 3; }
-
-    if (e.ctrlKey || e.metaKey) {
-      const factor = dy < 0 ? 1.1 : 0.9;
-      const rect = containerRef.current.getBoundingClientRect();
-      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      const cx = mx / zoom + panX, cy = my / zoom + panY;
-      const nz = Math.max(0.2, Math.min(4, zoom * factor));
-      viewRef.current = { panX: Math.max(0, cx - mx/nz), panY: Math.max(0, cy - my/nz), zoom: nz };
-    } else {
-      viewRef.current = { panX: Math.max(0, panX + dx/zoom), panY: Math.max(0, panY + dy/zoom), zoom };
-    }
-    applyTransform();
-    updatePageView(viewRef.current.panX, viewRef.current.panY, viewRef.current.zoom);
+  function handleScroll() {
+    updateSizer();
+    const { zoom } = viewRef.current;
+    const panX = containerRef.current.scrollLeft / zoom;
+    const panY = containerRef.current.scrollTop  / zoom;
+    clearTimeout(scrollSaveTimer.current);
+    scrollSaveTimer.current = setTimeout(() => {
+      updatePageView(panX, panY, zoom);
+    }, 150);
   }
 
-  // ── Space key ────────────────────────────────────────────
+  // ── Wheel: zoom only (pan is native) ─────────────────────
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    function onWheel(e) {
+      if (!e.ctrlKey && !e.metaKey) return; // native scroll handles pan
+      e.preventDefault();
+
+      const { zoom } = viewRef.current;
+      const rect = el.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.1 : 0.9;
+      const nz = Math.max(0.2, Math.min(4, zoom * factor));
+
+      // Canvas point under mouse — keep this fixed after zoom
+      const cx = (mx + el.scrollLeft) / zoom;
+      const cy = (my + el.scrollTop)  / zoom;
+      const newScrollLeft = Math.max(0, cx * nz - mx);
+      const newScrollTop  = Math.max(0, cy * nz - my);
+
+      viewRef.current = { zoom: nz };
+      innerRef.current.style.transform = `scale(${nz})`;
+
+      // Resize sizer BEFORE setting scroll so browser doesn't clamp the position
+      updateSizer(newScrollLeft, newScrollTop);
+      el.scrollLeft = newScrollLeft;
+      el.scrollTop  = newScrollTop;
+
+      updatePageView(newScrollLeft / nz, newScrollTop / nz, nz);
+    }
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
+  // ── Space key / Delete / Undo / Paste ────────────────────
 
   useEffect(() => {
     function onKeyDown(e) {
@@ -461,7 +450,6 @@ export function Canvas({ page }) {
         spaceHeld.current = true;
         if (containerRef.current) containerRef.current.style.cursor = 'grab';
       }
-      // Delete selected blocks
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedRef.current.size && !e.target.isContentEditable) {
         e.preventDefault();
         const pg = getActivePage();
@@ -474,7 +462,6 @@ export function Canvas({ page }) {
         for (const id of toDelete) deleteBlock(id);
         setSelected(new Set());
       }
-      // Undo/redo
       const mod = e.ctrlKey || e.metaKey;
       if (mod && e.key === 'z' && !e.target.isContentEditable) {
         e.preventDefault();
@@ -488,29 +475,28 @@ export function Canvas({ page }) {
       }
     }
     function onPaste(e) {
-      // If pasting inside a contentEditable, let the browser handle it
       if (e.target.isContentEditable) return;
-
       const items = [...(e.clipboardData?.items || [])];
       const imageItem = items.find(item => item.type.startsWith('image/'));
       if (!imageItem) return;
-
       e.preventDefault();
       const file = imageItem.getAsFile();
       if (!file) return;
-
-      // Place at center of current viewport
-      const { panX, panY, zoom } = viewRef.current;
+      const { zoom } = viewRef.current;
       const rect = containerRef.current?.getBoundingClientRect();
-      const cx = rect ? (rect.width / 2) / zoom + panX : 100;
-      const cy = rect ? (rect.height / 2) / zoom + panY : 100;
+      const cx = rect ? (rect.width  / 2 + containerRef.current.scrollLeft) / zoom : 100;
+      const cy = rect ? (rect.height / 2 + containerRef.current.scrollTop)  / zoom : 100;
       addImageFromFile(file, cx, cy);
     }
 
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
     document.addEventListener('paste', onPaste);
-    return () => { document.removeEventListener('keydown', onKeyDown); document.removeEventListener('keyup', onKeyUp); document.removeEventListener('paste', onPaste); };
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keyup', onKeyUp);
+      document.removeEventListener('paste', onPaste);
+    };
   }, []);
 
   // ── Undo/Redo ────────────────────────────────────────────
@@ -532,11 +518,8 @@ export function Canvas({ page }) {
   // ── Image drop ───────────────────────────────────────────
 
   function addImageFromFile(file, x, y) {
-    // Show immediately using object URL
     const objectUrl = URL.createObjectURL(file);
     const blk = addBlock(x, y, 300, 'image', { src: objectUrl });
-
-    // Save blob in background, update src to persistent reference
     if (window.notebook) {
       file.arrayBuffer().then(buffer => {
         const meta = {
@@ -573,7 +556,6 @@ export function Canvas({ page }) {
   function handleDrop(e) {
     e.preventDefault();
 
-    // Check for Claude chat drop
     if (e.dataTransfer.types.includes('application/x-notebound-claude')) {
       startClaudeChat(e.clientX - 180, e.clientY - 20);
       return;
@@ -581,14 +563,12 @@ export function Canvas({ page }) {
 
     const pos = toCanvas(e.clientX, e.clientY);
 
-    // Check for image URL in text/uri-list first
     const uri = (e.dataTransfer.getData('text/uri-list') || '').trim();
     if (uri && !uri.startsWith('#') && IMAGE_URL_RE.test(uri)) {
       addImageFromUrl(uri, pos.x, pos.y);
       return;
     }
 
-    // Fall back to dropped files
     const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
     if (!files.length) return;
     files.forEach((file, i) => {
@@ -620,20 +600,22 @@ export function Canvas({ page }) {
     <>
       <PageTitle page={page} onEnter={focusDefaultBlock} />
       <CanvasCtx.Provider value={ctx}>
-        <div
-          ref={containerRef}
-          id="canvas-container"
-          onPointerDown={handlePointerDown}
-          onWheel={handleWheel}
-          onDragOver={e => { if (e.dataTransfer.types.includes('Files') || e.dataTransfer.types.includes('application/x-notebound-claude')) e.preventDefault(); }}
-          onDrop={handleDrop}
-        >
-          <div ref={marqueeRef} id="marquee-rect" />
-          <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
-            {page?.blocks.map(b => <Block key={b.id} block={b} page={page} />)}
+        <div id="canvas-wrapper">
+          <div
+            ref={containerRef}
+            id="canvas-container"
+            onPointerDown={handlePointerDown}
+            onScroll={handleScroll}
+            onDragOver={e => { if (e.dataTransfer.types.includes('Files') || e.dataTransfer.types.includes('application/x-notebound-claude')) e.preventDefault(); }}
+            onDrop={handleDrop}
+          >
+            <div ref={sizerRef} id="canvas-sizer">
+              <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
+                {page?.blocks.map(b => <Block key={b.id} block={b} page={page} />)}
+              </div>
+            </div>
           </div>
-          <div ref={hScrollRef} class="canvas-scroll-thumb canvas-scroll-thumb-h" />
-          <div ref={vScrollRef} class="canvas-scroll-thumb canvas-scroll-thumb-v" />
+          <div ref={marqueeRef} id="marquee-rect" />
         </div>
       </CanvasCtx.Provider>
     </>
