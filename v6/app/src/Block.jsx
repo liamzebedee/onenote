@@ -21,6 +21,72 @@ function computeTextDiff(oldText, newText) {
   return diffs;
 }
 
+// ─── HTML paste sanitizer ───────────────────────────────
+// Walks the DOM tree, keeping only the tags and attributes we care about.
+// Everything else is either unwrapped (unknown tags → keep children) or dropped.
+
+const ALLOWED_TAGS = new Set([
+  'b', 'strong', 'i', 'em', 'u', 's', 'strike', 'del',
+  'br', 'p', 'div',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'ul', 'ol', 'li',
+  'table', 'thead', 'tbody', 'tr', 'td', 'th',
+  'a', 'img',
+  'code', 'pre', 'blockquote',
+]);
+
+const ALLOWED_ATTRS = {
+  a:   ['href', 'title'],
+  img: ['src', 'alt', 'width', 'height'],
+  td:  ['colspan', 'rowspan'],
+  th:  ['colspan', 'rowspan'],
+};
+
+function sanitizeNode(node) {
+  if (node.nodeType === Node.TEXT_NODE) return node.cloneNode();
+  if (node.nodeType !== Node.ELEMENT_NODE) return null;
+
+  const tag = node.tagName.toLowerCase();
+
+  if (!ALLOWED_TAGS.has(tag)) {
+    // Drop the tag but keep its children (unwrap)
+    const frag = document.createDocumentFragment();
+    for (const child of node.childNodes) {
+      const s = sanitizeNode(child);
+      if (s) frag.appendChild(s);
+    }
+    return frag;
+  }
+
+  const el = document.createElement(tag);
+
+  for (const attr of (ALLOWED_ATTRS[tag] || [])) {
+    if (!node.hasAttribute(attr)) continue;
+    const val = node.getAttribute(attr);
+    if (attr === 'href' && /^javascript:/i.test(val.trim())) continue;
+    if (attr === 'src'  && !/^(https?:|data:|blob:|\/)/i.test(val.trim())) continue;
+    el.setAttribute(attr, val);
+  }
+
+  for (const child of node.childNodes) {
+    const s = sanitizeNode(child);
+    if (s) el.appendChild(s);
+  }
+  return el;
+}
+
+function sanitizeHtml(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const frag = document.createDocumentFragment();
+  for (const child of doc.body.childNodes) {
+    const s = sanitizeNode(child);
+    if (s) frag.appendChild(s);
+  }
+  const tmp = document.createElement('div');
+  tmp.appendChild(frag);
+  return tmp.innerHTML;
+}
+
 // ─── Link context menu state ────────────────────────────
 const linkMenu = signal(null); // { x, y, href, anchorEl, blockId }
 
@@ -179,16 +245,12 @@ export function Block({ block, page }) {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const html = e.clipboardData.getData('text/html');
+    const html  = e.clipboardData.getData('text/html');
     const plain = e.clipboardData.getData('text/plain');
 
     if (html) {
-      // Sanitize: parse the HTML fragment, keep only safe inline/block tags
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-      // Insert the cleaned HTML
-      document.execCommand('insertHTML', false, doc.body.innerHTML);
+      document.execCommand('insertHTML', false, sanitizeHtml(html));
     } else if (plain) {
-      // Convert newlines to <br> for plain text
       const escaped = plain
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
