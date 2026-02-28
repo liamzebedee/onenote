@@ -113,6 +113,11 @@ class NotebookManager {
       this.wal.append(op);
       return this.state;
     }
+    // page-view is device-local UI state — apply in memory, never sync
+    if (op.type === 'page-view') {
+      this.state = modelApplyOp(this.state, op);
+      return this.state;
+    }
     this.state = modelApplyOp(this.state, op);
     this.wal.append(op);
     return this.state;
