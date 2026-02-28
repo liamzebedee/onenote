@@ -116,6 +116,9 @@ function persistUiState() {
 
 // ─── Navigation ──────────────────────────────────────────
 
+// Remember last visited page per section (in-memory, session-only)
+const lastPagePerSection = new Map();
+
 export function setActiveNotebook(id) {
   update(s => {
     s.ui.notebookId = id;
@@ -131,12 +134,17 @@ export function setActiveSection(id) {
     s.ui.sectionId = id;
     const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
     const sec = nb?.sections.find(sec => sec.id === id);
-    s.ui.pageId = sec?.pages[0]?.id ?? null;
+    // Restore last visited page in this section, fall back to first page
+    const lastId = lastPagePerSection.get(id);
+    const lastPage = lastId && sec ? findInTree(sec.pages, lastId) : null;
+    s.ui.pageId = lastPage?.id ?? sec?.pages[0]?.id ?? null;
   });
   persistUiState();
 }
 
 export function setActivePage(id) {
+  const { sectionId } = appState.value.ui;
+  if (sectionId) lastPagePerSection.set(sectionId, id);
   update(s => { s.ui.pageId = id; });
   persistUiState();
 }
@@ -378,6 +386,7 @@ export function updateBlockSrc(blockId, src) {
 }
 
 export function jumpToPage(sectionId, pageId) {
+  lastPagePerSection.set(sectionId, pageId);
   update(s => { s.ui.sectionId = sectionId; s.ui.pageId = pageId; });
   persistUiState();
 }
