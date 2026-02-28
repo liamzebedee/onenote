@@ -314,6 +314,16 @@ export function updateBlockWidth(blockId, w) {
   sendOp({ type: 'block-resize', pageId, blockId, w });
 }
 
+export function updateBlockSrc(blockId, src) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.src = src;
+  });
+  sendOp({ type: 'block-update-src', pageId, blockId, src });
+}
+
 export function updatePageView(panX, panY, zoom) {
   const pageId = appState.value.ui.pageId;
   silent(s => {
@@ -360,6 +370,8 @@ export async function openNotebook(notebookPath) {
     }
     appState.value = state;
     connected.value = true;
+    // Persist the notebook path for future launches
+    window.notebook.saveConfig(notebookPath);
   }
 }
 

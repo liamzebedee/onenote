@@ -2,6 +2,7 @@
 // Bridges renderer to the notebook manager
 
 const { ipcMain, dialog, app } = require('electron');
+const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { NotebookManager } = require('./notebook');
@@ -9,9 +10,11 @@ const blobs = require('./blobs');
 
 let manager = null;
 let mainWindow = null;
+let _configPath = null;
 
-function setupIPC(win) {
+function setupIPC(win, configPath) {
   mainWindow = win;
+  _configPath = configPath;
   manager = new NotebookManager();
 
   // Forward renderer logs to main process stdout
@@ -125,6 +128,19 @@ function setupIPC(win) {
     const contentType = resp.headers.get('content-type') || 'image/png';
     const buffer = Buffer.from(await resp.arrayBuffer());
     return { buffer, contentType, size: buffer.length };
+  });
+
+  // Save notebook path to config (merges with existing config)
+  ipcMain.handle('notebook:save-config', async (event, notebookPath) => {
+    let config = {};
+    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
+    config.notebookPath = notebookPath;
+    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+  });
+
+  // Get config (for renderer to check if first-run)
+  ipcMain.handle('notebook:get-config', async () => {
+    try { return JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch { return {}; }
   });
 }
 

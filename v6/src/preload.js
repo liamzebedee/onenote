@@ -35,6 +35,10 @@ contextBridge.exposeInMainWorld('notebook', {
   // Fetch remote image (bypasses CORS)
   fetchImage: (url) => ipcRenderer.invoke('notebook:fetch-image', url),
 
+  // Config (notebook path + window state)
+  saveConfig: (notebookPath) => ipcRenderer.invoke('notebook:save-config', notebookPath),
+  getConfig: () => ipcRenderer.invoke('notebook:get-config'),
+
   // Listen for state changes from sync
   onStateChanged: (callback) => {
     ipcRenderer.on('notebook:state-changed', (event, state) => {

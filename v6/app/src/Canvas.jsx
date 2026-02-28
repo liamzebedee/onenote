@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage } from './store.js';
+import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage } from './store.js';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
 
@@ -509,37 +509,37 @@ export function Canvas({ page }) {
 
   // ── Image drop ───────────────────────────────────────────
 
-  async function addImageFromFile(file, x, y) {
-    const meta = {
-      filename: file.name || null,
-      mimeType: file.type || null,
-      size: file.size || null,
-      lastModified: file.lastModified || null,
-    };
+  function addImageFromFile(file, x, y) {
+    // Show immediately using object URL
+    const objectUrl = URL.createObjectURL(file);
+    const blk = addBlock(x, y, 300, 'image', { src: objectUrl });
+
+    // Save blob in background, update src to persistent reference
     if (window.notebook) {
-      const buffer = await file.arrayBuffer();
-      const hash = await window.notebook.saveBlob(buffer, meta);
-      if (hash) {
-        addBlock(x, y, 300, 'image', { src: 'blob:' + hash });
-        return;
-      }
+      file.arrayBuffer().then(buffer => {
+        const meta = {
+          filename: file.name || null,
+          mimeType: file.type || null,
+          size: file.size || null,
+          lastModified: file.lastModified || null,
+        };
+        return window.notebook.saveBlob(buffer, meta);
+      }).then(hash => {
+        if (hash) updateBlockSrc(blk.id, 'blob:' + hash);
+        URL.revokeObjectURL(objectUrl);
+      });
     }
-    // Fallback: inline data URL (no IPC available)
-    const reader = new FileReader();
-    reader.onload = ev => addBlock(x, y, 300, 'image', { src: ev.target.result });
-    reader.readAsDataURL(file);
   }
 
   async function addImageFromUrl(url, x, y) {
     const placeholder = addBlock(x, y, 300, 'loading');
     try {
-      const { dataUrl, contentType, size } = await window.notebook.fetchImage(url);
+      const { buffer, contentType, size } = await window.notebook.fetchImage(url);
       const filename = url.split('/').pop().split('?')[0];
       const meta = { filename, mimeType: contentType, size, lastModified: null };
       deleteBlock(placeholder.id);
-      const hash = await window.notebook.saveBlob(dataUrl, meta);
+      const hash = await window.notebook.saveBlob(buffer, meta);
       if (hash) { addBlock(x, y, 300, 'image', { src: 'blob:' + hash }); return; }
-      addBlock(x, y, 300, 'image', { src: dataUrl });
     } catch (err) {
       deleteBlock(placeholder.id);
       (window.log || console.log)('[addImageFromUrl] error:', err.message);

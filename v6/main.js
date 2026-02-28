@@ -9,35 +9,40 @@ Menu.setApplicationMenu(null);
 let mainWindow = null;
 let closed = false;
 
-const windowStatePath = path.join(app.getPath('userData'), 'window-state.json');
+const configPath = path.join(app.getPath('userData'), 'config.json');
 
-function loadWindowState() {
+function loadConfig() {
   try {
-    return JSON.parse(fs.readFileSync(windowStatePath, 'utf8'));
+    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
   } catch {
-    return null;
+    return {};
   }
 }
 
-function saveWindowState() {
-  if (!mainWindow) return;
-  const isFullScreen = mainWindow.isFullScreen();
-  const isMaximized = mainWindow.isMaximized();
-  // Save normal bounds (not the fullscreen/maximized bounds)
-  const bounds = isFullScreen || isMaximized ? (mainWindow._normalBounds || mainWindow.getNormalBounds()) : mainWindow.getBounds();
-  const state = { ...bounds, isFullScreen, isMaximized };
-  try { fs.writeFileSync(windowStatePath, JSON.stringify(state)); } catch {}
+function saveConfig(extra = {}) {
+  const existing = loadConfig();
+  const merged = { ...existing, ...extra };
+
+  if (mainWindow) {
+    const isFullScreen = mainWindow.isFullScreen();
+    const isMaximized = mainWindow.isMaximized();
+    const bounds = isFullScreen || isMaximized ? (mainWindow._normalBounds || mainWindow.getNormalBounds()) : mainWindow.getBounds();
+    merged.window = { ...bounds, isFullScreen, isMaximized };
+  }
+
+  try { fs.writeFileSync(configPath, JSON.stringify(merged)); } catch {}
 }
 
 function shutdown() {
   if (closed) return;
   closed = true;
-  saveWindowState();
+  saveConfig();
   closeNotebook();
 }
 
 function createWindow() {
-  const saved = loadWindowState();
+  const config = loadConfig();
+  const saved = config.window || null;
   const opts = {
     autoHideMenuBar: true,
     width: 1200,
@@ -86,12 +91,13 @@ function createWindow() {
     }
   });
 
-  // Set up IPC handlers
-  setupIPC(mainWindow);
+  // Set up IPC handlers (pass configPath so IPC can read/write config)
+  setupIPC(mainWindow, configPath);
 
-  // Open default notebook immediately (before renderer even loads)
-  const defaultPath = path.join(os.homedir(), 'Dropbox', 'Notes', 'My Notebook.notebound');
-  openDefault(mainWindow, defaultPath);
+  // If config has a notebook path, open it eagerly; otherwise renderer shows welcome screen
+  if (config.notebookPath) {
+    openDefault(mainWindow, config.notebookPath);
+  }
 
   mainWindow.on('close', shutdown);
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));

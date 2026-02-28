@@ -12,20 +12,22 @@ export function Block({ block, page }) {
   const isLoading = block.type === 'loading';
   const isSelected = ctx.selectedIds.has(block.id);
 
-  // Resolve blob: references to data URLs
-  const [resolvedSrc, setResolvedSrc] = useState(null);
+  // Resolve notebook blob refs ("blob:<sha256>") to data URLs.
+  // Object URLs ("blob:null/...") and other srcs are used directly.
+  const isNotebookBlob = (s) => s.startsWith('blob:') && !s.includes('/');
+  const rawSrc = block.src || '';
+  const [resolvedSrc, setResolvedSrc] = useState(isNotebookBlob(rawSrc) ? null : rawSrc);
   useEffect(() => {
     if (!isImage) return;
-    const src = block.src || '';
-    if (src.startsWith('blob:') && window.notebook) {
-      const hash = src.slice(5);
+    if (isNotebookBlob(rawSrc)) {
+      const hash = rawSrc.slice(5);
       window.notebook.getBlob(hash).then(dataUrl => {
         if (dataUrl) setResolvedSrc(dataUrl);
       });
     } else {
-      setResolvedSrc(src);
+      setResolvedSrc(rawSrc);
     }
-  }, [block.src, isImage]);
+  }, [rawSrc, isImage]);
 
   // Sync content when block.html changes externally (undo/page-switch)
   useEffect(() => {
