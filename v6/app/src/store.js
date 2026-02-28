@@ -274,6 +274,21 @@ export function deleteBlock(blockId) {
 }
 
 // Silent updates — block content/position changes don't re-render the sidebar
+export function updateBlockHtmlLocal(blockId, html) {
+  silent(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.html = html;
+  });
+}
+
+export function updateBlockTextDiff(blockId, diffs) {
+  const pageId = appState.value.ui.pageId;
+  if (hasIPC && diffs.length > 0) {
+    window.notebook.applyOp({ type: 'block-text-diff', pageId, blockId, diffs });
+  }
+}
+
 export function updateBlockHtml(blockId, html) {
   const pageId = appState.value.ui.pageId;
   silent(s => {

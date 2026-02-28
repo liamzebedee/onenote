@@ -1,8 +1,24 @@
 import { useRef, useEffect, useContext, useState } from 'preact/hooks';
 import { CanvasCtx } from './Canvas.jsx';
-import { updateBlockHtml, updateBlockType, deleteBlock, getActivePage } from './store.js';
+import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
+
+function computeTextDiff(oldText, newText) {
+  let p = 0;
+  const minLen = Math.min(oldText.length, newText.length);
+  while (p < minLen && oldText[p] === newText[p]) p++;
+  let oldEnd = oldText.length;
+  let newEnd = newText.length;
+  while (oldEnd > p && newEnd > p && oldText[oldEnd - 1] === newText[newEnd - 1]) {
+    oldEnd--; newEnd--;
+  }
+  const diffs = [];
+  if (oldEnd > p) diffs.push({ type: 'delete', pos: p, count: oldEnd - p });
+  const ins = newText.slice(p, newEnd);
+  if (ins) diffs.push({ type: 'insert', pos: p, text: ins });
+  return diffs;
+}
 
 export function Block({ block, page }) {
   const ctx = useContext(CanvasCtx);
@@ -32,12 +48,16 @@ export function Block({ block, page }) {
   // Sync content when block.html changes externally (undo/page-switch)
   useEffect(() => {
     const el = contentRef.current;
-    if (el && el.innerHTML !== block.html) el.innerHTML = block.html;
+    if (el && el.innerHTML !== block.html) {
+      el.innerHTML = block.html;
+      prevTextRef.current = el.innerText || '';
+    }
   }, [block.html]);
 
   // Track HTML at focus time for undo deltas
   const undoTimer = useRef(null);
   const htmlAtFocus = useRef(null);
+  const prevTextRef = useRef(null);
 
   const handleInput = () => {
     const el = contentRef.current;
@@ -47,8 +67,13 @@ export function Block({ block, page }) {
     const result = handleMarkdownInput(el);
     if (result === 'code') updateBlockType(block.id, 'code');
 
-    // Save HTML to store (silent)
-    updateBlockHtml(block.id, el.innerHTML);
+    // Compute character-level diff for CRDT sync
+    const newText = el.innerText || '';
+    const oldText = prevTextRef.current ?? '';
+    const diffs = computeTextDiff(oldText, newText);
+    prevTextRef.current = newText;
+    updateBlockHtmlLocal(block.id, el.innerHTML);
+    updateBlockTextDiff(block.id, diffs);
 
     // Debounced undo snapshot while typing (every ~1.5 s of inactivity)
     clearTimeout(undoTimer.current);
@@ -75,6 +100,7 @@ export function Block({ block, page }) {
 
   const handleFocus = () => {
     htmlAtFocus.current = block.html;
+    prevTextRef.current = contentRef.current?.innerText || '';
     ctx.onBlockFocus?.(block.id);
   };
 

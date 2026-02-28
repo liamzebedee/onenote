@@ -315,6 +315,31 @@ function applyOp(state, op) {
       return state;
     }
 
+    case 'block-text-op': {
+      const { TextCRDT } = require('./crdt');
+      const { applyTextChangeToHtml } = require('./htmlutils');
+      const result = findPageInState(state, op.pageId);
+      if (!result) return state;
+      const blk = result.page.blocks.find(b => b.id === op.blockId);
+      if (!blk) return state;
+      let crdt;
+      if (blk.crdt) {
+        crdt = TextCRDT.fromSnapshot(blk.crdt);
+      } else {
+        crdt = new TextCRDT('__replay__');
+        if (blk.html) {
+          const text = blk.html.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+          if (text) crdt.insertTextAt(0, text);
+        }
+      }
+      const oldText = crdt.getText();
+      for (const crdtOp of (op.crdtOps || [])) crdt.apply(crdtOp);
+      const newText = crdt.getText();
+      blk.html = applyTextChangeToHtml(blk.html || '', oldText, newText);
+      blk.crdt = crdt.snapshot();
+      return state;
+    }
+
     default:
       console.warn('Unknown op type:', op.type);
       return state;

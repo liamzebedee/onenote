@@ -5,7 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { WAL } = require('./wal');
-const { defaultState, applyOp, makeOp } = require('./model');
+const { defaultState, applyOp: modelApplyOp, makeOp, findPageInState } = require('./model');
+const { TextCRDT } = require('./crdt');
+const { applyDiffsToHtml, applyTextChangeToHtml } = require('./htmlutils');
 const { rebuildState, createSnapshot } = require('./snapshot');
 const { SyncEngine } = require('./sync');
 
@@ -22,6 +24,7 @@ class NotebookManager {
     this.deviceId = null;
     this.appliedBatches = new Set();
     this._onStateChange = null; // callback for renderer notification
+    this.crdts = new Map();
   }
 
   // Create a new .notebound directory
@@ -89,6 +92,7 @@ class NotebookManager {
 
     // Initialize WAL
     this.wal = new WAL();
+    this._initCrdts();
     this.wal.startAutoSeal(this.deviceId, walDir);
 
     // Start sync engine (file watcher)
@@ -103,29 +107,29 @@ class NotebookManager {
     if (!op.deviceId) op.deviceId = this.deviceId;
     if (!op.timestamp) op.timestamp = Date.now();
     if (!op.id) op.id = crypto.randomUUID();
-
-    // Apply to local state
-    this.state = applyOp(this.state, op);
-
-    // Append to WAL
+    if (op.type === 'block-text-diff') return this._applyBlockTextDiff(op);
+    if (op.type === 'block-text-op') {
+      this._applyBlockTextOp(op);
+      this.wal.append(op);
+      return this.state;
+    }
+    this.state = modelApplyOp(this.state, op);
     this.wal.append(op);
-
     return this.state;
   }
 
   // Apply a remote batch (from sync)
   applyRemoteBatch(batchFile, batch) {
     if (this.appliedBatches.has(batchFile)) return;
-
     for (const op of batch.ops) {
-      this.state = applyOp(this.state, op);
+      if (op.type === 'block-text-op') {
+        this._applyBlockTextOp(op);
+      } else {
+        this.state = modelApplyOp(this.state, op);
+      }
     }
     this.appliedBatches.add(batchFile);
-
-    // Notify renderer
-    if (this._onStateChange) {
-      this._onStateChange(this.state);
-    }
+    if (this._onStateChange) this._onStateChange(this.state);
   }
 
   // Get current state
@@ -152,6 +156,7 @@ class NotebookManager {
     const batchCount = WAL.listBatches(walDir).length;
     if (batchCount > SNAPSHOT_THRESHOLD) {
       const snapshotsDir = path.join(this.notebookPath, 'snapshots');
+      this._serializeCrdts();
       createSnapshot(this.state, snapshotsDir, Array.from(this.appliedBatches));
     }
   }
@@ -175,6 +180,7 @@ class NotebookManager {
 
         // Create a snapshot on close
         const snapshotsDir = path.join(this.notebookPath, 'snapshots');
+        this._serializeCrdts();
         const snapFile = createSnapshot(this.state, snapshotsDir, Array.from(this.appliedBatches));
         console.log('[notebound] created snapshot:', snapFile);
       }
@@ -184,6 +190,116 @@ class NotebookManager {
     this.notebookPath = null;
     this.state = null;
     this.deviceId = null;
+  }
+
+  _initCrdts() {
+    this.crdts.clear();
+    const walkPages = (pages) => {
+      for (const page of pages) {
+        for (const blk of (page.blocks || [])) {
+          if (blk.type === 'image' || blk.type === 'loading') continue;
+          let crdt;
+          if (blk.crdt) {
+            crdt = TextCRDT.fromSnapshot(blk.crdt);
+          } else {
+            crdt = new TextCRDT(this.deviceId);
+            if (blk.html) {
+              const text = blk.html.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, '');
+              if (text) crdt.insertTextAt(0, text);
+            }
+          }
+          this.crdts.set(blk.id, crdt);
+        }
+        if (page.children?.length) walkPages(page.children);
+      }
+    };
+    for (const nb of this.state.notebooks) {
+      for (const sec of nb.sections) walkPages(sec.pages);
+    }
+  }
+
+  _applyBlockTextDiff(diffOp) {
+    const { pageId, blockId, diffs } = diffOp;
+    let crdt = this.crdts.get(blockId);
+    if (!crdt) {
+      crdt = new TextCRDT(this.deviceId);
+      this.crdts.set(blockId, crdt);
+    }
+    const crdtOps = [];
+    for (const diff of diffs) {
+      if (diff.type === 'insert') {
+        const ops = crdt.insertTextAt(diff.pos, diff.text);
+        crdtOps.push(...ops);
+      } else if (diff.type === 'delete') {
+        for (let i = 0; i < diff.count; i++) {
+          const op = crdt.deleteAt(diff.pos);
+          if (op) crdtOps.push(op);
+        }
+      }
+    }
+    if (crdtOps.length === 0) return this.state;
+    // Apply diffs to HTML preserving formatting tags
+    const result = findPageInState(this.state, pageId);
+    if (result) {
+      const blk = result.page.blocks.find(b => b.id === blockId);
+      if (blk) blk.html = applyDiffsToHtml(blk.html || '', diffs);
+    }
+    const walOp = {
+      id: crypto.randomUUID(),
+      deviceId: this.deviceId,
+      timestamp: Date.now(),
+      type: 'block-text-op',
+      pageId,
+      blockId,
+      crdtOps,
+    };
+    this.wal.append(walOp);
+    return this.state;
+  }
+
+  _applyBlockTextOp(op) {
+    let crdt = this.crdts.get(op.blockId);
+    if (!crdt) {
+      crdt = new TextCRDT(this.deviceId);
+      this.crdts.set(op.blockId, crdt);
+    }
+    const oldText = crdt.getText();
+    for (const crdtOp of (op.crdtOps || [])) crdt.apply(crdtOp);
+    const newText = crdt.getText();
+    if (oldText !== newText) {
+      const result = findPageInState(this.state, op.pageId);
+      if (result) {
+        const blk = result.page.blocks.find(b => b.id === op.blockId);
+        if (blk) blk.html = applyTextChangeToHtml(blk.html || '', oldText, newText);
+      }
+    }
+  }
+
+  _serializeCrdts() {
+    const walkPages = (pages) => {
+      for (const page of pages) {
+        for (const blk of (page.blocks || [])) {
+          const crdt = this.crdts.get(blk.id);
+          if (crdt) blk.crdt = crdt.snapshot();
+        }
+        if (page.children?.length) walkPages(page.children);
+      }
+    };
+    for (const nb of this.state.notebooks) {
+      for (const sec of nb.sections) walkPages(sec.pages);
+    }
+  }
+
+  _findBlockInPages(pages, blockId) {
+    for (const page of pages) {
+      const blk = page.blocks?.find(b => b.id === blockId);
+      if (blk) return blk;
+      if (page.children?.length) {
+        const found = this._findBlockInPages(page.children, blockId);
+        if (found) return found;
+      }
+    }
+    return null;
   }
 
   get walDir() {
