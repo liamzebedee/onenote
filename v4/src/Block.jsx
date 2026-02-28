@@ -17,8 +17,9 @@ export function Block({ block, page }) {
     if (el && el.innerHTML !== block.html) el.innerHTML = block.html;
   }, [block.html]);
 
-  // Debounced undo push while typing
+  // Track HTML at focus time for undo deltas
   const undoTimer = useRef(null);
+  const htmlAtFocus = useRef(null);
 
   const handleInput = () => {
     const el = contentRef.current;
@@ -34,8 +35,10 @@ export function Block({ block, page }) {
     // Debounced undo snapshot while typing (every ~1.5 s of inactivity)
     clearTimeout(undoTimer.current);
     undoTimer.current = setTimeout(() => {
-      const pg = getActivePage();
-      if (pg) pushUndo(pg);
+      if (htmlAtFocus.current != null && htmlAtFocus.current !== el.innerHTML) {
+        pushUndo(page.id, { type: 'html', id: block.id, html: htmlAtFocus.current });
+        htmlAtFocus.current = el.innerHTML;
+      }
     }, 1500);
   };
 
@@ -53,9 +56,7 @@ export function Block({ block, page }) {
   };
 
   const handleFocus = () => {
-    // Snapshot undo state when user enters the block
-    const pg = getActivePage();
-    if (pg) pushUndo(pg);
+    htmlAtFocus.current = block.html;
     ctx.onBlockFocus?.(block.id);
   };
 
@@ -67,8 +68,13 @@ export function Block({ block, page }) {
     const html = el.innerHTML;
     const isEmpty = !html || html === '<br>' || html.trim() === '';
 
+    // Push undo delta if content changed during this edit session
+    if (htmlAtFocus.current != null && htmlAtFocus.current !== html) {
+      pushUndo(page.id, { type: 'html', id: block.id, html: htmlAtFocus.current });
+    }
+    htmlAtFocus.current = null;
+
     if (isEmpty && !isDefault) {
-      // Auto-delete empty non-default blocks
       deleteBlock(block.id);
     } else {
       updateBlockHtml(block.id, html);

@@ -9,7 +9,7 @@ export const CanvasCtx = createContext(null);
 
 // ─── FormatToolbar ───────────────────────────────────────
 
-function FormatToolbar() {
+export function FormatToolbar() {
   const btns = [
     { cmd: 'bold',          node: <b>B</b>,   title: 'Bold' },
     { cmd: 'italic',        node: <i>I</i>,   title: 'Italic' },
@@ -75,6 +75,9 @@ export function Canvas({ page }) {
   const containerRef = useRef(null);
   const innerRef = useRef(null);
   const marqueeRef = useRef(null);
+  const hScrollRef = useRef(null);
+  const vScrollRef = useRef(null);
+  const scrollHideTimer = useRef(null);
   const viewRef = useRef({ panX: 0, panY: 0, zoom: 1 });
   const spaceHeld = useRef(false);
 
@@ -99,6 +102,69 @@ export function Canvas({ page }) {
     if (!innerRef.current) return;
     const { panX, panY, zoom } = viewRef.current;
     innerRef.current.style.transform = `translate(${-panX * zoom}px, ${-panY * zoom}px) scale(${zoom})`;
+    updateScrollbars();
+  }
+
+  function updateScrollbars() {
+    if (!containerRef.current) return;
+
+    const { panX, panY, zoom } = viewRef.current;
+    const rect = containerRef.current.getBoundingClientRect();
+    const viewW = rect.width / zoom;
+    const viewH = rect.height / zoom;
+
+    // Total world = union of content bounds and current viewport
+    let maxX = 0, maxY = 0;
+    if (page?.blocks?.length) {
+      for (const b of page.blocks) {
+        maxX = Math.max(maxX, b.x + (b.w || 480));
+        maxY = Math.max(maxY, b.y + 300);
+      }
+    }
+    const totalW = Math.max(maxX + 100, panX + viewW);
+    const totalH = Math.max(maxY + 100, panY + viewH);
+
+    // Only show if panned away from origin (there's something to scroll back to)
+    const showH = panX > 1 || maxX + 100 > viewW;
+    const showV = panY > 1 || maxY + 100 > viewH;
+
+    if (showH || showV) {
+      containerRef.current.classList.add('scrollbar-active');
+      clearTimeout(scrollHideTimer.current);
+      scrollHideTimer.current = setTimeout(() => {
+        containerRef.current?.classList.remove('scrollbar-active');
+      }, 1200);
+    }
+
+    // Horizontal thumb
+    if (hScrollRef.current) {
+      if (!showH) {
+        hScrollRef.current.style.display = 'none';
+      } else {
+        hScrollRef.current.style.display = '';
+        const trackW = rect.width - 14;
+        const ratio = viewW / totalW;
+        const thumbW = Math.max(30, ratio * trackW);
+        const thumbX = (panX / totalW) * trackW;
+        hScrollRef.current.style.width = thumbW + 'px';
+        hScrollRef.current.style.left = Math.max(4, thumbX + 4) + 'px';
+      }
+    }
+
+    // Vertical thumb
+    if (vScrollRef.current) {
+      if (!showV) {
+        vScrollRef.current.style.display = 'none';
+      } else {
+        vScrollRef.current.style.display = '';
+        const trackH = rect.height - 14;
+        const ratio = viewH / totalH;
+        const thumbH = Math.max(30, ratio * trackH);
+        const thumbY = (panY / totalH) * trackH;
+        vScrollRef.current.style.height = thumbH + 'px';
+        vScrollRef.current.style.top = Math.max(4, thumbY + 4) + 'px';
+      }
+    }
   }
 
   function toCanvas(clientX, clientY) {
@@ -116,6 +182,9 @@ export function Canvas({ page }) {
 
   const onBlockDragStart = useCallback((e, blockId) => {
     e.preventDefault();
+    if (document.activeElement && document.activeElement !== document.body) {
+      document.activeElement.blur();
+    }
     const pg = getActivePage();
     if (!pg) return;
 
@@ -126,8 +195,6 @@ export function Canvas({ page }) {
       if (!e.shiftKey) setSelected(new Set([blockId]));
       else setSelected(new Set([...selectedRef.current, blockId]));
     }
-
-    pushUndo(pg);
 
     const ids = selectedRef.current.has(blockId)
       ? [...selectedRef.current]
@@ -155,11 +222,14 @@ export function Canvas({ page }) {
     }
 
     function onUp() {
-      for (const [id, _] of origPos) {
+      // Save old positions as undo delta, then commit new positions
+      const moves = [];
+      for (const [id, orig] of origPos) {
+        moves.push({ id, x: orig.x, y: orig.y });
         const el = innerRef.current?.querySelector(`[data-block-id="${id}"]`);
-        if (!el) continue;
-        updateBlockPos(id, parseInt(el.style.left), parseInt(el.style.top));
+        if (el) updateBlockPos(id, parseInt(el.style.left), parseInt(el.style.top));
       }
+      pushUndo(pg.id, { type: 'move', moves });
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
     }
@@ -177,13 +247,13 @@ export function Canvas({ page }) {
     const origW = parseInt(el.style.width) || 480;
     const startX = e.clientX;
     const pg = getActivePage();
-    if (pg) pushUndo(pg);
 
     function onMove(e2) {
       const dx = (e2.clientX - startX) / viewRef.current.zoom;
       el.style.width = Math.max(120, origW + dx) + 'px';
     }
     function onUp() {
+      if (pg) pushUndo(pg.id, { type: 'resize', id: blockId, w: origW });
       updateBlockWidth(blockId, parseInt(el.style.width));
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
@@ -200,9 +270,9 @@ export function Canvas({ page }) {
     if (!el) return;
     const origW = el.offsetWidth;
     const origX = parseInt(el.style.left);
+    const origY = parseInt(el.style.top);
     const startX = e.clientX;
     const pg = getActivePage();
-    if (pg) pushUndo(pg);
 
     function onMove(e2) {
       const dx = (e2.clientX - startX) / viewRef.current.zoom;
@@ -211,6 +281,7 @@ export function Canvas({ page }) {
       if (dir.includes('w')) el.style.left = (origX - (newW - origW)) + 'px';
     }
     function onUp() {
+      if (pg) pushUndo(pg.id, { type: 'resize', id: blockId, w: origW, x: origX, y: origY });
       updateBlockWidth(blockId, parseInt(el.style.width));
       updateBlockPos(blockId, parseInt(el.style.left), parseInt(el.style.top));
       document.removeEventListener('pointermove', onMove);
@@ -297,6 +368,11 @@ export function Canvas({ page }) {
     }
     if (e.button !== 0) return;
 
+    // Blur any focused block so marquee selection + Delete key works
+    if (document.activeElement && document.activeElement !== document.body) {
+      document.activeElement.blur();
+    }
+
     // Left click on empty canvas — might be marquee or create-block
     e.preventDefault();
     const startX = e.clientX, startY = e.clientY;
@@ -367,11 +443,13 @@ export function Canvas({ page }) {
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedRef.current.size && !e.target.isContentEditable) {
         e.preventDefault();
         const pg = getActivePage();
-        if (pg) pushUndo(pg);
-        const defaultId = pg?.defaultBlockId;
-        for (const id of selectedRef.current) {
-          if (id !== defaultId) deleteBlock(id);
-        }
+        if (!pg) return;
+        const defaultId = pg.defaultBlockId;
+        const toDelete = [...selectedRef.current].filter(id => id !== defaultId);
+        if (!toDelete.length) return;
+        const deleted = toDelete.map(id => pg.blocks.find(b => b.id === id)).filter(Boolean).map(b => ({ ...b }));
+        pushUndo(pg.id, { type: 'delete', blocks: deleted });
+        for (const id of toDelete) deleteBlock(id);
         setSelected(new Set());
       }
       // Undo/redo
@@ -397,19 +475,14 @@ export function Canvas({ page }) {
   function doUndo() {
     const pg = getActivePage();
     if (!pg) return;
-    const blocks = applyUndo(pg);
-    if (!blocks) return;
-    pg.blocks = blocks;
-    // Force Preact re-render of blocks
+    if (!applyUndo(pg.id, pg)) return;
     appState.value = { ...appState.value };
   }
 
   function doRedo() {
     const pg = getActivePage();
     if (!pg) return;
-    const blocks = applyRedo(pg);
-    if (!blocks) return;
-    pg.blocks = blocks;
+    if (!applyRedo(pg.id, pg)) return;
     appState.value = { ...appState.value };
   }
 
@@ -456,7 +529,6 @@ export function Canvas({ page }) {
 
   return (
     <>
-      <FormatToolbar />
       <PageTitle page={page} onEnter={focusDefaultBlock} />
       <CanvasCtx.Provider value={ctx}>
         <div
@@ -471,6 +543,8 @@ export function Canvas({ page }) {
           <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
             {page?.blocks.map(b => <Block key={b.id} block={b} page={page} />)}
           </div>
+          <div ref={hScrollRef} class="canvas-scroll-thumb canvas-scroll-thumb-h" />
+          <div ref={vScrollRef} class="canvas-scroll-thumb canvas-scroll-thumb-v" />
         </div>
       </CanvasCtx.Provider>
     </>

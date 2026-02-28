@@ -48,7 +48,7 @@ export const appState = signal(load() || defaultState());
 
 // Immutable update — triggers Preact re-render
 function update(fn) {
-  const draft = JSON.parse(JSON.stringify(appState.value));
+  const draft = structuredClone(appState.value);
   fn(draft);
   appState.value = draft;
   scheduleSave();
@@ -224,7 +224,7 @@ export function movePage(pageId, targetSecId) {
     let pg = null;
     for (const sec of nb.sections) {
       const found = findInTree(sec.pages, pageId);
-      if (found) { pg = JSON.parse(JSON.stringify(found)); sec.pages = removeFromTree(sec.pages, pageId); break; }
+      if (found) { pg = structuredClone(found); sec.pages = removeFromTree(sec.pages, pageId); break; }
     }
     if (!pg) return;
     const target = nb.sections.find(sec => sec.id === targetSecId);
