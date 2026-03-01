@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, useState } from 'preact/hooks';
+import { useRef, useEffect, useLayoutEffect, useContext, useState } from 'preact/hooks';
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
 import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop } from './store.js';
@@ -158,7 +158,7 @@ export function Block({ block, page }) {
   }, [rawSrc, isImage]);
 
   // Sync content when block.html changes externally (undo/page-switch)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = contentRef.current;
     if (el && el.innerHTML !== block.html) {
       el.innerHTML = block.html;

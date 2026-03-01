@@ -1,17 +1,27 @@
-const { app, BrowserWindow, Menu, screen, nativeImage } = require('electron');
+const { app, BrowserWindow, Menu, screen, nativeImage, shell } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 const { setupIPC, closeNotebook, openDefault } = require('./src/ipc');
 
+const isMac = process.platform === 'darwin';
+
 Menu.setApplicationMenu(Menu.buildFromTemplate([
-  {
-    label: app.name,
+  ...(isMac ? [{
+    label: 'Notebound',
     submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideOthers' },
+      { role: 'unhide' },
+      { type: 'separator' },
       { role: 'quit' },
     ],
-  },
+  }] : []),
   {
     label: 'Edit',
     submenu: [
@@ -24,6 +34,43 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
       { role: 'selectAll' },
     ],
   },
+  {
+    label: 'View',
+    submenu: [
+      {
+        label: 'Zoom In',
+        accelerator: 'CmdOrCtrl+=',
+        click: () => { const w = BrowserWindow.getFocusedWindow(); if (w) w.webContents.send('canvas:zoom', 'in'); },
+      },
+      {
+        label: 'Zoom In',
+        accelerator: 'CmdOrCtrl+Plus',
+        visible: false,
+        click: () => { const w = BrowserWindow.getFocusedWindow(); if (w) w.webContents.send('canvas:zoom', 'in'); },
+      },
+      {
+        label: 'Zoom Out',
+        accelerator: 'CmdOrCtrl+-',
+        click: () => { const w = BrowserWindow.getFocusedWindow(); if (w) w.webContents.send('canvas:zoom', 'out'); },
+      },
+      {
+        label: 'Actual Size',
+        accelerator: 'CmdOrCtrl+0',
+        click: () => { const w = BrowserWindow.getFocusedWindow(); if (w) w.webContents.send('canvas:zoom', 'reset'); },
+      },
+      { type: 'separator' },
+      { role: 'togglefullscreen' },
+    ],
+  },
+  ...(isMac ? [{
+    label: 'Window',
+    submenu: [
+      { role: 'minimize' },
+      { role: 'zoom' },
+      { type: 'separator' },
+      { role: 'front' },
+    ],
+  }] : []),
   {
     label: 'Help',
     submenu: [
@@ -85,6 +132,12 @@ function createWindow() {
     autoHideMenuBar: true,
     width: 1200,
     height: 800,
+    minWidth: 800,
+    minHeight: 560,
+    ...(isMac ? {
+      titleBarStyle: 'hiddenInset',
+      trafficLightPosition: { x: 14, y: 13 },
+    } : {}),
     icon: nativeImage.createFromPath(path.join(__dirname, process.platform === 'darwin' ? 'icon.icns' : 'app/icon-256.png')),
     webPreferences: {
       nodeIntegration: false,
@@ -94,22 +147,33 @@ function createWindow() {
   };
 
   if (saved) {
-    // Validate that the saved position is still on a visible display
-    const displays = screen.getAllDisplays();
-    const visible = displays.some(d => {
-      const b = d.bounds;
-      return saved.x >= b.x && saved.y >= b.y &&
-             saved.x < b.x + b.width && saved.y < b.y + b.height;
-    });
-    if (visible) {
-      opts.x = saved.x;
-      opts.y = saved.y;
+    // Restore size (clamped to minimums)
+    if (saved.width && saved.height) {
+      opts.width  = Math.max(opts.minWidth,  saved.width);
+      opts.height = Math.max(opts.minHeight, saved.height);
     }
-    opts.width = saved.width;
-    opts.height = saved.height;
+
+    // Validate position: the window must substantially overlap at least one display
+    if (saved.x != null && saved.y != null) {
+      const winRect = { x: saved.x, y: saved.y, w: opts.width, h: opts.height };
+      const displays = screen.getAllDisplays();
+      const onScreen = displays.some(d => {
+        const b = d.workArea;
+        const ox = Math.max(0, Math.min(winRect.x + winRect.w, b.x + b.width)  - Math.max(winRect.x, b.x));
+        const oy = Math.max(0, Math.min(winRect.y + winRect.h, b.y + b.height) - Math.max(winRect.y, b.y));
+        return ox * oy > 10000; // at least ~100×100 px overlap
+      });
+      if (onScreen) {
+        opts.x = saved.x;
+        opts.y = saved.y;
+      }
+    }
   }
 
   mainWindow = new BrowserWindow(opts);
+
+  // Centre if we couldn't restore a valid position
+  if (opts.x == null) mainWindow.center();
 
   if (saved?.isFullScreen) {
     mainWindow.setFullScreen(true);

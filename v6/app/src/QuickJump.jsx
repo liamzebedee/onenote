@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'preact/hooks';
+import { useState, useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { appState, jumpToPage } from './store.js';
 
 function flattenPages(pages, sectionId, sectionTitle) {
@@ -42,12 +42,12 @@ export function QuickJump({ onClose }) {
   useEffect(() => { setActiveIdx(0); }, [query]);
 
   // Scroll active result into view
-  useEffect(() => {
+  useLayoutEffect(() => {
     listRef.current?.children[clampedIdx]?.scrollIntoView({ block: 'nearest' });
   }, [clampedIdx]);
 
   // Scroll to current page on open (before any query)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!q) listRef.current?.children[clampedIdx]?.scrollIntoView({ block: 'center' });
   }, []);
 

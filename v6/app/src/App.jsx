@@ -94,13 +94,20 @@ export function App() {
   const sec = nb?.sections.find(s => s.id === ui.sectionId);
   const page = sec ? findInTree(sec.pages, ui.pageId) : null;
 
+  const SECTION_COLORS = [
+    '#fce4b8', '#b8d4f0', '#c8e6c0', '#f0c0c0',
+    '#d8c8f0', '#f0d8b0', '#b8e0e0', '#f0c8e0',
+  ];
+  const secIdx = nb?.sections.findIndex(s => s.id === ui.sectionId) ?? 0;
+  const sectionColor = nb ? SECTION_COLORS[secIdx % SECTION_COLORS.length] : '#e8e8e8';
+
   return (
     <>
       <FormatToolbar />
       <SectionPanel />
       <div id="body-row">
         <NotebookBar />
-        <div id="main">
+        <div id="section-desk" style={{ background: sectionColor }}>
           <div id="canvas-area">
             <Canvas page={page} />
           </div>

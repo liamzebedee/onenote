@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
 import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage } from './store.js';
+
+const SECTION_COLORS = [
+  '#fce4b8', '#b8d4f0', '#c8e6c0', '#f0c0c0',
+  '#d8c8f0', '#f0d8b0', '#b8e0e0', '#f0c8e0',
+];
 import { openContextMenu } from './ContextMenu.jsx';
 
 // ── Helpers for collecting page IDs from tree ──────

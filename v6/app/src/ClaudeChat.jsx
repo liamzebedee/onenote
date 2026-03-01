@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'preact/hooks';
+import { useRef, useEffect, useLayoutEffect, useCallback } from 'preact/hooks';
 import { claudeChat, sendClaudeMessage, closeClaudeChat, updateClaudeChatPosition } from './store.js';
 
 function renderMarkdown(text) {
@@ -35,7 +35,7 @@ export function ClaudeChat() {
   const dragRef = useRef(null);
 
   // Auto-scroll on new messages
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }

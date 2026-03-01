@@ -48,6 +48,10 @@ contextBridge.exposeInMainWorld('notebook', {
   // Open URL in system browser
   openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
 
+  // Canvas zoom commands from menu
+  onCanvasZoom: (cb) => ipcRenderer.on('canvas:zoom', (_, dir) => cb(dir)),
+  offCanvasZoom: () => ipcRenderer.removeAllListeners('canvas:zoom'),
+
   // Listen for state changes from sync
   onStateChanged: (callback) => {
     ipcRenderer.on('notebook:state-changed', (event, state) => {

@@ -1,5 +1,5 @@
 import { createContext } from 'preact';
-import { useRef, useEffect, useState, useCallback } from 'preact/hooks';
+import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
 import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache } from './store.js';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
@@ -28,20 +28,25 @@ export function FormatToolbar() {
     { cmd: 'link', node: '⌘K', title: 'Insert link' },
   ];
   return (
-    <div id="format-toolbar">
-      {btns.map((b, i) => b === null
-        ? <span key={i} class="fmt-sep" />
-        : <button key={b.cmd} class="fmt-btn" title={b.title} onMouseDown={e => { e.preventDefault(); execFmt(b.cmd); }}>{b.node}</button>
-      )}
-      <span class="fmt-sep" />
-      <button
-        class="fmt-btn fmt-btn--wand"
-        title="Drag onto canvas to chat with Claude"
-        draggable
-        onDragStart={e => { e.dataTransfer.setData('application/x-notebound-claude', '1'); }}
-      >✨</button>
-      <span class="canvas-hint">Click to add block · Space+drag to pan · Ctrl+scroll zoom</span>
-    </div>
+    <>
+      <div id="titlebar">
+        <span class="toolbar-title">Notebound</span>
+      </div>
+      <div id="format-toolbar">
+        {btns.map((b, i) => b === null
+          ? <span key={i} class="fmt-sep" />
+          : <button key={b.cmd} class="fmt-btn" title={b.title} onMouseDown={e => { e.preventDefault(); execFmt(b.cmd); }}>{b.node}</button>
+        )}
+        <span class="fmt-sep" />
+        <button
+          class="fmt-btn fmt-btn--wand"
+          title="Drag onto canvas to chat with Claude"
+          draggable
+          onDragStart={e => { e.dataTransfer.setData('application/x-notebound-claude', '1'); }}
+        >✨</button>
+        <span class="canvas-hint">Click to add block · Space+drag to pan · Ctrl+scroll zoom</span>
+      </div>
+    </>
   );
 }
 
@@ -51,7 +56,7 @@ function PageTitle({ page, onEnter }) {
   const ref = useRef(null);
   const editing = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current && !editing.current) ref.current.textContent = page?.title ?? '';
   }, [page?.id, page?.title]);
 
@@ -137,22 +142,58 @@ export function Canvas({ page }) {
     sizerRef.current.style.height = (totalH * zoom) + 'px';
   }
 
-  // ── Sync view when page changes ──────────────────────────
+  // ── Fixed zoom levels (menu zoom in/out/reset) ───────────
+
+  const ZOOM_LEVELS = [0.5, 0.6, 0.75, 0.8, 1.0, 1.25, 1.5, 2.0];
+
+  function applyZoom(nz) {
+    const el = containerRef.current;
+    if (!el || !innerRef.current) return;
+    const { zoom } = viewRef.current;
+    const mx = el.clientWidth / 2;
+    const my = el.clientHeight / 2;
+    const cx = (mx + el.scrollLeft) / zoom;
+    const cy = (my + el.scrollTop) / zoom;
+    const newScrollLeft = Math.max(0, cx * nz - mx);
+    const newScrollTop  = Math.max(0, cy * nz - my);
+    viewRef.current = { zoom: nz };
+    innerRef.current.style.transform = `scale(${nz})`;
+    updateSizer(newScrollLeft, newScrollTop);
+    el.scrollLeft = newScrollLeft;
+    el.scrollTop  = newScrollTop;
+    updatePageView(newScrollLeft / nz, newScrollTop / nz, nz);
+  }
 
   useEffect(() => {
+    function onZoom(dir) {
+      const cur = viewRef.current.zoom;
+      let nz;
+      if (dir === 'reset') {
+        nz = 1.0;
+      } else if (dir === 'in') {
+        nz = ZOOM_LEVELS.find(l => l > cur + 0.01) ?? ZOOM_LEVELS[ZOOM_LEVELS.length - 1];
+      } else {
+        nz = [...ZOOM_LEVELS].reverse().find(l => l < cur - 0.01) ?? ZOOM_LEVELS[0];
+      }
+      applyZoom(nz);
+    }
+    window.notebook?.onCanvasZoom(onZoom);
+    return () => window.notebook?.offCanvasZoom();
+  }, []);
+
+  // ── Sync view when page changes ──────────────────────────
+
+  useLayoutEffect(() => {
     if (!page || !containerRef.current || !innerRef.current) return;
     const zoom = page.zoom ?? 1;
     viewRef.current = { zoom };
     innerRef.current.style.transform = `scale(${zoom})`;
-    updateSizer();
-    // Set scroll after sizer is sized (rAF ensures layout is flushed)
     const targetLeft = (page.panX ?? 0) * zoom;
     const targetTop  = (page.panY ?? 0) * zoom;
-    requestAnimationFrame(() => {
-      if (!containerRef.current) return;
-      containerRef.current.scrollLeft = targetLeft;
-      containerRef.current.scrollTop  = targetTop;
-    });
+    // Size sizer with target scroll before applying scroll (prevents browser clamping)
+    updateSizer(targetLeft, targetTop);
+    containerRef.current.scrollLeft = targetLeft;
+    containerRef.current.scrollTop  = targetTop;
     setSelected(new Set());
   }, [page?.id]);
 
