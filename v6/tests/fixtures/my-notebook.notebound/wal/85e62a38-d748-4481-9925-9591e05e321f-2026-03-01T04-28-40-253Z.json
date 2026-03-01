@@ -1,0 +1,47 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772339320253,
+  "ops": [
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "834deebb-ff07-48ff-8110-0cd1d5e05f40",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772339301194,
+      "id": "dd443722-8ff3-44b6-aace-c292d9b6f926"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "ab824478-b4d4-4e1c-8be0-1f67c6f62eb5",
+      "x": 1242,
+      "y": 287,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772339301315,
+      "id": "7e54d0f8-0294-4ac6-85c4-84e9e9798ca7"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "ab824478-b4d4-4e1c-8be0-1f67c6f62eb5",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772339302152,
+      "id": "683bdf7f-16ca-4819-bc54-5ee74d7180d0"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "fbb50ed8-255e-4597-99ff-8f5afde3d918",
+        "x": 40,
+        "y": 788.6589307240585,
+        "w": 1667,
+        "html": "<br>    4. Inoculate the liquid cultures (by introducing single colonies)<br>3. Transcription + Translati",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772339311162,
+      "id": "1263ed4b-5068-4fad-910c-40467c127356"
+    }
+  ]
+}

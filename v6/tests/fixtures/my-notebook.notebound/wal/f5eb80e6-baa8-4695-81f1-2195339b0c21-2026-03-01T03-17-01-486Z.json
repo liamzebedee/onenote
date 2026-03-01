@@ -1,0 +1,16 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772335021486,
+  "ops": [
+    {
+      "type": "block-move",
+      "pageId": "d5b19ef4-22ad-48f8-a111-09ee122898fa",
+      "blockId": "f88c61ad-06d0-476b-bc5e-bb78610e614d",
+      "x": 835,
+      "y": 84,
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335019899,
+      "id": "26f35d90-e01e-4af4-bacc-ae1e962e3b8e"
+    }
+  ]
+}

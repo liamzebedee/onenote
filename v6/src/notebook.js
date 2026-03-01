@@ -30,19 +30,17 @@ class NotebookManager {
   // Create a new .notebound directory
   create(dirPath) {
     fs.mkdirSync(dirPath, { recursive: true });
-    fs.mkdirSync(path.join(dirPath, 'snapshots'), { recursive: true });
     fs.mkdirSync(path.join(dirPath, 'wal'), { recursive: true });
     fs.mkdirSync(path.join(dirPath, 'blobs'), { recursive: true });
 
     // Marker file
     fs.writeFileSync(path.join(dirPath, MARKER_FILE), '');
 
-    // Generate device ID
-    const deviceId = crypto.randomUUID();
+    const notebookId = crypto.randomUUID();
     const meta = {
       name: path.basename(dirPath, '.notebound'),
       createdAt: Date.now(),
-      deviceId,
+      notebookId,
     };
     fs.writeFileSync(path.join(dirPath, META_FILE), JSON.stringify(meta, null, 2));
 
@@ -50,7 +48,8 @@ class NotebookManager {
   }
 
   // Open an existing .notebound directory (or create if it doesn't exist)
-  open(dirPath, deviceId) {
+  // userDataPath: local app data dir for device-local caches (snapshots)
+  open(dirPath, deviceId, userDataPath) {
     this.notebookPath = dirPath;
 
     // Create if doesn't exist
@@ -59,7 +58,7 @@ class NotebookManager {
     }
 
     // Ensure subdirectories exist
-    for (const sub of ['snapshots', 'wal', 'blobs']) {
+    for (const sub of ['wal', 'blobs']) {
       fs.mkdirSync(path.join(dirPath, sub), { recursive: true });
     }
 
@@ -74,21 +73,32 @@ class NotebookManager {
     if (!fs.existsSync(metaPath)) {
       this.create(dirPath);
     }
+    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+
+    // Migrate: ensure meta has a notebookId
+    if (!meta.notebookId) {
+      meta.notebookId = this._detectNotebookId(path.join(dirPath, 'wal')) || crypto.randomUUID();
+      fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
+    }
 
     // deviceId is per-machine, passed in from local config (not from shared meta.json)
     this.deviceId = deviceId || crypto.randomUUID();
+    this.notebookId = meta.notebookId;
+
+    // Snapshot cache lives in local userData, not in the shared .notebound bundle
+    if (userDataPath) {
+      this.snapshotCacheDir = path.join(userDataPath, 'snapshots', meta.notebookId);
+    } else {
+      // Fallback for tests or CLI usage without Electron
+      this.snapshotCacheDir = path.join(dirPath, 'snapshots');
+    }
+    fs.mkdirSync(this.snapshotCacheDir, { recursive: true });
 
     // Rebuild state from snapshots + WAL
-    const snapshotsDir = path.join(dirPath, 'snapshots');
     const walDir = path.join(dirPath, 'wal');
-    const result = rebuildState(snapshotsDir, walDir);
+    const result = rebuildState(this.snapshotCacheDir, walDir, meta.notebookId, meta.name);
     this.state = result.state;
     this.appliedBatches = result.appliedBatches;
-
-    // If state is empty (no notebooks), initialize with defaults
-    if (!this.state.notebooks || this.state.notebooks.length === 0) {
-      this.state = defaultState();
-    }
 
     // Initialize WAL (CRDTs are lazy — created on first edit)
     this.wal = new WAL();
@@ -99,6 +109,18 @@ class NotebookManager {
     this.sync.start();
 
     return this.state;
+  }
+
+  // Scan WAL ops to find the notebookId used by existing data (migration only)
+  _detectNotebookId(walDir) {
+    const batches = WAL.listBatches(walDir);
+    for (const file of batches) {
+      const batch = WAL.readBatch(path.join(walDir, file));
+      for (const op of batch.ops) {
+        if (op.notebookId) return op.notebookId;
+      }
+    }
+    return null;
   }
 
   // Apply a user operation
@@ -158,10 +180,9 @@ class NotebookManager {
 
     // Check if we should create a snapshot
     const batchCount = WAL.listBatches(walDir).length;
-    if (batchCount > SNAPSHOT_THRESHOLD) {
-      const snapshotsDir = path.join(this.notebookPath, 'snapshots');
+    if (batchCount > SNAPSHOT_THRESHOLD && this.snapshotCacheDir) {
       this._serializeCrdts();
-      createSnapshot(this.state, snapshotsDir, Array.from(this.appliedBatches));
+      createSnapshot(this.state, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId);
     }
   }
 
@@ -182,16 +203,18 @@ class NotebookManager {
         console.log('[notebound] sealed WAL batch:', filename);
         if (filename) this.appliedBatches.add(filename);
 
-        // Create a snapshot on close
-        const snapshotsDir = path.join(this.notebookPath, 'snapshots');
-        this._serializeCrdts();
-        const snapFile = createSnapshot(this.state, snapshotsDir, Array.from(this.appliedBatches));
-        console.log('[notebound] created snapshot:', snapFile);
+        // Create a snapshot on close (in local device cache)
+        if (this.snapshotCacheDir) {
+          this._serializeCrdts();
+          const snapFile = createSnapshot(this.state, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId);
+          console.log('[notebound] created snapshot:', snapFile);
+        }
       }
       this.wal = null;
     }
 
     this.notebookPath = null;
+    this.snapshotCacheDir = null;
     this.state = null;
     this.deviceId = null;
   }
@@ -305,7 +328,7 @@ class NotebookManager {
   }
 
   get snapshotsDir() {
-    return this.notebookPath ? path.join(this.notebookPath, 'snapshots') : null;
+    return this.snapshotCacheDir || null;
   }
 
   get blobsDir() {

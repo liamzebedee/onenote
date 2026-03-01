@@ -1,0 +1,38 @@
+{
+  "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+  "sealedAt": 1772281210221,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "html": "<b>Recombinant expression</b><div>1. Clone the coding sequence into an expression vector (a plasmid).</div><div>2. Transform the plasmid into host cells.</div><div>&nbsp; &nbsp; 1. Bacteria are given a heat shock.</div><div>&nbsp; &nbsp; 2. Colonies grow.</div><div>&nbsp; &nbsp; 3. Pick colonies.</div><div>&nbsp; &nbsp; 4. Inoculate the liquid cultures (by introducing single colonies)</div><div>3. Transcription + Translation</div><div>4. Harvest. Cells are lysed. Protein is purified.</div><div><br></div><div><br></div><div><br></div>",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281205334,
+      "id": "59a7f720-e868-46a1-a290-264c5150d6ad"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "a023fc30-2215-4592-b0a8-14ef8a5eceee",
+        "x": 682.3398593914641,
+        "y": 27.207546909456656,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281205368,
+      "id": "1b03433d-9804-4b63-bd85-70842f26b008"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "a023fc30-2215-4592-b0a8-14ef8a5eceee",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281206513,
+      "id": "37e5cc82-46aa-4a1c-b0f3-61413ed4bb3c"
+    }
+  ]
+}

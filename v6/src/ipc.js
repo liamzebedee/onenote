@@ -2,21 +2,21 @@
 // Bridges renderer to the notebook manager
 
 const { ipcMain, dialog, app, shell } = require('electron');
-const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { NotebookManager } = require('./notebook');
 const blobs = require('./blobs');
 const { createVFS, cleanupVFS } = require('./claude-vfs');
 const { ClaudeAgent } = require('./claude-agent');
+const { config, writeConfig } = require('./config');
 
 let manager = null;
 let mainWindow = null;
-let _configPath = null;
 let _deviceId = null;
 let _claudeAgent = null;
 let _claudeVfsPath = null;
 let _claudePageMap = null;
+let _userDataPath = null;
 
 function _findPage(pages, id) {
   for (const p of pages) {
@@ -26,10 +26,10 @@ function _findPage(pages, id) {
   return null;
 }
 
-function setupIPC(win, configPath, deviceId) {
+function setupIPC(win, deviceId, userDataPath) {
   mainWindow = win;
-  _configPath = configPath;
   _deviceId = deviceId;
+  _userDataPath = userDataPath;
   manager = new NotebookManager();
 
   // Forward renderer logs to main process stdout
@@ -39,7 +39,9 @@ function setupIPC(win, configPath, deviceId) {
 
   // Open or create a notebook
   ipcMain.handle('notebook:open', async (event, notebookPath) => {
+    console.log('[ipc] notebook:open called, path:', notebookPath);
     if (manager.notebookPath) {
+      console.log('[ipc] closing existing notebook:', manager.notebookPath);
       manager.close();
     }
 
@@ -49,7 +51,10 @@ function setupIPC(win, configPath, deviceId) {
       notebookPath = path.join(dropbox, 'My Notebook.notebound');
     }
 
-    const state = manager.open(notebookPath, _deviceId);
+    const state = manager.open(notebookPath, _deviceId, _userDataPath);
+    console.log('[ipc] notebook:open result — notebooks:', state?.notebooks?.length,
+      'sections:', state?.notebooks?.[0]?.sections?.length,
+      'ui:', JSON.stringify(state?.ui));
 
     // Set up state change listener to push to renderer
     manager.onStateChange((newState) => {
@@ -108,9 +113,10 @@ function setupIPC(win, configPath, deviceId) {
   // Show open dialog to pick a .notebound directory
   ipcMain.handle('notebook:pick-directory', async () => {
     const result = await dialog.showOpenDialog(mainWindow, {
-      properties: ['openDirectory', 'createDirectory'],
-      title: 'Open or Create Notebook',
+      properties: ['openDirectory'],
+      title: 'Open Notebook',
       buttonLabel: 'Open Notebook',
+      filters: [{ name: 'Notebound Notebooks', extensions: ['notebound'] }],
     });
     if (result.canceled || result.filePaths.length === 0) return null;
     return result.filePaths[0];
@@ -147,18 +153,17 @@ function setupIPC(win, configPath, deviceId) {
 
   // Save notebook path to config (merges with existing config, maintains recents)
   ipcMain.handle('notebook:save-config', async (event, info) => {
-    let config = {};
-    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
     const notebookPath = typeof info === 'string' ? info : info.path;
     const name = (typeof info === 'object' && info.name) || path.basename(notebookPath, '.notebound');
+    console.log('[ipc] save-config — path:', notebookPath, 'name:', name);
     config.notebookPath = notebookPath;
-    // Maintain recentNotebooks array
     const recents = Array.isArray(config.recentNotebooks) ? config.recentNotebooks : [];
     const entry = { path: notebookPath, name, lastOpened: Date.now() };
     const filtered = recents.filter(r => r.path !== notebookPath);
     filtered.unshift(entry);
     config.recentNotebooks = filtered.slice(0, 10);
-    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+    writeConfig();
+    console.log('[ipc] config written, notebookPath now:', config.notebookPath);
   });
 
   // ── Claude agent IPC ─────────────────────────────────
@@ -223,38 +228,65 @@ function setupIPC(win, configPath, deviceId) {
 
   // Save UI navigation state per notebook path
   ipcMain.handle('notebook:save-ui-state', async (event, notebookPath, uiState) => {
-    let config = {};
-    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
     if (!config.uiPositions) config.uiPositions = {};
     config.uiPositions[notebookPath] = uiState;
-    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+    writeConfig();
   });
 
   // Save per-page view state (pan/zoom) to local config, keyed by notebookPath → pageId
   ipcMain.handle('notebook:save-page-view', async (event, notebookPath, pageId, panX, panY, zoom) => {
-    let config = {};
-    try { config = JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch {}
     if (!config.pageViews) config.pageViews = {};
     if (!config.pageViews[notebookPath]) config.pageViews[notebookPath] = {};
-    config.pageViews[notebookPath][pageId] = { panX, panY, zoom };
-    try { fs.writeFileSync(_configPath, JSON.stringify(config)); } catch {}
+    const existing = config.pageViews[notebookPath][pageId] || {};
+    config.pageViews[notebookPath][pageId] = { ...existing, panX, panY, zoom };
+    writeConfig();
+  });
+
+  // Save per-page caret position to local config
+  ipcMain.handle('notebook:save-page-caret', async (event, notebookPath, pageId, caretBlockId, caretOffset) => {
+    if (!config.pageViews) config.pageViews = {};
+    if (!config.pageViews[notebookPath]) config.pageViews[notebookPath] = {};
+    const existing = config.pageViews[notebookPath][pageId] || {};
+    config.pageViews[notebookPath][pageId] = { ...existing, caretBlockId, caretOffset };
+    writeConfig();
   });
 
   // Get config (for renderer to check if first-run)
   ipcMain.handle('notebook:get-config', async () => {
-    try { return JSON.parse(fs.readFileSync(_configPath, 'utf8')); } catch { return {}; }
+    console.log('[ipc] get-config — notebookPath:', config.notebookPath, 'recents:', config.recentNotebooks?.length ?? 0);
+    return config;
   });
 }
 
 // Open default notebook eagerly from main process (no IPC round-trip)
-function openDefault(win, notebookPath, deviceId) {
+function openDefault(win, notebookPath, deviceId, userDataPath) {
   mainWindow = win;
   _deviceId = deviceId;
+  _userDataPath = userDataPath;
   console.log('[notebound] openDefault called, path:', notebookPath, 'manager:', !!manager);
-  if (!manager) manager = new NotebookManager();
-  if (manager.notebookPath) manager.close();
-  manager.open(notebookPath, deviceId);
-  console.log('[notebound] notebook opened, state notebooks:', manager.state?.notebooks?.length);
+  try {
+    if (!manager) manager = new NotebookManager();
+    if (manager.notebookPath) manager.close();
+    manager.open(notebookPath, deviceId, userDataPath);
+    console.log('[notebound] notebook opened, state notebooks:', manager.state?.notebooks?.length);
+  } catch (err) {
+    console.error('[notebound] openDefault failed:', err.message);
+    // Clear the saved path so the welcome screen shows with recents
+    config.notebookPath = null;
+    writeConfig();
+    // Tell renderer to stop waiting and show welcome screen
+    const notify = () => {
+      if (win && !win.isDestroyed()) {
+        win.webContents.send('notebook:open-failed');
+      }
+    };
+    if (win.webContents.isLoading()) {
+      win.webContents.once('did-finish-load', notify);
+    } else {
+      notify();
+    }
+    return;
+  }
 
   manager.onStateChange((newState) => {
     if (mainWindow && !mainWindow.isDestroyed()) {

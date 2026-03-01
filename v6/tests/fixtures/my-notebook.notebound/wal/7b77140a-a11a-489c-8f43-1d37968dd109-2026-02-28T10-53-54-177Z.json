@@ -1,0 +1,16 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772276034177,
+  "ops": [
+    {
+      "type": "page-view",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276032971,
+      "id": "df0eadf2-d7dc-4afa-a502-9155f5f9fb49"
+    }
+  ]
+}

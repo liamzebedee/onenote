@@ -1,0 +1,110 @@
+{
+  "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+  "sealedAt": 1772281732675,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "78a013e6-3376-4eb0-8707-79f24144b42a",
+        "x": 1812.904267515491,
+        "y": 265.98525650465143,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281703863,
+      "id": "e1459d3d-f8c6-4737-bfe7-590131f49dca"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "78a013e6-3376-4eb0-8707-79f24144b42a",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281705964,
+      "id": "42300bf9-71fc-4df5-8201-18cadd2c293b"
+    },
+    {
+      "id": "fd4c092d-3d87-4034-8def-f41e80ab1321",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281712106,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 860
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 1000
+          }
+        }
+      ]
+    },
+    {
+      "id": "e04168fa-72e0-4f71-9ae1-1f2640774c4c",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281712305,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 858
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 859
+          }
+        }
+      ]
+    },
+    {
+      "id": "5ad7497d-9054-4d5d-81ec-4a3aba8aa13a",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281713017,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 856
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 857
+          }
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "html": "<b>Recombinant expression</b><div>1. Clone the coding sequence into an expression vector (a plasmid).</div><div>2. Transform the plasmid into host cells.</div><div>&nbsp; &nbsp; 1. Bacteria are given a heat shock.</div><div>&nbsp; &nbsp; 2. Colonies grow.</div><div>&nbsp; &nbsp; 3. Pick colonies.</div><div>&nbsp; &nbsp; 4. Inoculate the liquid cultures (by introducing single colonies)</div><div>3. Transcription + Translation</div><div>4. Harvest. Cells are lysed. Protein is purified.</div>",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772281725039,
+      "id": "539623b8-93f6-4d75-bd5f-20596f8f5626"
+    }
+  ]
+}

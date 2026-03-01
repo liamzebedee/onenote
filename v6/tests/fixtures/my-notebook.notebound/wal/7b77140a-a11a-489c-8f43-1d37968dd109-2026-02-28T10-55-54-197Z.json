@@ -1,0 +1,255 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772276154197,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "html": "<ul><li><b>Sharks -&nbsp;<span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">North Queensland</span></b></li><li><b><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\"><br></span></b></li></ul>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276132941,
+      "id": "53997303-c505-4562-9873-bba2d6dec386"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "1bfb05fc-d3c7-4f4e-8fde-349236ab2dfa",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "fe93f099-5d00-4c4c-87c7-dc0586ab3da6",
+      "blocks": [
+        {
+          "id": "fe93f099-5d00-4c4c-87c7-dc0586ab3da6",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        },
+        {
+          "id": "ff088d05-7768-4f85-b925-0f1336dca480",
+          "x": 181.81640625,
+          "y": 81.32421875,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276134660,
+      "id": "5dca013f-bcd1-4e1a-bf0b-eafe91fdef79"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core conepts",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276138109,
+      "id": "8f652a04-5314-47c1-ae13-17a314a760ac"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core conepts",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276138126,
+      "id": "e7e85138-f902-4976-8076-467d26725ba9"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276141494,
+      "id": "a6b05b05-9a2b-4066-bbe5-4082f91f2b34"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276141512,
+      "id": "dc741b14-31a3-41fb-9a01-85768ab72dc5"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "ff088d05-7768-4f85-b925-0f1336dca480",
+        "x": 181.81640625,
+        "y": 81.32421875,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276142627,
+      "id": "ab3acf4e-7f2e-44dc-b1c2-e11b2e6072f9"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "ff088d05-7768-4f85-b925-0f1336dca480",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276143167,
+      "id": "a53dcf7f-139d-48eb-a7d5-5c0eeb1e8fe7"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "0bbfca2f-250a-401b-9fe4-55567e53c198",
+        "x": 90.53125,
+        "y": 54.40625,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276143226,
+      "id": "740e7070-fde4-4a3c-a5d4-5527577cfeea"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "0bbfca2f-250a-401b-9fe4-55567e53c198",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276143604,
+      "id": "cabf03ba-1d08-4620-b8ad-21697df4800d"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+        "x": 41.44921875,
+        "y": 56.23046875,
+        "w": 480,
+        "html": "<ul><li>DNA</li><li><br></li></ul>",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276143683,
+      "id": "9a9dee5f-f8cd-4e46-ab3a-10cadd92494f"
+    },
+    {
+      "id": "4bddb102-3504-4301-b2c8-3b5eb6bc068b",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276144352,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 1
+          },
+          "parentId": {
+            "device": "__root__",
+            "counter": 0
+          },
+          "char": "D"
+        }
+      ]
+    },
+    {
+      "id": "be47bb53-4f7b-4dfc-a5dc-5c368b613228",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276144503,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 2
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 1
+          },
+          "char": "N"
+        }
+      ]
+    },
+    {
+      "id": "ea2b36b1-23cc-453a-bb95-256451de257f",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276144553,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 3
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 2
+          },
+          "char": "A"
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "DNA",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276146623,
+      "id": "210ce951-2bb8-4996-b8c6-7fca416cfb45"
+    },
+    {
+      "id": "87380fbb-34bf-4523-871b-3033daa3c09a",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276148282,
+      "type": "block-text-op",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 4
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 3
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 5
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 4
+          },
+          "char": "\n"
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li><li><br></li></ul>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276148539,
+      "id": "63c914dd-1f3f-4746-b9f8-ed937b8c5c66"
+    }
+  ]
+}

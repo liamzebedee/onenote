@@ -1,0 +1,69 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772267843828,
+  "ops": [
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "6d0d2988-d7d4-4333-ac4f-ad24f7efa589",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "bbed4b7a-6eb4-4531-8fde-5d5c812eafbe",
+      "blocks": [
+        {
+          "id": "bbed4b7a-6eb4-4531-8fde-5d5c812eafbe",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772267836465,
+      "id": "41eb6f68-0440-4a77-969d-b15e0f2f4034"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "3814e265-9767-4065-9503-92707ebde999",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "ccc7063b-4206-4b23-88b9-1d00d55a5b70",
+      "blocks": [
+        {
+          "id": "ccc7063b-4206-4b23-88b9-1d00d55a5b70",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772267836601,
+      "id": "e03bee95-c94e-4b75-8c49-46122ffcf573"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "9f09c47d-ba9e-44a4-b388-1745094bd02b",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "b01c4679-563e-45ba-a7df-f05a3abef426",
+      "blocks": [
+        {
+          "id": "b01c4679-563e-45ba-a7df-f05a3abef426",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772267836769,
+      "id": "5c9e5fb2-da47-4312-aad5-6f738e2fdb88"
+    }
+  ]
+}

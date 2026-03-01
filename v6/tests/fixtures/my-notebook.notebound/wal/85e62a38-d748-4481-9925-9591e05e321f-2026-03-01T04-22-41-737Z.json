@@ -1,0 +1,15 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772338961737,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li></ul><ul><li>DNA synthesis</li><li>DNA manipulation</li><li>DNA replication</li><li>Restriction enzymes</li><li>RNA</li><ul><li>mRNA</li><ul><li>codons</li></ul><li>tRNA</li><ul><li>anti codon</li></ul></ul><li>Central Dogma</li><ul><li>DNA -&gt; mRNA -&gt; Amino acid chain (polypeptide) -&gt; Folding into 3D protein</li></ul><li>Transcription</li><li>Translation</li><li>Eukaryotic</li><li>Prokaryotic</li><li>Protein synthesis</li><li>Plasmids</li><li>Peptide synthesis</li><li>Pippetting&nbsp;</li><ul><li>Units</li><ul><li>Moles - absolute amount of substance</li><li><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">Molarity - concentration</span></li></ul><li>Assays</li><li>Serial dilutions</li></ul></ul><p><br></p>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338946260,
+      "id": "b9d9b216-9629-455d-aa48-f4af92606720"
+    }
+  ]
+}

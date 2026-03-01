@@ -1,0 +1,86 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772262108379,
+  "ops": [
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "aff0ac7c-504c-4036-8f0d-557fcd1018cf",
+      "x": 739,
+      "y": 280,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262099540,
+      "id": "32c48574-6866-4ea2-b86e-83b469ec62ef"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "2d9d1cc8-bbf6-4ccf-9f65-f6ce3e60da81",
+      "x": 163,
+      "y": 110,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262100548,
+      "id": "3654c15e-6725-4125-b982-9c22323a9908"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "363262b3-c20e-4d72-b491-d77ea0680c3c",
+      "x": 683,
+      "y": 401,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262101276,
+      "id": "c3e46018-b9bc-4ef1-be87-2a139903a625"
+    },
+    {
+      "type": "section-add",
+      "notebookId": "04c8ce0d-e96d-411c-a5e6-3ab3d5cfcdc4",
+      "sectionId": "17bf43f1-1a5e-414f-96e6-ea6d90b28e06",
+      "title": "New Section",
+      "pages": [
+        {
+          "id": "556b996c-8299-4d64-865a-1e34f9f01657",
+          "title": "Untitled Page",
+          "children": [],
+          "defaultBlockId": "b74f37fe-d113-45ac-a229-2bbe74201956",
+          "blocks": [
+            {
+              "id": "b74f37fe-d113-45ac-a229-2bbe74201956",
+              "x": 0,
+              "y": 0,
+              "w": 480,
+              "html": "",
+              "type": "text"
+            }
+          ],
+          "panX": 0,
+          "panY": 0,
+          "zoom": 1
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262103989,
+      "id": "3186690a-9bab-4754-b1b4-d05c8d0865a0"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "17bf43f1-1a5e-414f-96e6-ea6d90b28e06",
+      "pageId": "556b996c-8299-4d64-865a-1e34f9f01657",
+      "title": "Untitled Page",
+      "defaultBlockId": "b74f37fe-d113-45ac-a229-2bbe74201956",
+      "blocks": [
+        {
+          "id": "b74f37fe-d113-45ac-a229-2bbe74201956",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262103989,
+      "id": "32c0c0ee-38a3-468a-80ea-f9ea7c8e75e2"
+    }
+  ]
+}

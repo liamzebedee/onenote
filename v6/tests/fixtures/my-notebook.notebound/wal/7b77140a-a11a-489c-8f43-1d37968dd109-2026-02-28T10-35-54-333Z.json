@@ -1,0 +1,169 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772274954333,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274927630,
+      "id": "88c12369-3921-42f9-8e35-c97b4d4d7b11"
+    },
+    {
+      "type": "block-add",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "block": {
+        "id": "37c8d21b-e583-48f9-8cab-ae8b2c2c9de5",
+        "x": 1130.53515625,
+        "y": 220.2421875,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274927655,
+      "id": "65b362b8-90ea-4f2b-b5fa-b390708ceb31"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "37c8d21b-e583-48f9-8cab-ae8b2c2c9de5",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274928627,
+      "id": "aeb71457-e85c-47c1-b54f-8b49e754b837"
+    },
+    {
+      "type": "block-move",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "8aa990ee-490c-4b65-a6f3-c16f04394e71",
+      "x": 1148,
+      "y": 104,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274928636,
+      "id": "1d277b32-d8fd-472e-b6f9-ddadf34f5daf"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274930256,
+      "id": "2ac5ad23-9aa6-40d6-838f-45287ea254a0"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "6ccd2184-ae25-4796-9237-f8294213248c",
+      "blockId": "2a48e5bd-cfe7-492d-b5ec-e541bc06fdb8",
+      "html": "<div>I've finally started writing the next chapter of my novel.</div><div>Yes, that's right. A chapter. Of a book I wrote. How fanciful.&nbsp;</div><div><br></div><div><br></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274933215,
+      "id": "6dcc0c88-f3e2-407e-b3c7-abadb6e9a502"
+    },
+    {
+      "type": "block-add",
+      "pageId": "6ccd2184-ae25-4796-9237-f8294213248c",
+      "block": {
+        "id": "c802f20e-a29a-47ec-be15-d8af833d6b44",
+        "x": 332.7890625,
+        "y": 96.18359375,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274933235,
+      "id": "083e53b4-504f-4faf-b933-fa1798485473"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "6ccd2184-ae25-4796-9237-f8294213248c",
+      "blockId": "c802f20e-a29a-47ec-be15-d8af833d6b44",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274934026,
+      "id": "55421cff-1055-42b8-90ae-7957c75bb3dc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 222.43863504321405,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274936678,
+      "id": "b3c4ae5e-7947-43e5-8e18-1c7784700501"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1233.0616572715153,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274940725,
+      "id": "7c2ece48-617e-435e-aad6-de8efe54548a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 897.8801524118778,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274941858,
+      "id": "64573521-6117-4636-b779-8dfb87c3a17b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 284.39642836575314,
+      "panY": 896.864450882,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274943276,
+      "id": "769dddd4-c757-4924-b9ee-f1fbf35f7a55"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 896.864450882,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274945043,
+      "id": "a5c3bee0-f2c8-4c7d-a63a-f8ac9a478e6c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1721.6140931426842,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274946194,
+      "id": "ab82348b-16e6-4445-87b2-3076d2024913"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "74fa08fb-d4ec-4b20-964a-a26590e6c33e",
+      "x": 729,
+      "y": 2057,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274947289,
+      "id": "fd0d19e9-18bb-49b5-ba1e-93e38b355755"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "x": 61,
+      "y": 1848,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274948393,
+      "id": "1a10fafe-0251-4e60-af7b-62c4d596aba0"
+    }
+  ]
+}

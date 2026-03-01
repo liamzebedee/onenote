@@ -9,8 +9,7 @@ function mkBlock(x = 0, y = 0, w = 480) {
 }
 
 function mkPage(title = 'Untitled Page') {
-  const db = mkBlock(0, 0, 480);
-  return { id: uid(), title, children: [], defaultBlockId: db.id, blocks: [db], panX: 0, panY: 0, zoom: 1, createdAt: Date.now() };
+  return { id: uid(), title, children: [], blocks: [], panX: 0, panY: 0, zoom: 1, createdAt: Date.now() };
 }
 
 function mkSection(title = 'New Section') {
@@ -92,12 +91,22 @@ export function toggleSwitcher() { showSwitcher.value = !showSwitcher.value; }
 export function closeSwitcher() { showSwitcher.value = false; }
 
 // Load recents from config on init; also determine if a notebook will be opened
+const _log = (...args) => { console.log('[store]', ...args); if (window.log) window.log('[store]', ...args); };
 if (hasIPC) {
   window.notebook.getConfig().then(cfg => {
+    _log('init getConfig result — notebookPath:', cfg.notebookPath, 'recents:', cfg.recentNotebooks?.length ?? 0);
     if (Array.isArray(cfg.recentNotebooks)) recentNotebooks.value = cfg.recentNotebooks;
     // If there's no saved notebook path, nothing will load — stop initializing now
-    if (!cfg.notebookPath) initializing.value = false;
+    if (!cfg.notebookPath) {
+      _log('no notebookPath — setting initializing=false (welcome screen)');
+      initializing.value = false;
+    }
     // If there is a path, initializing stays true until onStateChanged fires
+  });
+  // If the default notebook fails to open, show welcome screen
+  window.notebook.onOpenFailed(() => {
+    _log('onOpenFailed fired — setting initializing=false');
+    initializing.value = false;
   });
 } else {
   initializing.value = false;
@@ -206,7 +215,7 @@ export function addNotebook() {
   sendOps([
     { type: 'notebook-add', notebookId: nb.id, title: nb.title, sections: [] },
     { type: 'section-add', notebookId: nb.id, sectionId: sec.id, title: sec.title, pages: [] },
-    { type: 'page-add', sectionId: sec.id, pageId: page.id, title: page.title, defaultBlockId: page.defaultBlockId, blocks: page.blocks },
+    { type: 'page-add', sectionId: sec.id, pageId: page.id, title: page.title, blocks: page.blocks },
   ]);
 }
 
@@ -247,7 +256,7 @@ export function addSection(nbId) {
   });
   sendOps([
     { type: 'section-add', notebookId: nbId, sectionId: sec.id, title: sec.title, pages: [] },
-    { type: 'page-add', sectionId: sec.id, pageId: page.id, title: page.title, defaultBlockId: page.defaultBlockId, blocks: page.blocks },
+    { type: 'page-add', sectionId: sec.id, pageId: page.id, title: page.title, blocks: page.blocks },
   ]);
 }
 
@@ -298,7 +307,7 @@ export function addPage(parentPageId = null) {
     }
     s.ui.pageId = pg.id;
   });
-  sendOp({ type: 'page-add', sectionId: secId, pageId: pg.id, title: pg.title, parentPageId, defaultBlockId: pg.defaultBlockId, blocks: pg.blocks });
+  sendOp({ type: 'page-add', sectionId: secId, pageId: pg.id, title: pg.title, parentPageId, blocks: pg.blocks });
 }
 
 export function renamePage(pageId, title) {
@@ -339,9 +348,24 @@ export function movePage(pageId, targetSecId) {
   sendOp({ type: 'page-move', pageId, targetSectionId: targetSecId });
 }
 
+// ─── Default block width ─────────────────────────────────
+// Width is calibrated so this reference string fits on one line at the default font.
+const DEFAULT_WIDTH_REF = "Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it's power realignment.";
+
+let _defaultBlockWidth = 580; // fallback
+if (typeof document !== 'undefined') {
+  const _m = document.createElement('span');
+  _m.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:14px "Helvetica Neue",Arial,-apple-system,sans-serif;padding:0 8px';
+  _m.textContent = DEFAULT_WIDTH_REF;
+  document.body.appendChild(_m);
+  _defaultBlockWidth = Math.ceil(_m.offsetWidth + 16); // +16 for block padding (8px each side)
+  document.body.removeChild(_m);
+}
+export const DEFAULT_BLOCK_WIDTH = _defaultBlockWidth;
+
 // ─── Block CRUD ──────────────────────────────────────────
 
-export function addBlock(x, y, w = 480, type = 'text', extra = {}) {
+export function addBlock(x, y, w = DEFAULT_BLOCK_WIDTH, type = 'text', extra = {}) {
   const blk = { id: uid(), x, y, w, html: '', type, ...extra };
   const pageId = appState.value.ui.pageId;
   update(s => {
@@ -506,6 +530,17 @@ export function updatePageView(panX, panY, zoom) {
   }
 }
 
+// Caret position memory: pageId → { blockId, offset }
+export const lastCaretPerPage = new Map();
+
+export function savePageCaret(pageId, blockId, offset) {
+  if (hasIPC && _notebookPath && pageId) {
+    window.notebook.savePageCaret(_notebookPath, pageId, blockId, offset);
+  }
+}
+
+export function getNotebookPath() { return _notebookPath; }
+
 export function updatePageTitle(pageId, title) {
   // Silent: sidebar title updates on blur only
   silent(s => {
@@ -531,7 +566,10 @@ export function updatePageTitleAndRefresh(pageId, title) {
 
 export async function openNotebook(notebookPath) {
   if (!hasIPC) return;
+  _log('openNotebook called, path:', notebookPath);
   const state = await window.notebook.open(notebookPath);
+  _log('openNotebook IPC returned — notebooks:', state?.notebooks?.length,
+    'sections:', state?.notebooks?.[0]?.sections?.length);
   if (state) {
     _notebookPath = notebookPath;
 
@@ -555,7 +593,7 @@ export async function openNotebook(notebookPath) {
           lastPagePerSection.set(secId, pgId);
         }
       }
-    } else if (!state.ui) {
+    } else {
       state.ui = {
         notebookId: nb?.id ?? null,
         sectionId: nb?.sections[0]?.id ?? null,
@@ -563,11 +601,13 @@ export async function openNotebook(notebookPath) {
       };
     }
 
+    _log('openNotebook setting appState — ui:', JSON.stringify(state.ui));
     appState.value = state;
     connected.value = true;
     closeSwitcher();
     // Persist with notebook title for recents
     const title = nb?.title || 'Untitled';
+    _log('openNotebook saving config — path:', notebookPath, 'title:', title);
     window.notebook.saveConfig({ path: notebookPath, name: title });
     // Refresh recents
     if (Array.isArray(cfg.recentNotebooks)) recentNotebooks.value = cfg.recentNotebooks;
@@ -697,7 +737,10 @@ export function updateClaudeChatPosition(x, y) {
 
 if (hasIPC) {
   window.notebook.onStateChanged(async (state) => {
-    if (!state || !state.notebooks) return;
+    _log('onStateChanged fired — notebooks:', state?.notebooks?.length,
+      'sections:', state?.notebooks?.[0]?.sections?.length,
+      'nb[0].title:', state?.notebooks?.[0]?.title);
+    if (!state || !state.notebooks) { _log('onStateChanged: no state/notebooks, ignoring'); return; }
 
     // Check if current UI IDs are valid in the incoming state
     const ui = appState.value.ui;
@@ -762,10 +805,17 @@ if (hasIPC) {
           for (const nb of state.notebooks) {
             for (const sec of nb.sections) applyViews(sec.pages);
           }
+          // Restore caret positions from the same pageViews data
+          for (const [pageId, v] of Object.entries(views)) {
+            if (v.caretBlockId) {
+              lastCaretPerPage.set(pageId, { blockId: v.caretBlockId, offset: v.caretOffset ?? 0 });
+            }
+          }
         }
       } catch {}
     }
 
+    _log('onStateChanged applied — ui:', JSON.stringify(state.ui), '_notebookPath:', _notebookPath);
     appState.value = { ...state };
     connected.value = true;
     initializing.value = false;

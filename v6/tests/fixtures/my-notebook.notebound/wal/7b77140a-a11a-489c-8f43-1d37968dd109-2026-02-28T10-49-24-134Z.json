@@ -1,0 +1,189 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772275764134,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "html": "This is pretty incredible LOL.<div>How slow this thing can be.</div><div>LMFAO.</div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275735555,
+      "id": "5a1fc5cf-252a-4b01-b6ae-b50dddaf6d58"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "html": "This is pretty incredible LOL.<div>How slow this thing can be.</div><div>LMFAO.</div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275738307,
+      "id": "a0039a69-b7e6-40fb-8cac-eab265e51625"
+    },
+    {
+      "id": "d32c9836-fe2a-49a9-8649-c06e30e92aa7",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275749511,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "__replay__",
+            "counter": 87
+          },
+          "parentId": {
+            "device": "__replay__",
+            "counter": 52
+          },
+          "char": "h"
+        }
+      ]
+    },
+    {
+      "id": "01f7ff5c-6e3f-4e85-9ed4-e6512f8d52f3",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275749733,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "__replay__",
+            "counter": 88
+          },
+          "parentId": {
+            "device": "__replay__",
+            "counter": 87
+          },
+          "char": "h"
+        }
+      ]
+    },
+    {
+      "id": "59a76af6-6858-4e79-87ca-501b168d99a3",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275749905,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "__replay__",
+            "counter": 89
+          },
+          "parentId": {
+            "device": "__replay__",
+            "counter": 88
+          },
+          "char": "h"
+        }
+      ]
+    },
+    {
+      "id": "74adfe53-6b6b-4ca9-b84e-c33e01556789",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275750381,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "__replay__",
+            "counter": 90
+          },
+          "parentId": {
+            "device": "__replay__",
+            "counter": 89
+          },
+          "char": "h"
+        }
+      ]
+    },
+    {
+      "id": "d25a34c1-196c-475a-9619-9b8ac6262438",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275750822,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "__replay__",
+            "counter": 90
+          }
+        }
+      ]
+    },
+    {
+      "id": "b9e0654a-e333-438a-a7df-57943274901b",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275751145,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "__replay__",
+            "counter": 89
+          }
+        }
+      ]
+    },
+    {
+      "id": "cde204a4-07dd-4a4d-91ef-43e29de92c18",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275751307,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "__replay__",
+            "counter": 88
+          }
+        }
+      ]
+    },
+    {
+      "id": "7ef52af8-a04b-4fe4-bd76-c7f8a83cc055",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275751876,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "__replay__",
+            "counter": 87
+          }
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "html": "This is pretty incredible LOL.<div>How slow this thing can be.</div><div>LMFAO.</div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275752786,
+      "id": "b0124ca9-49cf-4d17-b51a-a076c32abfcf"
+    }
+  ]
+}

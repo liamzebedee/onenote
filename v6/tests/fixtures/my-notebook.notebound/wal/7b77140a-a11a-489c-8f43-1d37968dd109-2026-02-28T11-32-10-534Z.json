@@ -1,0 +1,38 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772278330534,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "e4c11b5b-7695-4506-b171-b8616c4c37db",
+        "x": 772.43359375,
+        "y": 197.92578125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278306061,
+      "id": "dcdc7eff-f6f1-4810-9478-5e788d2ffd61"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "e4c11b5b-7695-4506-b171-b8616c4c37db",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278306504,
+      "id": "211750ed-8a1f-40fe-913b-635aa5f3cc85"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "html": "<b>Recombinant expression</b><div><b><br></b></div><div><br></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278307835,
+      "id": "fd3ca81c-4ae3-4de3-91c6-df9d174c188e"
+    }
+  ]
+}

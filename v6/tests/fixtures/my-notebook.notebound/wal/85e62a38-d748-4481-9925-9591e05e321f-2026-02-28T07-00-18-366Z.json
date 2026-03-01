@@ -1,0 +1,80 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772262018366,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "e2b53881-63c7-46c6-a10b-8b0a61baa613",
+      "html": "ubuntu live changes???",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262003160,
+      "id": "3e70442f-5de5-479b-994f-7c2cf3dd83b9"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "46ff07f4-dacd-407a-8765-cd0a65e3a027",
+        "x": 1398.1648955631197,
+        "y": 55.162266523468105,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262003229,
+      "id": "fa7d1f3b-4626-49d7-b50b-6cb265c02c28"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "46ff07f4-dacd-407a-8765-cd0a65e3a027",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262004294,
+      "id": "1807591f-262b-4c20-a7b9-bfb18affdd12"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "e2b53881-63c7-46c6-a10b-8b0a61baa613",
+      "html": "ubuntu liv e changes???",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262006284,
+      "id": "ea66a087-3698-4f3b-9c3a-bd74edc9dc41"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "e2b53881-63c7-46c6-a10b-8b0a61baa613",
+      "html": "ubuntu liv e c hanges???",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262007091,
+      "id": "dd7c1c71-bb77-4631-be64-16c956ea0f12"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "e2b53881-63c7-46c6-a10b-8b0a61baa613",
+      "html": "ubuntu liv e c hanges???",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262007877,
+      "id": "845449a2-e455-4cb7-9f48-844c4dca1bb3"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "b466d4d3-47a9-41af-8778-a50025d6fcce",
+        "x": 918.462715663372,
+        "y": 71.0898779654519,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772262007965,
+      "id": "2b5a05c6-e71c-4658-8c14-e72a0c40001d"
+    }
+  ]
+}

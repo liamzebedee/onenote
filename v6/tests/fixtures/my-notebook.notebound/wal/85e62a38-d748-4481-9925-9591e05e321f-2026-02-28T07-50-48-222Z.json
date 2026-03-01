@@ -1,0 +1,987 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772265048223,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iP</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265018600,
+      "id": "5118b553-2615-4ce1-93b6-82342376cb31"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPo</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265018752,
+      "id": "1c9ab1d0-594d-414f-aeb9-13790e172867"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265018864,
+      "id": "842a54fc-ba28-4f84-b45d-492af49c44af"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265018976,
+      "id": "2c2a528c-0ba0-4a7c-b0f1-428fcac9d7a6"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod M</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019168,
+      "id": "796445f7-22df-41be-b543-0c1980a2c585"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Ma</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019295,
+      "id": "5d88613f-3488-4c0e-9e18-2cde5ad83dc9"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Man</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019359,
+      "id": "affd13c2-a905-414c-ae40-45f31f95e170"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Mana</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019456,
+      "id": "0e170f1e-6f2e-47a8-bd96-373fa00646dd"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manag</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019512,
+      "id": "235f55a1-e58f-40da-a0ba-2a4ad7e2bfbf"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manage</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019632,
+      "id": "b5584c92-463c-42d2-bca7-c686516d1322"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019696,
+      "id": "83b04d42-0a89-4ef8-b470-65b627077c39"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager)</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019816,
+      "id": "fa666500-c286-41be-8259-103bbe019fa0"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager)&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265019912,
+      "id": "5c5262c0-6555-47c7-bef5-2b0695cd5a11"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) f</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020088,
+      "id": "a74c6ad1-e28e-4885-9aca-fb20b36aedbe"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) fo</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020424,
+      "id": "a20f437a-9952-4bb7-8802-2350a84b2219"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020495,
+      "id": "f33a36e1-85a1-4161-9ba0-07769b7bb3f0"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020608,
+      "id": "579c2eb3-21cc-42b9-b4e6-bae50017e5af"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for L</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020760,
+      "id": "13641382-edfb-48da-bd94-940bfbe73fda"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Li</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265020936,
+      "id": "2f344f23-3006-42bd-ae5e-475d8f1ae81f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Lin</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021096,
+      "id": "52a7a429-f471-4e5d-94df-026eeb365924"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linu</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021168,
+      "id": "c38591dd-ae93-4240-9cd9-5c6275c290bc"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021223,
+      "id": "2efcbc4c-1d6f-4b75-a45a-35b5999a36d5"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021344,
+      "id": "ee4efd10-3299-4128-8a52-8ef9c9341813"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux u</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021480,
+      "id": "9bad9351-fb1e-45e1-8976-bf783bf1c492"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux us</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021592,
+      "id": "cbdac072-206c-4404-9e4e-373db23b9c03"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux usi</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021656,
+      "id": "fb155eb1-9d06-43d3-8396-b8fa49cba920"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux usin</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021695,
+      "id": "798c9fb8-6424-4d24-99a1-c144512b236f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021791,
+      "id": "317f4827-a3f0-429b-acc0-8952c18d033f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265021855,
+      "id": "0cab588c-8c62-4bca-a293-407b24babeec"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using C</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022000,
+      "id": "3833db09-eaf8-4dc2-b913-2b586b7294b7"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Cl</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022063,
+      "id": "eb7bbc25-1631-43ad-a551-296f76a0edd8"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Cla</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022200,
+      "id": "e13c3274-2dbc-4837-933a-6985eac4a17e"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Clau</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022303,
+      "id": "ab1b190b-95b5-4018-8c9d-432f4cab2c56"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claud</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022383,
+      "id": "55b906b7-17fb-430f-bba0-de4103cdfed7"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022432,
+      "id": "d759413a-ed98-4ea3-87fb-0d467721a420"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265022600,
+      "id": "adef9f5e-ab96-4034-8e61-9da917dba6f6"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div><br></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023080,
+      "id": "f0533b5a-a3fd-4118-b8de-c80040a9278d"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>F</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023272,
+      "id": "a37941b6-d3cd-4519-89d9-1b68b066d260"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fu</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023424,
+      "id": "7fa2a675-ed80-4364-99cc-a907e874ec4a"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Ful</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023624,
+      "id": "80dbdf99-b8b8-430d-bdf2-0cab643cc80b"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Full</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023728,
+      "id": "dc0af3ec-39b7-4e49-9e92-937db7e47c96"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023751,
+      "id": "98f142a2-3764-411c-8532-29708f3edfc6"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully&nbsp;</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023912,
+      "id": "ed94d3c7-410f-4166-bdd5-995a08a51afa"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully f</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265023968,
+      "id": "e246d616-2293-4771-8cd0-dfeb7ca81e90"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully fu</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024088,
+      "id": "9fa5023b-d14f-43ce-ab7e-0fffbbe2de34"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully fun</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024135,
+      "id": "e6e6dfce-818c-4ecf-818d-2de135d42359"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully func</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024159,
+      "id": "8f2770d7-6c13-4809-8118-a981f8c3f7fa"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully funct</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024328,
+      "id": "3c307180-321c-4735-b4d3-21f56afecc1e"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functi</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024367,
+      "id": "9da4b4d8-d960-49cb-9976-78a6ebc80021"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functio</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024383,
+      "id": "938ac484-f2d8-4eac-9e19-12b4d03f78c6"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully function</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024415,
+      "id": "7b17bebe-5b91-4146-8873-3cecc88fe8d4"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functiona</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024560,
+      "id": "3d7cc63a-81b2-42ee-bab6-540cbef11171"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024607,
+      "id": "108e2e03-63dd-403c-a7dd-26374c36b78c"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional.</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265024800,
+      "id": "8ed0a3ce-5ed2-4a86-ae63-79dbef53771a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 803,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025622,
+      "id": "99b202cd-b09f-4c42-9716-a073792cdb8b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 683,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025639,
+      "id": "a412b429-e068-436f-819a-d994e91869bd"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 563,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025655,
+      "id": "31edca2b-7c05-4167-bb0d-ee352783bb98"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 443,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025671,
+      "id": "43b27bac-18ab-486c-b33c-f9a9815c1cb9"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 323,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025689,
+      "id": "1f455ff0-3f9f-4988-b35f-719805400464"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 203,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265025705,
+      "id": "566627de-9d5e-40eb-ba45-791088f13a94"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 83,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026138,
+      "id": "1cb3ad8b-e376-428f-add0-5ce6e565b458"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026155,
+      "id": "c0f8dcee-0040-4223-874e-cbeac6f15361"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026172,
+      "id": "b4f7d00f-ff06-49b2-8b6b-15b31d3dcc1e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026188,
+      "id": "9d47e0d9-2956-4c80-9144-b90d320908ee"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026205,
+      "id": "f624aad7-b325-4f59-8ea8-f153545b8ea0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026222,
+      "id": "7344ac61-a7ed-4265-bde9-e891a9b1807f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional.</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265026945,
+      "id": "5e01ba84-1eb6-4426-a33e-d9111cd2af96"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "0d751ca2-2f5c-471d-8740-898f3547e1c7",
+        "x": 1127,
+        "y": 21.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265027065,
+      "id": "f7cba733-835f-4bcb-918b-41b04a5f5fd5"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "0d751ca2-2f5c-471d-8740-898f3547e1c7",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265027746,
+      "id": "53ab91cf-0f7b-4438-a80b-1c511aa323a7"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "000ee5a1-3bb9-4cb2-b77c-ef37f01f48ec",
+      "html": "<b>Created an agent runtime and programming layer.</b>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265028247,
+      "id": "34b4fd95-d5a3-4ab8-b922-5d5b7fe09d9c"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "000ee5a1-3bb9-4cb2-b77c-ef37f01f48ec",
+      "html": "<b>Created an agent runtime and programming layer.</b>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265028505,
+      "id": "918e4ced-0739-4b97-a1d9-f3e25d419f08"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "902e3c94-7bfa-406d-8cce-eb78edc8f92d",
+        "x": 1152,
+        "y": 114.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265028569,
+      "id": "54dc5d4c-35e2-4833-afc9-324d6d60209b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 120,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033556,
+      "id": "a88a41c2-8945-400d-9e4f-506c364d70be"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 240,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033572,
+      "id": "d30188e9-f4f3-41c7-8beb-855910e6e345"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 360,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033589,
+      "id": "fffb9eee-97f7-44e8-ac98-a238b2d49416"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 480,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033605,
+      "id": "8c1fe73b-433c-49dd-a347-4b0b1f8db054"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 600,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033622,
+      "id": "75b2f4d8-dbc5-4730-88bd-59cacf4e823e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 720,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033639,
+      "id": "0efab465-3b6a-4b11-999d-a5c04f676ad7"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 840,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265033655,
+      "id": "5e2a6cce-3004-4bfb-a321-581227be0114"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 960,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034049,
+      "id": "47181327-a9e7-4765-8fdf-77920a8d448c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1080,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034064,
+      "id": "790f810d-696c-4f2b-a164-ed03bd9cba68"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1200,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034106,
+      "id": "b08c09b9-b3ef-4e10-9d30-7328f81e01fa"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1320,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034122,
+      "id": "c487cc18-6666-4816-87aa-006f43ae4918"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1440,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034497,
+      "id": "9c9865a2-391d-423d-9e70-baed0f619195"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1560,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034520,
+      "id": "94a2b133-6c0c-4b32-9036-b78c713e72b2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1680,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034556,
+      "id": "135555ea-e550-403e-ac7c-a269adf6c867"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1800,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034572,
+      "id": "77ead4bd-ca30-4673-9bd7-a6e47b39601b"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "902e3c94-7bfa-406d-8cce-eb78edc8f92d",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265034917,
+      "id": "a639fe5e-e848-4dce-9948-53d438bee594"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+        "x": 524,
+        "y": 1805,
+        "w": 765,
+        "html": "",
+        "type": "image",
+        "src": "blob:2a3a9fa93ea1eb0285bf6b3c6f5837f6bcbadfd3a3ca35ff641ebbde50893b30"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265041940,
+      "id": "32dc6acc-c84a-4746-aa7c-d1318d6db93f"
+    },
+    {
+      "type": "block-update-src",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "src": "blob:2a3a9fa93ea1eb0285bf6b3c6f5837f6bcbadfd3a3ca35ff641ebbde50893b30",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265041946,
+      "id": "ad8d26b7-68a5-48f2-bdf8-1daaaa028878"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "x": 143,
+      "y": 1929,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265042833,
+      "id": "f471054a-11c6-4fe9-a08b-be31b5dd6ab3"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1680,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265043272,
+      "id": "57d2652b-1ed8-44e7-a9a7-1e3b654a37c4"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1560,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265043289,
+      "id": "e4fffdc2-cc80-44ca-9325-294e409c4acb"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1440,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265043322,
+      "id": "afbbee35-ba4f-45f1-98de-1855ae8fe31e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1320,
+      "zoom": 1,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265043339,
+      "id": "5af00d1a-582b-46ed-9823-8411ab184131"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "x": 94,
+      "y": 1834,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265044424,
+      "id": "e3f3ea4c-5595-4817-9b7c-157d27d40bbd"
+    },
+    {
+      "type": "block-resize",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "w": 765,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265046153,
+      "id": "7f006cef-e2b7-418c-b8a6-47b385b90334"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "x": 94,
+      "y": 1834,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265046153,
+      "id": "eae70355-9577-4f1e-896a-747959dafd55"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b102b362-b29a-473c-b27a-cff1163bd5fd",
+      "x": 524,
+      "y": 1805,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265047201,
+      "id": "c55c5807-2d0e-4eec-aec6-5b0345534f29"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "99117ad2-1b2b-440f-8cd8-d4dd14e29bd3",
+        "x": 850,
+        "y": 1743.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265047634,
+      "id": "deeaf11f-76f0-40fb-8c4d-a53b1ea2ee65"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "99117ad2-1b2b-440f-8cd8-d4dd14e29bd3",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265047939,
+      "id": "4d6ac553-8bbf-4beb-8c44-0993930bc6dc"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "ad045060-485f-447f-a818-fe2753aff91c",
+        "x": 826,
+        "y": 1785.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265048010,
+      "id": "4657c8fc-391e-4576-a83d-c21fdf4e67f7"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772286297362,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "74c8f4d2-8c73-45f3-a1c5-0395445209bb",
+        "x": 657,
+        "y": 56.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286287329,
+      "id": "9e212068-8fbc-4761-ae3e-c97de68aa947"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "74c8f4d2-8c73-45f3-a1c5-0395445209bb",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286287802,
+      "id": "0d8247c2-89cc-4d50-8e3e-8933c6b3079d"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286288266,
+      "id": "09f23a18-7f9b-4df8-98d8-a81e0fd5fffb"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "9fa0a121-aab4-4618-8bca-76b245305c69",
+      "html": "<b>Recombinant expression</b><div>1. Clone the coding sequence into an expression vector (a plasmid).</div><div>2. Transform the plasmid into host cells.</div><div>&nbsp; &nbsp; 1. Bacteria are given a heat shock.</div><div>&nbsp; &nbsp; 2. Colonies grow.</div><div>&nbsp; &nbsp; 3. Pick colonies.</div><div>&nbsp; &nbsp; 4. Inoculate the liquid cultures (by introducing single colonies)</div><div>3. Transcription + Translation</div><div>4. Harvest. Cells are lysed. Protein is purified.</div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286289297,
+      "id": "1c262f94-8d70-459c-a7ce-5c55414b1ae9"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li></ul><ul><li>DNA synthesis</li><li>DNA manipulation</li><li>DNA replication</li><li>Restriction enzymes</li><li>RNA</li><ul><li>mRNA</li><ul><li>codons</li></ul><li>tRNA</li><ul><li>anti codon</li></ul></ul><li>Central Dogma</li><ul><li>DNA -&gt; mRNA -&gt; Amino acid chain (polypeptide) -&gt; Folding into 3D protein</li></ul><li>Transcription</li><li>Translation</li><li>Eukaryotic</li><li>Prokaryotic</li><li>Protein synthesis</li><li>Plasmids</li><li>Peptide synthesis</li><li>Pippetting&nbsp;</li><ul><li>Units</li><ul><li>Moles - absolute amount of substance</li><li><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">Molarity - concentration</span></li></ul><li>Assays</li><li>Serial dilutions</li></ul></ul><p><br></p>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286291322,
+      "id": "6c1f7592-db0e-4a93-b279-91e505e0c9ef"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "0d7624e4-1c37-4059-802e-4569aabd2c91",
+      "x": 618,
+      "y": 351,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286291427,
+      "id": "43d67404-0a73-4ada-a2a5-ae3d87658a34"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "0d7624e4-1c37-4059-802e-4569aabd2c91",
+      "x": 651,
+      "y": 337,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286292809,
+      "id": "f946a9aa-33d5-4ddb-bdb6-d7111cdf57f9"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "f6ad9b01-daee-4532-b476-40b0a742c1df",
+        "x": 1372,
+        "y": 74.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286293114,
+      "id": "54be0de6-5e81-467e-9f67-c31b4bfda1eb"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "f6ad9b01-daee-4532-b476-40b0a742c1df",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772286293642,
+      "id": "05e76a3c-23ed-4f19-bef5-afd34e6fa05c"
+    }
+  ]
+}

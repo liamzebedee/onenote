@@ -126,7 +126,6 @@ function sanitizePastedHtml(html) {
 export function Block({ block, page }) {
   const ctx = useContext(CanvasCtx);
   const contentRef = useRef(null);
-  const isDefault = block.id === page.defaultBlockId;
   const isImage   = block.type === 'image';
   const isLoading = block.type === 'loading';
   const isSelected = ctx.selectedIds.has(block.id);
@@ -257,7 +256,7 @@ export function Block({ block, page }) {
     }
     htmlAtFocus.current = null;
 
-    if (isEmpty && !isDefault) {
+    if (isEmpty) {
       deleteBlock(block.id);
     } else {
       updateBlockHtml(block.id, html);
@@ -351,13 +350,13 @@ export function Block({ block, page }) {
 
   return (
     <div
-      class={['block', isDefault && 'block--default', isImage && 'block--image', isLoading && 'block--loading', isSelected && 'block--selected'].filter(Boolean).join(' ')}
+      class={['block', isImage && 'block--image', isLoading && 'block--loading', isSelected && 'block--selected'].filter(Boolean).join(' ')}
       data-block-id={block.id}
       style={{ left: block.x + 'px', top: block.y + 'px', width: block.w + 'px', zIndex: block.z ?? 0 }}
       onPointerDown={handleBlockPointerDown}
     >
-      {/* Drag handle — hidden for default block and image blocks */}
-      {!isDefault && !isImage && (
+      {/* Drag handle — hidden for image blocks */}
+      {!isImage && (
         <div
           class="block-handle"
           onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}

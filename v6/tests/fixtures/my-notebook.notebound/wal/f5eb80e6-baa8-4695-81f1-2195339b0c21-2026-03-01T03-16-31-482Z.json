@@ -1,0 +1,14 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772334991482,
+  "ops": [
+    {
+      "type": "page-rename",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "title": "W1",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334963744,
+      "id": "9dd2b22c-de37-4026-804b-c6874b704d6b"
+    }
+  ]
+}

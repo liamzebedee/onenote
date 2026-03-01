@@ -1,0 +1,14 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772265232423,
+  "ops": [
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "8f5fab82-5fce-43dc-afe1-e26bd87ec123",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265214881,
+      "id": "59095361-1a18-4291-957e-bc0a89f86eb5"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772338841673,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li></ul><ul><li>DNA synthesis</li><li>DNA manipulation</li><li>DNA replication</li><li>Restriction enzymes</li><li>RNA</li><ul><li>mRNA</li><ul><li>codons</li></ul><li>tRNA</li><ul><li>anti codon</li></ul></ul><li>Central Dogma</li><ul><li>DNA -&gt; mRNA -&gt; Amino acid chain (polypeptide) -&gt; Folding into 3D protein</li></ul><li>Transcription</li><li>Translation</li><li>Eukaryotic</li><li>Prokaryotic</li><li>Protein synthesis</li><li>Plasmids</li><li>Peptide synthesis</li><li>Pippetting&nbsp;</li><ul><li>Units</li><ul><li>Moles - absolute amount of substance</li><li><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">Molarity - concentration</span></li></ul><li>Assays</li><li>Serial dilutions</li></ul></ul><p><br></p>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338812051,
+      "id": "c0ffa00f-2736-4c31-8319-30f01fb45b84"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "0d7624e4-1c37-4059-802e-4569aabd2c91",
+      "x": 656,
+      "y": 331,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338822538,
+      "id": "f63a8531-dba2-413a-bc2c-76e14250043a"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "c672ef0c-513f-4c06-b773-56a507e8024b",
+        "x": 816.5,
+        "y": 693.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338824106,
+      "id": "3e09abad-b807-4985-a96e-59fadaa5aa64"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "c672ef0c-513f-4c06-b773-56a507e8024b",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338824338,
+      "id": "66cfea32-a9f1-43f6-8397-a2b6f9f1c258"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "f75e8dc1-d0d4-4f05-b2d2-5659c43beb32",
+      "x": 553,
+      "y": 730,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338824446,
+      "id": "7751a703-b01b-4b90-835a-994769da4784"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "eafbe054-ee6f-4206-a69f-e2fe69164a9f",
+      "x": 882,
+      "y": 724,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338824738,
+      "id": "d2efca27-070e-42e2-8027-a6db6823a025"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "a3d71358-8905-40be-a6b9-b5bf5c98e996",
+        "x": 864.5,
+        "y": 670.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338825970,
+      "id": "a55522e6-e3b3-4404-82b0-88b95923c9d1"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "a3d71358-8905-40be-a6b9-b5bf5c98e996",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338828131,
+      "id": "ba60cf35-6ff7-470f-9b7c-0038949b319a"
+    }
+  ]
+}

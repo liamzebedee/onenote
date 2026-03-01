@@ -1,0 +1,206 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772274198923,
+  "ops": [
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.6625046194537588,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274194585,
+      "id": "73cc3c1e-bce1-4320-bcb2-30fbba3a69d1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 91.5259484324185,
+      "panY": 13.146349156984941,
+      "zoom": 0.7287550813991348,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195269,
+      "id": "057418a0-c3fd-4f62-86f2-32a273aeec50"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 174.45691547326834,
+      "panY": 24.98715619312615,
+      "zoom": 0.8016305895390483,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195334,
+      "id": "be56e7fb-9409-4a29-b708-7d78131696e8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 249.6615850842787,
+      "panY": 35.813899095296534,
+      "zoom": 0.8817936484929532,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195372,
+      "id": "373fbe23-b606-46e0-9af6-4d2f16f6da84"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 318.2562769827055,
+      "panY": 45.59969003425624,
+      "zoom": 0.9699730133422486,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195418,
+      "id": "203254fc-00c6-4080-a09a-647dff903bf3"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 380.5635399735768,
+      "panY": 54.341220137488854,
+      "zoom": 1.0669703146764735,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195451,
+      "id": "1a0018db-b5e4-4fee-ad37-98740030aeda"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 437.34709130858727,
+      "panY": 62.05375738642794,
+      "zoom": 1.173667346144121,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195483,
+      "id": "74321b5f-b60e-43fd-9dba-8aa86f085faa"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 488.7554940681837,
+      "panY": 69.19295941243848,
+      "zoom": 1.2910340807585332,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195516,
+      "id": "3ab1231c-19e1-4797-8cce-5720450f5724"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 535.722777535044,
+      "panY": 75.68314307244808,
+      "zoom": 1.4201374888343867,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195522,
+      "id": "fdec7235-2562-4ef6-9903-4795624f1dac"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 578.2090608074376,
+      "panY": 81.47768646008072,
+      "zoom": 1.5621512377178255,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195550,
+      "id": "629a65ab-f51c-4b3f-9fef-474b0442e902"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 530.6073246146304,
+      "panY": 74.48384760249421,
+      "zoom": 1.405936113946043,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195606,
+      "id": "9d630b28-2eaa-408e-bbb4-55064ae69c15"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 477.8943240906569,
+      "panY": 66.75625854634258,
+      "zoom": 1.2653425025514387,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195651,
+      "id": "8b8b8148-5093-473b-a313-f64afd012eb9"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 477.7362641190707,
+      "panY": 66.3851880661736,
+      "zoom": 1.2653425025514387,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274195803,
+      "id": "ae93e359-9ff6-4809-8a78-f2524962ee6f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.2653425025514387,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274196569,
+      "id": "9bb6c77b-a2b6-4a32-b7f0-085721cb2563"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.1388082522962948,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274196869,
+      "id": "e1b233f4-c4ba-4e3e-871a-8ffed6bde89c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0249274270666653,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274196934,
+      "id": "72ef0640-eea1-4ce4-9aca-eaad9338df5a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.9224346843599988,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274196971,
+      "id": "86b2af49-9a28-4dc4-ba30-8e47f2a716a8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.8301912159239989,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274197005,
+      "id": "b9394e01-512c-46b0-849d-8008feb4213d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.747172094331599,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274197037,
+      "id": "4d30e389-13b5-4fc7-8938-98842f059e2d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.6724548848984392,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772274197070,
+      "id": "e124f631-60e3-495f-a075-59e66cc1c55e"
+    }
+  ]
+}

@@ -52,7 +52,14 @@ class WAL {
     if (!fs.existsSync(walDir)) return [];
     return fs.readdirSync(walDir)
       .filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
-      .sort(); // lexicographic sort = chronological since timestamp is in filename
+      .sort((a, b) => {
+        // Extract timestamp portion after the device UUID prefix
+        // Filename format: <deviceId>-<ISO timestamp>.json
+        // Device ID is a UUID (36 chars), followed by a dash, then the timestamp
+        const tsA = a.slice(37);
+        const tsB = b.slice(37);
+        return tsA < tsB ? -1 : tsA > tsB ? 1 : a < b ? -1 : a > b ? 1 : 0;
+      });
   }
 
   // Start auto-seal timer (every 30 seconds)

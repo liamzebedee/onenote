@@ -1,0 +1,114 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772275794140,
+  "ops": [
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 345.8463709233534,
+      "panY": 39.6123596652299,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275765766,
+      "id": "8986e158-5da8-4740-a713-b8407af3faf4"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 11.680567593593432,
+      "panY": 0,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275766815,
+      "id": "ffcf9211-e2fb-47a6-81e7-dc4530c6ffa8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 33.518150485963766,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275767164,
+      "id": "b85388ad-0a51-4576-862d-0818d1eabbdf"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 444.8772700864281,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275767798,
+      "id": "6179b3a4-02c8-4b56-9aa7-4960572ac9db"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 368.6996553456014,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275768181,
+      "id": "46fa0501-2edc-4746-b77f-3e6de5dd6a48"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275769931,
+      "id": "8444a102-930c-4bc7-9fbc-795558aeb40e"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1dbc7357-5a02-482f-9fc0-2933d4dcaa0e",
+      "html": "This is pretty incredible LOL.<div>How slow this thing can be.</div><div>LMFAO.</div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275771959,
+      "id": "07ee0e10-4e3c-4d32-a771-6aac6bd1f748"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 47.73797190425142,
+      "panY": 742.4778183405912,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275791467,
+      "id": "90863170-b0a4-4aa0-afe2-068812dcc545"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 47.73797190425142,
+      "panY": 995.387499280136,
+      "zoom": 0.9845411969798051,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275792751,
+      "id": "f19e8bff-d8bc-4a0d-9225-a1257ce2823f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional.</div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275793816,
+      "id": "b9b87b34-e52c-4f47-b6bd-8d51427a38a6"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "67b22714-0e2e-4e8b-9863-689c20da6cc5",
+      "x": 1122,
+      "y": 1296,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772275793831,
+      "id": "e6299dbc-7199-4f9f-9eca-9e17bb83f9a9"
+    }
+  ]
+}

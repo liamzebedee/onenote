@@ -1,11 +1,15 @@
-const { app, BrowserWindow, Menu, screen, nativeImage, shell } = require('electron');
-const fs = require('fs');
-const os = require('os');
+const { app, BrowserWindow, Menu, nativeImage, screen } = require('electron');
 const path = require('path');
-const crypto = require('crypto');
+const { config, initConfig, writeConfig } = require('./src/config');
 const { setupIPC, closeNotebook, openDefault } = require('./src/ipc');
 
 const isMac = process.platform === 'darwin';
+
+// Set app name early so Linux WM_CLASS matches the .desktop file
+app.name = 'notebound';
+if (process.platform === 'linux') {
+  app.setDesktopName('notebound.desktop');
+}
 
 Menu.setApplicationMenu(Menu.buildFromTemplate([
   ...(isMac ? [{
@@ -58,8 +62,6 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
         accelerator: 'CmdOrCtrl+0',
         click: () => { const w = BrowserWindow.getFocusedWindow(); if (w) w.webContents.send('canvas:zoom', 'reset'); },
       },
-      { type: 'separator' },
-      { role: 'togglefullscreen' },
     ],
   },
   ...(isMac ? [{
@@ -86,52 +88,25 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
 let mainWindow = null;
 let closed = false;
 
-const configPath = path.join(app.getPath('userData'), 'config.json');
-
-function loadConfig() {
-  try {
-    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  } catch {
-    return {};
-  }
-}
-
-function getOrCreateDeviceId() {
-  const config = loadConfig();
-  if (config.deviceId) return config.deviceId;
-  const deviceId = crypto.randomUUID();
-  try { fs.writeFileSync(configPath, JSON.stringify({ ...config, deviceId })); } catch {}
-  return deviceId;
-}
-
-function saveConfig(extra = {}) {
-  const existing = loadConfig();
-  const merged = { ...existing, ...extra };
-
-  if (mainWindow) {
-    const isFullScreen = mainWindow.isFullScreen();
-    const isMaximized = mainWindow.isMaximized();
-    const bounds = isFullScreen || isMaximized ? (mainWindow._normalBounds || mainWindow.getNormalBounds()) : mainWindow.getBounds();
-    merged.window = { ...bounds, isFullScreen, isMaximized };
-  }
-
-  try { fs.writeFileSync(configPath, JSON.stringify(merged)); } catch {}
-}
-
 function shutdown() {
   if (closed) return;
   closed = true;
-  saveConfig();
+  console.log('[main] shutdown — writing config, notebookPath:', config.notebookPath);
+  writeConfig();
   closeNotebook();
 }
 
 function createWindow() {
-  const config = loadConfig();
-  const saved = config.window || null;
+  const configPath = path.join(app.getPath('userData'), 'config.json');
+  initConfig(configPath);
+
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   const opts = {
+    width,
+    height,
+    x: 0,
+    y: 0,
     autoHideMenuBar: true,
-    width: 1200,
-    height: 800,
     minWidth: 800,
     minHeight: 560,
     ...(isMac ? {
@@ -146,65 +121,22 @@ function createWindow() {
     },
   };
 
-  if (saved) {
-    // Restore size (clamped to minimums)
-    if (saved.width && saved.height) {
-      opts.width  = Math.max(opts.minWidth,  saved.width);
-      opts.height = Math.max(opts.minHeight, saved.height);
-    }
-
-    // Validate position: the window must substantially overlap at least one display
-    if (saved.x != null && saved.y != null) {
-      const winRect = { x: saved.x, y: saved.y, w: opts.width, h: opts.height };
-      const displays = screen.getAllDisplays();
-      const onScreen = displays.some(d => {
-        const b = d.workArea;
-        const ox = Math.max(0, Math.min(winRect.x + winRect.w, b.x + b.width)  - Math.max(winRect.x, b.x));
-        const oy = Math.max(0, Math.min(winRect.y + winRect.h, b.y + b.height) - Math.max(winRect.y, b.y));
-        return ox * oy > 10000; // at least ~100×100 px overlap
-      });
-      if (onScreen) {
-        opts.x = saved.x;
-        opts.y = saved.y;
-      }
-    }
-  }
-
   mainWindow = new BrowserWindow(opts);
+  mainWindow.maximize();
 
-  // Centre if we couldn't restore a valid position
-  if (opts.x == null) mainWindow.center();
-
-  if (saved?.isFullScreen) {
-    mainWindow.setFullScreen(true);
-  } else if (saved?.isMaximized) {
-    mainWindow.maximize();
-  }
-
-  // Track normal bounds so we can save them even when fullscreen/maximized
-  mainWindow.on('resize', () => {
-    if (!mainWindow.isFullScreen() && !mainWindow.isMaximized()) {
-      mainWindow._normalBounds = mainWindow.getBounds();
-    }
-  });
-  mainWindow.on('move', () => {
-    if (!mainWindow.isFullScreen() && !mainWindow.isMaximized()) {
-      mainWindow._normalBounds = mainWindow.getBounds();
-    }
-  });
-
-  const deviceId = getOrCreateDeviceId();
-
-  // Set up IPC handlers (pass configPath so IPC can read/write config)
-  setupIPC(mainWindow, configPath, deviceId);
+  const userDataPath = app.getPath('userData');
+  setupIPC(mainWindow, config.deviceId, userDataPath);
 
   mainWindow.on('close', shutdown);
   // Load the page first so the window appears immediately (shows spinner while notebook loads)
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
 
   // Defer notebook open so the renderer can start painting before synchronous I/O begins
+  console.log('[main] config.notebookPath:', config.notebookPath);
   if (config.notebookPath) {
-    setImmediate(() => openDefault(mainWindow, config.notebookPath, deviceId));
+    setImmediate(() => openDefault(mainWindow, config.notebookPath, config.deviceId, userDataPath));
+  } else {
+    console.log('[main] no notebookPath in config, will show welcome screen');
   }
 }
 

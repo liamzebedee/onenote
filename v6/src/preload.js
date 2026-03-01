@@ -1,7 +1,9 @@
 // Preload script — exposes notebook API to renderer via contextBridge
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('log', (...args) => ipcRenderer.send('renderer:log', ...args));
+contextBridge.exposeInMainWorld('log', (...args) => {
+  ipcRenderer.send('renderer:log', ...args);
+});
 
 contextBridge.exposeInMainWorld('notebook', {
   // Open a .notebound directory, returns materialized state
@@ -45,6 +47,9 @@ contextBridge.exposeInMainWorld('notebook', {
   // Save per-page pan/zoom to local config (device-local, not synced)
   savePageView: (notebookPath, pageId, panX, panY, zoom) => ipcRenderer.invoke('notebook:save-page-view', notebookPath, pageId, panX, panY, zoom),
 
+  // Save per-page caret position to local config
+  savePageCaret: (notebookPath, pageId, caretBlockId, caretOffset) => ipcRenderer.invoke('notebook:save-page-caret', notebookPath, pageId, caretBlockId, caretOffset),
+
   // Open URL in system browser
   openExternal: (url) => ipcRenderer.invoke('shell:open-external', url),
 
@@ -57,6 +62,11 @@ contextBridge.exposeInMainWorld('notebook', {
     ipcRenderer.on('notebook:state-changed', (event, state) => {
       callback(state);
     });
+  },
+
+  // Listen for open failure (show welcome screen)
+  onOpenFailed: (callback) => {
+    ipcRenderer.on('notebook:open-failed', () => callback());
   },
 
   // Remove state change listener

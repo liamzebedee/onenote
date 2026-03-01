@@ -1,0 +1,235 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772276124192,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "html": "<ul><li>Sharks&nbsp;&nbsp;<span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">North Queensland</span></li></ul>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276097363,
+      "id": "04a3c62a-c260-4a83-a3e8-c16a75a52a4e"
+    },
+    {
+      "type": "block-move",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "x": 49,
+      "y": 60,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276098123,
+      "id": "8b853115-5bca-4db0-98d3-eb083f0b4e89"
+    },
+    {
+      "id": "5c455e4a-6b68-411b-8784-ef36612a694a",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276100375,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "34e35425-7a85-49a6-baf9-17b887a01faf",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276100654,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 7
+          }
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 33
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 6
+          },
+          "char": " "
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 34
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 33
+          },
+          "char": "0"
+        }
+      ]
+    },
+    {
+      "id": "c5ed8b5e-3e30-496b-8695-e3c6707f482c",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276100731,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 35
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 34
+          },
+          "char": " "
+        }
+      ]
+    },
+    {
+      "id": "56acffad-0d77-498b-87cc-bceffca07a3b",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276101026,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 35
+          }
+        }
+      ]
+    },
+    {
+      "id": "6a818ad6-b804-4323-8463-200d3410b0f5",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276101170,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 34
+          }
+        }
+      ]
+    },
+    {
+      "id": "b21b7d8e-a2d7-45c3-a21c-3db63d8c40f6",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276101314,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 36
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 33
+          },
+          "char": "-"
+        }
+      ]
+    },
+    {
+      "id": "59ab4c31-999e-4c46-bea9-3057bbce84cd",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276101396,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 37
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 36
+          },
+          "char": " "
+        }
+      ]
+    },
+    {
+      "id": "6e670878-4cf1-4afd-8c46-1cfab16b9643",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276102646,
+      "type": "block-text-op",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 38
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 31
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 39
+          },
+          "parentId": {
+            "device": "7b77140a-a11a-489c-8f43-1d37968dd109",
+            "counter": 38
+          },
+          "char": "\n"
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "html": "<ul><li><b>Sharks -&nbsp;<span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">North Queensland</span></b></li><li><b><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\"><br></span></b></li></ul>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276102921,
+      "id": "95aa724a-e707-439b-83bb-63fc86dbc3b5"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+      "blockId": "466cf2b0-3644-4cae-9c4f-ba29d7990f21",
+      "html": "<ul><li><b>Sharks -&nbsp;<span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">North Queensland</span></b></li><li><b><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\"><br></span></b></li></ul>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772276103961,
+      "id": "d1bb2b5a-36ff-4402-a783-76eb4e011c3e"
+    }
+  ]
+}

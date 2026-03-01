@@ -20,6 +20,13 @@ function removeFromTree(pages, id) {
 }
 
 function findPageInState(state, pageId) {
+  // Fast path: use index if available
+  const idx = state._index;
+  if (idx) {
+    const entry = idx.pages.get(pageId);
+    if (entry) return entry;
+    return null;
+  }
   for (const nb of state.notebooks) {
     for (const sec of nb.sections) {
       const p = findInTree(sec.pages, pageId);
@@ -29,6 +36,44 @@ function findPageInState(state, pageId) {
   return null;
 }
 
+// ─── Index helpers ───────────────────────────────────────
+
+function buildIndex(state) {
+  const idx = { pages: new Map(), sections: new Map(), blocks: new Map() };
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) {
+      idx.sections.set(sec.id, { section: sec, notebook: nb });
+      _indexPages(idx, sec.pages, sec, nb);
+    }
+  }
+  state._index = idx;
+  return idx;
+}
+
+function _indexPages(idx, pages, sec, nb) {
+  for (const p of pages) {
+    idx.pages.set(p.id, { page: p, section: sec, notebook: nb });
+    for (const b of (p.blocks || [])) {
+      idx.blocks.set(b.id, { block: b, page: p });
+    }
+    if (p.children?.length) _indexPages(idx, p.children, sec, nb);
+  }
+}
+
+function _findBlockFast(state, pageId, blockId) {
+  const idx = state._index;
+  if (idx) {
+    const entry = idx.blocks.get(blockId);
+    if (entry) return entry;
+    return null;
+  }
+  const result = findPageInState(state, pageId);
+  if (!result) return null;
+  const blk = result.page.blocks.find(b => b.id === blockId);
+  if (!blk) return null;
+  return { block: blk, page: result.page };
+}
+
 // ─── Default constructors ────────────────────────────────
 
 function mkBlock(x = 0, y = 0, w = 480) {
@@ -36,8 +81,7 @@ function mkBlock(x = 0, y = 0, w = 480) {
 }
 
 function mkPage(title = 'Untitled Page') {
-  const db = mkBlock(0, 0, 480);
-  return { id: uid(), title, children: [], defaultBlockId: db.id, blocks: [db], panX: 0, panY: 0, zoom: 1 };
+  return { id: uid(), title, children: [], blocks: [], panX: 0, panY: 0, zoom: 1 };
 }
 
 function mkSection(title = 'New Section') {
@@ -66,6 +110,8 @@ function emptyState() {
 // ─── Apply operation (idempotent) ────────────────────────
 
 function applyOp(state, op) {
+  const idx = state._index;
+
   switch (op.type) {
 
     // ── Notebook ops ──────────────────────────────────────
@@ -74,10 +120,25 @@ function applyOp(state, op) {
       if (state.notebooks.find(n => n.id === op.notebookId)) return state;
       const nb = { id: op.notebookId, title: op.title || 'New Notebook', sections: op.sections || [] };
       state.notebooks.push(nb);
+      if (idx) {
+        for (const sec of nb.sections) {
+          idx.sections.set(sec.id, { section: sec, notebook: nb });
+          _indexPages(idx, sec.pages, sec, nb);
+        }
+      }
       return state;
     }
 
     case 'notebook-delete': {
+      if (idx) {
+        const nb = state.notebooks.find(n => n.id === op.notebookId);
+        if (nb) {
+          for (const sec of nb.sections) {
+            idx.sections.delete(sec.id);
+            _removePageIndex(idx, sec.pages);
+          }
+        }
+      }
       state.notebooks = state.notebooks.filter(n => n.id !== op.notebookId);
       return state;
     }
@@ -103,17 +164,32 @@ function applyOp(state, op) {
       if (nb.sections.find(s => s.id === op.sectionId)) return state;
       const sec = { id: op.sectionId, title: op.title || 'New Section', pages: op.pages || [] };
       nb.sections.push(sec);
+      if (idx) {
+        idx.sections.set(sec.id, { section: sec, notebook: nb });
+        _indexPages(idx, sec.pages, sec, nb);
+      }
       return state;
     }
 
     case 'section-delete': {
       const nb = state.notebooks.find(n => n.id === op.notebookId);
       if (!nb) return state;
+      if (idx) {
+        const sec = nb.sections.find(s => s.id === op.sectionId);
+        if (sec) {
+          idx.sections.delete(sec.id);
+          _removePageIndex(idx, sec.pages);
+        }
+      }
       nb.sections = nb.sections.filter(s => s.id !== op.sectionId);
       return state;
     }
 
     case 'section-rename': {
+      if (idx) {
+        const entry = idx.sections.get(op.sectionId);
+        if (entry) { entry.section.title = op.title; return state; }
+      }
       for (const nb of state.notebooks) {
         const sec = nb.sections.find(s => s.id === op.sectionId);
         if (sec) { sec.title = op.title; break; }
@@ -132,19 +208,27 @@ function applyOp(state, op) {
     // ── Page ops ──────────────────────────────────────────
 
     case 'page-add': {
-      // Find the target section
       let targetSec = null;
-      for (const nb of state.notebooks) {
-        targetSec = nb.sections.find(s => s.id === op.sectionId);
-        if (targetSec) break;
+      let targetNb = null;
+      if (idx) {
+        const entry = idx.sections.get(op.sectionId);
+        if (entry) { targetSec = entry.section; targetNb = entry.notebook; }
+      } else {
+        for (const nb of state.notebooks) {
+          targetSec = nb.sections.find(s => s.id === op.sectionId);
+          if (targetSec) { targetNb = nb; break; }
+        }
       }
       if (!targetSec) return state;
-      if (findInTree(targetSec.pages, op.pageId)) return state; // idempotent
+      if (idx) {
+        if (idx.pages.has(op.pageId)) return state; // idempotent
+      } else {
+        if (findInTree(targetSec.pages, op.pageId)) return state;
+      }
       const page = {
         id: op.pageId,
         title: op.title || 'Untitled Page',
         children: [],
-        defaultBlockId: op.defaultBlockId || null,
         blocks: op.blocks || [],
         panX: 0, panY: 0, zoom: 1,
       };
@@ -155,10 +239,24 @@ function applyOp(state, op) {
       } else {
         targetSec.pages.push(page);
       }
+      if (idx) {
+        idx.pages.set(page.id, { page, section: targetSec, notebook: targetNb });
+        for (const b of page.blocks) {
+          idx.blocks.set(b.id, { block: b, page });
+        }
+      }
       return state;
     }
 
     case 'page-delete': {
+      if (idx) {
+        const entry = idx.pages.get(op.pageId);
+        if (entry) {
+          entry.section.pages = removeFromTree(entry.section.pages, op.pageId);
+          _removePageIndex(idx, [entry.page]);
+        }
+        return state;
+      }
       for (const nb of state.notebooks) {
         for (const sec of nb.sections) {
           const found = findInTree(sec.pages, op.pageId);
@@ -178,23 +276,43 @@ function applyOp(state, op) {
     }
 
     case 'page-move': {
-      // Move page to a different section
       let extracted = null;
-      for (const nb of state.notebooks) {
-        for (const sec of nb.sections) {
-          const found = findInTree(sec.pages, op.pageId);
-          if (found) {
-            extracted = structuredClone(found);
-            sec.pages = removeFromTree(sec.pages, op.pageId);
-            break;
-          }
+      if (idx) {
+        const entry = idx.pages.get(op.pageId);
+        if (entry) {
+          // Remove page from current section and index, then re-add to target
+          // We move the original object (no clone needed since removeFromTree detaches it)
+          extracted = entry.page;
+          entry.section.pages = removeFromTree(entry.section.pages, op.pageId);
+          _removePageIndex(idx, [entry.page]);
         }
-        if (extracted) break;
+      } else {
+        for (const nb of state.notebooks) {
+          for (const sec of nb.sections) {
+            const found = findInTree(sec.pages, op.pageId);
+            if (found) {
+              extracted = structuredClone(found);
+              sec.pages = removeFromTree(sec.pages, op.pageId);
+              break;
+            }
+          }
+          if (extracted) break;
+        }
       }
       if (!extracted) return state;
-      for (const nb of state.notebooks) {
-        const targetSec = nb.sections.find(s => s.id === op.targetSectionId);
-        if (targetSec) { targetSec.pages.push(extracted); break; }
+      let targetSec = null, targetNb = null;
+      if (idx) {
+        const entry = idx.sections.get(op.targetSectionId);
+        if (entry) { targetSec = entry.section; targetNb = entry.notebook; }
+      } else {
+        for (const nb of state.notebooks) {
+          targetSec = nb.sections.find(s => s.id === op.targetSectionId);
+          if (targetSec) { targetNb = nb; break; }
+        }
+      }
+      if (targetSec) {
+        targetSec.pages.push(extracted);
+        if (idx) _indexPages(idx, [extracted], targetSec, targetNb);
       }
       return state;
     }
@@ -211,34 +329,40 @@ function applyOp(state, op) {
     }
 
     case 'page-reorder': {
-      // Reorder top-level pages in a section
-      for (const nb of state.notebooks) {
-        const sec = nb.sections.find(s => s.id === op.sectionId);
-        if (sec && op.pageIds) {
-          // Only reorder pages that are in the list, keep others at end
-          const ordered = [];
-          for (const id of op.pageIds) {
-            const p = sec.pages.find(pg => pg.id === id);
-            if (p) ordered.push(p);
-          }
-          for (const p of sec.pages) {
-            if (!op.pageIds.includes(p.id)) ordered.push(p);
-          }
-          sec.pages = ordered;
-          break;
+      let sec = null;
+      if (idx) {
+        const entry = idx.sections.get(op.sectionId);
+        if (entry) sec = entry.section;
+      } else {
+        for (const nb of state.notebooks) {
+          sec = nb.sections.find(s => s.id === op.sectionId);
+          if (sec) break;
         }
+      }
+      if (sec && op.pageIds) {
+        const ordered = [];
+        for (const id of op.pageIds) {
+          const p = sec.pages.find(pg => pg.id === id);
+          if (p) ordered.push(p);
+        }
+        for (const p of sec.pages) {
+          if (!op.pageIds.includes(p.id)) ordered.push(p);
+        }
+        sec.pages = ordered;
       }
       return state;
     }
 
     case 'page-tree-update': {
-      // Restructure pages (drag-and-drop / delete-with-promote).
-      // op.pages carries only { id, children } structure — block content
-      // is preserved by merging with existing pages looked up by id.
-      let targetSec = null;
-      for (const nb of state.notebooks) {
-        targetSec = nb.sections.find(s => s.id === op.sectionId);
-        if (targetSec) break;
+      let targetSec = null, targetNb = null;
+      if (idx) {
+        const entry = idx.sections.get(op.sectionId);
+        if (entry) { targetSec = entry.section; targetNb = entry.notebook; }
+      } else {
+        for (const nb of state.notebooks) {
+          targetSec = nb.sections.find(s => s.id === op.sectionId);
+          if (targetSec) { targetNb = nb; break; }
+        }
       }
       if (!targetSec) return state;
       const byId = new Map();
@@ -253,7 +377,11 @@ function applyOp(state, op) {
           return { ...ex, children: rebuild(p.children ?? []) };
         }).filter(Boolean);
       }
+      // Remove old page index entries before rebuilding
+      if (idx) _removePageIndex(idx, targetSec.pages);
       targetSec.pages = rebuild(op.pages);
+      // Re-index new structure
+      if (idx) _indexPages(idx, targetSec.pages, targetSec, targetNb);
       return state;
     }
 
@@ -262,12 +390,25 @@ function applyOp(state, op) {
     case 'block-add': {
       const result = findPageInState(state, op.pageId);
       if (!result) return state;
-      if (result.page.blocks.find(b => b.id === op.block.id)) return state;
+      if (idx) {
+        if (idx.blocks.has(op.block.id)) return state;
+      } else {
+        if (result.page.blocks.find(b => b.id === op.block.id)) return state;
+      }
       result.page.blocks.push(op.block);
+      if (idx) idx.blocks.set(op.block.id, { block: op.block, page: result.page });
       return state;
     }
 
     case 'block-delete': {
+      if (idx) {
+        const entry = idx.blocks.get(op.blockId);
+        if (entry) {
+          entry.page.blocks = entry.page.blocks.filter(b => b.id !== op.blockId);
+          idx.blocks.delete(op.blockId);
+        }
+        return state;
+      }
       const result = findPageInState(state, op.pageId);
       if (!result) return state;
       result.page.blocks = result.page.blocks.filter(b => b.id !== op.blockId);
@@ -275,66 +416,50 @@ function applyOp(state, op) {
     }
 
     case 'block-move': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) { blk.x = op.x; blk.y = op.y; }
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) { entry.block.x = op.x; entry.block.y = op.y; }
       return state;
     }
 
     case 'block-resize': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.w = op.w;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.w = op.w;
       return state;
     }
 
     case 'block-update-html': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.html = op.html;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.html = op.html;
       return state;
     }
 
     case 'block-update-type': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.type = op.blockType;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.type = op.blockType;
       return state;
     }
 
     case 'block-update-src': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.src = op.src;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.src = op.src;
       return state;
     }
 
     case 'block-update-crop': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.crop = op.crop;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.crop = op.crop;
       return state;
     }
 
     case 'block-style': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) Object.assign(blk.styles || (blk.styles = {}), op.styles);
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) Object.assign(entry.block.styles || (entry.block.styles = {}), op.styles);
       return state;
     }
 
     case 'block-z': {
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (blk) blk.z = op.z;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.z = op.z;
       return state;
     }
 
@@ -350,12 +475,14 @@ function applyOp(state, op) {
     case 'block-text-op': {
       const { TextCRDT } = require('./crdt');
       const { applyTextChangeToHtml } = require('./htmlutils');
-      const result = findPageInState(state, op.pageId);
-      if (!result) return state;
-      const blk = result.page.blocks.find(b => b.id === op.blockId);
-      if (!blk) return state;
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (!entry) return state;
+      const blk = entry.block;
       let crdt;
-      if (blk.crdt) {
+      // Fast path: reuse live CRDT cached on block during rebuild
+      if (blk._crdt) {
+        crdt = blk._crdt;
+      } else if (blk.crdt) {
         crdt = TextCRDT.fromSnapshot(blk.crdt);
       } else {
         crdt = new TextCRDT('__replay__');
@@ -368,13 +495,51 @@ function applyOp(state, op) {
       for (const crdtOp of (op.crdtOps || [])) crdt.apply(crdtOp);
       const newText = crdt.getText();
       blk.html = applyTextChangeToHtml(blk.html || '', oldText, newText);
-      blk.crdt = crdt.snapshot();
+      // Cache live CRDT on block for subsequent ops
+      blk._crdt = crdt;
+      blk.crdt = null; // mark snapshot as stale
       return state;
     }
 
     default:
       console.warn('Unknown op type:', op.type);
       return state;
+  }
+}
+
+function _removePageIndex(idx, pages) {
+  for (const p of pages) {
+    idx.pages.delete(p.id);
+    for (const b of (p.blocks || [])) idx.blocks.delete(b.id);
+    if (p.children?.length) _removePageIndex(idx, p.children);
+  }
+}
+
+// Finalize state after rebuild: serialize cached CRDTs, remove index
+function finalizeState(state) {
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) {
+      _finalizePages(sec.pages);
+    }
+  }
+  delete state._index;
+  return state;
+}
+
+function _finalizePages(pages) {
+  for (const p of pages) {
+    // Serialize cached CRDTs
+    for (const b of (p.blocks || [])) {
+      if (b._crdt) {
+        b.crdt = b._crdt.snapshot();
+        delete b._crdt;
+      }
+    }
+    // Strip empty non-image blocks
+    p.blocks = (p.blocks || []).filter(b =>
+      b.type === 'image' || (b.html && b.html !== '<br>' && b.html.trim() !== '')
+    );
+    if (p.children?.length) _finalizePages(p.children);
   }
 }
 
@@ -394,5 +559,7 @@ module.exports = {
   findInTree,
   removeFromTree,
   findPageInState,
+  buildIndex,
+  finalizeState,
   uid,
 };

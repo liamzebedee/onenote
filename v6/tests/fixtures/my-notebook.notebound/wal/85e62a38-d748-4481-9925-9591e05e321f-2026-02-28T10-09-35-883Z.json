@@ -1,0 +1,347 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772273375883,
+  "ops": [
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1688.0075381692373,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273357757,
+      "id": "8a32dfe3-4589-4c79-b826-02a66fbd86cb"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1544.9560518837086,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273357806,
+      "id": "c3d6478e-ac5b-41ee-993e-ed0f8340553c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 1258.8530793126515,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273357851,
+      "id": "11d369e0-a266-475d-ada6-54303b33303d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 972.7501067415944,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273357859,
+      "id": "5a923580-4d44-4a03-bc13-83d2115a7174"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 829.6986204560659,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273357898,
+      "id": "492b9ad4-7696-4de5-b220-21ef18e3d43f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 686.6471341705374,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273358340,
+      "id": "70e63da3-3a82-4580-b8d9-470ee74702ea"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 543.5956478850088,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273358390,
+      "id": "93607c01-368d-43ac-bc81-02dccc903832"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 257.4926753139517,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273358440,
+      "id": "5ef312b4-8747-41d3-883c-0330afa82f05"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273358483,
+      "id": "9c79925c-fd8a-4c47-865d-efbef2633a3f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.838858813116292,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273358540,
+      "id": "06b7a9f3-e1f2-455f-aec8-bf3f88a2d4d1"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "title": "Feb.",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273359765,
+      "id": "87dbc78d-b5e6-4e1a-9a0d-74f6f807d01a"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "7c482e3b-654e-4f52-b505-e3d083f1e7ee",
+      "x": 30,
+      "y": 67,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273359842,
+      "id": "abfca7d9-87f4-4e15-a40a-374419fa108e"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "7c482e3b-654e-4f52-b505-e3d083f1e7ee",
+      "x": 30,
+      "y": 67,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273360402,
+      "id": "ab90c2c1-a425-485e-9e0b-7921e7b42676"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "730b4856-fd54-47ed-abad-c14a1fed0ef3",
+        "x": 231.26656949493784,
+        "y": 689.9999033803541,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273360757,
+      "id": "0453caa8-b45f-42ad-9746-8e3689aa0a7d"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "730b4856-fd54-47ed-abad-c14a1fed0ef3",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361252,
+      "id": "0fb06262-6aa7-4605-bbe3-160a4d494e0e"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "5fbc72a8-358a-41ae-97f9-d29742a6bb3d",
+        "x": 287.2950682901032,
+        "y": 751.9888807707498,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361324,
+      "id": "0df2cd19-6214-4590-91f4-73117bc4fa2c"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "5fbc72a8-358a-41ae-97f9-d29742a6bb3d",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361533,
+      "id": "257c432c-d8c9-430a-8d1a-446a0b3a08f4"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "f1febd70-88e0-4ab3-96a6-5d710eabfb69",
+        "x": 110.86490187128463,
+        "y": 794.9043266564084,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361612,
+      "id": "052725c8-b748-4ba2-81a7-2b73245ad4e0"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "f1febd70-88e0-4ab3-96a6-5d710eabfb69",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361900,
+      "id": "6e94aeee-86ee-4570-8e26-7ea7a8548d4e"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "f6967bf5-ebff-431c-9316-dbe965724694",
+      "x": 578,
+      "y": 394,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273361962,
+      "id": "445128d1-66f8-4ad4-9610-abd1cad88f42"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "7c482e3b-654e-4f52-b505-e3d083f1e7ee",
+      "x": 30,
+      "y": 67,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273362402,
+      "id": "c4c9b575-c3f2-4859-8aa6-cf2a6aa18fe9"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "7cba68b6-3cfd-4533-906a-4927a69d9426",
+        "x": 663.9973155086617,
+        "y": 29.578875028830645,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273362837,
+      "id": "84de78ca-4b48-4c25-becd-ae922407ce3f"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "7cba68b6-3cfd-4533-906a-4927a69d9426",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273364205,
+      "id": "5388f04f-57da-46b6-8c1d-56c5b095440c"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "blockId": "84209a85-bcc6-4f6b-bf4e-b74af56c79b0",
+      "html": "<header><h1 class=\"page-title\" dir=\"auto\" style=\"letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.75em; font-size: 2.5rem;\">Knowledge.</h1><p class=\"page-description\" dir=\"auto\" style=\"margin-top: 0.5em; margin-bottom: 2em;\"></p></header><div class=\"page-body\"><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><h3 id=\"301ba89f-2f77-804d-b1ba-e5397ae7c005\" class=\"\" style=\"letter-spacing: -0.01em; line-height: 1.2; font-size: 1.25rem; margin-top: 1.25rem;\">Overview.</h3></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-807e-8fda-c246032a7bb2\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is a double helix. 2 strands</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d8-9ce1-c487cb6b0247\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each strand is a chain of nucleotides</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8033-9213-e93d55c73fa2\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">At each position, 2 bases interact forming a base pair - ie. A and G</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801c-8c1c-dbed04467871\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d8-879d-ec9e433068ee\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A nucleotide has one base (A/C/G/T) and a sugar/phosphate chemistry to keep it together.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8099-a5de-fb4b94a01f19\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8020-94e3-e05b8bcb9c34\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">groups of 3 bases are referred to as a <strong>codon</strong></p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"314ba89f-2f77-80c2-8d65-d210d30cfffa\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">RNA polymerase reads DNA one base at a time. There is no triplet framing.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"314ba89f-2f77-8090-b9d8-d76e207abdf3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The ribosome reads mRNA in non-overlapping triplets. That is where codons function as codons.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8063-aa66-fc0bb6b54e7c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801d-9d8a-ed1ed3880006\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">mRNA is then translated into a protein</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80eb-95bb-ffd8478072c5\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon (3x bases) maps to one amino acid or a stop codon (special token which signals the end of protein synthesis)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80c9-a87e-c0fea0de63ee\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The codons are chained together using peptide bonds</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-808c-9f79-e162d52d0612\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This forms a polypeptide chain</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ec-9355-d8b81c7036f3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">When the stop codon is encountered, the translation process stops</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d3-9335-e2317b49b708\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8041-b8c6-d41d6cb4d628\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The polypeptide chain folds into a functional 3D structure (protein folding)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8055-8f80-da35a9e5118d\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This is referred to as its “native state” </p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-808e-8e6e-ef734d614a43\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-800d-bf4f-e3236f45648c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Degeneracy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ce-ba4d-f2d5a19c7d65\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Codons are 3 nucleotides, each which have a base (A,C,G,T)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801d-9242-d944de4785af\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">There are 64 possible triplet combinations (codons) using the four bases (A, U, G, C)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80b3-991d-f2fc1f9f0cc0\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon encodes one amino acid</p></div><div dir=\"ltr\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><figure id=\"301ba89f-2f77-80b0-b98c-e20091c429aa\" class=\"image\" style=\"margin-top: 1.5em; margin-bottom: 1.5em; break-inside: avoid; border: none; border-radius: 0px; text-align: center;\"><a href=\"Knowledge/Screenshot_2026-02-08_at_4.55.20_PM.png\"><img src=\"Knowledge/Screenshot_2026-02-08_at_4.55.20_PM.png\" style=\"max-width: 100%; width: 709.984px;\"></a></figure></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e6-9449-d3ed01e5d0e9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">An amino acid can be encoded by multiple codons</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8054-93ec-d7b092aa8fe8\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">For instance, codons GAA and GAG both specify glutamic acid and exhibit redundancy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8080-b18c-d050b5494f65\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This is referred to as degeneracy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80df-b46f-c72ec48dd803\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Mathematically:</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80b6-881a-cad4565bc8f9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">4^3 = 64 codons</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80f8-ae04-f7382d6b70a9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">22 amino acids </p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8065-9c3d-f46d04c0b8e0\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e7-9967-fc5d39b9d4d3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"ltr\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><figure id=\"301ba89f-2f77-802e-a8d9-fd37af038045\" class=\"image\" style=\"margin-top: 1.5em; margin-bottom: 1.5em; break-inside: avoid; border: none; border-radius: 0px; text-align: center;\"><a href=\"Knowledge/Screenshot_2026-02-08_at_4.33.13_PM.png\"><img src=\"Knowledge/Screenshot_2026-02-08_at_4.33.13_PM.png\" style=\"max-width: 100%; width: 668px;\"></a></figure></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801b-946d-e9a2fa977f6a\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-809f-af89-dc678678be0b\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-803f-8071-d5fa3285b949\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">respiration → ATP → powers RNA polymerase which moves along DNA → assembles RNA → ribosome grabs RNA → it steps along RNA and uses ATP to bring in amino acid and produce → peptide bond of amino acids → chain of amino acids together → folds into a protein → protein</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ba-b610-f3dda3e1a52e\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e4-8989-d6861770a36c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is a chemical polymer made of nucleotides.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8051-9fa9-e5d28235fd3b\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A nucleotide is one “letter” (A,C,G,T) plus sugar+phosphate (the chemistry).</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801b-b22f-da0cba7b9625\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is usually double-stranded: two complementary letters bind (A–T, C–G).<br>One matched pair across the strands is a base pair.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d5-bd0a-c79b0c9fe393\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A gene is a stretch of DNA letters.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-802a-afdd-e75b971c1f83\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">When expressed, DNA is read in groups of 3 nucleotides.<br>A 3-letter group is a codon.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80f1-88a9-d9c420094312\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon maps to one amino acid (or stop).</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80a9-8283-f989bcf93848\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Amino acids are small chemicals (20 main types) that link into a chain.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-802a-a597-fd78552157e1\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">That amino-acid chain is a protein.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80bc-9d39-ee82c290f360\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">So:<br>nucleotides → DNA sequence (base pairs in double helix) → codons (triplets) → amino acids → protein.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d4-bb16-e4996edb93e9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"></div></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273365780,
+      "id": "c102b34d-d77b-494a-aeee-88bab5bf1b3d"
+    },
+    {
+      "type": "notebook-add",
+      "notebookId": "4172d241-7261-49ff-ab55-fde70c527e8c",
+      "title": "New Notebook",
+      "sections": [
+        {
+          "id": "75aa31f3-307f-4160-bbb6-b7973155a6c8",
+          "title": "New Section",
+          "pages": [
+            {
+              "id": "b0cadffc-65a7-49cc-83aa-0790a1841175",
+              "title": "Untitled Page",
+              "children": [],
+              "defaultBlockId": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+              "blocks": [
+                {
+                  "id": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+                  "x": 0,
+                  "y": 0,
+                  "w": 480,
+                  "html": "",
+                  "type": "text"
+                }
+              ],
+              "panX": 0,
+              "panY": 0,
+              "zoom": 1
+            }
+          ]
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273369789,
+      "id": "67bcc1e5-70b9-466d-9241-46a6d9c866b4"
+    },
+    {
+      "type": "section-add",
+      "notebookId": "4172d241-7261-49ff-ab55-fde70c527e8c",
+      "sectionId": "75aa31f3-307f-4160-bbb6-b7973155a6c8",
+      "title": "New Section",
+      "pages": [
+        {
+          "id": "b0cadffc-65a7-49cc-83aa-0790a1841175",
+          "title": "Untitled Page",
+          "children": [],
+          "defaultBlockId": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+          "blocks": [
+            {
+              "id": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+              "x": 0,
+              "y": 0,
+              "w": 480,
+              "html": "",
+              "type": "text"
+            }
+          ],
+          "panX": 0,
+          "panY": 0,
+          "zoom": 1
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273369789,
+      "id": "bb1d646e-d5a9-4810-9f1a-c511336214f2"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "75aa31f3-307f-4160-bbb6-b7973155a6c8",
+      "pageId": "b0cadffc-65a7-49cc-83aa-0790a1841175",
+      "title": "Untitled Page",
+      "defaultBlockId": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+      "blocks": [
+        {
+          "id": "c031e2ed-6a4f-4db0-992e-35ce93d7e12e",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273369789,
+      "id": "b35355d7-a0e7-4e3c-ae5b-71be495742e6"
+    },
+    {
+      "type": "notebook-delete",
+      "notebookId": "4172d241-7261-49ff-ab55-fde70c527e8c",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772273372580,
+      "id": "9780a019-76dd-476c-836c-c77e74a23cea"
+    }
+  ]
+}

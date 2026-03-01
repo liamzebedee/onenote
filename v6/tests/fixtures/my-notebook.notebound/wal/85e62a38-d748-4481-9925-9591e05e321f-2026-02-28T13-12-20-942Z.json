@@ -1,0 +1,1143 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772284340942,
+  "ops": [
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "7c7f9213-a89e-40d4-9f65-e65f12925a75",
+      "blocks": [
+        {
+          "id": "7c7f9213-a89e-40d4-9f65-e65f12925a75",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        },
+        {
+          "id": "544f9dbc-640b-411a-95e6-5a8bd83d8bb4",
+          "x": 65,
+          "y": 89.8125,
+          "w": 480,
+          "html": "<br>",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284314454,
+      "id": "f92a65c9-9c7b-4a8c-899c-4a86068b8a64"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "title": "Homebuilding",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284318888,
+      "id": "1c222f67-e585-42b9-9481-5ce524c3ab1b"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "block": {
+        "id": "544f9dbc-640b-411a-95e6-5a8bd83d8bb4",
+        "x": 65,
+        "y": 89.8125,
+        "w": 480,
+        "html": "<br>",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284318992,
+      "id": "bb243874-86b8-47a2-95f1-d7a2c765dbbe"
+    },
+    {
+      "id": "2780e002-7751-4828-9c9f-5dd3bdef623e",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284319396,
+      "type": "block-text-op",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "blockId": "544f9dbc-640b-411a-95e6-5a8bd83d8bb4",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 1
+          },
+          "parentId": {
+            "device": "__root__",
+            "counter": 0
+          },
+          "char": "M"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 2
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 1
+          },
+          "char": "a"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 3
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 2
+          },
+          "char": "t"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 4
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 3
+          },
+          "char": "e"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 5
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 4
+          },
+          "char": "r"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 6
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 5
+          },
+          "char": "i"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 7
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 6
+          },
+          "char": "a"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 8
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 7
+          },
+          "char": "l"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 9
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 8
+          },
+          "char": "s"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 10
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 9
+          },
+          "char": " "
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 11
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 10
+          },
+          "char": "c"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 12
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 11
+          },
+          "char": "o"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 13
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 12
+          },
+          "char": "s"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 14
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 13
+          },
+          "char": "t"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 15
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 14
+          },
+          "char": ":"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 16
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 15
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 17
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 16
+          },
+          "char": "$"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 18
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 17
+          },
+          "char": "8"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 19
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 18
+          },
+          "char": "k"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 20
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 19
+          },
+          "char": "."
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 21
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 20
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 22
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 21
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 23
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 22
+          },
+          "char": "W"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 24
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 23
+          },
+          "char": "h"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 25
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 24
+          },
+          "char": "i"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 26
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 25
+          },
+          "char": "t"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 27
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 26
+          },
+          "char": "e"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 28
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 27
+          },
+          "char": " "
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 29
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 28
+          },
+          "char": "c"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 30
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 29
+          },
+          "char": "a"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 31
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 30
+          },
+          "char": "r"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 32
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 31
+          },
+          "char": "d"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 33
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 32
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 34
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 33
+          },
+          "char": "C"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 35
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 34
+          },
+          "char": "o"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 36
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 35
+          },
+          "char": "u"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 37
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 36
+          },
+          "char": "n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 38
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 37
+          },
+          "char": "c"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 39
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 38
+          },
+          "char": "i"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 40
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 39
+          },
+          "char": "l"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 41
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 40
+          },
+          "char": " "
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 42
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 41
+          },
+          "char": "D"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 43
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 42
+          },
+          "char": "A"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 44
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 43
+          },
+          "char": " "
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 45
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 44
+          },
+          "char": "a"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 46
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 45
+          },
+          "char": "p"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 47
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 46
+          },
+          "char": "p"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 48
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 47
+          },
+          "char": "l"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 49
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 48
+          },
+          "char": "i"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 50
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 49
+          },
+          "char": "c"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 51
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 50
+          },
+          "char": "a"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 52
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 51
+          },
+          "char": "t"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 53
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 52
+          },
+          "char": "i"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 54
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 53
+          },
+          "char": "o"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 55
+          },
+          "parentId": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 54
+          },
+          "char": "n"
+        }
+      ]
+    },
+    {
+      "id": "54f32d3e-ba58-4347-a9ca-e5ca4ee050a8",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284321857,
+      "type": "block-text-op",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "blockId": "544f9dbc-640b-411a-95e6-5a8bd83d8bb4",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 1
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 2
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 3
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 4
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 5
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 6
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 7
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 8
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 9
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 10
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 11
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 12
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 13
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 14
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 15
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 16
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 17
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 18
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 19
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 20
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 21
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 22
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 23
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 24
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 25
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 26
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 27
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 28
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 29
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 30
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 31
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 32
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 33
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 34
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 35
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 36
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 37
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 38
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 39
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 40
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 41
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 42
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 43
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 44
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 45
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 46
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 47
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 48
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 49
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 50
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 51
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 52
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 53
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 54
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 55
+          }
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 56
+          },
+          "parentId": {
+            "device": "__root__",
+            "counter": 0
+          },
+          "char": "\n"
+        }
+      ]
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73d67fb5-1bdb-401f-acac-93cd00632951",
+      "blockId": "544f9dbc-640b-411a-95e6-5a8bd83d8bb4",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284322034,
+      "id": "38f0bef9-cb6c-41ed-8272-650fa8e096bb"
+    }
+  ]
+}

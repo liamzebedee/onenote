@@ -1,0 +1,103 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772334271094,
+  "ops": [
+    {
+      "type": "section-rename",
+      "sectionId": "0c34e4d4-0cfb-4707-9558-c30094a2f00c",
+      "title": "Main",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334258280,
+      "id": "b3fdb41f-d17f-4162-b8e4-2d093e4be711"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "2966efe9-8373-4f78-bc0f-2bd41311e086",
+      "title": "Untitled Page",
+      "parentPageId": null,
+      "defaultBlockId": "5ff8467a-ea69-4e98-bc32-cdc29a6595d7",
+      "blocks": [
+        {
+          "id": "5ff8467a-ea69-4e98-bc32-cdc29a6595d7",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334262126,
+      "id": "35ae30d9-4eb3-4a5c-a3c8-fda2f45a2017"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "2966efe9-8373-4f78-bc0f-2bd41311e086",
+      "title": "Ideas",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334263873,
+      "id": "38ef6728-818e-4f01-8304-0bc6ed96dd03"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pages": [
+        {
+          "id": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+          "children": []
+        },
+        {
+          "id": "d5b19ef4-22ad-48f8-a111-09ee122898fa",
+          "children": []
+        },
+        {
+          "id": "c08fd512-07d0-4fd9-a968-64623589383a",
+          "children": []
+        },
+        {
+          "id": "2966efe9-8373-4f78-bc0f-2bd41311e086",
+          "children": [
+            {
+              "id": "73d67fb5-1bdb-401f-acac-93cd00632951",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334265644,
+      "id": "5c7bb743-0c38-42cd-a99d-afb898216803"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pages": [
+        {
+          "id": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+          "children": []
+        },
+        {
+          "id": "d5b19ef4-22ad-48f8-a111-09ee122898fa",
+          "children": []
+        },
+        {
+          "id": "2966efe9-8373-4f78-bc0f-2bd41311e086",
+          "children": [
+            {
+              "id": "73d67fb5-1bdb-401f-acac-93cd00632951",
+              "children": []
+            },
+            {
+              "id": "c08fd512-07d0-4fd9-a968-64623589383a",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334267538,
+      "id": "d7b5fbbd-5705-49e6-b808-d4634f2c941c"
+    }
+  ]
+}

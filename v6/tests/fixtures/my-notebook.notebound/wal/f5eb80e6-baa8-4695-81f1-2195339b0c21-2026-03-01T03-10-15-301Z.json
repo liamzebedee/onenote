@@ -1,0 +1,100 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772334615301,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b9e9653b-6685-4bcd-a7d5-f427d15a97ab",
+      "html": "Do you notice?<div><br></div><div>Notice how the 2010 OneNote is just full of colour.&nbsp;</div><div>Every section has its own colour.</div><div>It's subtle, but if you look closely, the entire section shares this single colour - the section tab, the pages pane, and then the content is overlaid on top. But there is a soft chrome around it that shows you visually you are inside the \"purple section\".</div><div><br></div><div>Modern OneNote has no such thing. Everything is a bland shade of gray. All the same.</div>",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334603351,
+      "id": "9dcff3d9-ea01-491c-9899-1dae88c94f4f"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional.</div>",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334603374,
+      "id": "08ba303c-802c-40c2-b926-90e6d9063fd7"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "b9e9653b-6685-4bcd-a7d5-f427d15a97ab",
+      "html": "Do you notice?<div><br></div><div>Notice how the 2010 OneNote is just full of colour.&nbsp;</div><div>Every section has its own colour.</div><div>It's subtle, but if you look closely, the entire section shares this single colour - the section tab, the pages pane, and then the content is overlaid on top. But there is a soft chrome around it that shows you visually you are inside the \"purple section\".</div><div><br></div><div>Modern OneNote has no such thing. Everything is a bland shade of gray. All the same.</div>",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334604049,
+      "id": "ea525f11-374b-4827-9c1d-b84f8b839946"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "x": 1062,
+      "y": 1241,
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334604812,
+      "id": "4cabdc7f-666f-45d0-8747-9591839a3220"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "3c4a171f-dbea-469c-9775-24b71051c1ba",
+        "x": 1199.9164596910537,
+        "y": 1122.4057366922623,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334605608,
+      "id": "29e819d7-d0d9-479a-bda1-ffdb8e81ff1b"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "3c4a171f-dbea-469c-9775-24b71051c1ba",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334606754,
+      "id": "00169ea1-efc2-4905-87e4-a6f6e170696a"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "html": "Started going all digital again.<div>2000's tech.</div><div><br></div><div>Wrote an iTunes clone (iPod Manager) for Linux using Claude.</div><div>Fully functional.</div>",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334607403,
+      "id": "6ad63927-848c-4671-abf6-54d86c6ff4f4"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1416fee1-c680-4b47-a9ce-ef04fec0db0d",
+      "x": 1069,
+      "y": 1116,
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334608255,
+      "id": "5f429b47-db60-48f6-abf8-006adad5e58f"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "2e14112a-7ca2-4982-8a67-466d0802d877",
+        "x": 1160.506446814979,
+        "y": 1262.7550566840334,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772334608759,
+      "id": "bac45626-ba56-4607-aaeb-bbc1f1f450bf"
+    }
+  ]
+}

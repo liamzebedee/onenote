@@ -1,0 +1,124 @@
+{
+  "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+  "sealedAt": 1772283128086,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "f37ecd33-d97e-43c5-a342-c916dab45d60",
+        "x": 466.2307113491142,
+        "y": 776.7593244093879,
+        "w": 300,
+        "html": "",
+        "type": "loading"
+      },
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283115833,
+      "id": "24d9db2c-2ba8-4b8c-adf0-e11e2ac90de4"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "f37ecd33-d97e-43c5-a342-c916dab45d60",
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283116849,
+      "id": "e08c99de-88b7-4bb6-ae29-1c96199ef304"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "a24174a3-10bc-481d-b039-74299912fab6",
+        "x": 75,
+        "y": 408,
+        "w": 818,
+        "html": "",
+        "type": "image",
+        "src": "blob:93f67a66912a66c86d5c035b7013b1f9795e1ff804a032473c434afeae290f2b",
+        "z": -1
+      },
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283116974,
+      "id": "573df75c-7fdb-46a5-aa37-35fb62b10e97"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 0,
+      "y": 549,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283118088,
+      "id": "cdaed44e-2f72-48a4-a8c2-7b6bb7cb8867"
+    },
+    {
+      "type": "block-resize",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "w": 818,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283120029,
+      "id": "e59e9658-d4d7-4877-a1af-02456c0db416"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 0,
+      "y": 549,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283120046,
+      "id": "1d5197f6-9482-43e0-a30a-a9a7384b1d6f"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 0,
+      "y": 303,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283121287,
+      "id": "9ffec047-7242-4df7-ad18-83dd3437d2cc"
+    },
+    {
+      "type": "block-z",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "z": -1,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283121627,
+      "id": "3d3f8954-4e66-41e3-afc4-66f31fb5fc48"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 75,
+      "y": 409,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283125982,
+      "id": "ad8c8580-55d8-4dd0-81c3-4cd7b3ca394f"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 75,
+      "y": 408,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283126520,
+      "id": "5ee42134-09cf-4c6b-98b5-136893df9358"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "a24174a3-10bc-481d-b039-74299912fab6",
+      "x": 75,
+      "y": 408,
+      "deviceId": "512854a5-5b74-4835-899f-3ee204905c03",
+      "timestamp": 1772283126664,
+      "id": "5184376a-e0d2-40a5-a477-c291cf5d0e2f"
+    }
+  ]
+}

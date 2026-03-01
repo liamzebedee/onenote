@@ -1,0 +1,104 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772264928181,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "blockId": "c699dad6-1b55-4cd9-a86f-5372465fd435",
+      "html": "",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264921666,
+      "id": "4e835d0c-ea39-4711-814b-c88de76e49d8"
+    },
+    {
+      "type": "block-add",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "block": {
+        "id": "5208e213-d559-49a8-b833-619e26ae0e92",
+        "x": 191,
+        "y": 70.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264921710,
+      "id": "2c775693-3e13-4716-8255-f8e970afbfac"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "blockId": "5208e213-d559-49a8-b833-619e26ae0e92",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264922575,
+      "id": "a6ac3bf1-40f5-4c1d-8034-03a978b6d2ab"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "title": "Main.",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264924743,
+      "id": "8e34432b-c4e4-4f2c-b2f4-deba41a42606"
+    },
+    {
+      "type": "section-add",
+      "notebookId": "04c8ce0d-e96d-411c-a5e6-3ab3d5cfcdc4",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "title": "New Section",
+      "pages": [
+        {
+          "id": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+          "title": "Untitled Page",
+          "children": [],
+          "defaultBlockId": "3640e8c5-5990-40aa-a43b-cde423bf28f5",
+          "blocks": [
+            {
+              "id": "3640e8c5-5990-40aa-a43b-cde423bf28f5",
+              "x": 0,
+              "y": 0,
+              "w": 480,
+              "html": "",
+              "type": "text"
+            }
+          ],
+          "panX": 0,
+          "panY": 0,
+          "zoom": 1
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264924823,
+      "id": "5d7073a5-f2dd-4737-af12-0382e731afed"
+    },
+    {
+      "type": "page-add",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "title": "Untitled Page",
+      "defaultBlockId": "3640e8c5-5990-40aa-a43b-cde423bf28f5",
+      "blocks": [
+        {
+          "id": "3640e8c5-5990-40aa-a43b-cde423bf28f5",
+          "x": 0,
+          "y": 0,
+          "w": 480,
+          "html": "",
+          "type": "text"
+        }
+      ],
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264924823,
+      "id": "055ebc11-7f66-42d3-8a19-492f0b690d5f"
+    },
+    {
+      "type": "section-rename",
+      "sectionId": "9d60a8bf-87c6-4be4-9798-8630a97211cf",
+      "title": "Blogging",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772264928165,
+      "id": "60aad8d4-7ee1-4819-8de6-0799b7eebefe"
+    }
+  ]
+}

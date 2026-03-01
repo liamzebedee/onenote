@@ -1,0 +1,15 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772278149487,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "6ccd2184-ae25-4796-9237-f8294213248c",
+      "blockId": "2a48e5bd-cfe7-492d-b5ec-e541bc06fdb8",
+      "html": "<div>I've finally started writing the next chapter of my novel.</div><div>Yes, that's right. A chapter. Of a book I wrote. How fanciful.&nbsp;</div><div><br></div><div><br></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278147204,
+      "id": "3545a0f4-0867-4c0f-a2d6-ad369fc35cf3"
+    }
+  ]
+}

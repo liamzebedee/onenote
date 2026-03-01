@@ -1,0 +1,57 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772335141506,
+  "ops": [
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335118563,
+      "id": "7b077520-ef04-4220-a62b-18bde084b01d"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "b3e236c4-0d84-419f-bd57-404646d07adc",
+        "x": 787.71875,
+        "y": 25.03125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335118589,
+      "id": "a52fcfc7-e270-4a0f-bdaa-4d84c2f18aac"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "b3e236c4-0d84-419f-bd57-404646d07adc",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335120066,
+      "id": "af509471-b554-4d54-a33c-ff0d202700f3"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d5b19ef4-22ad-48f8-a111-09ee122898fa",
+      "blockId": "218ade77-fbd4-4d72-b358-ad6f149e6af9",
+      "x": 58,
+      "y": 91,
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335126214,
+      "id": "ebfc3289-2f3f-4ddf-8944-75fb283ccdb9"
+    },
+    {
+      "type": "block-move",
+      "pageId": "d5b19ef4-22ad-48f8-a111-09ee122898fa",
+      "blockId": "f88c61ad-06d0-476b-bc5e-bb78610e614d",
+      "x": 835,
+      "y": 87,
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335127099,
+      "id": "ce6c09a1-5b53-44b1-aa5e-901ef47a18a5"
+    }
+  ]
+}

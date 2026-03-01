@@ -1,0 +1,79 @@
+{
+  "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+  "sealedAt": 1772259126015,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "2a9d2338-5d44-452d-8928-a5d08cec076a",
+        "x": 279,
+        "y": 167.8125,
+        "w": 300,
+        "html": "",
+        "type": "image",
+        "src": "blob:8b1bcccee2a18b642d4e52dd324180cf4b255122c1fe4255365274bed136f98b"
+      },
+      "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+      "timestamp": 1772259116472,
+      "id": "2a197390-afc8-4074-95de-3fd3c4df47f0"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "71c6aefb-a7be-4410-95a7-f343c857368d",
+        "x": 521,
+        "y": 215.8125,
+        "w": 300,
+        "html": "",
+        "type": "image",
+        "src": "blob:8b1bcccee2a18b642d4e52dd324180cf4b255122c1fe4255365274bed136f98b"
+      },
+      "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+      "timestamp": 1772259121080,
+      "id": "f27fab7e-6681-4b98-ae00-bd900b84cb25"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "3e0de90b-363d-4cfa-b916-30ebf8f385e5",
+        "x": 371,
+        "y": 343,
+        "w": 300,
+        "html": "",
+        "type": "image",
+        "src": "blob:9261ae98a78ed33090c5c60c4945a9596c12f66a2d8c0f9be0b86028e0c16993"
+      },
+      "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+      "timestamp": 1772259124017,
+      "id": "3ee25aad-a5d4-455f-9316-045b8af585b2"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "3e0de90b-363d-4cfa-b916-30ebf8f385e5",
+      "x": 371,
+      "y": 343,
+      "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+      "timestamp": 1772259124847,
+      "id": "768cdcc5-4f6c-4eb6-8f5e-25540a8edc8c"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "277b5ab5-8a66-4784-942d-9d44cd886d5c",
+        "x": 715,
+        "y": 262.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "01be70db-c18d-434b-b713-0ed5a7db51ff",
+      "timestamp": 1772259125111,
+      "id": "992287b1-ceeb-48bb-9d44-cbd70a0c4f4f"
+    }
+  ]
+}

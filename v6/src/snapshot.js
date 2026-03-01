@@ -4,14 +4,16 @@
 const fs = require('fs');
 const path = require('path');
 const { WAL } = require('./wal');
-const { emptyState, applyOp } = require('./model');
+const { emptyState, applyOp, buildIndex, finalizeState } = require('./model');
+
+const MAX_SNAPSHOTS_PER_DEVICE = 3;
 
 // Create a snapshot of the current state
-function createSnapshot(state, snapshotsDir, includedBatches = []) {
+function createSnapshot(state, snapshotsDir, includedBatches = [], deviceId) {
   fs.mkdirSync(snapshotsDir, { recursive: true });
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const filename = `${timestamp}.json`;
+  const filename = deviceId ? `${deviceId}-${timestamp}.json` : `${timestamp}.json`;
   const filePath = path.join(snapshotsDir, filename);
 
   const snapshot = {
@@ -23,6 +25,19 @@ function createSnapshot(state, snapshotsDir, includedBatches = []) {
   const tmpPath = filePath + '.tmp';
   fs.writeFileSync(tmpPath, JSON.stringify(snapshot));
   fs.renameSync(tmpPath, filePath);
+
+  // Prune old snapshots — keep only the latest MAX_SNAPSHOTS_PER_DEVICE
+  try {
+    const allSnaps = fs.readdirSync(snapshotsDir)
+      .filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
+      .sort();
+    if (allSnaps.length > MAX_SNAPSHOTS_PER_DEVICE) {
+      const toDelete = allSnaps.slice(0, allSnaps.length - MAX_SNAPSHOTS_PER_DEVICE);
+      for (const f of toDelete) {
+        fs.unlinkSync(path.join(snapshotsDir, f));
+      }
+    }
+  } catch {}
 
   return filename;
 }
@@ -43,7 +58,7 @@ function loadLatestSnapshot(snapshotsDir) {
 }
 
 // Rebuild state from latest snapshot + WAL replay
-function rebuildState(snapshotsDir, walDir) {
+function rebuildState(snapshotsDir, walDir, notebookId, notebookName) {
   const snapshot = loadLatestSnapshot(snapshotsDir);
   let state;
   let appliedBatches = new Set();
@@ -57,6 +72,14 @@ function rebuildState(snapshotsDir, walDir) {
     state = emptyState();
   }
 
+  // Ensure the notebook exists in state — it's the directory we opened
+  if (notebookId && !state.notebooks.find(n => n.id === notebookId)) {
+    state.notebooks.push({ id: notebookId, title: notebookName || 'Notebook', sections: [] });
+  }
+
+  // Build index for O(1) lookups during replay
+  buildIndex(state);
+
   // Replay all WAL batches not included in the snapshot
   const batches = WAL.listBatches(walDir);
   for (const batchFile of batches) {
@@ -67,6 +90,9 @@ function rebuildState(snapshotsDir, walDir) {
     }
     appliedBatches.add(batchFile);
   }
+
+  // Finalize: serialize cached CRDTs, remove index
+  finalizeState(state);
 
   return { state, appliedBatches };
 }

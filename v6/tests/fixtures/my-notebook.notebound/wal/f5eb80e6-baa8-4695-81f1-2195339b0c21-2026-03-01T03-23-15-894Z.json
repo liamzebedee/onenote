@@ -1,0 +1,13 @@
+{
+  "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+  "sealedAt": 1772335395894,
+  "ops": [
+    {
+      "type": "notebook-delete",
+      "notebookId": "9e7cc0b4-06e1-4a00-94a7-7d4ac84a1d8e",
+      "deviceId": "f5eb80e6-baa8-4695-81f1-2195339b0c21",
+      "timestamp": 1772335388924,
+      "id": "13a0bc55-c0e5-40ea-bd83-775983f152b0"
+    }
+  ]
+}

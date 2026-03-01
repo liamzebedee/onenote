@@ -1,0 +1,21 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772265483420,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "239793f9-ceaf-4d69-9eee-f56b2f780cc3",
+        "x": 541,
+        "y": 13.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772265478576,
+      "id": "97971507-9656-406f-b132-5081dbfba3d5"
+    }
+  ]
+}

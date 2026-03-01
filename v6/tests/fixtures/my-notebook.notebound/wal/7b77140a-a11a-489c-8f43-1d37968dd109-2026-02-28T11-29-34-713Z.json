@@ -1,0 +1,151 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772278174713,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li></ul><ul><li>DNA synthesis</li><li>DNA manipulation</li><li>DNA replication</li><li>Restriction enzymes</li><li>RNA</li><ul><li>mRNA</li><ul><li>codons</li></ul><li>tRNA</li><ul><li>anti codon</li></ul></ul><li>Central Dogma</li><ul><li>DNA -&gt; mRNA -&gt; Amino acid chain (polypeptide) -&gt; Folding into 3D protein</li></ul><li>Transcription</li><li>Translation</li><li>Eukaryotic</li><li>Prokaryotic</li><li>Protein synthesis</li><li>Plasmids</li><li>Peptide synthesis</li><li>Pippetting&nbsp;</li><ul><li>Units</li><ul><li>Moles - absolute amount of substance</li><li><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">Molarity - concentration</span></li></ul><li>Assays</li><li>Serial dilutions</li></ul></ul><p><br></p>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278154598,
+      "id": "e58362b5-ef5b-4bff-8a3c-627a6b1539cd"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "1bfb05fc-d3c7-4f4e-8fde-349236ab2dfa",
+      "pages": [
+        {
+          "id": "fa053582-3042-4fff-8130-d6c53563716d",
+          "children": []
+        },
+        {
+          "id": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+          "children": []
+        },
+        {
+          "id": "d7e53ed0-638d-4df8-943d-b5513d367558",
+          "children": []
+        },
+        {
+          "id": "808356be-18d2-41a8-a846-28f179e776ca",
+          "children": [
+            {
+              "id": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "abab4a78-2682-4bf2-836f-02e533a56775",
+          "children": []
+        }
+      ],
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278158395,
+      "id": "d32c5df0-7e90-4bfb-9035-9f06d542ee4a"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "1bfb05fc-d3c7-4f4e-8fde-349236ab2dfa",
+      "pages": [
+        {
+          "id": "fa053582-3042-4fff-8130-d6c53563716d",
+          "children": []
+        },
+        {
+          "id": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+          "children": []
+        },
+        {
+          "id": "d7e53ed0-638d-4df8-943d-b5513d367558",
+          "children": []
+        },
+        {
+          "id": "808356be-18d2-41a8-a846-28f179e776ca",
+          "children": [
+            {
+              "id": "abab4a78-2682-4bf2-836f-02e533a56775",
+              "children": []
+            },
+            {
+              "id": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278166914,
+      "id": "6c7daf9d-30a5-4ae7-a4c1-58014d243167"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "1bfb05fc-d3c7-4f4e-8fde-349236ab2dfa",
+      "pages": [
+        {
+          "id": "fa053582-3042-4fff-8130-d6c53563716d",
+          "children": []
+        },
+        {
+          "id": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+          "children": []
+        },
+        {
+          "id": "d7e53ed0-638d-4df8-943d-b5513d367558",
+          "children": []
+        },
+        {
+          "id": "808356be-18d2-41a8-a846-28f179e776ca",
+          "children": [
+            {
+              "id": "abab4a78-2682-4bf2-836f-02e533a56775",
+              "children": []
+            },
+            {
+              "id": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278168202,
+      "id": "57e279ba-a768-4697-8bfc-747629d82586"
+    },
+    {
+      "type": "page-tree-update",
+      "sectionId": "1bfb05fc-d3c7-4f4e-8fde-349236ab2dfa",
+      "pages": [
+        {
+          "id": "fa053582-3042-4fff-8130-d6c53563716d",
+          "children": []
+        },
+        {
+          "id": "cb836e8d-73c1-4bc4-980a-606ed79401b1",
+          "children": []
+        },
+        {
+          "id": "d7e53ed0-638d-4df8-943d-b5513d367558",
+          "children": []
+        },
+        {
+          "id": "808356be-18d2-41a8-a846-28f179e776ca",
+          "children": [
+            {
+              "id": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+              "children": []
+            },
+            {
+              "id": "abab4a78-2682-4bf2-836f-02e533a56775",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772278172734,
+      "id": "88a5dd05-7be8-4d0c-8be4-8df0eb1cf45a"
+    }
+  ]
+}

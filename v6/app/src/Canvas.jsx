@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache } from './store.js';
+import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH } from './store.js';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
 import { initPasteHandler } from './clipboard.js';
@@ -52,6 +52,38 @@ export function FormatToolbar() {
 
 // ─── PageTitle ───────────────────────────────────────────
 
+function getCaretOffset(el) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount || !el.contains(sel.anchorNode)) return 0;
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  range.setEnd(sel.anchorNode, sel.anchorOffset);
+  return range.toString().length;
+}
+
+function setCaretOffset(el, offset) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  let pos = 0;
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    const len = node.textContent.length;
+    if (pos + len >= offset) {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.setStart(node, Math.min(offset - pos, len));
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return;
+    }
+    pos += len;
+  }
+}
+
+function hasNonEmptyBlocks(page) {
+  return page.blocks.some(b => b.type === 'image' || (b.html && b.html !== '<br>' && b.html.trim() !== ''));
+}
+
 function PageTitle({ page, onEnter }) {
   const ref = useRef(null);
   const editing = useRef(false);
@@ -59,6 +91,32 @@ function PageTitle({ page, onEnter }) {
   useLayoutEffect(() => {
     if (ref.current && !editing.current) ref.current.textContent = page?.title ?? '';
   }, [page?.id, page?.title]);
+
+  // On page switch: restore last caret position, or focus title if empty page
+  useEffect(() => {
+    if (!page) return;
+    if (hasNonEmptyBlocks(page)) {
+      const saved = lastCaretPerPage.get(page.id);
+      if (saved) {
+        requestAnimationFrame(() => {
+          const el = document.querySelector(`[data-block-id="${saved.blockId}"] .block-content`);
+          if (el) {
+            el.focus();
+            setCaretOffset(el, saved.offset);
+          }
+        });
+        return;
+      }
+    }
+    // Empty page — focus title at end
+    const el = ref.current;
+    if (el) {
+      el.focus();
+      const sel = window.getSelection();
+      sel.selectAllChildren(el);
+      sel.collapseToEnd();
+    }
+  }, [page?.id]);
 
   if (!page) return <div id="page-title-bar" />;
 
@@ -128,7 +186,7 @@ export function Canvas({ page }) {
     let maxX = 0, maxY = 0;
     if (pg?.blocks?.length) {
       for (const b of pg.blocks) {
-        maxX = Math.max(maxX, b.x + (b.w || 480));
+        maxX = Math.max(maxX, b.x + (b.w || DEFAULT_BLOCK_WIDTH));
         maxY = Math.max(maxY, b.y + 300);
       }
     }
@@ -226,8 +284,6 @@ export function Canvas({ page }) {
     const pg = getActivePage();
     if (!pg) return;
 
-    if (pg.defaultBlockId === blockId) return;
-
     if (!selectedRef.current.has(blockId)) {
       if (!e.shiftKey) setSelected(new Set([blockId]));
       else setSelected(new Set([...selectedRef.current, blockId]));
@@ -279,7 +335,7 @@ export function Canvas({ page }) {
     e.preventDefault();
     const el = innerRef.current?.querySelector(`[data-block-id="${blockId}"]`);
     if (!el) return;
-    const origW = parseInt(el.style.width) || 480;
+    const origW = parseInt(el.style.width) || DEFAULT_BLOCK_WIDTH;
     const startX = e.clientX;
     const pg = getActivePage();
 
@@ -504,8 +560,7 @@ export function Canvas({ page }) {
         e.preventDefault();
         const pg = getActivePage();
         if (!pg) return;
-        const defaultId = pg.defaultBlockId;
-        const toDelete = [...selectedRef.current].filter(id => id !== defaultId);
+        const toDelete = [...selectedRef.current];
         if (!toDelete.length) return;
         const deleted = toDelete.map(id => pg.blocks.find(b => b.id === id)).filter(Boolean).map(b => ({ ...b }));
         pushUndo(pg.id, { type: 'delete', blocks: deleted });
@@ -590,11 +645,20 @@ export function Canvas({ page }) {
 
   // ── Context for blocks ───────────────────────────────────
 
-  function focusDefaultBlock() {
+  function focusFirstBlock() {
     const pg = getActivePage();
-    if (!pg?.defaultBlockId) return;
-    const el = innerRef.current?.querySelector(`[data-block-id="${pg.defaultBlockId}"] .block-content`);
-    el?.focus();
+    if (!pg) return;
+    let blk = pg.blocks.find(b => b.type === 'text' && b.x === 28 && b.y === 0);
+    if (!blk) {
+      blk = addBlock(28, 0);
+    }
+    const id = blk.id;
+    // Force Canvas re-render so the block appears in the DOM
+    setSelected(new Set());
+    requestAnimationFrame(() => {
+      const el = innerRef.current?.querySelector(`[data-block-id="${id}"] .block-content`);
+      if (el) el.focus();
+    });
   }
 
   const ctx = {
@@ -603,7 +667,13 @@ export function Canvas({ page }) {
     onBlockResizeStart,
     onImgResizeStart,
     onBlockFocus: (id) => {},
-    onBlockBlur: (id) => {},
+    onBlockBlur: (id) => {
+      if (!page) return;
+      const el = innerRef.current?.querySelector(`[data-block-id="${id}"] .block-content`);
+      const offset = el ? getCaretOffset(el) : 0;
+      lastCaretPerPage.set(page.id, { blockId: id, offset });
+      savePageCaret(page.id, id, offset);
+    },
     undo: doUndo,
     redo: doRedo,
     getZoom: () => viewRef.current.zoom,
@@ -611,7 +681,7 @@ export function Canvas({ page }) {
 
   return (
     <>
-      <PageTitle page={page} onEnter={focusDefaultBlock} />
+      <PageTitle page={page} onEnter={focusFirstBlock} />
       <CanvasCtx.Provider value={ctx}>
         <div id="canvas-wrapper">
           <div

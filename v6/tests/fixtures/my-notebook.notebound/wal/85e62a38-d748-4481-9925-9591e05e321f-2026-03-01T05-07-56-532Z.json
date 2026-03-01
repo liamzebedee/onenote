@@ -1,0 +1,14 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772341676532,
+  "ops": [
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772341674332,
+      "id": "56140fb8-a26d-4e96-8830-e128d714dfdd"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+  "sealedAt": 1772280109979,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+        "x": 352,
+        "y": 2706,
+        "w": 751,
+        "html": "",
+        "type": "image",
+        "src": "blob:8559826af755dc5472f53dca77dc82d50e7088586e2b45390114ff0a8c50a7bc"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280104787,
+      "id": "5fc70797-f423-420c-bb01-da5c9e0cbf5f"
+    },
+    {
+      "type": "block-update-src",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+      "src": "blob:8559826af755dc5472f53dca77dc82d50e7088586e2b45390114ff0a8c50a7bc",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280104852,
+      "id": "acc75a4a-4819-4a8e-b039-00fed2a504b6"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+      "x": 550,
+      "y": 2802,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280106329,
+      "id": "fb01641b-79fc-43a4-9c5e-f065c24b2872"
+    },
+    {
+      "type": "block-resize",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+      "w": 751,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280108166,
+      "id": "6d27d6e4-c54b-4da7-9c75-4040c410aa8f"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+      "x": 550,
+      "y": 2802,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280108181,
+      "id": "5a466b34-82f8-4f95-9ca5-ac9385fb225b"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "2ac7d825-6a9a-42b3-b5a4-cae6d0ec6a88",
+      "x": 352,
+      "y": 2706,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280109196,
+      "id": "9b622a01-7542-4eff-b0a6-17c8c8d3d499"
+    }
+  ]
+}

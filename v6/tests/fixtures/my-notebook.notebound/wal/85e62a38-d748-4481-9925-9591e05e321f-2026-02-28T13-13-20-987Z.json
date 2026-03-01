@@ -1,0 +1,65 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772284400987,
+  "ops": [
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "f4398793-13bb-4e81-bf46-27e5031e5281",
+      "x": 1397,
+      "y": 366,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284379104,
+      "id": "828fc0b7-eb65-41c4-baff-9b27d73bb9c7"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "7586f261-e3b7-4beb-b7c5-0d4f7b4e0343",
+      "x": 877,
+      "y": 124,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284379592,
+      "id": "2251df1a-0aca-41f5-beef-7d20969b7cbb"
+    },
+    {
+      "type": "block-add",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "block": {
+        "id": "91527cdd-eabb-4817-b987-1a3a5114ccb1",
+        "x": 1198.4520208397103,
+        "y": 11.674446898765881,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284380072,
+      "id": "f27410dd-b990-47e1-be3e-b7df6e117985"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "91527cdd-eabb-4817-b987-1a3a5114ccb1",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284381369,
+      "id": "3285f343-405f-4092-8c99-4a48fe182822"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "title": "Main page.",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284394817,
+      "id": "402d0311-b8bb-47c5-bce0-fd672e1f6b39"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "title": "Main page.",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772284395537,
+      "id": "d825184a-f87f-4b26-b442-54852766a7b1"
+    }
+  ]
+}

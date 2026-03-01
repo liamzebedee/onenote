@@ -1,0 +1,345 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772268816091,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268787558,
+      "id": "ba4871e5-7ca1-4721-991e-ad102b75a443"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268787861,
+      "id": "c02ec3bd-735e-400b-9913-3d95a8f39380"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268788229,
+      "id": "f7f07854-83bd-42d8-8024-3a2343e1c427"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268788733,
+      "id": "a8c28dbe-dc1d-418e-b8f7-91ab2ddb771b"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268788877,
+      "id": "6d68c3d4-b74a-42e4-bd63-110861949bbb"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268789029,
+      "id": "efe4fded-01dc-48f5-bfae-d38325086aa1"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268789878,
+      "id": "eac61c66-2980-4343-a88c-b091e56be565"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "c08fd512-07d0-4fd9-a968-64623589383a",
+      "blockId": "54065ee3-6a74-4a09-a06d-d4ea80d52fb1",
+      "html": "<div class=\"flex flex-col text-sm pb-25\"><article class=\"text-token-text-primary w-full focus:outline-none [--shadow-height:45px] has-data-writing-block:pointer-events-none has-data-writing-block:-mt-(--shadow-height) has-data-writing-block:pt-(--shadow-height) [&amp;:has([data-writing-block])>*]:pointer-events-auto scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]\" tabindex=\"-1\" dir=\"auto\" data-turn-id=\"request-WEB:e96fe109-8e6d-4ea5-b1af-b0f6df9e9115-24\" data-testid=\"conversation-turn-46\" data-scroll-anchor=\"true\" data-turn=\"assistant\"><div class=\"text-base my-auto mx-auto pb-10 [--thread-content-margin:--spacing(4)] @w-sm/main:[--thread-content-margin:--spacing(6)] @w-lg/main:[--thread-content-margin:--spacing(16)] px-(--thread-content-margin)\"><div tabindex=\"-1\" class=\"[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn\"><div class=\"flex max-w-full flex-col grow\"><div data-message-author-role=\"assistant\" data-message-id=\"3f890152-db5a-4422-94fd-a30e5c47d7d0\" dir=\"auto\" data-message-model-slug=\"gpt-5-2\" class=\"min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal [.text-message+&amp;]:mt-1\"><div class=\"flex w-full flex-col gap-1 empty:hidden first:pt-[1px]\"><div class=\"markdown prose dark:prose-invert w-full wrap-break-word light markdown-new-styling\"><p data-start=\"0\" data-end=\"120\">Yes. The real leverage of a local-first, log-replicated object model is not technical elegance — it’s power realignment.</p>\n<p data-start=\"122\" data-end=\"157\">“Enshittification” happens because:</p>\n<ol data-start=\"159\" data-end=\"374\">\n<li data-start=\"159\" data-end=\"198\">\n<p data-start=\"162\" data-end=\"198\">The server is the source of truth.</p>\n</li>\n<li data-start=\"199\" data-end=\"249\">\n<p data-start=\"202\" data-end=\"249\">Identity and access are controlled centrally.</p>\n</li>\n<li data-start=\"250\" data-end=\"297\">\n<p data-start=\"253\" data-end=\"297\">The provider owns the only canonical copy.</p>\n</li>\n<li data-start=\"298\" data-end=\"374\">\n<p data-start=\"301\" data-end=\"374\">Switching costs are artificially high because the data model is opaque.</p>\n</li>\n</ol>\n<p data-start=\"376\" data-end=\"414\">If you invert those, incentives shift.</p>\n<p data-start=\"416\" data-end=\"439\">In a local-first model:</p>\n<p data-start=\"441\" data-end=\"624\">• The client is the source of truth.<br data-start=\"477\" data-end=\"480\">\n• The server is a sync relay and access gate.<br data-start=\"525\" data-end=\"528\">\n• Objects are content-addressed and verifiable.<br data-start=\"575\" data-end=\"578\">\n• Documents are log-replicated and portable.</p>\n<p data-start=\"626\" data-end=\"878\">If the server disappears or degrades, your local copy is still complete. If pricing changes, you point your client at a different backend. If sharing rules change, they’re cryptographically enforceable at the object layer, not via opaque SaaS policies.</p>\n<p data-start=\"880\" data-end=\"914\">The important distinction is this:</p>\n<p data-start=\"916\" data-end=\"1055\">Cloud SaaS = computation and state are centralized; sync is the product.<br data-start=\"988\" data-end=\"991\">\nLocal-first substrate = state is user-owned; sync is a protocol.</p>\n<p data-start=\"1057\" data-end=\"1243\">That changes incentives. A backend provider competes on reliability, bandwidth, storage cost, and permission management — not on trapping your data inside proprietary mutation semantics.</p>\n<p data-start=\"1245\" data-end=\"1311\">The “public URL per object” idea is especially powerful. It means:</p>\n<ul data-start=\"1313\" data-end=\"1461\">\n<li data-start=\"1313\" data-end=\"1350\">\n<p data-start=\"1315\" data-end=\"1350\">Objects are globally referenceable.</p>\n</li>\n<li data-start=\"1351\" data-end=\"1372\">\n<p data-start=\"1353\" data-end=\"1372\">Identity is stable.</p>\n</li>\n<li data-start=\"1373\" data-end=\"1403\">\n<p data-start=\"1375\" data-end=\"1403\">Sharing is capability-based.</p>\n</li>\n<li data-start=\"1404\" data-end=\"1461\">\n<p data-start=\"1406\" data-end=\"1461\">The storage backend becomes replaceable infrastructure.</p>\n</li>\n</ul>\n<p data-start=\"1463\" data-end=\"1647\">In effect, you are describing a programmable personal data layer with portable authority. It solves backup, cross-device sync, and sharing — but without requiring surrender of control.</p>\n<p data-start=\"1649\" data-end=\"1922\">The real constraint isn’t technical; it’s ecosystem coordination. The primitives (CRDTs, content addressing, capability tokens, log replication) already exist. What’s missing is a widely adopted, backend-agnostic standard that combines them into a coherent developer model.</p>\n<p data-start=\"1924\" data-end=\"2010\" data-is-last-node=\"\" data-is-only-node=\"\">That is the structural difference between “cloud app” and “user-sovereign data layer.”</p></div></div></div></div><div class=\"z-0 flex min-h-[46px] justify-start\"></div><div class=\"mt-3 w-full empty:hidden\"><div class=\"text-center\"></div></div></div></div></article></div><div aria-hidden=\"true\" data-edge=\"true\" class=\"pointer-events-none h-px w-px absolute bottom-0\"></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268790822,
+      "id": "b8d4a2bf-1bc3-41ae-ac73-dbd36194de7b"
+    },
+    {
+      "id": "5c391475-8cd8-498f-9bd5-edbd8a478d43",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268794899,
+      "type": "block-text-op",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "blockId": "c699dad6-1b55-4cd9-a86f-5372465fd435",
+      "crdtOps": [
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 1
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 3
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 4
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 5
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 6
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 7
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 8
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 9
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 10
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 11
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 13
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 15
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 16
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 18
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 19
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 21
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 22
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 23
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 24
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 25
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 26
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 27
+          }
+        },
+        {
+          "type": "delete",
+          "id": {
+            "device": "85e62a38-d748-4481-9925-9591e05e321f",
+            "counter": 28
+          }
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "f36f1f08-cf35-4f4d-87b1-c14925d6ab08",
+      "blockId": "c699dad6-1b55-4cd9-a86f-5372465fd435",
+      "html": "<div><br></div><div><br></div><div><br></div><div><br></div>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268796333,
+      "id": "80df5cdf-a514-46fc-bc34-272e757ac679"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "000ee5a1-3bb9-4cb2-b77c-ef37f01f48ec",
+      "html": "<b>Created an agent runtime and programming layer.</b>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268803117,
+      "id": "d740c67c-3def-47f2-a94e-de5236f6839a"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "76660519-4bed-442d-aba5-b924763d3ee5",
+        "x": 1117,
+        "y": 103.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268803188,
+      "id": "76d3f82e-1e5a-410d-b79a-22b8fb4a7568"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "76660519-4bed-442d-aba5-b924763d3ee5",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268804880,
+      "id": "d3d8e84c-856f-414a-a8b0-4f9ea97889c2"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "3640e8c5-5990-40aa-a43b-cde423bf28f5",
+      "html": "",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268807550,
+      "id": "cdf14fbb-7ff0-4522-8fe5-934d0c5e1c94"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "1629c934-e90a-4da9-986e-3deef2fe73f7",
+        "x": 981,
+        "y": 30.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268807645,
+      "id": "940ad8d9-ba20-4d66-a411-c4351972698d"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "1629c934-e90a-4da9-986e-3deef2fe73f7",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268808221,
+      "id": "88957623-35cd-404e-9a61-63dcea7e4654"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "02355752-2d6f-48bc-9a91-c33864b47a76",
+        "x": 1397,
+        "y": 118.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268808317,
+      "id": "9e8969f2-1f5a-4190-b7de-503b598dc325"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "02355752-2d6f-48bc-9a91-c33864b47a76",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772268809188,
+      "id": "92fad974-e84f-428f-8291-3f9653fc3bf0"
+    }
+  ]
+}

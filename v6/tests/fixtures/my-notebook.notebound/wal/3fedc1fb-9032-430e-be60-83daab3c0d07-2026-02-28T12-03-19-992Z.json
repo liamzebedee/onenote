@@ -1,0 +1,253 @@
+{
+  "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+  "sealedAt": 1772280199992,
+  "ops": [
+    {
+      "id": "9c33f63d-fc19-4d26-8128-023c9ac9dcf4",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280170025,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 194
+          },
+          "parentId": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 193
+          },
+          "char": "a"
+        }
+      ]
+    },
+    {
+      "id": "5423f278-b3d4-425b-a7e7-93cc9ec85c54",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280170117,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 195
+          },
+          "parentId": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 194
+          },
+          "char": "r"
+        }
+      ]
+    },
+    {
+      "id": "bdef9c52-501a-4f14-8ec6-6b96c92f3db1",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280170185,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 196
+          },
+          "parentId": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 195
+          },
+          "char": "e"
+        }
+      ]
+    },
+    {
+      "id": "de1b2684-50f6-40f6-816c-392b655ebdc3",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280170264,
+      "type": "block-text-op",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "crdtOps": [
+        {
+          "type": "insert",
+          "id": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 197
+          },
+          "parentId": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 196
+          },
+          "char": "\n"
+        },
+        {
+          "type": "insert",
+          "id": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 198
+          },
+          "parentId": {
+            "device": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+            "counter": 197
+          },
+          "char": "\n"
+        }
+      ]
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "html": "I like the ability to spatially arrange images.<div>I like the information density of the app</div><div>I like that I own my own files and my own software</div><div><br></div>",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280171680,
+      "id": "ed8e130a-e11d-4b63-b55c-d1a20fd751a3"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "x": 975,
+      "y": 2918,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280172199,
+      "id": "10562e36-9483-494c-9c3a-4f8f085ebdad"
+    },
+    {
+      "type": "block-resize",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "w": 362,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280174375,
+      "id": "f9ac756e-96ff-46fe-9bf8-58bbebc99f71"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "58fbe117-7069-48e9-b0e2-55413eb6550f",
+        "x": 1316.6903949541793,
+        "y": 2863.0126549268393,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280174779,
+      "id": "9713b419-b90d-430e-8432-855d8f3d157a"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "58fbe117-7069-48e9-b0e2-55413eb6550f",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280175806,
+      "id": "60638996-6df2-40ff-8795-2572d8119a40"
+    },
+    {
+      "type": "block-move",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "x": 1025,
+      "y": 2950,
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280176299,
+      "id": "20deec7c-6859-4ea4-a974-ed6e6f99c3bb"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "f0c57d45-e4be-461c-a459-9b9a34fd7488",
+        "x": 1260.390376559787,
+        "y": 2923.2485167495074,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280176705,
+      "id": "883f45bc-76ba-40ad-976b-4a50ac6ee69a"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "f0c57d45-e4be-461c-a459-9b9a34fd7488",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280177416,
+      "id": "8ee0664b-4804-4aee-a7f4-31facc583263"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "51110752-aa04-409e-a294-48444b126245",
+      "html": "<b>I like the ability to spatially arrange images.</b><div><b>I like the information density of the app</b></div><div><b>I like that I own my own files and my own software</b></div><div><br></div>",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280178817,
+      "id": "4c74828b-9159-4ee2-9cb7-04ccd3cc6273"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "9cf58015-449c-49c6-b04d-e671ecefd19c",
+        "x": 1126.3455477046396,
+        "y": 2897.832172997959,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280178917,
+      "id": "6b7adaff-b331-492f-9aec-60d29a522311"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "9cf58015-449c-49c6-b04d-e671ecefd19c",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280179875,
+      "id": "34a33395-f364-433c-a7be-e26c6ce2e9f6"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "f95b1d0d-e9b7-471a-8d7d-5cb78f1dcb07",
+        "x": 1163.228209508323,
+        "y": 2776.078919687972,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280179936,
+      "id": "bd98ccc5-1f74-48bb-b1cd-a958595fe129"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "f95b1d0d-e9b7-471a-8d7d-5cb78f1dcb07",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280186233,
+      "id": "6031f1b4-5a0b-471b-b878-5f42acefc567"
+    },
+    {
+      "type": "section-delete",
+      "notebookId": "04c8ce0d-e96d-411c-a5e6-3ab3d5cfcdc4",
+      "sectionId": "d22aaa55-fd4c-42db-a737-81f816eacaf9",
+      "deviceId": "3fedc1fb-9032-430e-be60-83daab3c0d07",
+      "timestamp": 1772280188964,
+      "id": "729b360e-d485-42c7-b33a-8256c6967244"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772269671410,
+  "ops": [
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "f95bbe13-f72a-43c8-a1d1-3ad96665f114",
+        "x": 1277,
+        "y": 89.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269669271,
+      "id": "04fb5760-ac83-4c75-9ed6-b545d30c76fc"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "f95bbe13-f72a-43c8-a1d1-3ad96665f114",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269669704,
+      "id": "807b7b9d-f1a3-46c7-a434-2ef422eccda5"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "title": "Feb.",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269670591,
+      "id": "9f2c175e-a5ed-4193-a3e2-41c2d5c42a2f"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "5847b98b-e4c9-41dc-a286-6b7a1061f2a0",
+        "x": 1049,
+        "y": 41.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269670670,
+      "id": "bba308bd-b99d-40ad-8549-932b4dd09011"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "blockId": "5847b98b-e4c9-41dc-a286-6b7a1061f2a0",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269671152,
+      "id": "7738fe55-77ce-4f82-9b03-1b568b2e8cd6"
+    },
+    {
+      "type": "block-add",
+      "pageId": "eec29769-fd32-44d2-a409-aa3eb7f0014a",
+      "block": {
+        "id": "8bfafd52-88f8-42b1-be95-f370e9573143",
+        "x": 775,
+        "y": 28.8125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772269671271,
+      "id": "d84e777d-92e3-42d3-9890-3515ad3bba67"
+    }
+  ]
+}

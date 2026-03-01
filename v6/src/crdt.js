@@ -3,27 +3,32 @@
 // Operations: insert(id, parentId, char), delete(id)
 // Deterministic ordering: concurrent inserts with same parent
 // break ties by (counter DESC, device DESC)
+//
+// Uses a doubly-linked list for O(1) insert instead of array splice.
 
 class TextCRDT {
   constructor(deviceId) {
     this.deviceId = deviceId;
     this.counter = 0;
-    // Doubly-linked list stored as map: id-key -> { id, char, deleted, parentId }
-    // Plus ordered array for efficient traversal
     this.nodes = new Map(); // key -> node
-    this.order = []; // ordered node references
+    this._rootKey = '__root__:0';
     this.ROOT_ID = { device: '__root__', counter: 0 };
-    this.nodes.set(this._key(this.ROOT_ID), {
+    const rootNode = {
       id: this.ROOT_ID,
       char: '',
       deleted: true,
       parentId: null,
-    });
-    this.order.push(this.nodes.get(this._key(this.ROOT_ID)));
+      _key: this._rootKey,
+      _next: null,
+      _prev: null,
+    };
+    this.nodes.set(this._rootKey, rootNode);
+    this._head = rootNode;
+    this._tail = rootNode;
   }
 
   _key(id) {
-    return `${id.device}:${id.counter}`;
+    return id.device + ':' + id.counter;
   }
 
   _nextId() {
@@ -31,22 +36,14 @@ class TextCRDT {
     return { device: this.deviceId, counter: this.counter };
   }
 
-  // Compare two IDs for tie-breaking: higher counter wins, then higher device string
   _compareIds(a, b) {
-    if (a.counter !== b.counter) return b.counter - a.counter; // DESC
-    if (a.device < b.device) return 1;  // DESC
+    if (a.counter !== b.counter) return b.counter - a.counter;
+    if (a.device < b.device) return 1;
     if (a.device > b.device) return -1;
     return 0;
   }
 
-  // Find the index of a node in the order array
-  _indexOf(id) {
-    const key = this._key(id);
-    return this.order.findIndex(n => this._key(n.id) === key);
-  }
-
   // Insert a character after parentId
-  // Returns the op for replication
   insertAt(parentId, char) {
     const id = this._nextId();
     const op = { type: 'insert', id, parentId, char };
@@ -54,7 +51,6 @@ class TextCRDT {
     return op;
   }
 
-  // Insert text at a cursor position (0-based index in visible text)
   insertTextAt(pos, text) {
     const ops = [];
     let parentId = this._idAtVisiblePos(pos === 0 ? -1 : pos - 1);
@@ -66,30 +62,28 @@ class TextCRDT {
     return ops;
   }
 
-  // Delete the character at visible position
   deleteAt(pos) {
     const id = this._idAtVisiblePos(pos);
-    if (!id || this._key(id) === this._key(this.ROOT_ID)) return null;
+    if (!id || this._key(id) === this._rootKey) return null;
     const op = { type: 'delete', id };
     this.apply(op);
     return op;
   }
 
-  // Get the ID of the character at a visible text position
-  // pos = -1 returns ROOT_ID (for inserting at start)
   _idAtVisiblePos(pos) {
     if (pos === -1) return this.ROOT_ID;
     let visible = -1;
-    for (const node of this.order) {
-      if (!node.deleted && this._key(node.id) !== this._key(this.ROOT_ID)) {
+    let node = this._head;
+    while (node) {
+      if (!node.deleted && node._key !== this._rootKey) {
         visible++;
         if (visible === pos) return node.id;
       }
+      node = node._next;
     }
     return null;
   }
 
-  // Apply an operation (idempotent, order-independent)
   apply(op) {
     if (op.type === 'insert') {
       return this._applyInsert(op);
@@ -98,69 +92,77 @@ class TextCRDT {
     }
   }
 
+  // Insert node after `after` in the linked list
+  _insertAfter(after, node) {
+    node._prev = after;
+    node._next = after._next;
+    if (after._next) after._next._prev = node;
+    else this._tail = node;
+    after._next = node;
+  }
+
   _applyInsert(op) {
     const key = this._key(op.id);
-
-    // Idempotent: if already exists, skip
     if (this.nodes.has(key)) return;
 
-    // Update counter to stay ahead
-    if (op.id.device === this.deviceId) {
-      this.counter = Math.max(this.counter, op.id.counter);
-    } else {
-      this.counter = Math.max(this.counter, op.id.counter);
-    }
+    this.counter = Math.max(this.counter, op.id.counter);
 
     const node = {
       id: op.id,
       char: op.char,
       deleted: false,
       parentId: op.parentId,
+      _key: key,
+      _next: null,
+      _prev: null,
     };
+
+    if (this._pendingDeletes && this._pendingDeletes.has(key)) {
+      node.deleted = true;
+      this._pendingDeletes.delete(key);
+    }
 
     this.nodes.set(key, node);
 
-    // Find insertion position: after parent, before any node that
-    // isn't a child of the same parent or has lower priority
-    const parentIdx = this._indexOf(op.parentId);
-    if (parentIdx === -1) {
-      // Parent not yet applied — append to end (will be ordered correctly on rebuild)
-      this.order.push(node);
+    const parentKey = this._key(op.parentId);
+    const parent = this.nodes.get(parentKey);
+    if (!parent) {
+      // Parent not yet applied — append to tail
+      this._insertAfter(this._tail, node);
       return;
     }
 
     // Scan right from parent to find correct position among siblings
-    let insertIdx = parentIdx + 1;
-    while (insertIdx < this.order.length) {
-      const existing = this.order[insertIdx];
-      // Check if this node is also a child of the same parent
-      if (existing.parentId && this._key(existing.parentId) === this._key(op.parentId)) {
+    let cursor = parent._next;
+    let insertAfter = parent;
+    while (cursor) {
+      const cursorParentKey = cursor.parentId ? this._key(cursor.parentId) : null;
+      if (cursorParentKey === parentKey) {
         // Same parent — compare priority
-        if (this._compareIds(op.id, existing.id) > 0) {
-          // Existing has higher priority, insert before it... wait no.
-          // compareIds > 0 means existing wins (has higher priority = goes first)
-          // So we need to go past it
-          insertIdx++;
-          // But also skip over existing's descendants
-          insertIdx = this._skipDescendants(insertIdx, existing.id);
+        if (this._compareIds(op.id, cursor.id) > 0) {
+          // Existing has higher priority, skip past it and its descendants
+          insertAfter = cursor;
+          cursor = cursor._next;
+          // Skip descendants
+          while (cursor && this._isDescendantOf(cursor, cursor._prev._key)) {
+            insertAfter = cursor;
+            cursor = cursor._next;
+          }
         } else {
-          // Our node has higher priority, insert here
           break;
         }
-      } else if (existing.parentId && this._isDescendantOf(existing, op.parentId)) {
-        // This node is a descendant of a sibling — skip it
-        insertIdx++;
+      } else if (cursor.parentId && this._isDescendantOf(cursor, parentKey)) {
+        insertAfter = cursor;
+        cursor = cursor._next;
       } else {
-        // Different parent entirely — insert here
         break;
       }
     }
 
-    this.order.splice(insertIdx, 0, node);
+    this._insertAfter(insertAfter, node);
   }
 
-  _isDescendantOf(node, ancestorId) {
-    const ancestorKey = this._key(ancestorId);
+  _isDescendantOf(node, ancestorKey) {
     let current = node;
     const visited = new Set();
     while (current && current.parentId) {
@@ -173,23 +175,10 @@ class TextCRDT {
     return false;
   }
 
-  _skipDescendants(startIdx, parentId) {
-    let idx = startIdx;
-    while (idx < this.order.length) {
-      if (this._isDescendantOf(this.order[idx], parentId)) {
-        idx++;
-      } else {
-        break;
-      }
-    }
-    return idx;
-  }
-
   _applyDelete(op) {
     const key = this._key(op.id);
     const node = this.nodes.get(key);
     if (!node) {
-      // Node not yet seen — store as pending delete
       if (!this._pendingDeletes) this._pendingDeletes = new Set();
       this._pendingDeletes.add(key);
       return;
@@ -197,53 +186,71 @@ class TextCRDT {
     node.deleted = true;
   }
 
-  // Materialize visible text
   getText() {
     let result = '';
-    const rootKey = this._key(this.ROOT_ID);
-    for (const node of this.order) {
-      if (!node.deleted && this._key(node.id) !== rootKey) {
+    let node = this._head;
+    while (node) {
+      if (!node.deleted && node._key !== this._rootKey) {
         result += node.char;
       }
+      node = node._next;
     }
     return result;
   }
 
-  // Get visible character count
   length() {
     let count = 0;
-    const rootKey = this._key(this.ROOT_ID);
-    for (const node of this.order) {
-      if (!node.deleted && this._key(node.id) !== rootKey) count++;
+    let node = this._head;
+    while (node) {
+      if (!node.deleted && node._key !== this._rootKey) count++;
+      node = node._next;
     }
     return count;
   }
 
-  // Serialize for snapshot
   snapshot() {
+    const nodes = [];
+    let node = this._head;
+    while (node) {
+      nodes.push({
+        id: node.id,
+        char: node.char,
+        deleted: node.deleted,
+        parentId: node.parentId,
+      });
+      node = node._next;
+    }
     return {
       deviceId: this.deviceId,
       counter: this.counter,
-      nodes: this.order.map(n => ({
-        id: n.id,
-        char: n.char,
-        deleted: n.deleted,
-        parentId: n.parentId,
-      })),
+      nodes,
     };
   }
 
-  // Restore from snapshot
   static fromSnapshot(data) {
     const crdt = new TextCRDT(data.deviceId);
     crdt.counter = data.counter;
     crdt.nodes.clear();
-    crdt.order = [];
+    crdt._head = null;
+    crdt._tail = null;
+    let prev = null;
     for (const n of data.nodes) {
-      const node = { id: n.id, char: n.char, deleted: n.deleted, parentId: n.parentId };
-      crdt.nodes.set(crdt._key(n.id), node);
-      crdt.order.push(node);
+      const key = crdt._key(n.id);
+      const node = {
+        id: n.id,
+        char: n.char,
+        deleted: n.deleted,
+        parentId: n.parentId,
+        _key: key,
+        _next: null,
+        _prev: prev,
+      };
+      if (prev) prev._next = node;
+      else crdt._head = node;
+      prev = node;
+      crdt.nodes.set(key, node);
     }
+    crdt._tail = prev;
     return crdt;
   }
 }

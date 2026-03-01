@@ -1,0 +1,2377 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772272472916,
+  "ops": [
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443713,
+      "id": "9fbdc7f3-7e97-45c3-8403-14d863a0efab"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 1,
+      "panY": 14,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443771,
+      "id": "e773a03b-2ad8-4637-acc8-3d62af5cefab"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 4,
+      "panY": 70,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443809,
+      "id": "d561c7c2-cad6-46ac-93f7-e4619e25eb71"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 166,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443849,
+      "id": "af419b0a-454e-4280-9c0e-11620780f9e1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 240,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443899,
+      "id": "e91ef33b-6447-467f-bbff-b2b7ac8a263b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 647,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443934,
+      "id": "687ab198-529c-4c2c-b8c6-7f0b0b137ccc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 799,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272443982,
+      "id": "1462e2a2-1266-4b50-99b9-7a4099df0eab"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 993,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444032,
+      "id": "c4eb5d21-e041-47d6-8f03-dc2246099229"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 1152,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444067,
+      "id": "1a5ca2d5-ea3a-42c3-871b-6ab6b849722d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 8,
+      "panY": 1197,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444115,
+      "id": "fe554093-ddb8-4985-b3d2-5559f6b24798"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 7,
+      "panY": 1197,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444182,
+      "id": "143b7e20-87d2-41f6-800c-9b4fdbaf820f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 6,
+      "panY": 1198,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444232,
+      "id": "9c773226-5894-4a80-a1d4-ecf7479b2742"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 4,
+      "panY": 1200,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444282,
+      "id": "f51bd71c-ec34-433c-a45e-15b51e3df95d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 1,
+      "panY": 1200,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444332,
+      "id": "3f0029c4-ff69-4036-ae51-4fe8b2865418"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 1,
+      "panY": 1201,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444382,
+      "id": "e07b95c5-3a5a-4597-a0c8-a12a1ec1a872"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 1,
+      "panY": 1203,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444432,
+      "id": "0697f19f-13f2-48c1-b3b1-0c74a92e6973"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1213,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444482,
+      "id": "ab406f5c-bf5e-4896-90f9-7393fb11d956"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1254,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444520,
+      "id": "913c8be8-3fb5-44dc-bd80-da7a377b4779"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1269,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444565,
+      "id": "ef81bfc1-6039-42ad-a005-1b58f9185e2b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1287,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444616,
+      "id": "17d2e3f6-f818-45e2-8589-9cf8638284a6"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1405,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444665,
+      "id": "cefdb2ad-4fc0-4ea5-a28b-e50a1bbe72b5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1458,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444716,
+      "id": "df9c4c66-a4af-4b63-bb5c-e9c4ccb8bec5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1500,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444751,
+      "id": "6d23477a-5ef3-49b5-814c-bd5f650163ac"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1522,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444799,
+      "id": "375f3dbf-005d-4905-b27c-fced5f1b2128"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1531,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444849,
+      "id": "706c7e6e-218f-4ccc-9b3b-038df539dc58"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1534,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444884,
+      "id": "d9312c74-4f1d-4f74-8c0a-d7ef8e9fcb03"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 2,
+      "panY": 1621,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444932,
+      "id": "b675ce32-4606-40b1-8cd6-29379ca900f8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1750,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272444982,
+      "id": "7ab30aed-d9da-4e0c-9cbd-d4269ee254c6"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1851,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445032,
+      "id": "feaf0431-6193-4ea9-848a-34e158285afe"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2476,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445082,
+      "id": "7296e11f-6f43-464b-9adc-0674f9f8c919"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2737,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445117,
+      "id": "48b90724-6f63-4b25-b41c-e4ec744321ed"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2956,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445165,
+      "id": "d74a46c1-f735-42dc-8636-69d974c0adcb"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2955,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445232,
+      "id": "88a86d08-ed08-4ab0-b0c6-03c931c7b8ee"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2943,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445282,
+      "id": "279522f6-c4cf-4db6-80df-c0056f5e42e7"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2810,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445332,
+      "id": "bc598b0f-d23b-48b1-a82c-01aae611ff1e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2515,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445382,
+      "id": "96b6e7de-20cb-4ae5-bd30-0cef6ee4a1df"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2372,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445417,
+      "id": "5eecf0a0-5383-44fa-9f61-506408742039"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1673,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445466,
+      "id": "2573c403-52a3-494e-97b8-bd33b75034a9"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1339,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445504,
+      "id": "59b6ff6d-9713-494b-9326-2b7838bbacd6"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1139,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445510,
+      "id": "50fa548b-2688-4186-92d2-fddeca65d326"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1046,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445573,
+      "id": "d5a88bfd-e191-47cf-b68f-53021af64b7b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 794,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445579,
+      "id": "f9414997-89cb-4686-aea1-6ebc8087c57b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 720,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445640,
+      "id": "747d4ec7-26aa-471c-9e67-ab1123d30f88"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 586,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445682,
+      "id": "5d66e25e-7622-4e23-b348-126c8806a9b8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 566,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445749,
+      "id": "fb33c0bc-b512-4b10-84b3-c53453e4609b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 282,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445785,
+      "id": "7ff22b50-dee2-4474-af2c-afc25bbd6a50"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 112,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445832,
+      "id": "a53b2729-de09-4176-a945-2c34cbefeeb0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445882,
+      "id": "ba13cf7a-3410-4c3a-a476-5fbd5d2b6aba"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445917,
+      "id": "75167d65-0402-44c9-9ee7-40802ff00711"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272445965,
+      "id": "e5070e9e-050b-4bd8-ab7a-b00c5714a423"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272446015,
+      "id": "7aa9fc7e-bf35-47f1-a1b8-ebea6969a69e"
+    },
+    {
+      "type": "block-move",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "blockId": "84209a85-bcc6-4f6b-bf4e-b74af56c79b0",
+      "x": 338,
+      "y": 158,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272447247,
+      "id": "b8c625b2-161c-491d-b86c-60378e2d1808"
+    },
+    {
+      "type": "block-move",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "blockId": "84209a85-bcc6-4f6b-bf4e-b74af56c79b0",
+      "x": 53,
+      "y": 38,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272448583,
+      "id": "75f6ee47-6e38-4475-8152-c55fe129003c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 3,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451746,
+      "id": "ba50e9ef-3a13-4dcb-9a58-765e3402fb63"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 1,
+      "panY": 32,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451810,
+      "id": "ad4e79b4-8e82-4391-a454-212165d3eed1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 3,
+      "panY": 180,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451849,
+      "id": "020ecde1-468c-47d3-a3e4-397450ff48d0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 339,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451884,
+      "id": "823e0b25-9103-4f0b-81c4-8e5a06049f1f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 553,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451931,
+      "id": "426e6521-2e80-41e9-a8b4-4babe2a5ac9d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1621,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272451982,
+      "id": "a18b5b4f-3bc8-416b-9dc2-a804c11b4f50"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2020,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452032,
+      "id": "bf52cae4-e645-459e-8da0-1520c26aedc1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2375,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452066,
+      "id": "22f0d845-9de9-4baf-8391-8cd081826fb1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2484,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452071,
+      "id": "eba5c86d-ca8c-40d3-978f-da07b26e36aa"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2491,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452132,
+      "id": "5273a5d3-4218-4eb7-a376-7908ed5016db"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2492,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452164,
+      "id": "0b45efaf-2994-4309-a106-391495f7d65f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2495,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452170,
+      "id": "0ea23d40-f0f1-49e5-a603-8ccccd5770f1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2503,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452228,
+      "id": "a0775c12-599b-4af5-9efb-2d000f8c25e5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2530,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452266,
+      "id": "d80ed6b5-2e22-4b3f-b737-e5e5f8d3494c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2540,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452316,
+      "id": "3ff318a1-c0f1-4eb1-816a-fa4f1523c716"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2534,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452365,
+      "id": "425f288b-3835-45d3-b119-536c98b86324"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2278,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452401,
+      "id": "78dfed4b-bc1c-4b84-9abf-f420c3f0b356"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 2087,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452449,
+      "id": "395cc8c5-02bd-44c0-b74b-36ff923dc045"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1945,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452499,
+      "id": "ae143914-589f-4ef1-94f6-cdb326533258"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1259,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452534,
+      "id": "9fe02a68-ff1b-4882-ae69-34b62dfe2354"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 1033,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452568,
+      "id": "d9102ed3-4fc5-4e38-a226-1fe17569516e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 828,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452574,
+      "id": "f52212e1-72fe-4b7e-90fe-f6de1fec07dc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 732,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452634,
+      "id": "024d2701-bed8-4f90-bcc3-14d8e082f367"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 471,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452668,
+      "id": "df035ba7-148b-43a0-9641-49e1f25fb25d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 322,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452674,
+      "id": "5d17b422-e72d-4be6-b99d-23bfdc6610ac"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 254,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452703,
+      "id": "e8f0d8e1-0308-46b3-a27a-a92a4d3516ea"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 190,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452764,
+      "id": "caf70f8a-6a60-4e90-9166-f5fa7f92453b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452799,
+      "id": "d41347be-4b93-4d5f-bd92-94e22d7543df"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452849,
+      "id": "eb6fa3d8-9eea-4aed-87e5-8b4431aaa8e6"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452899,
+      "id": "ed37608c-b58a-4796-810d-de62237af7e2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452935,
+      "id": "59210b64-e589-421e-8604-a4528d3290dd"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452969,
+      "id": "e9ed3ba9-5db1-4833-97b0-7dc4e865e010"
+    },
+    {
+      "type": "page-view",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272452974,
+      "id": "a782de60-942d-40c5-9eff-5d8ef427cb43"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "fa053582-3042-4fff-8130-d6c53563716d",
+      "blockId": "84209a85-bcc6-4f6b-bf4e-b74af56c79b0",
+      "html": "<header><h1 class=\"page-title\" dir=\"auto\" style=\"letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 0.75em; font-size: 2.5rem;\">Knowledge.</h1><p class=\"page-description\" dir=\"auto\" style=\"margin-top: 0.5em; margin-bottom: 2em;\"></p></header><div class=\"page-body\"><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><h3 id=\"301ba89f-2f77-804d-b1ba-e5397ae7c005\" class=\"\" style=\"letter-spacing: -0.01em; line-height: 1.2; font-size: 1.25rem; margin-top: 1.25rem;\">Overview.</h3></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-807e-8fda-c246032a7bb2\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is a double helix. 2 strands</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d8-9ce1-c487cb6b0247\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each strand is a chain of nucleotides</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8033-9213-e93d55c73fa2\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">At each position, 2 bases interact forming a base pair - ie. A and G</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801c-8c1c-dbed04467871\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d8-879d-ec9e433068ee\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A nucleotide has one base (A/C/G/T) and a sugar/phosphate chemistry to keep it together.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8099-a5de-fb4b94a01f19\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8020-94e3-e05b8bcb9c34\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">groups of 3 bases are referred to as a <strong>codon</strong></p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"314ba89f-2f77-80c2-8d65-d210d30cfffa\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">RNA polymerase reads DNA one base at a time. There is no triplet framing.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"314ba89f-2f77-8090-b9d8-d76e207abdf3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The ribosome reads mRNA in non-overlapping triplets. That is where codons function as codons.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8063-aa66-fc0bb6b54e7c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801d-9d8a-ed1ed3880006\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">mRNA is then translated into a protein</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80eb-95bb-ffd8478072c5\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon (3x bases) maps to one amino acid or a stop codon (special token which signals the end of protein synthesis)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80c9-a87e-c0fea0de63ee\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The codons are chained together using peptide bonds</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-808c-9f79-e162d52d0612\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This forms a polypeptide chain</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ec-9355-d8b81c7036f3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">When the stop codon is encountered, the translation process stops</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d3-9335-e2317b49b708\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8041-b8c6-d41d6cb4d628\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">The polypeptide chain folds into a functional 3D structure (protein folding)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8055-8f80-da35a9e5118d\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This is referred to as its “native state” </p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-808e-8e6e-ef734d614a43\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-800d-bf4f-e3236f45648c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Degeneracy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ce-ba4d-f2d5a19c7d65\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Codons are 3 nucleotides, each which have a base (A,C,G,T)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801d-9242-d944de4785af\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">There are 64 possible triplet combinations (codons) using the four bases (A, U, G, C)</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80b3-991d-f2fc1f9f0cc0\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon encodes one amino acid</p></div><div dir=\"ltr\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><figure id=\"301ba89f-2f77-80b0-b98c-e20091c429aa\" class=\"image\" style=\"margin-top: 1.5em; margin-bottom: 1.5em; break-inside: avoid; border: none; border-radius: 0px; text-align: center;\"><a href=\"Knowledge/Screenshot_2026-02-08_at_4.55.20_PM.png\"><img src=\"Knowledge/Screenshot_2026-02-08_at_4.55.20_PM.png\" style=\"max-width: 100%; width: 709.984px;\"></a></figure></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e6-9449-d3ed01e5d0e9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">An amino acid can be encoded by multiple codons</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8054-93ec-d7b092aa8fe8\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">For instance, codons GAA and GAG both specify glutamic acid and exhibit redundancy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8080-b18c-d050b5494f65\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">This is referred to as degeneracy</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80df-b46f-c72ec48dd803\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Mathematically:</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80b6-881a-cad4565bc8f9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">4^3 = 64 codons</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80f8-ae04-f7382d6b70a9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">22 amino acids </p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8065-9c3d-f46d04c0b8e0\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e7-9967-fc5d39b9d4d3\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"ltr\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><figure id=\"301ba89f-2f77-802e-a8d9-fd37af038045\" class=\"image\" style=\"margin-top: 1.5em; margin-bottom: 1.5em; break-inside: avoid; border: none; border-radius: 0px; text-align: center;\"><a href=\"Knowledge/Screenshot_2026-02-08_at_4.33.13_PM.png\"><img src=\"Knowledge/Screenshot_2026-02-08_at_4.33.13_PM.png\" style=\"max-width: 100%; width: 668px;\"></a></figure></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801b-946d-e9a2fa977f6a\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-809f-af89-dc678678be0b\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-803f-8071-d5fa3285b949\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">respiration → ATP → powers RNA polymerase which moves along DNA → assembles RNA → ribosome grabs RNA → it steps along RNA and uses ATP to bring in amino acid and produce → peptide bond of amino acids → chain of amino acids together → folds into a protein → protein</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80ba-b610-f3dda3e1a52e\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80e4-8989-d6861770a36c\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is a chemical polymer made of nucleotides.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-8051-9fa9-e5d28235fd3b\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A nucleotide is one “letter” (A,C,G,T) plus sugar+phosphate (the chemistry).</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-801b-b22f-da0cba7b9625\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">DNA is usually double-stranded: two complementary letters bind (A–T, C–G).<br>One matched pair across the strands is a base pair.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d5-bd0a-c79b0c9fe393\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">A gene is a stretch of DNA letters.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-802a-afdd-e75b971c1f83\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">When expressed, DNA is read in groups of 3 nucleotides.<br>A 3-letter group is a codon.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80f1-88a9-d9c420094312\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Each codon maps to one amino acid (or stop).</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80a9-8283-f989bcf93848\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">Amino acids are small chemicals (20 main types) that link into a chain.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-802a-a597-fd78552157e1\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">That amino-acid chain is a protein.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80bc-9d39-ee82c290f360\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">So:<br>nucleotides → DNA sequence (base pairs in double helix) → codons (triplets) → amino acids → protein.</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"><p id=\"301ba89f-2f77-80d4-bb16-e4996edb93e9\" class=\"\" style=\"margin-top: 0.5em; margin-bottom: 0.5em;\">\n</p></div><div dir=\"auto\" style=\"color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, &quot;Segoe UI Variable Display&quot;, &quot;Segoe UI&quot;, Helvetica, &quot;Apple Color Emoji&quot;, &quot;Noto Sans Arabic&quot;, &quot;Noto Sans Hebrew&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-size: medium; white-space-collapse: preserve; display: contents;\"></div></div>",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272453804,
+      "id": "0cf86b84-4300-42c4-be4d-e27909a3f8a0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 22.486039682800666,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455513,
+      "id": "4d37b937-1972-465a-8cde-7bae2fccc0fc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 24.359876323034054,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455577,
+      "id": "a441c9da-ba8d-411f-b422-f059ba59714a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 64.64736408805192,
+      "panY": 11.243019841400335,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455616,
+      "id": "96a2d7b0-4d64-49f4-af8a-25390464d774"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 137.7269930571541,
+      "panY": 32.79214120408431,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455650,
+      "id": "ec59f25b-2b42-46e6-ba75-02450e0d5c78"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 201.43743882508932,
+      "panY": 49.65667096618481,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455699,
+      "id": "26cb7cbb-ebe4-413a-a983-1dbebc1916b8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 551.844890548733,
+      "panY": 139.6008296973875,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455749,
+      "id": "45ddfa7e-d5e2-427a-be57-549e3752c94a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 742.9762278525387,
+      "panY": 193.94209226415578,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455784,
+      "id": "c79d5ef6-ed24-459d-a6c4-2a7159a1d114"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 851.6587529860753,
+      "panY": 222.04964186765662,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455832,
+      "id": "e8338fce-8ca7-4935-9529-b0ccbdf5cb15"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 901.3154239522602,
+      "panY": 235.16649834929035,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455868,
+      "id": "bb41761b-b9cb-43a7-865f-0af8694d322d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 901.3154239522602,
+      "panY": 236.10341666940704,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455978,
+      "id": "b081b34a-512f-4f87-b47b-9ab1c3289139"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 901.3154239522602,
+      "panY": 237.04033498952373,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272455985,
+      "id": "083ab497-fc71-4bd3-8a4a-87406b9a1799"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 901.3154239522602,
+      "panY": 240.7880082699905,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456048,
+      "id": "e88bacaa-f54e-4efe-9f31-83219de3d82c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 903.1892605924936,
+      "panY": 253.90486475162425,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456083,
+      "id": "37b5ed18-0bd0-45c1-b18c-326e8666c931"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 897.5677506717934,
+      "panY": 268.8955578734914,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456132,
+      "id": "70872d49-4103-4cc7-b7ba-6e224c6d52b4"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 871.334037708526,
+      "panY": 305.43537235804246,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456182,
+      "id": "d8dc5f47-e584-4111-9d68-f7d6db04bcf3"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 846.9741613854919,
+      "panY": 335.4167586017767,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456218,
+      "id": "8bc0aa60-a86b-4f5e-b62e-a2dbfa5dba35"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 837.604978184325,
+      "panY": 343.8490234828269,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456265,
+      "id": "b912951a-3a8e-43e7-8e15-25cf88ccbfb8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 828.235794983158,
+      "panY": 347.59669676329366,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456316,
+      "id": "e61b4f36-6ead-4676-b9c3-0ee44b5bb076"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 823.5512033825746,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456351,
+      "id": "b2305151-529a-40b7-8583-1f91b5cfb6a2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 822.614285062458,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456399,
+      "id": "5f0b24a0-b2e9-42da-8346-c9e60bc44a93"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 821.6773667423413,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456449,
+      "id": "a6ca8380-ef92-412d-8abb-ee3377b26b54"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 820.7404484222246,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456485,
+      "id": "4f8a8997-8536-41d0-9575-d8cbf3cafd4d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 819.803530102108,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456532,
+      "id": "547b3a1b-3637-4b3c-bae5-0757056ee885"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 818.8666117819913,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272456582,
+      "id": "ad495849-5a98-4f79-984f-2b888557e817"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "5aa158c3-4cd7-4f27-a548-31fc37b8ba89",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272458230,
+      "id": "b3c06a3c-09eb-49d4-a79f-98be863ee1f8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 817.9296934618746,
+      "panY": 348.5336150834104,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272458980,
+      "id": "d934a402-b7be-4b3a-b3e5-7becee3f1c09"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 816.0558568216412,
+      "panY": 347.59669676329366,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459049,
+      "id": "88b0c370-d04e-45bd-bc8c-d22b5c6af39e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 623.9876011977188,
+      "panY": 197.68976554462253,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459099,
+      "id": "a05fe7ce-4a9c-4ccd-9c89-8d4b8cef8a7b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 504.06205622278196,
+      "panY": 100.2502602524863,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459132,
+      "id": "c2e6ff25-dae5-477b-8d70-c6a78662d6c5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459165,
+      "id": "c1b1bb91-9f3e-40c0-9768-cc7ade74e396"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459197,
+      "id": "1998af72-2b91-494d-80c4-f563df4ed10f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459232,
+      "id": "b5e50acf-5baf-4d92-8fcd-db7e6f4e9e3d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459263,
+      "id": "b9f68070-4bac-47f9-9f53-510a1e0cffc7"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459299,
+      "id": "70a4915b-69e0-4ee6-9fdf-616c9ee374c8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459332,
+      "id": "95db92da-a271-44fa-b000-7174da2489f3"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459362,
+      "id": "dbfd72c7-101c-47a2-b909-d5e162ca7d54"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0.9369183201166945,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459390,
+      "id": "b7bb1218-fbba-41cc-8077-b2ada3685512"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 13.116856481633723,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459432,
+      "id": "39ca1d9c-21b3-45bf-8c90-b3170722af97"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 87.13340377085258,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459462,
+      "id": "84d71b73-0702-4a69-bea8-a10ad9e6f9f0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 262.3371296326745,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459466,
+      "id": "bcaaadd8-7356-4ef5-86b2-6c0e8a2c04d2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 320.42606547990954,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459516,
+      "id": "2095857f-03c2-4b58-a961-dbafd6d97de8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 430.0455089335628,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459546,
+      "id": "d381934e-c707-40a6-92ca-f48e3bb04c67"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 783.2637156175567,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459550,
+      "id": "3ad971cd-9dea-4f12-b8d6-958f83d50d3e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 892.88315907121,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459575,
+      "id": "447e3b43-c7fe-40fd-9705-deb304015f94"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 997.8180109242797,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459601,
+      "id": "e8b6df81-e6f7-4c76-96b6-bca72d1060ab"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1098.068271176766,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459627,
+      "id": "5f5e1dee-7f00-44cf-a334-e7ad97d15ae0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1283.5780985598717,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459654,
+      "id": "ded2fd2f-cc04-47a7-8289-4683b4a88892"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1450.3495595406434,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459706,
+      "id": "1a82905c-e27a-4641-98ec-77346f38fa7b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1668.6515281278332,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459738,
+      "id": "803ff1a9-7913-434d-a7db-f080100660fb"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1792.324746383237,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459782,
+      "id": "09a6ff2f-af2d-4b73-8289-e53d3bc3e9f0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1901.0072715167735,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459813,
+      "id": "26b4498f-be10-4707-bbf5-2bcb41ab22b2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1948.7901058427249,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459817,
+      "id": "f1f3603b-8f1a-4736-942e-b725f422de31"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1950.6639424829582,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459867,
+      "id": "17fd02e2-a606-46ef-a6d9-0c5707da0e04"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0.9369183201166945,
+      "panY": 1951.600860803075,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459896,
+      "id": "beacb7b9-be72-42f4-95a8-f0c752b0b673"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 5.621509920700167,
+      "panY": 1960.0331256841253,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459932,
+      "id": "52e3d591-8faf-44e7-a5ec-83ee424b12f2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 8.432264881050251,
+      "panY": 1942.2316776019081,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459960,
+      "id": "aa9faff5-6f6f-4f8c-87f1-3678b034b38f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 4.684591600583474,
+      "panY": 1891.6380883156066,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272459990,
+      "id": "07e01ee1-2f35-47de-a2f1-fa569e9c773d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1738.9204021365854,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460032,
+      "id": "4e812de6-5908-428b-b0c5-5dae3ce2df9d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1621.8056121219986,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460062,
+      "id": "84577d71-8a39-403c-928e-047b481e31cc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1150.5356971033011,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460067,
+      "id": "957d7903-f62d-402c-be5c-a255195f2ba1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 1045.6008452502313,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460117,
+      "id": "d6a301c4-aece-4768-8131-dfad012354d6"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 759.8407576146394,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460146,
+      "id": "be6a8b9e-2898-4565-b0f8-98ceb9e9c639"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 674.5811904840202,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460182,
+      "id": "b92c3e6b-fc82-428c-a884-62ff4b419ef4"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 444.0992837353134,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460210,
+      "id": "b8f01c1d-d9ab-411c-873d-47af18dc4720"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 374.767328046678,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460241,
+      "id": "08d8032d-fd53-4d18-a9e5-3f2b64dde67e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 251.09410979127432,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460270,
+      "id": "35eb7add-d9b8-4623-ac00-e526a2c379d0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 194.87901058427263,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460274,
+      "id": "038cfceb-7361-45a7-8c7e-4124eaa5e0fa"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 193.00517394403926,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460301,
+      "id": "9f812141-3241-409f-b568-298a2b20658c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 189.25750066357247,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460327,
+      "id": "7389ac72-e9aa-4c4d-a4b7-94cdf509da1a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 175.20372586182205,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460355,
+      "id": "24b4b652-d423-4183-b48a-3e42c505bc9f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0.9369183201166945,
+      "panY": 148.0330945784379,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460381,
+      "id": "658dbdfb-0607-4ae0-b663-78f9828dfa01"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 71.20579232886894,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460409,
+      "id": "1510c0b0-7d5e-4906-a6db-e2112b7d1e4d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460464,
+      "id": "920dd47c-56f7-4acf-bbb1-9554ce698007"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460499,
+      "id": "4a0f4061-73b8-4356-b7ff-2c14a3772a41"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460528,
+      "id": "fdf55c61-2b94-4a27-8366-f8a4e87c71b9"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460532,
+      "id": "7e00c6f2-a935-4a00-89d3-8ece1e38341b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460583,
+      "id": "c8d4a194-c361-4d58-ba26-965cb8b1f4fa"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460612,
+      "id": "54b74ef6-27b3-44ef-9d5e-0a35caecb16a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460649,
+      "id": "394b5d29-df04-49d1-9a24-44a1347acfe8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460677,
+      "id": "a9dc9ded-5ba6-474b-b505-6320ee370489"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460706,
+      "id": "8c4cfa5b-c8a3-4dc1-a7a8-e73d9da7dd5d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460749,
+      "id": "ea825f68-d13f-4c12-8bac-4b0be1df8824"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460778,
+      "id": "947a3c2d-453b-400d-831b-452f634dcb89"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460782,
+      "id": "e885c17b-cc0e-4e05-871c-ea5bfd8eede9"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460833,
+      "id": "b2b7adff-6a27-44f5-a325-fe133a3fb153"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272460862,
+      "id": "efe064ec-9656-43e6-932b-576a4f6ff20c"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "aff0ac7c-504c-4036-8f0d-557fcd1018cf",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272462494,
+      "id": "78113168-1e9e-4dba-8b16-12454691acb7"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "36aae607-fe18-432b-a9b7-f0187ef2383a",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272462509,
+      "id": "1cdba7e2-7c61-4ff1-bb24-80c303a7bde4"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "bb9fbf5c-48c6-4609-a4a1-60afa57026ab",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272462521,
+      "id": "0aadad4b-2145-4b1f-bf74-18dac34788d7"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "8ac8c45d-9d37-4f8f-9cac-2eee07117a91",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272462531,
+      "id": "fe4c2361-cbad-42fe-a542-0db9f8f80cc4"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "da0f4b41-0950-4897-bea4-a0de888bdc8a",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272462541,
+      "id": "bc5f67c5-30fe-427c-8a54-8a3ae310e51d"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "2a77d8f9-09a0-4ee0-abd4-28c34a3e1691",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464042,
+      "id": "2f349c00-7923-4424-88be-0cd0ff665326"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "d068050b-48bd-47c9-a32f-304625a49090",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464057,
+      "id": "339d76b2-07d4-4a4b-b89a-45e1faf2dcdd"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0.9369183201166945,
+      "panY": 0,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464667,
+      "id": "65500719-18fa-4891-b6e9-6bda8d542fc5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 2.8107549603500837,
+      "panY": 0.9369183201166945,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464727,
+      "id": "5b29f448-4928-4759-b8be-72c789cb2f81"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 31.855222883967617,
+      "panY": 9.369183201166946,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464732,
+      "id": "d5f28e1c-80ac-4974-b2a2-7817593804d0"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 45.908997685718035,
+      "panY": 13.116856481633723,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464786,
+      "id": "3c64e7ef-1597-4c6f-b714-6e055a1fabcd"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 81.51189385015243,
+      "panY": 21.549121362683977,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464815,
+      "id": "66b9f18d-d83f-41bd-985a-7ed6430d4d66"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 91.81799537143607,
+      "panY": 25.296794643150754,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464845,
+      "id": "3419f8b8-38ed-4304-9841-bac7577bbb9c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 97.43950529213623,
+      "panY": 27.170631283384143,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464882,
+      "id": "e6edeb32-f70c-4bae-bb87-3a872690a153"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 99.31334193236962,
+      "panY": 29.044467923617532,
+      "zoom": 1.0673289000000006,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272464912,
+      "id": "65bffdf0-4ac8-4716-8dfc-b677669da401"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.9605960100000005,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465163,
+      "id": "93d4a514-fd1e-41d2-af84-93900a349be2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.8645364090000005,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465221,
+      "id": "8a9620c5-40b3-4c12-8189-c8ff3f7e6412"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.7780827681000004,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465256,
+      "id": "cc9af00d-b31a-409e-9777-469928ab4d5c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.7002744912900004,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465260,
+      "id": "5ce56a17-9cef-4e91-8ebe-62b667866479"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.6302470421610004,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465284,
+      "id": "9931c726-a6d4-456a-87f1-8b88d7c885db"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.5672223379449003,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465288,
+      "id": "c7419e52-6432-4544-a812-673a0e052db1"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.5105001041504102,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272465313,
+      "id": "086b2923-0ae4-43fd-bb0a-6ff0df97f43d"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 127.14804635958808,
+      "panY": 44.841000111781,
+      "zoom": 0.5615501145654513,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466096,
+      "id": "3e3fa3b3-1f9b-4d40-8c15-6e11dd46dd58"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 242.73717941375935,
+      "panY": 85.60554566794553,
+      "zoom": 0.6177051260219966,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466156,
+      "id": "79de752a-e883-44e9-82b3-4b75e6b3ea33"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 347.8182094630056,
+      "panY": 122.66422344627688,
+      "zoom": 0.6794756386241962,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466190,
+      "id": "282c787e-261b-45e3-a231-0693b4c24c6b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 443.3464185986843,
+      "panY": 156.35393051748724,
+      "zoom": 0.747423202486616,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466194,
+      "id": "0f5cdf6e-7d0b-4638-bc47-b3a672407f18"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 530.1902450856647,
+      "panY": 186.98093694586026,
+      "zoom": 0.8221655227352777,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466245,
+      "id": "bd3233f1-57c7-4d1f-90ee-835ae43aa5ad"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 609.139178255647,
+      "panY": 214.82367006256305,
+      "zoom": 0.9043820750088055,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466282,
+      "id": "dc394fd6-2050-4c27-bb15-1ae8722a97b5"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 680.9109356829036,
+      "panY": 240.13524562320188,
+      "zoom": 0.9948202825096861,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466311,
+      "id": "b925d09a-6b1a-411a-bb8a-4cd390f1f2ac"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 746.1579878895005,
+      "panY": 263.1457688601463,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466340,
+      "id": "177b3b08-5bc7-41fe-b3d1-88129cfff886"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 745.244163628904,
+      "panY": 262.2319445995497,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466629,
+      "id": "0356b6ff-7f30-4e0c-beda-ca99cfb84b43"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 737.9335695441312,
+      "panY": 256.74899903597014,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466681,
+      "id": "0716406f-418a-404c-bce5-5ebe70970c21"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 700.4667748596707,
+      "panY": 227.50662269687913,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466715,
+      "id": "fbd98fd3-25e2-47be-86de-c7710c1a7e33"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 601.7737547152385,
+      "panY": 142.52096646139586,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466744,
+      "id": "acee123f-7e20-4427-89c7-05744af1d599"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 552.4272446430224,
+      "panY": 99.57122621335593,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466773,
+      "id": "be73d9c3-ae94-495d-b0fd-3fa7d976ddcc"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 513.1328014373688,
+      "panY": 65.75972857128194,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466816,
+      "id": "4c0e45d2-ac14-4fa5-963c-63ae8808557f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 439.1130363290447,
+      "panY": 3.6196788507135267,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466845,
+      "id": "ad41d3fc-aea0-407b-a0db-fca832476765"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 19.6677007152079,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466849,
+      "id": "691ee8a6-3608-483a-bdca-4d47d3bd7da3"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466899,
+      "id": "e380f6f3-2065-4267-a873-577a67715389"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466928,
+      "id": "7332e0d2-c5d2-4783-a832-413f4e9ad882"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466958,
+      "id": "2bb5275e-1c70-49e4-ac2b-ea8f5f9ee97c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272466999,
+      "id": "b1c69dce-d871-42c2-9528-87899d8b4b55"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467028,
+      "id": "7bc8a360-1a83-4856-9d86-6a94703d8a8c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467065,
+      "id": "67641c2b-f828-4bc5-8a9c-23fd5bde4457"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467095,
+      "id": "ed74bdcc-6c8a-458b-b2ff-2a5e15fe4435"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467132,
+      "id": "ef3aab89-c650-4603-b827-c85f6e3daa5f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467159,
+      "id": "3a81e9ca-0cec-4da0-93fc-d779739fba92"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467188,
+      "id": "8ebe7a9a-904e-465a-9caf-b008781f6b1e"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467232,
+      "id": "c7297ab0-2056-4f42-920d-95ade8ce9080"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467262,
+      "id": "d454e631-04c0-43b3-8530-d7da76e07c4b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467266,
+      "id": "6ecf7f4c-3153-45de-80c6-b20326382c99"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467316,
+      "id": "1b6824ed-6de6-4d93-8752-c3a9ad072345"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 1.0943023107606549,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272467344,
+      "id": "b47ea96c-95e6-4923-bdb3-31fdc1c6846b"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.9848720796845895,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468817,
+      "id": "0cf21fcf-d650-46ef-be03-0b8f3eafa601"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.8863848717161306,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468877,
+      "id": "90c3546a-ba82-42f2-8808-c7ae3b4ba1a8"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.7977463845445175,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468882,
+      "id": "292c2095-fe07-4772-abf9-57ab75b319a2"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.7179717460900658,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468912,
+      "id": "30424dec-b5ae-46d3-aa9b-f4feb59ce106"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.6461745714810592,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468965,
+      "id": "a17d0b87-22d7-4bb9-80a7-eff2f2700b38"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.5815571143329533,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272468994,
+      "id": "ee688096-acb9-4cbd-9a7f-ff73783fe100"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.523401402899658,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272469312,
+      "id": "79e23395-cc8c-4447-85e3-6f625633b51c"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.47106126260969217,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272469371,
+      "id": "16a5c4f5-ae8e-4775-a9a5-1efc36fa390f"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.42395513634872295,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272469406,
+      "id": "fd138999-9455-4cf8-bac4-1250835d517a"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.3815596227138507,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272469449,
+      "id": "b949be2d-aef7-4ac3-89e0-7cd1ea69e8ee"
+    },
+    {
+      "type": "page-view",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "panX": 0,
+      "panY": 0,
+      "zoom": 0.3434036604424656,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272469477,
+      "id": "5cb849b5-8c20-411a-b4db-ea7e7a785144"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "10d62f96-2822-4443-8e0c-30cfcf5eb0e7",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272471185,
+      "id": "34518dec-344f-4910-89e9-be9b83d71558"
+    },
+    {
+      "type": "block-move",
+      "pageId": "73f34530-2439-482d-a3a5-84f3b908d9a3",
+      "blockId": "7586f261-e3b7-4beb-b7c5-0d4f7b4e0343",
+      "x": 1200,
+      "y": 224,
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772272472639,
+      "id": "2ebc1e69-5300-4f9a-8fc0-0ba374d5cb3b"
+    }
+  ]
+}

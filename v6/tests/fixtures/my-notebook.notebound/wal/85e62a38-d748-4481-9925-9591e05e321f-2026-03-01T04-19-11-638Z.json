@@ -1,0 +1,78 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772338751638,
+  "ops": [
+    {
+      "type": "block-update-html",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "blockId": "f18d0fc7-5880-48c2-927b-6ab63423fa90",
+      "html": "<h1>Week 1 HW.2: Lecture prep for W2</h1><p>Answer prep questions from three faculty members:</p><h2>Homework Questions from Professor Jacobson:</h2><h4>Nature’s\n machinery for copying DNA is called polymerase. What is the error rate \nof polymerase? How does this compare to the length of the human genome. \nHow does biology deal with that discrepancy?</h4><p>Error rate refers to\n errors per nucleotide added per replication. An error could be a \nmisincorporation (wrong base expressed for a pair), for example.</p><p>Error rate of polymerase synthesis is 1/1e7 (1:10^7).</p><p>Human genome has 3.1-3.2 Gbp or 3e9 <a href=\"https://en.wikipedia.org/wiki/Base_pair\">base pairs</a>.</p><p>The rate of errors in polymerase copying the human genome’s DNA is 1/1e7 * 3e9, which is nonzero.</p><p>Biology deals with the likely error through multiple levels of mitigation:</p><ul><li>Proofreading during synthesis corrects errors</li><li>Mismatch repair after synthesis repairs errors</li><li>Redundancy\n and selection at multiple levels - DNA is double-stranded, cells exist \nin huge populations, misfolded proteins get degraded, defective RNAs are\n destroyed, faulty cells undergo apoptosis</li><li>Damage repair system</li></ul><h4>How\n many different ways are there to code (DNA nucleotide code) for an \naverage human protein? In practice what are some of the reasons that all\n of these different codes don’t work to code for the protein of \ninterest?</h4><p>Our assumptions:</p><ul><li>Average Human Protein: 1036 bp.</li><li>~30,000 proteins observed in mammalian genome.</li><li>A protein of length L = 3L nucleotides (bases) + a stop codon in the genome</li></ul><p>Coding\n is the process by which DNA is transcribed into mRNA (triplets / \ncodons), and mRNA (codons) is translated into a linear chain of amino \nacids (polypeptides), which folds into 3D protein structures.</p><p>How \nmany different ways are there to code for an average human protein, \nmeaning how many different DNA encodings would compile (transcribe and \ntranslate) down to the same protein (chain of amino acids) of length \n1036 bp?</p><a href=\"https://pages.htgaa.org/2026a/liam-edwards-playne/homework/week-01-2/index.html#R-image-ddacee0b9dd86b76d6e3f1f295c0cf2f\"></a>\n<p>Codons are 3 nucleotides, each which have a base (A,C,G,T). There are\n 64 possible triplet combinations (codons) using the four bases (A, U, \nG, C). Each codon encodes one amino acid. An amino acid can be encoded \nby multiple codons. For instance, codons GAA and GAG both specify \nglutamic acid and exhibit redundancy. This is referred to as <b>degeneracy</b>.</p><p>The degeneracy of an amino acid refers to the number of codons which encode it. ie. d(<a href=\"https://en.wikipedia.org/wiki/Leucine\">Leu</a>)=6, meaning Leucine has 6 codons which encode it.</p><p>Average codon degeneracy across amino acids is roughly 3.</p><p>So\n to calculate the number of possible encodings for a protein of length \nL=5 amino acids, we compute the degeneracy of each amino acid, and \ncompute their product to find the maximum number of permutations. ie. \nfor a protein of L=5, average degeneracy d(*)=3, <code>num_permutations=d(*) * d(*) * d(*) * d(*) * d(*) = d(*)^L = 3^L</code></p><p>So for an average human protein of L=1036 bp, the number of possible encodings could be <code>3^L = 3^1036</code>.</p><p>There\n is an intractable number of possible encodings. However, functional \n“good” encodings are a tiny subset constrained by expression, folding, \nRNA processing, regulation, and host biology.</p><h2>Homework Questions from Dr. LeProust:</h2><h4>What’s the most commonly used method for oligo synthesis currently?</h4><p>solid-phase chemical synthesis with phosphoramidite chemistry</p><h4>Why is it difficult to make oligos longer than 200nt via direct synthesis?</h4><p>Because\n direct phosphoramidite synthesis has a per-step yield &lt;1.0, errors \ncompound exponentially with length. P(success)=(1-e)^200 is improbable \n(e ~= 0.01)</p><h4>Why can’t you make a 2000bp gene via direct oligo synthesis?</h4><p>(1-e)^2000 is near impossible, due to errors accumulating from each synthetic cycle/step.</p><ul><li>expected number of cleavage events scales ~linearly with cycle count and purine content</li><li>Misincorporations accumulate (wrong base addition)</li></ul><h2>Homework Question from George Church:</h2><p>Choose ONE of the following three questions to answer; and please cite AI prompts or paper citations used, if any.</p><blockquote><p>[Using\n Google &amp; Prof. Church’s slide #4] What are the 10 essential amino \nacids in all animals and how does this affect your view of the “Lysine \nContingency”?</p><p>[Given slides #2 &amp; 4 (AA:NA and NA:NA codes)] What code would you suggest for AA:AA interactions?</p><p>[(Advanced\n students)] Given the one paragraph abstracts for these real 2026 grant \nprograms sketch a response to one of them or devise one of your own:</p><p><a href=\"https://arpa-h.gov/explore-funding/programs/boss\">https://arpa-h.gov/explore-funding/programs/boss</a></p><p><a href=\"https://www.darpa.mil/research/programs/smart-rbc\">https://www.darpa.mil/research/programs/smart-rbc</a></p><p><a href=\"https://www.darpa.mil/research/programs/go\">https://www.darpa.mil/research/programs/go</a></p></blockquote><h3>What are the 10 essential amino acids in all animals and how does this affect your view of the “Lysine Contingency”?</h3><p>Histidine, isoleucine, leucine, lysine, methionine, phenylalanine, threonine, tryptophan, valine (+ arginine conditional).</p><p>Out\n of the 20 amino acids needed, the body synthesizes 11-12, while the \nremaining 8-9, known as essential amino acids, must be obtained through \ndiet.</p><p>This is not accurate to all animals, it seems? Counterexample: cats. Cats require taurine.</p><blockquote><p>The <a href=\"https://jurassicpark.fandom.com/wiki/Lysine_contingency\">Lysine Contingency</a>\n was a genetic alteration Henry Wu performed in the dinosaur genome. The\n modification knocked out the ability of the dinosaurs to produce the \namino acid Lysine.</p><p>This forced the dinosaurs to depend on lysine \nsupplements provided by the park’s veterinary staff. In this way, \ndinosaurs could never escape from the park because they would never \nsurvive long without the food supplements.</p></blockquote><p>Haha, I have to rewatch this film.</p><p>The\n way I would hack around this would be to introduce a substance \ncontaining the microbes that cows digest and feed it to the dinosaurs. \nThese microbes synthesise the essential amino acids from nitrogen, thus \nmitigating the need for the dinosaurs to produce Lysine themselves, \ninstead forming a symbiotic relationship with the microbes in their gut.</p><p>I don’t know what this question means, but it reminds me also of <a href=\"https://en.wikipedia.org/wiki/Liebig%27s_law_of_the_minimum\">Liebig’s law</a>\n - would the restriction of one amino acid necessarily debilitate the \ndinosaurs so they can’t escape, or is nature more nonlinear and complex \nthan that?</p><p>LLM prompts used:</p><ul><li>10 essential amino acids in all animals?</li><li>across all animals?</li><li>cows can synthesise most of their needed amino acids? how many which ones</li><li>how long can you survive without just one of the amnio acids ?</li></ul>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338727354,
+      "id": "2929783b-5d67-44ef-9166-41baca94d05f"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "183e016b-c70e-46ab-863a-628f76c9bdfd",
+        "x": 612.5,
+        "y": 95.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338730009,
+      "id": "daaaa03f-1842-4ae7-b88e-87f2ea49c17f"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "183e016b-c70e-46ab-863a-628f76c9bdfd",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338731825,
+      "id": "3d2bbf17-e28b-44de-8fae-e42a3f25e3b4"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "title": "Core concepts",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338732217,
+      "id": "30a92ddd-00ac-458c-9b57-34574afe2c67"
+    },
+    {
+      "type": "block-add",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "block": {
+        "id": "d25344d7-bee5-43ed-9526-d55c4217afc5",
+        "x": 1121.5,
+        "y": 35.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338732321,
+      "id": "31fbe532-192d-4903-915b-778388131246"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "d25344d7-bee5-43ed-9526-d55c4217afc5",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338733994,
+      "id": "bf206111-f604-4567-82e7-f069af8c9242"
+    },
+    {
+      "type": "block-update-html",
+      "pageId": "d7e53ed0-638d-4df8-943d-b5513d367558",
+      "blockId": "1b0921bb-7eba-4d1c-b726-3296f234cfc9",
+      "html": "<ul><li>DNA</li></ul><ul><li>DNA synthesis</li><li>DNA manipulation</li><li>DNA replication</li><li>Restriction enzymes</li><li>RNA</li><ul><li>mRNA</li><ul><li>codons</li></ul><li>tRNA</li><ul><li>anti codon</li></ul></ul><li>Central Dogma</li><ul><li>DNA -&gt; mRNA -&gt; Amino acid chain (polypeptide) -&gt; Folding into 3D protein</li></ul><li>Transcription</li><li>Translation</li><li>Eukaryotic</li><li>Prokaryotic</li><li>Protein synthesis</li><li>Plasmids</li><li>Peptide synthesis</li><li>Pippetting&nbsp;</li><ul><li>Units</li><ul><li>Moles - absolute amount of substance</li><li><span style=\"caret-color: var(--text); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;\">Molarity - concentration</span></li></ul><li>Assays</li><li>Serial dilutions</li></ul></ul><p><br></p>",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338736393,
+      "id": "95ca3c86-737a-4f8d-9084-86bc3db3cd07"
+    }
+  ]
+}

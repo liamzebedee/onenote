@@ -1,0 +1,70 @@
+{
+  "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+  "sealedAt": 1772338601563,
+  "ops": [
+    {
+      "type": "block-move",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "blockId": "62555385-3d3c-48bc-b9de-b62ad4ce4795",
+      "x": 1110,
+      "y": 180,
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338595296,
+      "id": "9385ffbf-7ba3-455c-ab2c-222f6886d6e4"
+    },
+    {
+      "type": "block-add",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "block": {
+        "id": "ac117201-944c-4d59-8077-9a933b5fd4bf",
+        "x": 1236.5,
+        "y": 112.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338595648,
+      "id": "f070e478-ae4d-427d-8e3c-0c696c2829ca"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "blockId": "ac117201-944c-4d59-8077-9a933b5fd4bf",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338596088,
+      "id": "6471043e-ac5d-4a59-95f1-90cbd2606cad"
+    },
+    {
+      "type": "block-add",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "block": {
+        "id": "bbbe435f-6c5e-4f56-affb-1d9091d622ce",
+        "x": 1046.5,
+        "y": 13.3125,
+        "w": 480,
+        "html": "",
+        "type": "text"
+      },
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338596197,
+      "id": "3eb6fe6e-2a98-4bfb-b4e4-0401956f7c8c"
+    },
+    {
+      "type": "block-delete",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "blockId": "bbbe435f-6c5e-4f56-affb-1d9091d622ce",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338596656,
+      "id": "365280d1-8409-4d37-8bc4-e00e4bf8005c"
+    },
+    {
+      "type": "page-rename",
+      "pageId": "7d5e49e2-0f5e-42ab-b1f7-5bc3931b8e24",
+      "title": "W1",
+      "deviceId": "85e62a38-d748-4481-9925-9591e05e321f",
+      "timestamp": 1772338597840,
+      "id": "dfec664e-d75c-4d68-abe9-d7c67d0e0fd5"
+    }
+  ]
+}

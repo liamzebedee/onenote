@@ -1,0 +1,13 @@
+{
+  "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+  "sealedAt": 1772262931938,
+  "ops": [
+    {
+      "type": "page-delete",
+      "pageId": "58006a3a-8864-431c-bc36-df8f9dd1bd6b",
+      "deviceId": "7b77140a-a11a-489c-8f43-1d37968dd109",
+      "timestamp": 1772262906641,
+      "id": "82665a66-fbbe-4327-9c36-2a8727e69996"
+    }
+  ]
+}
