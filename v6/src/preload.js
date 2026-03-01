@@ -76,6 +76,12 @@ contextBridge.exposeInMainWorld('notebook', {
 
 });
 
+contextBridge.exposeInMainWorld('windowControls', {
+  minimize: () => ipcRenderer.invoke('window:minimize'),
+  maximize: () => ipcRenderer.invoke('window:maximize'),
+  close: () => ipcRenderer.invoke('window:close'),
+});
+
 contextBridge.exposeInMainWorld('claude', {
   start: (pageId) => ipcRenderer.invoke('claude:start', pageId),
   message: (text) => ipcRenderer.invoke('claude:message', text),

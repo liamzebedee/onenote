@@ -24,6 +24,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 /* ── Title bar (drag region, traffic lights row) ─── */
 
 #titlebar {
+  position: relative;
   height: 38px;
   display: flex;
   align-items: center;
@@ -43,6 +44,33 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   pointer-events: none;
   white-space: nowrap;
 }
+
+/* ── Window controls (Linux frameless) ──────────── */
+.window-controls {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+.wc-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  padding: 0;
+}
+.wc-btn:hover { background: rgba(0,0,0,0.1); }
+.wc-close:hover { background: #e81123; color: #fff; }
 
 /* ── Format toolbar (controls row) ──────────────── */
 
@@ -108,9 +136,9 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   white-space: nowrap;
   z-index: 1;
   /* filter: drop-shadow traces the full composite shape (body + corner spans) — no border artifacts */
-  filter: drop-shadow(0 0 0.5px rgba(0,0,0,0.28)) drop-shadow(0 1px 2px rgba(0,0,0,0.10));
+  filter: drop-shadow(0 0 0.5px #b8b8b8) drop-shadow(0 1px 2px #e0e0e0);
 }
-.sec-tab:hover { filter: drop-shadow(0 0 0.5px rgba(0,0,0,0.35)) drop-shadow(0 1px 2px rgba(0,0,0,0.13)) brightness(0.96); }
+.sec-tab:hover { filter: drop-shadow(0 0 0.5px #a0a0a0) drop-shadow(0 1px 2px #d5d5d5) brightness(0.96); }
 .sec-tab--active { z-index: 2; }
 
 /* ── Tab visual chrome lives here, not on the shell ─ */
@@ -119,21 +147,21 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   font-size: 14px;
   font-weight: 600;
   color: #333;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
-  background: inherit;
+  text-shadow: 0 1px 0 #fff;
+  background: var(--tab-solid) var(--tab-grad);
   border-radius: 4px 4px 0 0;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), inset 0 -2px 3px rgba(0,0,0,0.06);
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #d8d8d8;
 }
 
-/* ── Section tab colours (corners inherit from shell) */
-.sec-tab:nth-child(8n+1) { background: linear-gradient(to bottom, #fff8e8, #fce4b8); }
-.sec-tab:nth-child(8n+2) { background: linear-gradient(to bottom, #daeffe, #b8d4f0); }
-.sec-tab:nth-child(8n+3) { background: linear-gradient(to bottom, #e8f8e4, #c8e6c0); }
-.sec-tab:nth-child(8n+4) { background: linear-gradient(to bottom, #fde0e0, #f0c0c0); }
-.sec-tab:nth-child(8n+5) { background: linear-gradient(to bottom, #ece0ff, #d8c8f0); }
-.sec-tab:nth-child(8n+6) { background: linear-gradient(to bottom, #fff0d0, #f0d8b0); }
-.sec-tab:nth-child(8n+7) { background: linear-gradient(to bottom, #d4f4f4, #b8e0e0); }
-.sec-tab:nth-child(8n+8) { background: linear-gradient(to bottom, #fde4f4, #f0c8e0); }
+/* ── Section tab colours (set as custom props so shell stays transparent for drop-shadow) */
+.sec-tab:nth-child(8n+1) { --tab-grad: linear-gradient(to bottom, #fff8e8, #fce4b8); --tab-solid: #fce4b8; }
+.sec-tab:nth-child(8n+2) { --tab-grad: linear-gradient(to bottom, #daeffe, #b8d4f0); --tab-solid: #b8d4f0; }
+.sec-tab:nth-child(8n+3) { --tab-grad: linear-gradient(to bottom, #e8f8e4, #c8e6c0); --tab-solid: #c8e6c0; }
+.sec-tab:nth-child(8n+4) { --tab-grad: linear-gradient(to bottom, #fde0e0, #f0c0c0); --tab-solid: #f0c0c0; }
+.sec-tab:nth-child(8n+5) { --tab-grad: linear-gradient(to bottom, #ece0ff, #d8c8f0); --tab-solid: #d8c8f0; }
+.sec-tab:nth-child(8n+6) { --tab-grad: linear-gradient(to bottom, #fff0d0, #f0d8b0); --tab-solid: #f0d8b0; }
+.sec-tab:nth-child(8n+7) { --tab-grad: linear-gradient(to bottom, #d4f4f4, #b8e0e0); --tab-solid: #b8e0e0; }
+.sec-tab:nth-child(8n+8) { --tab-grad: linear-gradient(to bottom, #fde4f4, #f0c8e0); --tab-solid: #f0c8e0; }
 
 /* ── Corner spans: inherit gradient from shell ────── */
 .sec-tab-left-corner,
@@ -141,11 +169,11 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   position: absolute;
   top: 0;
   bottom: 0;
-  background: inherit;
+  background: var(--tab-solid) var(--tab-grad);
   pointer-events: none;
 }
 .sec-tab-left-corner  { left: -10px; width: 10px; clip-path: polygon(100% 0, 0 100%, 100% 100%); }
-.sec-tab-right-corner { right: -14px; width: 14px; clip-path: polygon(0 0, 0 100%, 100% 100%); }
+.sec-tab-right-corner { right: -14px; width: 16px; margin-left: -2px; clip-path: polygon(0 0, 0 100%, 100% 100%); }
 
 .sec-add {
   padding: 2px 8px;
@@ -736,6 +764,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   gap: 8px;
 }
 .context-menu-item:hover { background: var(--hover-bg); }
+.context-menu-item--disabled { color: #aaa; cursor: default; }
+.context-menu-item--disabled:hover { background: transparent; }
 
 .context-menu-item--danger {
   color: #c62828;

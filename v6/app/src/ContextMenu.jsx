@@ -80,7 +80,7 @@ export function ContextMenu() {
   }
 
   return (
-    <div class="context-menu" ref={ref} style={{ left: x + 'px', top: y + 'px' }}>
+    <div class="context-menu" ref={ref} style={{ left: x + 'px', top: y + 'px' }} onMouseDown={e => e.preventDefault()}>
       {menu.items.map((item, i) => {
         if (item.type === 'separator') {
           return <div key={i} class="context-menu-separator" />;
@@ -136,7 +136,14 @@ export function ContextMenu() {
           );
         }
 
-        // Normal item
+        // Normal item (possibly disabled)
+        if (item.disabled) {
+          return (
+            <div key={i} class="context-menu-item context-menu-item--disabled">
+              {item.label}
+            </div>
+          );
+        }
         return (
           <div key={i} class="context-menu-item" onClick={() => { item.action(); closeContextMenu(); }}>
             {item.label}

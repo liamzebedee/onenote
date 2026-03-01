@@ -2,6 +2,7 @@ import { createContext } from 'preact';
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
 import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH } from './store.js';
+import { openContextMenu } from './ContextMenu.jsx';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
 import { initPasteHandler } from './clipboard.js';
@@ -31,6 +32,19 @@ export function FormatToolbar() {
     <>
       <div id="titlebar">
         <span class="toolbar-title">Notebound</span>
+        {!/Mac/.test(navigator.platform) && (
+          <div class="window-controls">
+            <button class="wc-btn wc-minimize" onClick={() => window.windowControls.minimize()} title="Minimize">
+              <svg width="10" height="1" viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg>
+            </button>
+            <button class="wc-btn wc-maximize" onClick={() => window.windowControls.maximize()} title="Maximize">
+              <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+            </button>
+            <button class="wc-btn wc-close" onClick={() => window.windowControls.close()} title="Close">
+              <svg width="10" height="10" viewBox="0 0 10 10"><line x1="0" y1="0" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="0" x2="0" y2="10" stroke="currentColor" stroke-width="1.2"/></svg>
+            </button>
+          </div>
+        )}
       </div>
       <div id="format-toolbar">
         {btns.map((b, i) => b === null
@@ -139,6 +153,33 @@ function PageTitle({ page, onEnter }) {
         }}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onEnter?.(); } }}
         onInput={e => { updatePageTitle(page.id, e.target.textContent); }}
+        onContextMenu={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          const selText = window.getSelection().toString();
+          const items = [];
+          if (selText) {
+            items.push({ label: 'Copy', action: () => document.execCommand('copy') });
+          } else {
+            items.push({ label: 'Copy', disabled: true });
+          }
+          items.push({ label: 'Paste', action: () => {
+            navigator.clipboard.readText().then(text => {
+              if (text) document.execCommand('insertText', false, text);
+            });
+          }});
+          if (selText) {
+            items.push({ type: 'separator' });
+            const q = encodeURIComponent(selText);
+            items.push({ label: 'Search with Google', action: () => {
+              window.notebook?.openExternal('https://www.google.com/search?q=' + q);
+            }});
+            items.push({ label: 'Ask ChatGPT', action: () => {
+              window.notebook?.openExternal('https://chatgpt.com/?q=' + q);
+            }});
+          }
+          openContextMenu(e.clientX, e.clientY, items);
+        }}
       />
       {dateStr && <div class="page-date">{dateStr}</div>}
     </div>

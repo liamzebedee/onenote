@@ -1,6 +1,7 @@
 import { useRef, useEffect, useLayoutEffect, useContext, useState } from 'preact/hooks';
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
+import { openContextMenu } from './ContextMenu.jsx';
 import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
@@ -224,10 +225,61 @@ export function Block({ block, page }) {
 
   const handleContentContextMenu = (e) => {
     const anchor = e.target.closest('a[href]');
-    if (!anchor) return;
+    if (anchor) {
+      e.preventDefault();
+      e.stopPropagation();
+      linkMenu.value = { x: e.clientX, y: e.clientY, href: anchor.href, anchorEl: anchor, blockId: block.id };
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
-    linkMenu.value = { x: e.clientX, y: e.clientY, href: anchor.href, anchorEl: anchor, blockId: block.id };
+    const selText = window.getSelection().toString();
+    const items = [];
+    if (selText) {
+      items.push({ label: 'Copy', action: () => document.execCommand('copy') });
+    } else {
+      items.push({ label: 'Copy', disabled: true });
+    }
+    items.push({ label: 'Paste', action: () => {
+      navigator.clipboard.readText().then(text => {
+        if (text) document.execCommand('insertText', false, text);
+      });
+    }});
+    if (selText) {
+      items.push({ type: 'separator' });
+      const q = encodeURIComponent(selText);
+      items.push({ label: 'Search with Google', action: () => {
+        window.notebook?.openExternal('https://www.google.com/search?q=' + q);
+      }});
+      items.push({ label: 'Ask ChatGPT', action: () => {
+        window.notebook?.openExternal('https://chatgpt.com/?q=' + q);
+      }});
+    }
+    openContextMenu(e.clientX, e.clientY, items);
+  };
+
+  const handleImageContextMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const items = [
+      { label: 'Copy', action: () => {
+        const img = e.target.closest('.img-frame')?.querySelector('img');
+        if (!img) return;
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        canvas.toBlob(blob => {
+          if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+        });
+      }},
+      { label: 'Paste', action: () => {
+        navigator.clipboard.readText().then(text => {
+          if (text) document.execCommand('insertText', false, text);
+        });
+      }},
+    ];
+    openContextMenu(e.clientX, e.clientY, items);
   };
 
   const handlePaste = (e) => {
@@ -434,6 +486,7 @@ export function Block({ block, page }) {
               class="block-drag-overlay"
               onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
               onDblClick={handleImgDoubleClick}
+              onContextMenu={handleImageContextMenu}
             />
           )}
         </>

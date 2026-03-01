@@ -32,6 +32,14 @@ function setupIPC(win, deviceId, userDataPath) {
   _userDataPath = userDataPath;
   manager = new NotebookManager();
 
+  // Window controls (for frameless window on Linux)
+  ipcMain.handle('window:minimize', () => mainWindow.minimize());
+  ipcMain.handle('window:maximize', () => {
+    if (mainWindow.isMaximized()) mainWindow.unmaximize();
+    else mainWindow.maximize();
+  });
+  ipcMain.handle('window:close', () => mainWindow.close());
+
   // Forward renderer logs to main process stdout
   ipcMain.on('renderer:log', (event, ...args) => {
     console.log('[renderer]', ...args);

@@ -112,11 +112,14 @@ function createWindow() {
     ...(isMac ? {
       titleBarStyle: 'hiddenInset',
       trafficLightPosition: { x: 14, y: 13 },
-    } : {}),
+    } : {
+      frame: false,
+    }),
     icon: nativeImage.createFromPath(path.join(__dirname, process.platform === 'darwin' ? 'icon.icns' : 'app/icon-256.png')),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      spellcheck: false,
       preload: path.join(__dirname, 'src', 'preload.js'),
     },
   };

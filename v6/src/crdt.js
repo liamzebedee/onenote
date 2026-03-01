@@ -45,6 +45,7 @@ class TextCRDT {
 
   // Insert a character after parentId
   insertAt(parentId, char) {
+    if (!parentId) parentId = this.ROOT_ID;
     const id = this._nextId();
     const op = { type: 'insert', id, parentId, char };
     this.apply(op);
