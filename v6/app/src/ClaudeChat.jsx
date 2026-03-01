@@ -1,5 +1,5 @@
 import { useRef, useEffect, useLayoutEffect, useCallback } from 'preact/hooks';
-import { claudeChat, sendClaudeMessage, closeClaudeChat, updateClaudeChatPosition } from './store.js';
+import { claudeChat, sendClaudeMessage, closeClaudeChat, updateClaudeChatPosition, displayPanel } from './store.js';
 
 function renderMarkdown(text) {
   // Code blocks
@@ -63,7 +63,7 @@ export function ClaudeChat() {
 
   function handleSend() {
     const text = inputRef.current?.value?.trim();
-    if (!text || chat.streaming) return;
+    if (!text) return;
     inputRef.current.value = '';
     sendClaudeMessage(text);
   }
@@ -82,7 +82,22 @@ export function ClaudeChat() {
     >
       <div class="cc-titlebar" onPointerDown={onDragStart} ref={dragRef}>
         <span class="cc-title">Claude</span>
-        <button class="cc-close" onClick={closeClaudeChat}>x</button>
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <button
+            class="cc-test"
+            onClick={() => { if (!chat.streaming) sendClaudeMessage('Write a tiny, self-contained HTML page (with inline CSS, make it look nice) and display it using the display_webpage tool. Keep it under 2 seconds.'); }}
+            disabled={chat.streaming}
+            title="Test display panel"
+          >test</button>
+          <button
+            class="cc-test"
+            onClick={() => {
+              displayPanel.value = { ...displayPanel.value, active: true, uri: 'file:///tmp/notebound-img-test.html' };
+            }}
+            title="Test iframe with local file + images"
+          >iframe</button>
+          <button class="cc-close" onClick={closeClaudeChat}>x</button>
+        </div>
       </div>
       <div class="cc-messages" ref={messagesRef}>
         {chat.messages.map((msg, i) => (
@@ -106,14 +121,13 @@ export function ClaudeChat() {
           class="cc-input"
           placeholder="Ask about your notebook..."
           onKeyDown={handleKeyDown}
-          disabled={chat.streaming}
           rows={1}
           onInput={e => {
             e.target.style.height = 'auto';
             e.target.style.height = Math.min(e.target.scrollHeight, 80) + 'px';
           }}
         />
-        <button class="cc-send" onClick={handleSend} disabled={chat.streaming}>Send</button>
+        <button class="cc-send" onClick={handleSend}>Send</button>
       </div>
     </div>
   );

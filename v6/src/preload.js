@@ -82,9 +82,19 @@ contextBridge.exposeInMainWorld('windowControls', {
   close: () => ipcRenderer.invoke('window:close'),
 });
 
+contextBridge.exposeInMainWorld('display', {
+  onCommand: (cb) => {
+    ipcRenderer.on('display:command', (event, cmd) => cb(cmd));
+  },
+  offCommand: () => {
+    ipcRenderer.removeAllListeners('display:command');
+  },
+});
+
 contextBridge.exposeInMainWorld('claude', {
   start: (pageId) => ipcRenderer.invoke('claude:start', pageId),
   message: (text) => ipcRenderer.invoke('claude:message', text),
+  interrupt: () => ipcRenderer.invoke('claude:interrupt'),
   stop: () => ipcRenderer.invoke('claude:stop'),
   onStream: (cb) => {
     ipcRenderer.on('claude:stream', (event, data) => cb(data));

@@ -120,6 +120,7 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       spellcheck: false,
+      webSecurity: false,
       preload: path.join(__dirname, 'src', 'preload.js'),
     },
   };

@@ -664,16 +664,21 @@ export async function startClaudeChat(x, y) {
   window.claude.onStream((data) => {
     if (data.type === 'text') {
       updateChat(c => {
-        // Append to last assistant message
         const last = c.messages[c.messages.length - 1];
         if (last && last.role === 'assistant') {
           last.content = data.content;
         }
       });
+    } else if (data.type === 'tool_use') {
+      updateChat(c => {
+        const last = c.messages[c.messages.length - 1];
+        if (last && last.role === 'assistant' && !last.content) {
+          last.content = `*Using ${data.tool}...*`;
+        }
+      });
     } else if (data.type === 'done') {
       updateChat(c => {
         c.streaming = false;
-        // Update last assistant message with final result
         const last = c.messages[c.messages.length - 1];
         if (last && last.role === 'assistant' && data.result) {
           last.content = data.result;
@@ -696,8 +701,19 @@ export async function startClaudeChat(x, y) {
   };
 }
 
+export function interruptClaude() {
+  if (!hasClaude) return;
+  window.claude.interrupt().catch(() => {});
+  updateChat(c => { c.streaming = false; });
+}
+
 export function sendClaudeMessage(text) {
   if (!hasClaude || !claudeChat.value.active) return;
+
+  // If streaming, interrupt current response first
+  if (claudeChat.value.streaming) {
+    window.claude.interrupt().catch(() => {});
+  }
 
   updateChat(c => {
     c.messages.push({ role: 'user', content: text });
@@ -731,6 +747,41 @@ export function closeClaudeChat() {
 export function updateClaudeChatPosition(x, y) {
   const c = claudeChat.value;
   claudeChat.value = { ...c, position: { x, y } };
+}
+
+// ─── Display Panel (MCP-controlled iframe) ────────────
+
+export const displayPanel = signal({
+  active: false,
+  uri: null,
+  position: { x: 480, y: 80 },
+});
+
+export function updateDisplayPanelPosition(x, y) {
+  const d = displayPanel.value;
+  displayPanel.value = { ...d, position: { x, y } };
+}
+
+export function closeDisplayPanel() {
+  displayPanel.value = { ...displayPanel.value, active: false, uri: null };
+}
+
+// Listen for display commands from MCP server via main process
+if (typeof window !== 'undefined' && window.display) {
+  window.display.onCommand((cmd) => {
+    console.log('[display] command:', cmd);
+    if (cmd.action === 'open') {
+      displayPanel.value = { ...displayPanel.value, active: true, uri: cmd.uri };
+    } else if (cmd.action === 'refresh') {
+      // Toggle uri to force iframe reload
+      const d = displayPanel.value;
+      if (d.active && d.uri) {
+        displayPanel.value = { ...d, uri: d.uri + (d.uri.includes('?') ? '&' : '?') + '_r=' + Date.now() };
+      }
+    } else if (cmd.action === 'close') {
+      displayPanel.value = { ...displayPanel.value, active: false, uri: null };
+    }
+  });
 }
 
 // ─── Listen for state changes (initial push + remote sync) ──

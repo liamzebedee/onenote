@@ -4,6 +4,8 @@
 const { ipcMain, dialog, app, shell } = require('electron');
 const os = require('os');
 const path = require('path');
+const fs = require('fs');
+const net = require('net');
 const { NotebookManager } = require('./notebook');
 const blobs = require('./blobs');
 const { createVFS, cleanupVFS } = require('./claude-vfs');
@@ -17,6 +19,8 @@ let _claudeAgent = null;
 let _claudeVfsPath = null;
 let _claudePageMap = null;
 let _userDataPath = null;
+let _mcpSocketServer = null;
+let _mcpSocketPath = null;
 
 function _findPage(pages, id) {
   for (const p of pages) {
@@ -174,6 +178,55 @@ function setupIPC(win, deviceId, userDataPath) {
     console.log('[ipc] config written, notebookPath now:', config.notebookPath);
   });
 
+  // ── MCP socket server for display panel ─────────────
+  function startMcpSocket() {
+    if (_mcpSocketServer) return _mcpSocketPath;
+
+    const runDir = process.env.XDG_RUNTIME_DIR
+      ? path.join(process.env.XDG_RUNTIME_DIR, 'notebound')
+      : path.join(os.homedir(), '.cache', 'notebound', 'run');
+    fs.mkdirSync(runDir, { recursive: true });
+
+    _mcpSocketPath = path.join(runDir, `display-${process.pid}.sock`);
+    // Clean up stale socket
+    try { fs.unlinkSync(_mcpSocketPath); } catch {}
+
+    _mcpSocketServer = net.createServer((conn) => {
+      let data = '';
+      conn.on('error', () => {}); // ignore EPIPE / connection reset
+      conn.on('data', (chunk) => { data += chunk.toString(); });
+      conn.on('end', () => {
+        try {
+          const cmd = JSON.parse(data.trim());
+          console.log('[mcp-socket] received:', cmd);
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('display:command', cmd);
+          }
+        } catch (err) {
+          console.error('[mcp-socket] parse error:', err.message);
+        }
+        try { conn.end(); } catch {}
+      });
+    });
+
+    _mcpSocketServer.listen(_mcpSocketPath, () => {
+      console.log('[mcp-socket] listening on', _mcpSocketPath);
+    });
+
+    return _mcpSocketPath;
+  }
+
+  function stopMcpSocket() {
+    if (_mcpSocketServer) {
+      _mcpSocketServer.close();
+      _mcpSocketServer = null;
+    }
+    if (_mcpSocketPath) {
+      try { fs.unlinkSync(_mcpSocketPath); } catch {}
+      _mcpSocketPath = null;
+    }
+  }
+
   // ── Claude agent IPC ─────────────────────────────────
   ipcMain.handle('claude:start', async (event, pageId) => {
     // Kill existing session
@@ -187,6 +240,21 @@ function setupIPC(win, deviceId, userDataPath) {
     _claudeVfsPath = basePath;
     _claudePageMap = pageMap;
     const cwd = (pageId && pageMap.get(pageId)) || basePath;
+
+    // Start MCP socket server and build config
+    const socketPath = startMcpSocket();
+    const mcpConfig = {
+      mcpServers: {
+        'notebound-display': {
+          command: 'node',
+          args: [path.join(__dirname, 'mcp-server.js')],
+          env: { NOTEBOUND_SOCKET: socketPath },
+        },
+      },
+    };
+    // Write MCP config to a temp file
+    const mcpConfigPath = path.join(path.dirname(socketPath), `mcp-config-${process.pid}.json`);
+    fs.writeFileSync(mcpConfigPath, JSON.stringify(mcpConfig), 'utf8');
 
     // Build context string describing the user's current location
     const state = manager.state;
@@ -206,19 +274,25 @@ function setupIPC(win, deviceId, userDataPath) {
       }
     }
     context += '\nYour working directory contains the notebook content as HTML files organized by section.';
+    context += '\n\nYou have access to a display panel tool (notebound-display MCP) that can show webpages in the app. When you want to show the user a webpage or HTML file, use the display_webpage tool. You can also refresh or close the display panel.';
 
-    _claudeAgent = new ClaudeAgent(cwd, context);
-    console.log('[claude] started session, VFS at', basePath, 'cwd:', cwd);
+    _claudeAgent = new ClaudeAgent(cwd, context, mcpConfigPath);
+    console.log('[claude] started session, VFS at', basePath, 'cwd:', cwd, 'mcp:', mcpConfigPath);
     return { sessionId };
   });
 
   ipcMain.handle('claude:message', async (event, text) => {
+    console.log('[ipc] claude:message received, agent exists:', !!_claudeAgent);
     if (!_claudeAgent) throw new Error('No Claude session');
     _claudeAgent.sendMessage(text, (data) => {
       if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.webContents.send('claude:stream', data);
       }
     });
+  });
+
+  ipcMain.handle('claude:interrupt', async () => {
+    if (_claudeAgent) _claudeAgent.interrupt();
   });
 
   ipcMain.handle('claude:stop', async () => {
@@ -320,6 +394,17 @@ function closeNotebook() {
   // Clean up Claude session
   if (_claudeAgent) { _claudeAgent.kill(); _claudeAgent = null; }
   if (_claudeVfsPath) { cleanupVFS(_claudeVfsPath); _claudeVfsPath = null; }
+  // Clean up MCP socket
+  if (_mcpSocketServer) {
+    _mcpSocketServer.close();
+    _mcpSocketServer = null;
+  }
+  if (_mcpSocketPath) {
+    try { fs.unlinkSync(_mcpSocketPath); } catch {}
+    // Also clean up the MCP config file
+    try { fs.unlinkSync(_mcpSocketPath.replace('.sock', '').replace('display-', 'mcp-config-') + '.json'); } catch {}
+    _mcpSocketPath = null;
+  }
   if (manager) {
     manager.close();
     console.log('[notebound] notebook closed, WAL sealed + snapshot written');

@@ -18,7 +18,7 @@ StartupWMClass=notebound
 Categories=Office;
 EOF
   update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
-  npx electron . --no-sandbox "$@"
+  npx electron . --no-sandbox --trace-warnings "$@"
 else
-  npx electron . "$@"
+  npx electron --trace-warnings . "$@"
 fi

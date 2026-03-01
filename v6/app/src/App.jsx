@@ -9,6 +9,7 @@ import { WelcomeScreen } from './WelcomeScreen.jsx';
 import { NotebookSwitcher } from './NotebookSwitcher.jsx';
 import { LinkContextMenu } from './Block.jsx';
 import { ClaudeChat } from './ClaudeChat.jsx';
+import { DisplayPanel } from './DisplayPanel.jsx';
 import { QuickJump } from './QuickJump.jsx';
 
 // macOS uses Cmd alone; Linux/Windows uses Ctrl+Shift
@@ -118,6 +119,7 @@ export function App() {
       <NotebookSwitcher />
       <LinkContextMenu />
       <ClaudeChat />
+      <DisplayPanel />
       {showJump && <QuickJump onClose={() => setShowJump(false)} />}
     </>
   );
