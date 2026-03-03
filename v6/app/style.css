@@ -172,8 +172,10 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   background: var(--tab-solid) var(--tab-grad);
   pointer-events: none;
 }
-.sec-tab-left-corner  { left: -10px; width: 10px; clip-path: polygon(100% 0, 0 100%, 100% 100%); }
-.sec-tab-right-corner { right: -14px; width: 16px; margin-left: -2px; clip-path: polygon(0 0, 0 100%, 100% 100%); }
+.sec-tab-left-corner  { left: -10px; width: 10px; clip-path: polygon(100% 0, 0 100%, 100% 100%); transform: scaleX(0); transform-origin: right center; transition: transform 250ms ease-out; }
+.sec-tab-right-corner { right: -14px; width: 16px; margin-left: -2px; clip-path: polygon(0 0, 0 100%, 100% 100%); transform: scaleX(0); transform-origin: left center; transition: transform 250ms ease-out; }
+.sec-tab--active .sec-tab-left-corner  { transform: scaleX(1); }
+.sec-tab--active .sec-tab-right-corner { transform: scaleX(1); }
 
 .sec-add {
   padding: 2px 8px;
@@ -453,14 +455,6 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   min-height: 0;
 }
 
-@keyframes page-enter {
-  from { opacity: 0; transform: translateY(5px); }
-  to   { opacity: 1; transform: none; }
-}
-#canvas-area.page-entering {
-  animation: page-enter 0.12s ease;
-}
-
 /* ── Page title ───────────────────────────────────── */
 
 #page-title-bar {
@@ -521,6 +515,10 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 }
 
 /* Inner: blocks are absolutely positioned here; scaled for zoom */
+.page-layer {
+  transition: opacity 250ms ease-out;
+}
+
 #canvas-inner {
   position: absolute;
   top: 0; left: 0;

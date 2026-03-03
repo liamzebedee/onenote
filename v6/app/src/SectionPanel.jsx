@@ -47,7 +47,7 @@ export function SectionPanel() {
             dragId.current = null;
           }}
         >
-          {i > 0 && sec.id === ui.sectionId && <span class="sec-tab-left-corner" />}
+          {i > 0 && <span class="sec-tab-left-corner" />}
           <div class="sec-tab-body">{sec.title}</div>
           <span class="sec-tab-right-corner" />
         </div>

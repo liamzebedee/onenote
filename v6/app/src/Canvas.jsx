@@ -217,6 +217,25 @@ export function Canvas({ page }) {
   const spaceHeld = useRef(false);
   const scrollSaveTimer = useRef(null);
 
+  // Page transition: fade out old, then fade in new
+  const [transition, setTransition] = useState(null); // { outId, inId, phase: 'out'|'in' }
+  const prevPageIdRef = useRef(page?.id);
+  const transitionTimers = useRef({});
+
+  useEffect(() => {
+    const newId = page?.id;
+    const oldId = prevPageIdRef.current;
+    if (!newId || !oldId || newId === oldId) { prevPageIdRef.current = newId; return; }
+    prevPageIdRef.current = newId;
+    clearTimeout(transitionTimers.current.t1);
+    clearTimeout(transitionTimers.current.t2);
+    setTransition({ outId: oldId, inId: newId, phase: 'out' });
+    transitionTimers.current.t1 = setTimeout(() => {
+      setTransition({ outId: oldId, inId: newId, phase: 'in' });
+      transitionTimers.current.t2 = setTimeout(() => setTransition(null), 125);
+    }, 125);
+  }, [page?.id]);
+
   // Keep-alive cache: pageId → page object. Grows as pages are visited.
   // Blocks are never unmounted — inactive pages are hidden with display:none.
   // preloadCache (signal) holds pages pre-rendered before the user visits them.
@@ -313,13 +332,6 @@ export function Canvas({ page }) {
     containerRef.current.scrollLeft = targetLeft;
     containerRef.current.scrollTop  = targetTop;
     setSelected(new Set());
-    // Trigger enter animation on the canvas area
-    const area = document.getElementById('canvas-area');
-    if (area) {
-      area.classList.remove('page-entering');
-      void area.offsetWidth; // flush styles so the animation restarts
-      area.classList.add('page-entering');
-    }
   }, [page?.id]);
 
   // Recompute sizer whenever blocks change (add/resize/move)
@@ -761,11 +773,22 @@ export function Canvas({ page }) {
           >
             <div ref={sizerRef} id="canvas-sizer">
               <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
-                {cachedPages.map(p => (
-                  <div key={p.id} style={p.id !== page?.id ? { display: 'none' } : undefined}>
-                    {p.blocks.map(b => <Block key={b.id} block={b} page={p} />)}
-                  </div>
-                ))}
+                {cachedPages.map(p => {
+                  let style;
+                  if (transition) {
+                    // Only the incoming page at phase='in' is visible (opacity:1, transitions from 0)
+                    // Everything else: opacity:0 (outgoing transitions 1→0, others stay hidden)
+                    const showing = p.id === transition.inId && transition.phase === 'in';
+                    style = showing ? undefined : { opacity: 0, pointerEvents: 'none' };
+                  } else {
+                    style = p.id !== page?.id ? { opacity: 0, pointerEvents: 'none' } : undefined;
+                  }
+                  return (
+                    <div key={p.id} class="page-layer" style={style}>
+                      {p.blocks.map(b => <Block key={b.id} block={b} page={p} />)}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
