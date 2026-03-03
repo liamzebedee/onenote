@@ -5,6 +5,7 @@ import { openContextMenu } from './ContextMenu.jsx';
 import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
+import { htmlToMarkdown } from './clipboard.js';
 
 function computeTextDiff(oldText, newText) {
   let p = 0;
@@ -339,8 +340,15 @@ export function Block({ block, page }) {
     const items = [];
     if (selText) {
       items.push({ label: 'Copy', action: () => document.execCommand('copy') });
+      const sel = window.getSelection();
+      const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
+      const div = document.createElement('div');
+      if (range) div.appendChild(range.cloneContents());
+      const md = htmlToMarkdown(div.innerHTML);
+      items.push({ label: 'Copy as Markdown', action: () => navigator.clipboard.writeText(md) });
     } else {
       items.push({ label: 'Copy', disabled: true });
+      items.push({ label: 'Copy as Markdown', disabled: true });
     }
     items.push({ label: 'Paste', action: () => {
       navigator.clipboard.readText().then(text => {
@@ -382,6 +390,21 @@ export function Block({ block, page }) {
       }},
     ];
     openContextMenu(e.clientX, e.clientY, items);
+  };
+
+  const handleCopy = (e) => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) return;
+    const range = sel.getRangeAt(0);
+    const div = document.createElement('div');
+    div.appendChild(range.cloneContents());
+    const selectedHtml = div.innerHTML;
+    const markdown = htmlToMarkdown(selectedHtml);
+    if (!markdown) return;
+    e.preventDefault();
+    e.clipboardData.setData('text/plain', sel.toString());
+    e.clipboardData.setData('text/html', selectedHtml);
+    e.clipboardData.setData('text/markdown', markdown);
   };
 
   const handlePaste = (e) => {
@@ -751,6 +774,7 @@ export function Block({ block, page }) {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onClick={handleContentClick}
+          onCopy={handleCopy}
           onPaste={handlePaste}
           onContextMenu={handleContentContextMenu}
           onPointerDown={(e) => e.stopPropagation()}

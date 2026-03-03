@@ -128,7 +128,6 @@ function setupIPC(win, deviceId, userDataPath) {
       properties: ['openDirectory'],
       title: 'Open Notebook',
       buttonLabel: 'Open Notebook',
-      filters: [{ name: 'Notebound Notebooks', extensions: ['notebound'] }],
     });
     if (result.canceled || result.filePaths.length === 0) return null;
     return result.filePaths[0];

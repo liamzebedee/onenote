@@ -152,6 +152,12 @@ export { findInTree, removeFromTree };
 let _notebookPath = null;
 let _uiSaveTimer = null;
 
+function setNotebookPath(p) {
+  _notebookPath = p;
+  const name = p ? p.replace(/\\/g, '/').split('/').pop() : null;
+  document.title = name ? `Notebound - ${name}` : 'Notebound';
+}
+
 function persistUiState() {
   if (!hasIPC || !_notebookPath) return;
   clearTimeout(_uiSaveTimer);
@@ -613,7 +619,7 @@ export async function openNotebook(notebookPath) {
   _log('openNotebook IPC returned — notebooks:', state?.notebooks?.length,
     'sections:', state?.notebooks?.[0]?.sections?.length);
   if (state) {
-    _notebookPath = notebookPath;
+    setNotebookPath(notebookPath);
 
     // Try to restore saved UI position
     const cfg = await window.notebook.getConfig();
@@ -849,7 +855,7 @@ if (hasIPC) {
         try {
           const cfg = await window.notebook.getConfig();
           if (cfg.notebookPath) {
-            _notebookPath = cfg.notebookPath;
+            setNotebookPath(cfg.notebookPath);
             const saved = cfg.uiPositions?.[cfg.notebookPath];
             if (saved && nb) {
               const sec = nb.sections.find(s => s.id === saved.sectionId);

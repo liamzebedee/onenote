@@ -28,6 +28,72 @@ function toHtml(text) {
     .replace(/\n/g, '<br>');
 }
 
+// ── HTML → Markdown conversion ────────────────────────────
+
+// Splits a <li>'s children into inline text vs nested list, returning "text\n  - subitem" form
+function _liToMd(li, indent) {
+  let text = '';
+  let nested = '';
+  for (const c of li.childNodes) {
+    if (c.nodeType === Node.ELEMENT_NODE && (c.tagName === 'UL' || c.tagName === 'OL'))
+      nested += '\n' + _nodeToMd(c, indent + '    ');
+    else
+      text += _nodeToMd(c, indent);
+  }
+  return text.trim() + nested.trimEnd();
+}
+
+function _nodeToMd(node, indent = '') {
+  if (node.nodeType === Node.TEXT_NODE) return node.textContent;
+  if (node.nodeType !== Node.ELEMENT_NODE) return '';
+  const tag = node.tagName.toLowerCase();
+  const inner = () => [...node.childNodes].map(c => _nodeToMd(c, indent)).join('');
+  switch (tag) {
+    case 'strong': case 'b':              return `**${inner()}**`;
+    case 'em':     case 'i':              return `*${inner()}*`;
+    case 's':      case 'strike': case 'del': return `~~${inner()}~~`;
+    case 'code':                          return `\`${inner()}\``;
+    case 'a': { const href = node.getAttribute('href') || ''; const t = inner(); return href ? `[${t}](${href})` : t; }
+    case 'br':  return '\n';
+    case 'h1':  return `# ${inner()}\n\n`;
+    case 'h2':  return `## ${inner()}\n\n`;
+    case 'h3':  return `### ${inner()}\n\n`;
+    case 'h4':  return `#### ${inner()}\n\n`;
+    case 'h5':  return `##### ${inner()}\n\n`;
+    case 'h6':  return `###### ${inner()}\n\n`;
+    case 'ul': {
+      let r = '';
+      for (const c of node.childNodes) {
+        if (c.nodeType !== Node.ELEMENT_NODE) continue;
+        if (c.tagName === 'LI') r += `${indent}- ${_liToMd(c, indent)}\n`;
+        else if (c.tagName === 'UL' || c.tagName === 'OL') r += _nodeToMd(c, indent + '    ');
+      }
+      return r + (indent ? '' : '\n');
+    }
+    case 'ol': {
+      let r = ''; let i = 1;
+      for (const c of node.childNodes) {
+        if (c.nodeType !== Node.ELEMENT_NODE) continue;
+        if (c.tagName === 'LI') r += `${indent}${i++}. ${_liToMd(c, indent)}\n`;
+        else if (c.tagName === 'UL' || c.tagName === 'OL') r += _nodeToMd(c, indent + '    ');
+      }
+      return r + (indent ? '' : '\n');
+    }
+    case 'li':  return `${indent}- ${_liToMd(node, indent)}\n`;
+    case 'p':   return `${inner()}\n\n`;
+    case 'div': {
+      if (node.childNodes.length === 1 && node.firstChild?.nodeName === 'BR') return '\n';
+      const c = inner(); return c ? `${c}\n` : '';
+    }
+    default:    return inner();
+  }
+}
+
+export function htmlToMarkdown(html) {
+  const wrap = new DOMParser().parseFromString(`<div>${html}</div>`, 'text/html').body.firstChild;
+  return _nodeToMd(wrap).replace(/\n{3,}/g, '\n\n').trim();
+}
+
 // Register a document-level paste handler.
 // Handles images (→ image block) and plain text with no focused block (→ text block).
 // Returns a cleanup function.
