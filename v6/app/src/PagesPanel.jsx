@@ -17,6 +17,12 @@ function flattenPageIds(pages) {
   return ids;
 }
 
+function isDescendantOf(pages, ancestorId, targetId) {
+  const ancestor = findInTree(pages, ancestorId);
+  if (!ancestor || !ancestor.children?.length) return false;
+  return !!findInTree(ancestor.children, targetId);
+}
+
 function getPageRange(pages, idA, idB) {
   const flat = flattenPageIds(pages);
   const a = flat.indexOf(idA), b = flat.indexOf(idB);
@@ -116,6 +122,8 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
         const sec = nb?.sections.find(sec => sec.id === s.ui.sectionId);
         if (!sec) return;
+        // Prevent dropping a page into its own descendant
+        if (isDescendantOf(sec.pages, fromId, page.id)) return;
         let extracted = null;
         function extract(pages) {
           for (let i = 0; i < pages.length; i++) {
@@ -137,6 +145,8 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
         const sec = nb?.sections.find(sec => sec.id === s.ui.sectionId);
         if (!sec) return;
+        // Prevent dropping a page before its own descendant
+        if (isDescendantOf(sec.pages, fromId, page.id)) return;
         let extracted = null;
         function extract(pages) {
           for (let i = 0; i < pages.length; i++) {
