@@ -451,6 +451,30 @@ function applyOp(state, op) {
       return state;
     }
 
+    case 'block-update-caption': {
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) {
+        if (op.caption) entry.block.caption = op.caption;
+        else delete entry.block.caption;
+      }
+      return state;
+    }
+
+    case 'block-checklist-update': {
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) entry.block.items = op.items;
+      return state;
+    }
+
+    case 'block-update-border': {
+      const entry = _findBlockFast(state, op.pageId, op.blockId);
+      if (entry) {
+        if (op.border) entry.block.border = op.border;
+        else delete entry.block.border;
+      }
+      return state;
+    }
+
     case 'block-style': {
       const entry = _findBlockFast(state, op.pageId, op.blockId);
       if (entry) Object.assign(entry.block.styles || (entry.block.styles = {}), op.styles);

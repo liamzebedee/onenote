@@ -461,6 +461,48 @@ export function updateBlockCrop(blockId, crop) {
   sendOp({ type: 'block-update-crop', pageId, blockId, crop });
 }
 
+export function updateBlockBorder(blockId, border) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.border = border || undefined;
+  });
+  sendOp({ type: 'block-update-border', pageId, blockId, border });
+}
+
+export function updateChecklistItems(blockId, items) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.items = items;
+  });
+  sendOp({ type: 'block-checklist-update', pageId, blockId, items });
+}
+
+// Silent variant — keeps block.items in sync without triggering a re-render.
+// Use for text-only saves (blur) to avoid re-render during focus switches.
+export function updateChecklistItemsSilent(blockId, items) {
+  const pageId = appState.value.ui.pageId;
+  silent(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.items = items;
+  });
+  sendOp({ type: 'block-checklist-update', pageId, blockId, items });
+}
+
+export function updateBlockCaption(blockId, caption) {
+  const pageId = appState.value.ui.pageId;
+  update(s => {
+    const pg = getActivePage(s);
+    const blk = pg?.blocks.find(b => b.id === blockId);
+    if (blk) blk.caption = caption ?? undefined;
+  });
+  sendOp({ type: 'block-update-caption', pageId, blockId, caption });
+}
+
 export function addImageFromFile(file, x, y) {
   const objectUrl = URL.createObjectURL(file);
   const blk = addBlock(x, y, 300, 'image', { src: objectUrl });

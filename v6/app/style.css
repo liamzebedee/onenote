@@ -676,7 +676,82 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .block--image::before { display: none; }
 .block--image.block--selected::before { display: block; pointer-events: none; }
 .block--image img { display: block; max-width: 100%; user-select: none; pointer-events: none; border-radius: 2px; }
+.img-media-area { position: relative; }
+
+.img-border-btn {
+  position: absolute;
+  top: 0;
+  left: -34px;
+  width: 26px;
+  height: 26px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.10);
+  z-index: 10;
+  padding: 0;
+}
+.img-border-btn:hover { background: #f5f5f5; }
+.img-border-btn--active { background: #fff4e0; border-color: #d4850a; }
 .block-drag-overlay { position: absolute; inset: 0; cursor: grab; }
+
+.img-caption {
+  display: block;
+  margin-top: 10px;
+  color: var(--text);
+  font-size: inherit;
+  line-height: 1.4;
+  text-align: center;
+  outline: none;
+  word-break: break-word;
+  cursor: text;
+}
+.img-caption:empty::after {
+  content: attr(data-placeholder);
+  color: #bbb;
+  pointer-events: none;
+}
+.img-caption-hint {
+  margin-top: 10px;
+  color: #bbb;
+  font-size: inherit;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Checklist block ─────────────────────────────── */
+
+.block-checklist { display: flex; flex-direction: column; gap: 2px; padding: 2px 0; }
+
+.cb-row { display: flex; align-items: flex-start; gap: 8px; min-height: 22px; }
+
+.cb-check {
+  width: 15px; height: 15px; margin-top: 3px; flex-shrink: 0;
+  appearance: none; -webkit-appearance: none;
+  border: 1.5px solid #aaa; border-radius: 3px;
+  background: #fff; cursor: pointer; position: relative;
+}
+.cb-check:hover { border-color: var(--active-color); }
+.cb-check--checked { background: var(--active-color); border-color: var(--active-color); }
+.cb-check--checked::after {
+  content: '';
+  position: absolute; left: 3px; top: 0px;
+  width: 5px; height: 9px;
+  border: 2px solid #fff; border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+
+.cb-text {
+  flex: 1; outline: none; line-height: 1.5;
+  word-break: break-word; min-height: 1.5em;
+}
+.cb-text:empty::before { content: attr(data-placeholder); color: #bbb; pointer-events: none; }
+.cb-row--checked .cb-text { text-decoration: line-through; color: var(--muted); }
 
 .img-resize {
   position: absolute;

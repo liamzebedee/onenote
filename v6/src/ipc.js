@@ -350,12 +350,14 @@ function openDefault(win, notebookPath, deviceId, userDataPath) {
     if (!manager) manager = new NotebookManager();
     if (manager.notebookPath) manager.close();
     manager.open(notebookPath, deviceId, userDataPath);
+    // Persist path after every successful open — repairs config if it was cleared by a prior error
+    config.notebookPath = notebookPath;
+    writeConfig();
     console.log('[notebound] notebook opened, state notebooks:', manager.state?.notebooks?.length);
   } catch (err) {
     console.error('[notebound] openDefault failed:', err.message);
-    // Clear the saved path so the welcome screen shows with recents
-    config.notebookPath = null;
-    writeConfig();
+    // Do NOT touch config — the path on disk is still valid.
+    // Just show the welcome screen and let the user decide.
     // Tell renderer to stop waiting and show welcome screen
     const notify = () => {
       if (win && !win.isDestroyed()) {

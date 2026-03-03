@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH } from './store.js';
+import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH, uid } from './store.js';
 import { openContextMenu } from './ContextMenu.jsx';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
@@ -51,6 +51,25 @@ export function FormatToolbar() {
           ? <span key={i} class="fmt-sep" />
           : <button key={b.cmd} class="fmt-btn" title={b.title} onMouseDown={e => { e.preventDefault(); execFmt(b.cmd); }}>{b.node}</button>
         )}
+        <span class="fmt-sep" />
+        <button
+          class="fmt-btn"
+          title="Add checklist"
+          onMouseDown={e => {
+            e.preventDefault();
+            const pg = getActivePage();
+            let y = 60;
+            if (pg?.blocks?.length) {
+              y = Math.max(...pg.blocks.map(b => b.y + 100)) + 40;
+            }
+            const itemId = uid();
+            addBlock(28, y, DEFAULT_BLOCK_WIDTH, 'checklist', { items: [{ id: itemId, text: '', checked: false }] });
+            requestAnimationFrame(() => {
+              const el = document.querySelector(`[data-item-id="${itemId}"]`);
+              el?.focus();
+            });
+          }}
+        >☑ List</button>
         <span class="fmt-sep" />
         <button
           class="fmt-btn fmt-btn--wand"

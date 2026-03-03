@@ -92,6 +92,14 @@ function apply(page, delta) {
     return { type: 'delete', blocks: removed };
   }
 
+  if (delta.type === 'checklist') {
+    const b = blocks.find(b => b.id === delta.id);
+    if (!b) return null;
+    const rev = { type: 'checklist', id: b.id, items: (b.items || []).map(i => ({ ...i })) };
+    b.items = delta.items;
+    return rev;
+  }
+
   if (delta.type === 'crop') {
     const b = blocks.find(b => b.id === delta.id);
     if (!b) return null;

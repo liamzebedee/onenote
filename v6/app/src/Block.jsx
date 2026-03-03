@@ -2,7 +2,7 @@ import { useRef, useEffect, useLayoutEffect, useContext, useState } from 'preact
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
 import { openContextMenu } from './ContextMenu.jsx';
-import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop } from './store.js';
+import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
 
@@ -78,6 +78,34 @@ if (typeof document !== 'undefined') {
   document.addEventListener('mousedown', () => { linkMenu.value = null; });
 }
 
+// ─── URL linkifier ───────────────────────────────────────
+const LINK_URL_RE = /https?:\/\/[^\s<>"{}|\\^`[\]]+(?<![.,;:!?])/g;
+
+function linkifyText(text) {
+  let hasUrl = false;
+  const segments = [];
+  let last = 0;
+  LINK_URL_RE.lastIndex = 0;
+  let m;
+  while ((m = LINK_URL_RE.exec(text)) !== null) {
+    hasUrl = true;
+    const before = text.slice(last, m.index)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>');
+    segments.push(before);
+    const url = m[0];
+    const esc = url.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    segments.push(`<a href="${esc}">${esc}</a>`);
+    last = m.index + url.length;
+  }
+  if (!hasUrl) return null;
+  const trailing = text.slice(last)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
+  segments.push(trailing);
+  return segments.join('');
+}
+
 // ─── HTML paste sanitizer ────────────────────────────────
 const PASTE_ALLOWED = new Set([
   'p','br','h1','h2','h3','h4','h5','h6',
@@ -127,8 +155,9 @@ function sanitizePastedHtml(html) {
 export function Block({ block, page }) {
   const ctx = useContext(CanvasCtx);
   const contentRef = useRef(null);
-  const isImage   = block.type === 'image';
-  const isLoading = block.type === 'loading';
+  const isImage     = block.type === 'image';
+  const isLoading   = block.type === 'loading';
+  const isChecklist = block.type === 'checklist';
   const isSelected = ctx.selectedIds.has(block.id);
 
   // Resolve notebook blob refs ("blob:<sha256>") to data URLs.
@@ -142,6 +171,79 @@ export function Block({ block, page }) {
   const [cropping, setCropping] = useState(false);
   const [pendingCrop, setPendingCrop] = useState(null);
   const pendingCropRef = useRef(null);
+
+  // Border local state — drives immediate visual feedback; store is source of truth on mount/undo
+  const [borderOn, setBorderOn] = useState(!!block.border);
+  useEffect(() => { setBorderOn(!!block.border); }, [block.border]);
+
+  // Checklist item DOM refs (itemId → span element)
+  const itemRefs = useRef({});
+
+  const toggleBorder = () => {
+    const next = !borderOn;
+    setBorderOn(next);
+    updateBlockBorder(block.id, next);
+  };
+
+  // ── Checklist handlers ───────────────────────────────────
+
+  // Read current text from DOM refs (may be ahead of block.items during typing)
+  const getItemsWithDOMText = () =>
+    (block.items || []).map(i => ({ ...i, text: itemRefs.current[i.id]?.textContent ?? i.text }));
+
+  const toggleCheckItem = (itemId) => {
+    const items = getItemsWithDOMText().map(i =>
+      i.id === itemId ? { ...i, checked: !i.checked } : i
+    );
+    updateChecklistItems(block.id, items);
+  };
+
+  const handleItemKeyDown = (e, itemId) => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key === 'z') { e.preventDefault(); e.shiftKey ? ctx.redo() : ctx.undo(); return; }
+
+    const items = block.items || [];
+    const idx = items.findIndex(i => i.id === itemId);
+
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newItem = { id: uid(), text: '', checked: false };
+      const current = getItemsWithDOMText();
+      const newItems = [...current.slice(0, idx + 1), newItem, ...current.slice(idx + 1)];
+      updateChecklistItems(block.id, newItems);
+      requestAnimationFrame(() => itemRefs.current[newItem.id]?.focus());
+      return;
+    }
+
+    if (e.key === 'Backspace' && e.target.textContent === '') {
+      e.preventDefault();
+      if (items.length <= 1) { deleteBlock(block.id); return; }
+      const prevItem = items[Math.max(0, idx - 1)];
+      const newItems = getItemsWithDOMText().filter(i => i.id !== itemId);
+      updateChecklistItems(block.id, newItems);
+      requestAnimationFrame(() => {
+        const el = itemRefs.current[prevItem.id];
+        if (el) {
+          el.focus();
+          const r = document.createRange();
+          r.selectNodeContents(el);
+          r.collapse(false);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(r);
+        }
+      });
+      return;
+    }
+  };
+
+  const handleItemBlur = () => {
+    // Save text silently (no re-render) to keep store in sync
+    updateChecklistItemsSilent(block.id, getItemsWithDOMText());
+  };
+
+  // Legend state
+  const captionRef = useRef(null);
+  const [captionEditing, setLegendEditing] = useState(false);
   // Effective natural size: prefer freshly loaded, fall back to stored dims in crop data
   const nw = naturalSize?.w ?? block.crop?.nw ?? null;
   const nh = naturalSize?.h ?? block.crop?.nh ?? null;
@@ -285,13 +387,37 @@ export function Block({ block, page }) {
   const handlePaste = (e) => {
     if ([...(e.clipboardData?.items || [])].some(i => i.type.startsWith('image/'))) return;
     e.preventDefault();
+    const text = e.clipboardData?.getData('text/plain') || '';
+    const trimmed = text.trim();
+    const isPureUrl = /^https?:\/\/\S+$/.test(trimmed);
+
+    // Pure URL: check before HTML so clipboard HTML from the source doesn't bypass linkification
+    if (isPureUrl) {
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed) {
+        // Wrap existing selection as a link
+        document.execCommand('createLink', false, trimmed);
+      } else {
+        const esc = trimmed.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        document.execCommand('insertHTML', false, `<a href="${esc}">${esc}</a>`);
+      }
+      return;
+    }
+
     const html = e.clipboardData?.getData('text/html');
     if (html) {
       document.execCommand('insertHTML', false, sanitizePastedHtml(html));
       return;
     }
-    const text = e.clipboardData?.getData('text/plain') || '';
-    if (text) document.execCommand('insertText', false, text);
+
+    if (!text) return;
+    // Linkify any URLs in plain text, otherwise insert as-is
+    const linked = linkifyText(text);
+    if (linked) {
+      document.execCommand('insertHTML', false, linked);
+    } else {
+      document.execCommand('insertText', false, text);
+    }
   };
 
   const handleBlur = () => {
@@ -342,6 +468,68 @@ export function Block({ block, page }) {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [cropping]);
+
+  // Legend: sync content from store (undo/page-switch)
+  useLayoutEffect(() => {
+    const el = captionRef.current;
+    if (el && el.innerText !== (block.caption || '')) {
+      el.innerText = block.caption || '';
+    }
+  }, [block.caption]);
+
+  // Legend: focus when editing starts
+  useEffect(() => {
+    if (!captionEditing || !captionRef.current) return;
+    const el = captionRef.current;
+    el.focus();
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }, [captionEditing]);
+
+  // Legend: stop editing when block is deselected
+  useEffect(() => {
+    if (!isSelected) setLegendEditing(false);
+  }, [isSelected]);
+
+  // Legend: Enter key on selected image starts caption editing
+  useEffect(() => {
+    if (!isSelected || !isImage) return;
+    const onKey = (e) => {
+      if (e.key === 'Enter' && !captionEditing && !cropping && !document.activeElement?.isContentEditable) {
+        e.preventDefault();
+        setLegendEditing(true);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isSelected, isImage, captionEditing, cropping]);
+
+  const handleLegendKeyDown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); captionRef.current?.blur(); }
+    if (e.key === 'Escape') {
+      if (captionRef.current) captionRef.current.innerText = block.caption || '';
+      captionRef.current?.blur();
+    }
+  };
+
+  const handleLegendBlur = () => {
+    const text = captionRef.current?.innerText?.trim() || '';
+    setLegendEditing(false);
+    updateBlockCaption(block.id, text || null);
+  };
+
+  // Checklist: sync text from store when items change externally (undo/remote sync)
+  useLayoutEffect(() => {
+    if (!isChecklist) return;
+    for (const item of (block.items || [])) {
+      const el = itemRefs.current[item.id];
+      if (el && el.textContent !== item.text) el.textContent = item.text;
+    }
+  }, [block.items]);
 
   const startCropDrag = (e, dir) => {
     e.preventDefault();
@@ -394,7 +582,7 @@ export function Block({ block, page }) {
     if (cropping) return;
 
     // If click lands outside content/handles, initiate drag+select
-    const onContent = e.target.closest('.block-content, .block-handle, .block-resize, .img-resize, .block-drag-overlay');
+    const onContent = e.target.closest('.block-content, .block-handle, .block-resize, .img-resize, .block-drag-overlay, .img-border-btn, .block-checklist');
     if (!onContent) {
       ctx.onBlockDragStart(e, block.id);
     }
@@ -427,69 +615,130 @@ export function Block({ block, page }) {
         <div class="block-loading"><div class="block-loading-spinner" /></div>
       ) : isImage ? (
         <>
-          {/* Image frame — handles crop rendering */}
-          <div
-            class="img-frame"
-            style={(!cropping && block.crop && nw) ? {
-              position: 'relative', overflow: 'hidden',
-              height: `${block.crop.h * block.w / block.crop.w}px`,
-            } : { position: 'relative', overflow: cropping ? 'hidden' : undefined }}
-          >
-            <img
-              src={resolvedSrc || ''}
-              draggable={false}
-              onLoad={handleImgLoad}
+          {/* Image area — contains frame, resize handles, and drag overlay */}
+          <div class="img-media-area">
+            {/* Border toggle button — visible when selected */}
+            {isSelected && !cropping && (
+              <button
+                class={`img-border-btn${borderOn ? ' img-border-btn--active' : ''}`}
+                title="Toggle border"
+                onPointerDown={e => e.stopPropagation()}
+                onClick={e => { e.stopPropagation(); toggleBorder(); }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <rect x="1.5" y="1.5" width="13" height="13" rx="1"
+                    stroke={borderOn ? '#8a4f00' : '#888'}
+                    stroke-width={block.border ? '2' : '1.5'}
+                    fill="none"
+                  />
+                </svg>
+              </button>
+            )}
+
+            {/* Image frame — handles crop rendering */}
+            <div
+              class="img-frame"
               style={(!cropping && block.crop && nw) ? {
-                position: 'absolute',
-                width: `${nw * block.w / block.crop.w}px`,
-                maxWidth: 'none',
-                left: `${-block.crop.x * block.w / block.crop.w}px`,
-                top: `${-block.crop.y * block.w / block.crop.w}px`,
-              } : { width: '100%', display: 'block' }}
-            />
-            {/* Crop overlay — shown while in crop mode */}
-            {cropping && pendingCrop && nw && nh && (
-              <div class="crop-overlay">
-                <div
-                  class="crop-box"
-                  style={{
-                    left:   `${pendingCrop.x * (block.w / nw)}px`,
-                    top:    `${pendingCrop.y * (block.w / nw)}px`,
-                    width:  `${pendingCrop.w * (block.w / nw)}px`,
-                    height: `${pendingCrop.h * (block.w / nw)}px`,
-                  }}
-                >
-                  {['n','s','e','w','ne','nw','se','sw'].map(dir => (
-                    <div
-                      key={dir}
-                      class={`crop-handle crop-handle--${dir}`}
-                      onPointerDown={(e) => startCropDrag(e, dir)}
-                    />
-                  ))}
+                position: 'relative', overflow: 'hidden',
+                height: `${block.crop.h * block.w / block.crop.w}px`,
+                outline: borderOn ? '1px solid #000' : undefined,
+              } : { position: 'relative', overflow: cropping ? 'hidden' : undefined, outline: borderOn ? '1px solid #000' : undefined }}
+            >
+              <img
+                src={resolvedSrc || ''}
+                draggable={false}
+                onLoad={handleImgLoad}
+                style={(!cropping && block.crop && nw) ? {
+                  position: 'absolute',
+                  width: `${nw * block.w / block.crop.w}px`,
+                  maxWidth: 'none',
+                  left: `${-block.crop.x * block.w / block.crop.w}px`,
+                  top: `${-block.crop.y * block.w / block.crop.w}px`,
+                } : { width: '100%', display: 'block' }}
+              />
+              {/* Crop overlay — shown while in crop mode */}
+              {cropping && pendingCrop && nw && nh && (
+                <div class="crop-overlay">
+                  <div
+                    class="crop-box"
+                    style={{
+                      left:   `${pendingCrop.x * (block.w / nw)}px`,
+                      top:    `${pendingCrop.y * (block.w / nw)}px`,
+                      width:  `${pendingCrop.w * (block.w / nw)}px`,
+                      height: `${pendingCrop.h * (block.w / nw)}px`,
+                    }}
+                  >
+                    {['n','s','e','w','ne','nw','se','sw'].map(dir => (
+                      <div
+                        key={dir}
+                        class={`crop-handle crop-handle--${dir}`}
+                        onPointerDown={(e) => startCropDrag(e, dir)}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
+
+            {/* Corner resize handles — hidden during crop */}
+            {!cropping && ['nw', 'ne', 'sw', 'se'].map(dir => (
+              <div
+                key={dir}
+                class={`img-resize img-resize--${dir}`}
+                onPointerDown={(e) => { e.stopPropagation(); ctx.onImgResizeStart(e, block.id, dir); }}
+              />
+            ))}
+
+            {/* Drag overlay — hidden during crop; dblclick enters crop mode */}
+            {!cropping && (
+              <div
+                class="block-drag-overlay"
+                onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
+                onDblClick={handleImgDoubleClick}
+                onContextMenu={handleImageContextMenu}
+              />
             )}
           </div>
 
-          {/* Corner resize handles — hidden during crop */}
-          {!cropping && ['nw', 'ne', 'sw', 'se'].map(dir => (
+          {/* Legend — below image */}
+          {(block.caption || captionEditing) ? (
             <div
-              key={dir}
-              class={`img-resize img-resize--${dir}`}
-              onPointerDown={(e) => { e.stopPropagation(); ctx.onImgResizeStart(e, block.id, dir); }}
+              ref={captionRef}
+              class="img-caption"
+              contentEditable="true"
+              data-placeholder="Add a caption…"
+              onKeyDown={handleLegendKeyDown}
+              onBlur={handleLegendBlur}
+              onPointerDown={(e) => e.stopPropagation()}
+              suppressContentEditableWarning
             />
-          ))}
-
-          {/* Drag overlay — hidden during crop; dblclick enters crop mode */}
-          {!cropping && (
-            <div
-              class="block-drag-overlay"
-              onPointerDown={(e) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
-              onDblClick={handleImgDoubleClick}
-              onContextMenu={handleImageContextMenu}
-            />
+          ) : isSelected && !cropping && (
+            <div class="img-caption-hint">Press [Enter] to add caption</div>
           )}
         </>
+      ) : isChecklist ? (
+        <div class="block-checklist">
+          {(block.items || []).map(item => (
+            <div key={item.id} class={`cb-row${item.checked ? ' cb-row--checked' : ''}`}>
+              <button
+                class={`cb-check${item.checked ? ' cb-check--checked' : ''}`}
+                onPointerDown={e => e.stopPropagation()}
+                onClick={e => { e.stopPropagation(); toggleCheckItem(item.id); }}
+              />
+              <span
+                ref={el => { if (el) itemRefs.current[item.id] = el; else delete itemRefs.current[item.id]; }}
+                class="cb-text"
+                contentEditable="true"
+                data-placeholder="List item"
+                data-item-id={item.id}
+                onKeyDown={e => handleItemKeyDown(e, item.id)}
+                onBlur={handleItemBlur}
+                onPointerDown={e => e.stopPropagation()}
+                suppressContentEditableWarning
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <div
           ref={contentRef}
