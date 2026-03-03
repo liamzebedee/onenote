@@ -453,6 +453,14 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   min-height: 0;
 }
 
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+#canvas-area.page-entering {
+  animation: page-enter 0.12s ease;
+}
+
 /* ── Page title ───────────────────────────────────── */
 
 #page-title-bar {

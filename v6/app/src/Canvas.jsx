@@ -313,6 +313,13 @@ export function Canvas({ page }) {
     containerRef.current.scrollLeft = targetLeft;
     containerRef.current.scrollTop  = targetTop;
     setSelected(new Set());
+    // Trigger enter animation on the canvas area
+    const area = document.getElementById('canvas-area');
+    if (area) {
+      area.classList.remove('page-entering');
+      void area.offsetWidth; // flush styles so the animation restarts
+      area.classList.add('page-entering');
+    }
   }, [page?.id]);
 
   // Recompute sizer whenever blocks change (add/resize/move)
