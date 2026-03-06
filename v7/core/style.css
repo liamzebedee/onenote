@@ -453,6 +453,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   background: #fff;
   min-width: 0;
   min-height: 0;
+  padding-left: 24px;
 }
 
 /* ── Page title ───────────────────────────────────── */

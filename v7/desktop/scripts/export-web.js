@@ -51,11 +51,19 @@ function exportNotebook(notebookDir, outputDir) {
     for (const sec of nb.sections) cleanBlocks(sec.pages);
   }
 
-  // Migration: normalize default text blocks to x=0
+  // Migration: shift all blocks so the top-left block starts at (0, 0)
   function migrateBlocks(pages) {
     for (const p of pages) {
-      for (const b of (p.blocks || [])) {
-        if (b.type === 'text' && b.y === 0 && (b.x === 28 || b.x === 16)) b.x = 0;
+      const blocks = p.blocks || [];
+      if (blocks.length) {
+        const minX = Math.min(...blocks.map(b => b.x ?? 0));
+        const minY = Math.min(...blocks.map(b => b.y ?? 0));
+        if (minX > 0 || minY > 0) {
+          for (const b of blocks) {
+            if (minX > 0) b.x = (b.x ?? 0) - minX;
+            if (minY > 0) b.y = (b.y ?? 0) - minY;
+          }
+        }
       }
       if (p.children?.length) migrateBlocks(p.children);
     }
