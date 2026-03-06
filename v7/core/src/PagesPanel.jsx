@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
-import { appState, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage } from './store.js';
+import { appState, editingEnabled, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage, togglePageVisibility } from './store.js';
 
 const SECTION_COLORS = [
   '#fce4b8', '#b8d4f0', '#c8e6c0', '#f0c0c0',
@@ -274,6 +274,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         ) : (
           <span class="page-title-text">{page.title}</span>
         )}
+        {/* Eye toggle disabled for now — all pages public */}
       </div>
       {hasKids && open && (
         <div class="subpages">

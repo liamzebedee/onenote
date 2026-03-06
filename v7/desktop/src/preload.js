@@ -56,6 +56,8 @@ contextBridge.exposeInMainWorld('notebook', {
   // Web publish
   webPublish: () => ipcRenderer.invoke('web:publish'),
   webOpenSite: () => ipcRenderer.invoke('web:open-site'),
+  webOpenDir: () => ipcRenderer.invoke('web:open-dir'),
+  getPublishUrl: () => ipcRenderer.invoke('web:get-publish-url'),
 
   // Canvas zoom commands from menu
   onCanvasZoom: (cb) => ipcRenderer.on('canvas:zoom', (_, dir) => cb(dir)),

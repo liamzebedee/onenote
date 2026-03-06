@@ -727,9 +727,9 @@ export function Canvas({ page }) {
   function focusFirstBlock() {
     const pg = getActivePage();
     if (!pg) return;
-    let blk = pg.blocks.find(b => b.type === 'text' && b.x === 28 && b.y === 0);
+    let blk = pg.blocks.find(b => b.type === 'text' && b.x === 0 && b.y === 0);
     if (!blk) {
-      blk = addBlock(28, 0);
+      blk = addBlock(0, 0);
     }
     const id = blk.id;
     // Force Canvas re-render so the block appears in the DOM

@@ -2,7 +2,7 @@ import { useRef, useEffect, useLayoutEffect, useContext, useState } from 'preact
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.jsx';
 import { openContextMenu } from './ContextMenu.jsx';
-import { updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.js';
+import { editingEnabled, updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.js';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.js';
 import { pushUndo } from './undo.js';
 import { htmlToMarkdown } from './clipboard.js';

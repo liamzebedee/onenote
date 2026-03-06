@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Notebound</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -10,6 +13,8 @@
     #titlebar { display: none; }
     #format-toolbar { border-top: none; }
     .fmt-btn--wand { display: none; }
+    /* Hide add page button in browser (unless editing) */
+    .panel-header .add-btn { display: none; }
   </style>
 </head>
 <body>

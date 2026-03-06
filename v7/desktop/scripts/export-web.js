@@ -51,6 +51,32 @@ function exportNotebook(notebookDir, outputDir) {
     for (const sec of nb.sections) cleanBlocks(sec.pages);
   }
 
+  // Migration: normalize default text blocks to x=0
+  function migrateBlocks(pages) {
+    for (const p of pages) {
+      for (const b of (p.blocks || [])) {
+        if (b.type === 'text' && b.y === 0 && (b.x === 28 || b.x === 16)) b.x = 0;
+      }
+      if (p.children?.length) migrateBlocks(p.children);
+    }
+  }
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) migrateBlocks(sec.pages);
+  }
+
+  // Filter out hidden pages
+  function filterHidden(pages) {
+    return pages.filter(p => !p.hidden).map(p => ({
+      ...p,
+      children: p.children?.length ? filterHidden(p.children) : p.children,
+    }));
+  }
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) {
+      sec.pages = filterHidden(sec.pages);
+    }
+  }
+
   // Set default UI navigation
   const nb = state.notebooks[0];
   if (nb) {
@@ -78,7 +104,25 @@ function exportNotebook(notebookDir, outputDir) {
   // 4. Copy browser dist (index.html, bundle.js, style.css)
   if (fs.existsSync(browserDist)) {
     for (const file of fs.readdirSync(browserDist)) {
-      fs.copyFileSync(path.join(browserDist, file), path.join(absOutput, file));
+      if (file === 'index.html') {
+        let html = fs.readFileSync(path.join(browserDist, file), 'utf8');
+        // Cache-bust resource URLs
+        const v = Date.now();
+        html = html.replace('href="style.css"', `href="style.css?v=${v}"`);
+        html = html.replace('src="bundle.js"', `src="bundle.js?v=${v}"`);
+        // Inject GitHub Pages URL if publish config has a remote
+        const publish = meta.publish;
+        if (publish?.remote) {
+          const match = publish.remote.match(/github\.com[:/]([^/]+)\/([^/.]+)/);
+          if (match) {
+            const ghUrl = `https://${match[1]}.github.io/${match[2]}/`;
+            html = html.replace('</head>', `  <script>window.__ghPagesUrl=${JSON.stringify(ghUrl)}</script>\n</head>`);
+          }
+        }
+        fs.writeFileSync(path.join(absOutput, file), html);
+      } else {
+        fs.copyFileSync(path.join(browserDist, file), path.join(absOutput, file));
+      }
     }
   } else {
     throw new Error('browser/dist/ not found. Run "cd browser && bun run build" first.');

@@ -80,6 +80,12 @@ const server = Bun.serve({
       if (await file.exists()) return new Response(file, { headers: { 'content-type': 'text/css' } });
     }
 
+    // Serve icon.svg from desktop
+    if (pathname === '/icon.svg') {
+      const file = Bun.file(join(ROOT, '..', 'desktop', 'icon.svg'));
+      if (await file.exists()) return new Response(file, { headers: { 'content-type': 'image/svg+xml' } });
+    }
+
     return new Response('Not found', { status: 404 });
   },
 });

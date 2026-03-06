@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
-import { appState, connected, initializing, getActivePage, findInTree, setActiveSection, setActivePage, preloadPages, getPreloadCandidates } from './store.js';
+import { appState, connected, initializing, editingEnabled, getActivePage, findInTree, setActiveSection, setActivePage, preloadPages, getPreloadCandidates } from './store.js';
 import { NotebookBar } from './NotebookBar.jsx';
 import { SectionPanel } from './SectionPanel.jsx';
 import { PagesPanel } from './PagesPanel.jsx';
@@ -26,6 +26,17 @@ function flatPages(pages) {
     if (p.children?.length) out.push(...flatPages(p.children));
   }
   return out;
+}
+
+function BrandHeader() {
+  return (
+    <div id="brand-header">
+      <img class="brand-icon" src="icon.svg" alt="" />
+      <span class="brand-name">Notebound</span>
+      <span class="brand-sep">—</span>
+      <span class="brand-tagline">enjoy colour again</span>
+    </div>
+  );
 }
 
 export function App() {
@@ -102,12 +113,14 @@ export function App() {
   const secIdx = nb?.sections.findIndex(s => s.id === ui.sectionId) ?? 0;
   const sectionColor = nb ? SECTION_COLORS[secIdx % SECTION_COLORS.length] : '#e8e8e8';
 
+  const editing = editingEnabled.value;
+
   return (
     <>
-      <FormatToolbar />
+      {editing && <FormatToolbar />}
       <SectionPanel />
       <div id="body-row">
-        <NotebookBar />
+        {editing && <NotebookBar />}
         <div id="section-desk" style={{ background: sectionColor }}>
           <div id="canvas-area">
             <Canvas page={page} />
@@ -116,10 +129,10 @@ export function App() {
         </div>
       </div>
       <ContextMenu />
-      <NotebookSwitcher />
+      {editing && <NotebookSwitcher />}
       <LinkContextMenu />
-      <ClaudeChat />
-      <DisplayPanel />
+      {editing && <ClaudeChat />}
+      {editing && <DisplayPanel />}
       {showJump && <QuickJump onClose={() => setShowJump(false)} />}
     </>
   );

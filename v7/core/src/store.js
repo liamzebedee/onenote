@@ -45,7 +45,34 @@ export const connected = signal(false);
 export const initializing = signal(true); // true until we know whether a notebook will load
 export const showSwitcher = signal(false);
 export const recentNotebooks = signal([]);
+const isDesktop = hasIPC && !window.notebook._browserShim;
+function checkEditParam() {
+  if (typeof window === 'undefined') return false;
+  if (new URLSearchParams(window.location.search).get('edit') === 'on') return true;
+  const hash = window.location.hash;
+  if (hash.includes('?')) {
+    if (new URLSearchParams(hash.slice(hash.indexOf('?') + 1)).get('edit') === 'on') return true;
+  }
+  return false;
+}
+export const editingEnabled = signal(
+  isDesktop ? true : checkEditParam()
+);
 export const preloadCache = signal(new Map()); // pageId → page, for keep-alive pre-rendering
+
+// Sync hash URL in browser mode: #!/SectionTitle/PageTitle/
+function syncHashUrl() {
+  if (isDesktop) return;
+  const { ui, notebooks } = appState.value;
+  const nb = notebooks.find(n => n.id === ui.notebookId);
+  if (!nb) return;
+  const sec = nb.sections.find(s => s.id === ui.sectionId);
+  const page = sec ? findInTree(sec.pages, ui.pageId) : null;
+  const parts = ['#!/'];
+  if (sec) parts.push(encodeURIComponent(sec.title), '/');
+  if (page) parts.push(encodeURIComponent(page.title), '/');
+  history.replaceState(null, '', parts.join(''));
+}
 
 export function preloadPage(page) {
   if (!page || preloadCache.value.has(page.id)) return;
@@ -197,6 +224,7 @@ export function setActiveSection(id) {
     s.ui.pageId = lastPage?.id ?? sec?.pages[0]?.id ?? null;
   });
   persistUiState();
+  syncHashUrl();
 }
 
 export function setActivePage(id) {
@@ -204,6 +232,7 @@ export function setActivePage(id) {
   if (sectionId) lastPagePerSection.set(sectionId, id);
   update(s => { s.ui.pageId = id; });
   persistUiState();
+  syncHashUrl();
 }
 
 // ─── Notebook CRUD ───────────────────────────────────────
@@ -560,6 +589,26 @@ export function updatePageTree(sectionId, pages) {
   sendOp({ type: 'page-tree-update', sectionId, pages: toStructure(pages) });
 }
 
+export function togglePageVisibility(pageId) {
+  update(s => {
+    const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
+    if (!nb) return;
+    for (const sec of nb.sections) {
+      const pg = findInTree(sec.pages, pageId);
+      if (pg) { pg.hidden = !pg.hidden; break; }
+    }
+  });
+  sendOp({ type: 'page-set-hidden', pageId, hidden: (() => {
+    const nb = appState.value.notebooks.find(n => n.id === appState.value.ui.notebookId);
+    if (!nb) return false;
+    for (const sec of nb.sections) {
+      const pg = findInTree(sec.pages, pageId);
+      if (pg) return !!pg.hidden;
+    }
+    return false;
+  })() });
+}
+
 export function jumpToPage(sectionId, pageId) {
   lastPagePerSection.set(sectionId, pageId);
   update(s => { s.ui.sectionId = sectionId; s.ui.pageId = pageId; });
@@ -851,7 +900,17 @@ if (hasIPC) {
       // First load — try to restore saved UI position
       const nb = state.notebooks[0];
       let restored = false;
-      if (!_notebookPath) {
+
+      // If the incoming state already has valid UI (e.g. set by browser shim from URL hash), keep it
+      if (state.ui?.sectionId && nb) {
+        const sec = nb.sections.find(s => s.id === state.ui.sectionId);
+        if (sec) {
+          state.ui.notebookId = nb.id;
+          restored = true;
+        }
+      }
+
+      if (!restored && !_notebookPath) {
         try {
           const cfg = await window.notebook.getConfig();
           if (cfg.notebookPath) {

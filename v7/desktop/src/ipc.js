@@ -309,30 +309,86 @@ function setupIPC(win, deviceId, userDataPath) {
 
 
   // ── Web publish ────────────────────────────────────
-  const { execSync } = require('child_process');
-  const { exportNotebook } = require('../scripts/export-web');
-  const EXPORT_DIR = path.join(__dirname, '..', '..', 'browser', 'tmp', 'test-export');
+  const { exec, fork } = require('child_process');
 
-  function getGhPagesUrl() {
-    try {
-      const remote = execSync('git remote get-url origin', { cwd: EXPORT_DIR, encoding: 'utf8' }).trim();
-      const match = remote.match(/github\.com[:/]([^/]+)\/([^/.]+)/);
-      if (match) return `https://${match[1]}.github.io/${match[2]}/`;
-      return null;
-    } catch { return null; }
+  function execAsync(cmd, opts) {
+    return new Promise((resolve, reject) => {
+      exec(cmd, opts, (err, stdout, stderr) => {
+        if (err) { err.stderr = stderr; reject(err); }
+        else resolve(stdout);
+      });
+    });
+  }
+
+  function getPublishConfig() {
+    if (!manager || !manager.notebookPath) return null;
+    const metaPath = path.join(manager.notebookPath, 'meta.json');
+    const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    return meta.publish || null;
+  }
+
+  function ghPagesUrl(remote) {
+    const match = remote.match(/github\.com[:/]([^/]+)\/([^/.]+)/);
+    if (match) return `https://${match[1]}.github.io/${match[2]}/`;
+    return null;
+  }
+
+  async function ensureGitRepo(exportDir, remote) {
+    const gitDir = path.join(exportDir, '.git');
+    if (!fs.existsSync(gitDir)) {
+      fs.mkdirSync(exportDir, { recursive: true });
+      await execAsync('git init', { cwd: exportDir });
+      await execAsync(`git remote add origin ${remote}`, { cwd: exportDir });
+      // Try to pull existing content
+      try { await execAsync('git fetch origin && git checkout -b main origin/main', { cwd: exportDir }); }
+      catch { /* empty repo, first push */ }
+    }
   }
 
   ipcMain.handle('web:publish', async () => {
     if (!manager || !manager.notebookPath) throw new Error('No notebook open');
-    exportNotebook(manager.notebookPath, EXPORT_DIR);
-    execSync('git add -A && git commit -m "update" --allow-empty && git push', { cwd: EXPORT_DIR, encoding: 'utf8' });
-    return { url: getGhPagesUrl() };
+    const pub = getPublishConfig();
+    if (!pub) throw new Error('No publish config in meta.json. Add a "publish" field with "remote" and "exportDir".');
+    const { remote, exportDir } = pub;
+
+    await ensureGitRepo(exportDir, remote);
+
+    // Pull before export to avoid conflicts
+    try { await execAsync('git pull --rebase origin main', { cwd: exportDir }); }
+    catch { /* first push or no remote branch yet */ }
+
+    // Export in child process to avoid blocking the UI
+    await new Promise((resolve, reject) => {
+      const script = path.join(__dirname, '..', 'scripts', 'export-web.js');
+      const child = fork(script, [manager.notebookPath, exportDir], { silent: true });
+      child.on('exit', code => code === 0 ? resolve() : reject(new Error('Export failed (exit ' + code + ')')));
+      child.on('error', reject);
+    });
+
+    await execAsync('git add -A', { cwd: exportDir });
+    await execAsync('git commit -m "update" --allow-empty', { cwd: exportDir });
+    await execAsync('git push -u origin main', { cwd: exportDir });
+
+    return { url: ghPagesUrl(remote) };
+  });
+
+  ipcMain.handle('web:open-dir', async () => {
+    const pub = getPublishConfig();
+    if (!pub) throw new Error('No publish config');
+    shell.openPath(pub.exportDir);
   });
 
   ipcMain.handle('web:open-site', async () => {
-    const url = getGhPagesUrl();
+    const pub = getPublishConfig();
+    if (!pub) throw new Error('No publish config');
+    const url = ghPagesUrl(pub.remote);
     if (url) shell.openExternal(url);
     return { url };
+  });
+
+  ipcMain.handle('web:get-publish-url', async () => {
+    const pub = getPublishConfig();
+    return pub?.remote ? ghPagesUrl(pub.remote) : null;
   });
 
   // Save UI navigation state per notebook path

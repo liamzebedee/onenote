@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.jsx';
-import { appState, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH, uid } from './store.js';
+import { appState, editingEnabled, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, findInTree, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH, uid } from './store.js';
 import { openContextMenu } from './ContextMenu.jsx';
 import { pushUndo, applyUndo, applyRedo } from './undo.js';
 import { execFmt } from './editor.js';
@@ -10,6 +10,37 @@ import { initPasteHandler } from './clipboard.js';
 export const CanvasCtx = createContext(null);
 
 // ─── FormatToolbar ───────────────────────────────────────
+
+async function buildShareUrl() {
+  const { ui, notebooks } = appState.value;
+  const nb = notebooks.find(n => n.id === ui.notebookId);
+  const sec = nb?.sections.find(s => s.id === ui.sectionId);
+  const page = sec ? findInTree(sec.pages, ui.pageId) : null;
+  if (!sec || !page) return null;
+
+  const hash = `#!/${encodeURIComponent(sec.title)}/${encodeURIComponent(page.title)}/`;
+  const qs = `?p=${page.id.slice(0, 6)}`;
+
+  const base = window.__ghPagesUrl
+    || (window.notebook?.getPublishUrl ? await window.notebook.getPublishUrl() : null)
+    || (window.location ? window.location.origin + window.location.pathname : '');
+  return base + hash + qs;
+}
+
+function ShareButton() {
+  const handleShare = async (e) => {
+    e.preventDefault();
+    const url = await buildShareUrl();
+    if (!url) return;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = e.currentTarget;
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = orig; }, 1500);
+    });
+  };
+  return <button class="fmt-btn" title="Copy link to this page" onMouseDown={handleShare}>🔗 Share</button>;
+}
 
 export function FormatToolbar() {
   const btns = [
@@ -63,7 +94,7 @@ export function FormatToolbar() {
               y = Math.max(...pg.blocks.map(b => b.y + 100)) + 40;
             }
             const itemId = uid();
-            addBlock(28, y, DEFAULT_BLOCK_WIDTH, 'checklist', { items: [{ id: itemId, text: '', checked: false }] });
+            addBlock(0, y, DEFAULT_BLOCK_WIDTH, 'checklist', { items: [{ id: itemId, text: '', checked: false }] });
             requestAnimationFrame(() => {
               const el = document.querySelector(`[data-item-id="${itemId}"]`);
               el?.focus();
@@ -84,14 +115,21 @@ export function FormatToolbar() {
             <button class="fmt-btn fmt-btn--publish" title="Publish to web" onMouseDown={async e => {
               e.preventDefault();
               const btn = e.currentTarget;
-              btn.textContent = '⏳';
-              try { await window.notebook.webPublish(); btn.textContent = '🌐 Publish'; }
-              catch (err) { btn.textContent = '🌐 Publish'; console.error('Publish failed:', err); }
+              btn.classList.add('publishing');
+              try { await window.notebook.webPublish(); }
+              catch (err) { console.error('Publish failed:', err); }
+              btn.classList.remove('publishing');
             }}>🌐 Publish</button>
-            <button class="fmt-btn" title="Open published site" onMouseDown={e => {
+            <button class="fmt-btn" title="Open published site" onMouseDown={async e => {
               e.preventDefault();
-              window.notebook.webOpenSite();
+              const url = await buildShareUrl();
+              if (url) window.notebook.openExternal(url);
             }}>↗ Open</button>
+            <button class="fmt-btn" title="Open export folder on disk" onMouseDown={e => {
+              e.preventDefault();
+              window.notebook.webOpenDir();
+            }}>📂 Folder</button>
+            <ShareButton />
           </>
         )}
       </div>
@@ -135,10 +173,10 @@ function hasNonEmptyBlocks(page) {
 
 function PageTitle({ page, onEnter }) {
   const ref = useRef(null);
-  const editing = useRef(false);
+  const titleEditing = useRef(false);
 
   useLayoutEffect(() => {
-    if (ref.current && !editing.current) ref.current.textContent = page?.title ?? '';
+    if (ref.current && !titleEditing.current) ref.current.textContent = page?.title ?? '';
   }, [page?.id, page?.title]);
 
   // On page switch: restore last caret position, or focus title if empty page
@@ -169,20 +207,21 @@ function PageTitle({ page, onEnter }) {
 
   if (!page) return <div id="page-title-bar" />;
 
+  const editing = editingEnabled.value;
   const dateStr = page.createdAt
     ? new Date(page.createdAt).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     : null;
 
   return (
-    <div id="page-title-bar" onClick={() => ref.current?.focus()}>
+    <div id="page-title-bar" onClick={() => editing && ref.current?.focus()}>
       <div
         ref={ref}
         id="page-title"
         contentEditable
         suppressContentEditableWarning
-        onFocus={() => { editing.current = true; }}
+        onFocus={() => { titleEditing.current = true; }}
         onBlur={e => {
-          editing.current = false;
+          titleEditing.current = false;
           const title = e.target.textContent.trim() || 'Untitled Page';
           updatePageTitleAndRefresh(page.id, title);
         }}
@@ -565,15 +604,19 @@ export function Canvas({ page }) {
       const dx = e2.clientX - startX, dy = e2.clientY - startY;
       if (!moved && Math.sqrt(dx*dx + dy*dy) > 4) {
         moved = true;
-        marqueeActive = true;
-        startMarquee(startX, startY);
+        if (editingEnabled.value) {
+          marqueeActive = true;
+          startMarquee(startX, startY);
+        } else {
+          startPan(startX, startY);
+        }
       }
     }
 
     function onUp(e2) {
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
-      if (!marqueeActive) {
+      if (!marqueeActive && editingEnabled.value) {
         setSelected(new Set());
         const pos = toCanvas(startX, startY);
         addBlock(pos.x, pos.y);
@@ -743,9 +786,9 @@ export function Canvas({ page }) {
   function focusFirstBlock() {
     const pg = getActivePage();
     if (!pg) return;
-    let blk = pg.blocks.find(b => b.type === 'text' && b.x === 28 && b.y === 0);
+    let blk = pg.blocks.find(b => b.type === 'text' && b.x === 0 && b.y === 0);
     if (!blk) {
-      blk = addBlock(28, 0);
+      blk = addBlock(0, 0);
     }
     const id = blk.id;
     // Force Canvas re-render so the block appears in the DOM

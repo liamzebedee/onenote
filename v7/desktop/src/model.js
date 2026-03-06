@@ -317,6 +317,12 @@ function applyOp(state, op) {
       return state;
     }
 
+    case 'page-set-hidden': {
+      const result = findPageInState(state, op.pageId);
+      if (result) result.page.hidden = !!op.hidden;
+      return state;
+    }
+
     case 'page-view': {
       const result = findPageInState(state, op.pageId);
       if (result) {

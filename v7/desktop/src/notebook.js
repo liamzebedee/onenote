@@ -100,6 +100,9 @@ class NotebookManager {
     this.state = result.state;
     this.appliedBatches = result.appliedBatches;
 
+    // Migration: normalize default text blocks to x=0
+    this._migrateBlockPositions();
+
     // Initialize WAL (CRDTs are lazy — created on first edit)
     this.wal = new WAL();
     this.wal.startAutoSeal(this.deviceId, walDir);
@@ -109,6 +112,25 @@ class NotebookManager {
     this.sync.start();
 
     return this.state;
+  }
+
+  // Migration: normalize default text blocks to x=0
+  _migrateBlockPositions() {
+    function migratePages(pages) {
+      for (const pg of pages) {
+        for (const b of pg.blocks || []) {
+          if (b.type === 'text' && b.y === 0 && (b.x === 28 || b.x === 16)) {
+            b.x = 0;
+          }
+        }
+        if (pg.children?.length) migratePages(pg.children);
+      }
+    }
+    for (const nb of this.state.notebooks || []) {
+      for (const sec of nb.sections || []) {
+        migratePages(sec.pages || []);
+      }
+    }
   }
 
   // Scan WAL ops to find the notebookId used by existing data (migration only)

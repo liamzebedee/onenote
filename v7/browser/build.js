@@ -28,4 +28,8 @@ copyFileSync(indexSrc, join(outDir, 'index.html'));
 const cssSrc = join(dirname(import.meta.path), '..', 'core', 'style.css');
 copyFileSync(cssSrc, join(outDir, 'style.css'));
 
+// Copy icon.svg from desktop
+const iconSrc = join(dirname(import.meta.path), '..', 'desktop', 'icon.svg');
+copyFileSync(iconSrc, join(outDir, 'icon.svg'));
+
 console.log('Browser build complete → dist/');

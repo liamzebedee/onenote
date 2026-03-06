@@ -458,7 +458,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 /* ── Page title ───────────────────────────────────── */
 
 #page-title-bar {
-  padding: 16px 24px 10px;
+  padding: 16px 0 10px;
   flex-shrink: 0;
   cursor: text;
 }
@@ -471,7 +471,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   min-width: 300px;
   border: 1.5px dotted #bbb;
   border-radius: 6px;
-  padding: 4px 12px;
+  padding: 4px 8px;
   line-height: 1.2;
   white-space: nowrap;
   cursor: text;
@@ -1114,6 +1114,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 .fmt-btn--wand { font-size: 14px; cursor: grab; }
 .fmt-btn--wand:active { cursor: grabbing; }
+.fmt-btn.publishing { opacity: 0.5; pointer-events: none; }
 
 .claude-chat {
   position: fixed;
@@ -1438,3 +1439,53 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   color: var(--muted);
   font-size: 13px;
 }
+
+/* ── Brand Header (browser view mode) ─────────── */
+
+#brand-header {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, #5c3520 0%, #3e2210 100%);
+  flex-shrink: 0;
+  border-bottom: 1px solid #2e1808;
+  box-shadow: inset 0 1px 0 rgba(255,220,170,.12);
+}
+.brand-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+}
+.brand-name {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #e8c868;
+  letter-spacing: 0.04em;
+}
+.brand-sep {
+  font-size: 13px;
+  color: rgba(212,164,74,.4);
+}
+.brand-tagline {
+  font-size: 12px;
+  color: rgba(255,220,170,.55);
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* ── Page visibility eye toggle ──────────────── */
+
+.page-eye {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: opacity .15s;
+}
+.page-item:hover .page-eye { opacity: 0.7; }
+.page-eye:hover { opacity: 1 !important; }
+.page-eye--hidden { opacity: 0.7; }
