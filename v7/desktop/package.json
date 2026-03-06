@@ -3,20 +3,23 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "build:frontend": "bun build ../core/src/main.jsx --outfile app/bundle.js --minify",
-    "watch:frontend": "bun build --watch ../core/src/main.jsx --outfile app/bundle.js --sourcemap=inline",
-    "start": "bun run build:frontend && electron .",
-    "dev": "bun run build:frontend && electron .",
-    "dist": "bun run build:frontend && electron-builder"
+    "build:frontend": "bun build ../core/src/main.tsx --outfile app/bundle.js --minify",
+    "build:main": "bun build main.ts --outfile main.js --target=node --format=cjs --external electron --packages=external && bun build src/preload.ts --outfile src/preload.js --target=node --format=cjs --external electron --packages=external",
+    "watch:frontend": "bun build --watch ../core/src/main.tsx --outfile app/bundle.js --sourcemap=inline",
+    "start": "bun run build:frontend && bun run build:main && electron .",
+    "dev": "bun run build:frontend && bun run build:main && electron .",
+    "dist": "bun run build:frontend && bun run build:main && electron-builder"
   },
   "dependencies": {
     "@preact/signals": "^1.3.0",
     "preact": "^10.25.0"
   },
   "devDependencies": {
+    "@types/node": "^25.3.5",
     "electron": "^33.0.0",
     "electron-builder": "^25.0.0",
     "sharp": "^0.34.5",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
   "build": {
@@ -25,7 +28,7 @@
     "icon": "icon.png",
     "files": [
       "main.js",
-      "src/**/*",
+      "src/preload.js",
       "app/**/*",
       "!app/src/**/*",
       "icon.png"

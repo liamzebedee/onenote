@@ -1,5 +1,7 @@
 node_modules/
 desktop/app/bundle.js
+desktop/main.js
+desktop/src/preload.js
 desktop/out/
 browser/dist/
 browser/tmp/

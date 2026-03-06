@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun run dev.js",
-    "build": "bun run build.js"
+    "dev": "bun run dev.ts",
+    "build": "bun run build.ts"
   }
 }

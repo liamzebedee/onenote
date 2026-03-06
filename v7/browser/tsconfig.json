@@ -2,8 +2,10 @@
   "compilerOptions": {
     "strict": true,
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmit": true,
@@ -11,6 +13,5 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["src/**/*.ts", "main.ts"],
-  "exclude": ["app/**/*"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "*.ts"]
 }

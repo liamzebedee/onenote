@@ -15,6 +15,7 @@ if [[ " $* " == *" --clear-cache "* ]] || [[ " $* " == *" --cc "* ]]; then
 fi
 
 bun run build:frontend
+bun run build:main
 
 # On Linux, install a .desktop file so the dock/taskbar picks up our icon
 if [ "$(uname)" = "Linux" ]; then
