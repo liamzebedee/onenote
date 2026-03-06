@@ -1,0 +1,7 @@
+node_modules/
+desktop/app/bundle.js
+desktop/out/
+browser/dist/
+browser/tmp/
+*.lock
+*.lockb

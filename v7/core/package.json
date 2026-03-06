@@ -1,0 +1,9 @@
+{
+  "name": "notebound-core",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@preact/signals": "^1.3.0",
+    "preact": "^10.25.0"
+  }
+}
