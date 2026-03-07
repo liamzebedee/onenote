@@ -5,7 +5,7 @@ import { appState, editingEnabled, addBlock, deleteBlock, updateBlockPos, update
 import { openContextMenu } from './ContextMenu.tsx';
 import { pushUndo, applyUndo, applyRedo } from './undo.ts';
 import { execFmt } from './editor.ts';
-import { initPasteHandler } from './clipboard.ts';
+import { initPasteHandler, copyBlocks, getCopiedBlocks } from './clipboard.ts';
 import type { Page, Block as BlockType, CanvasContext, MenuItem } from './types.ts';
 import type { JSX } from 'preact';
 
@@ -250,8 +250,18 @@ function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
             items.push({ label: 'Copy', disabled: true, action: () => {} });
           }
           items.push({ label: 'Paste', action: () => {
+            const el = ref.current;
+            const s = window.getSelection();
+            const savedRange = s?.rangeCount ? s.getRangeAt(0).cloneRange() : null;
             navigator.clipboard.readText().then(text => {
-              if (text) document.execCommand('insertText', false, text);
+              if (!text || !el) return;
+              el.focus();
+              if (savedRange) {
+                const sel = window.getSelection()!;
+                sel.removeAllRanges();
+                sel.addRange(savedRange);
+              }
+              document.execCommand('insertText', false, text);
             });
           }});
           if (selText) {
@@ -470,13 +480,19 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     }
 
     function onUp(): void {
+      let hasMoved = false;
       const moves: { id: string; x: number; y: number }[] = [];
       for (const [id, orig] of origPos) {
-        moves.push({ id, x: orig.x, y: orig.y });
         const el = innerRef.current?.querySelector(`[data-block-id="${id}"]`) as HTMLElement | null;
-        if (el) updateBlockPos(id, parseInt(el.style.left), parseInt(el.style.top));
+        if (!el) continue;
+        const nx = parseInt(el.style.left), ny = parseInt(el.style.top);
+        if (nx !== orig.x || ny !== orig.y) {
+          hasMoved = true;
+          moves.push({ id, x: orig.x, y: orig.y });
+          updateBlockPos(id, nx, ny);
+        }
       }
-      if (pg) pushUndo(pg.id, { type: 'move', moves });
+      if (hasMoved && pg) pushUndo(pg.id, { type: 'move', moves });
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
     }
@@ -743,6 +759,93 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
           if (!blk) continue;
           updateBlockZ(id, (blk.z ?? 0) + (e.key === ']' ? 1 : -1));
         }
+      }
+      // Ctrl+A — select all blocks
+      if (mod && e.key === 'a' && !target.isContentEditable && target.tagName !== 'INPUT') {
+        e.preventDefault();
+        const pg = getActivePage();
+        if (pg) setSelected(new Set(pg.blocks.map(b => b.id)));
+      }
+      // Escape — deselect
+      if (e.key === 'Escape' && !target.isContentEditable) {
+        if (selectedRef.current.size) setSelected(new Set());
+      }
+      // Ctrl+C — copy selected blocks
+      if (mod && e.key === 'c' && !target.isContentEditable && selectedRef.current.size) {
+        e.preventDefault();
+        const pg = getActivePage();
+        if (!pg) return;
+        const blocks = [...selectedRef.current].map(id => pg.blocks.find(b => b.id === id)).filter((b): b is BlockType => !!b);
+        copyBlocks(blocks);
+        // Single image block: also copy image to system clipboard
+        if (blocks.length === 1 && blocks[0].type === 'image') {
+          const imgEl = innerRef.current?.querySelector(`[data-block-id="${blocks[0].id}"] img`) as HTMLImageElement | null;
+          if (imgEl) {
+            try {
+              const c = document.createElement('canvas');
+              c.width = imgEl.naturalWidth;
+              c.height = imgEl.naturalHeight;
+              c.getContext('2d')!.drawImage(imgEl, 0, 0);
+              c.toBlob(blob => {
+                if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]).catch(() => {});
+              });
+            } catch {}
+          }
+        }
+      }
+      // Ctrl+X — cut selected blocks
+      if (mod && e.key === 'x' && !target.isContentEditable && selectedRef.current.size) {
+        e.preventDefault();
+        const pg = getActivePage();
+        if (!pg) return;
+        const toDelete = [...selectedRef.current];
+        const blocks = toDelete.map(id => pg.blocks.find(b => b.id === id)).filter((b): b is BlockType => !!b).map(b => ({ ...b }));
+        copyBlocks(blocks);
+        pushUndo(pg.id, { type: 'delete', blocks });
+        for (const id of toDelete) deleteBlock(id);
+        setSelected(new Set());
+      }
+      // Ctrl+V — paste copied blocks (when not in a text editor)
+      if (mod && e.key === 'v' && !target.isContentEditable) {
+        const blocks = getCopiedBlocks();
+        if (blocks?.length) {
+          e.preventDefault();
+          const pg = getActivePage();
+          if (!pg) return;
+          const newIds = new Set<string>();
+          for (const b of blocks) {
+            const nb = addBlock(b.x + 30, b.y + 30, b.w, b.type, {
+              html: b.html, src: b.src,
+              crop: b.crop ? { ...b.crop } : undefined,
+              caption: b.caption, border: b.border,
+              items: b.items?.map(i => ({ ...i, id: uid() })),
+              z: b.z,
+            });
+            newIds.add(nb.id);
+          }
+          pushUndo(pg.id, { type: 'deleteForward', ids: [...newIds] });
+          setSelected(newIds);
+        }
+      }
+      // Ctrl+D — duplicate selected blocks
+      if (mod && e.key === 'd' && !target.isContentEditable && selectedRef.current.size) {
+        e.preventDefault();
+        const pg = getActivePage();
+        if (!pg) return;
+        const blocks = [...selectedRef.current].map(id => pg.blocks.find(b => b.id === id)).filter((b): b is BlockType => !!b);
+        const newIds = new Set<string>();
+        for (const b of blocks) {
+          const nb = addBlock(b.x + 30, b.y + 30, b.w, b.type, {
+            html: b.html, src: b.src,
+            crop: b.crop ? { ...b.crop } : undefined,
+            caption: b.caption, border: b.border,
+            items: b.items?.map(i => ({ ...i, id: uid() })),
+            z: b.z,
+          });
+          newIds.add(nb.id);
+        }
+        pushUndo(pg.id, { type: 'deleteForward', ids: [...newIds] });
+        setSelected(newIds);
       }
     }
     function onKeyUp(e: KeyboardEvent): void {

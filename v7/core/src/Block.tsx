@@ -367,8 +367,18 @@ export function Block({ block, page }: BlockProps): JSX.Element {
       items.push({ label: 'Copy as Markdown', disabled: true, action: () => {} });
     }
     items.push({ label: 'Paste', action: () => {
+      const el = contentRef.current;
+      const sel = window.getSelection();
+      const savedRange = sel?.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
       navigator.clipboard.readText().then(text => {
-        if (text) document.execCommand('insertText', false, text);
+        if (!text || !el) return;
+        el.focus();
+        if (savedRange) {
+          const s = window.getSelection()!;
+          s.removeAllRanges();
+          s.addRange(savedRange);
+        }
+        document.execCommand('insertText', false, text);
       });
     }});
     if (selText) {
@@ -388,21 +398,18 @@ export function Block({ block, page }: BlockProps): JSX.Element {
     e.preventDefault();
     e.stopPropagation();
     const items: MenuItem[] = [
-      { label: 'Copy', action: () => {
+      { label: 'Copy Image', action: () => {
         const img = (e.target as HTMLElement).closest('.img-frame')?.querySelector('img');
         if (!img) return;
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        canvas.getContext('2d')!.drawImage(img, 0, 0);
-        canvas.toBlob(blob => {
-          if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-        });
-      }},
-      { label: 'Paste', action: () => {
-        navigator.clipboard.readText().then(text => {
-          if (text) document.execCommand('insertText', false, text);
-        });
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          canvas.getContext('2d')!.drawImage(img, 0, 0);
+          canvas.toBlob(blob => {
+            if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]).catch(() => {});
+          });
+        } catch {}
       }},
     ];
     openContextMenu(e.clientX, e.clientY, items);

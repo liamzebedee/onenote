@@ -346,7 +346,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   color: var(--text);
 }
 .panel-item--active:hover { background: #fff; }
-.page-item--drop-before { border-top: 2px solid var(--active-color); }
+.page-item--drop-before { border-top: 2px solid var(--active-color); margin-top: -2px; }
+.page-item--drop-after  { border-bottom: 2px solid var(--active-color); margin-bottom: -2px; }
 .page-item--drop-child  { background: rgba(255,255,255,.6); outline: 1px dashed var(--active-color); }
 
 .add-btn {
@@ -364,8 +365,22 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 /* Page tree */
 .page-item-wrap { display: flex; flex-direction: column; }
-.page-item { padding-right: 10px; }
-.page-expand { width: 16px; flex-shrink: 0; font-size: 11px; color: var(--muted); cursor: pointer; }
+.page-item { padding-right: 10px; position: relative; overflow: visible; }
+
+/* Tree guide lines */
+/* Slide open/close using grid-template-rows trick */
+.subpages-wrap {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 150ms ease-out;
+}
+.subpages-wrap--closed {
+  grid-template-rows: 0fr;
+}
+.subpages { position: relative; overflow: hidden; min-height: 0; }
+.tree-row { position: relative; }
+.tree-line { display: none; }
+.page-expand { width: 16px; flex-shrink: 0; font-size: 11px; color: var(--muted); cursor: pointer; text-align: center; }
 .page-title-text { overflow: hidden; text-overflow: ellipsis; }
 .page-title-edit {
   flex: 1;
@@ -374,7 +389,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   font-size: inherit;
   line-height: inherit;
   padding: 0;
-  margin: 0;
+  margin: 0 0 -1px 0;
   border: none;
   border-bottom: 1px solid var(--active-color);
   border-radius: 0;
@@ -555,7 +570,6 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   pointer-events: none;
   transition: border-color .1s;
 }
-.block:hover { z-index: 9999 !important; }
 .block:hover::before { border-color: #d8dce0; }
 .block--selected::before { border-color: var(--active-color) !important; background: rgba(26,115,232,.03); }
 

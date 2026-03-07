@@ -123,7 +123,7 @@ export function App(): JSX.Element | null {
       {editing && <FormatToolbar />}
       <SectionPanel />
       <div id="body-row">
-        {editing && <NotebookBar />}
+        {/* {editing && <NotebookBar />} */}
         <div id="section-desk" style={{ background: sectionColor }}>
           <div id="canvas-area">
             <Canvas page={page} />

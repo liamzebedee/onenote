@@ -84,7 +84,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
   const [open, setOpen] = useState<boolean>(true);
   const hasKids = (page.children?.length ?? 0) > 0;
   const isOver = dragState.over === page.id;
-  const isOverAsChild = isOver && dragState.mode === 'child';
+  const dropMode = isOver ? dragState.mode : null;
   const isEditing = editingId === page.id;
   const editRef = useRef<HTMLInputElement>(null);
   const [editVal, setEditVal] = useState<string>(page.title);
@@ -112,13 +112,18 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
     e.dataTransfer!.effectAllowed = 'move';
   }
 
+  function onDragEnd(): void {
+    drag.pageId = null;
+    onDragChange(null, null);
+  }
+
   function onDragOver(e: DragEvent): void {
     e.preventDefault();
     e.stopPropagation();
     if (drag.pageId === page.id) return;
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const rel = (e.clientY - rect.top) / rect.height;
-    const mode = (rel > 0.3 && rel < 0.7) ? 'child' : 'before';
+    const mode = rel < 0.3 ? 'before' : rel > 0.7 ? 'after' : 'child';
     if (dragState.over !== page.id || dragState.mode !== mode) {
       onDragChange(page.id, mode);
     }
@@ -132,63 +137,54 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
     e.preventDefault();
     e.stopPropagation();
     const fromId = drag.pageId;
+    const mode = dragState.mode;
     drag.pageId = null;
     onDragChange(null, null);
     if (!fromId || fromId === page.id) return;
 
-    if (dragState.mode === 'child') {
-      import('./store.ts').then(m => {
-        const s = m.appState.value;
-        const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
-        const sec = nb?.sections.find(sec => sec.id === s.ui.sectionId);
-        if (!sec) return;
-        // Prevent dropping a page into its own descendant
-        if (isDescendantOf(sec.pages, fromId, page.id)) return;
-        let extracted: Page | null = null;
-        function extract(pages: Page[]): boolean {
-          for (let i = 0; i < pages.length; i++) {
-            if (pages[i].id === fromId) { [extracted] = pages.splice(i, 1); return true; }
-            if (extract(pages[i].children ?? [])) return true;
-          }
-          return false;
-        }
-        extract(sec.pages);
-        if (!extracted) return;
-        const target = m.findInTree(sec.pages, page.id);
-        if (target) { target.children = target.children ?? []; target.children.push(extracted); }
-        m.appState.value = { ...m.appState.value };
-        m.updatePageTree(sec.id, sec.pages);
-      });
-    } else {
-      import('./store.ts').then(m => {
-        const s = m.appState.value;
-        const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
-        const sec = nb?.sections.find(sec => sec.id === s.ui.sectionId);
-        if (!sec) return;
-        // Prevent dropping a page before its own descendant
-        if (isDescendantOf(sec.pages, fromId, page.id)) return;
-        let extracted: Page | null = null;
-        function extract(pages: Page[]): boolean {
-          for (let i = 0; i < pages.length; i++) {
-            if (pages[i].id === fromId) { [extracted] = pages.splice(i, 1); return true; }
-            if (extract(pages[i].children ?? [])) return true;
-          }
-          return false;
-        }
-        extract(sec.pages);
-        if (!extracted) return;
-        function insertBefore(pages: Page[]): boolean {
-          for (let i = 0; i < pages.length; i++) {
-            if (pages[i].id === page.id) { pages.splice(i, 0, extracted!); return true; }
-            if (insertBefore(pages[i].children ?? [])) return true;
-          }
-          return false;
-        }
-        insertBefore(sec.pages);
-        m.appState.value = { ...m.appState.value };
-        m.updatePageTree(sec.id, sec.pages);
-      });
+    const s = appState.value;
+    const nb = s.notebooks.find(n => n.id === s.ui.notebookId);
+    const sec = nb?.sections.find(sec => sec.id === s.ui.sectionId);
+    if (!sec) return;
+    if (isDescendantOf(sec.pages, fromId, page.id)) return;
+
+    let extracted: Page | null = null;
+    function extract(pages: Page[]): boolean {
+      for (let i = 0; i < pages.length; i++) {
+        if (pages[i].id === fromId) { [extracted] = pages.splice(i, 1); return true; }
+        if (extract(pages[i].children ?? [])) return true;
+      }
+      return false;
     }
+    extract(sec.pages);
+    if (!extracted) return;
+
+    if (mode === 'child') {
+      const target = findInTree(sec.pages, page.id);
+      if (target) { target.children = target.children ?? []; target.children.push(extracted); }
+    } else if (mode === 'before') {
+      function insertBefore(pages: Page[]): boolean {
+        for (let i = 0; i < pages.length; i++) {
+          if (pages[i].id === page.id) { pages.splice(i, 0, extracted!); return true; }
+          if (insertBefore(pages[i].children ?? [])) return true;
+        }
+        return false;
+      }
+      insertBefore(sec.pages);
+    } else {
+      // 'after' — insert after target at same level
+      function insertAfter(pages: Page[]): boolean {
+        for (let i = 0; i < pages.length; i++) {
+          if (pages[i].id === page.id) { pages.splice(i + 1, 0, extracted!); return true; }
+          if (insertAfter(pages[i].children ?? [])) return true;
+        }
+        return false;
+      }
+      insertAfter(sec.pages);
+    }
+
+    appState.value = { ...appState.value };
+    updatePageTree(sec.id, sec.pages);
   }
 
   function openPageContextMenu(e: MouseEvent): void {
@@ -241,6 +237,8 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
     openContextMenu(e.clientX, e.clientY, items);
   }
 
+  const lineLeft = 10 + depth * 16 + 8; // center of the expand arrow
+
   return (
     <div class="page-item-wrap">
       <div
@@ -248,13 +246,15 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
           'panel-item page-item',
           page.id === activeId && !selected?.size && 'panel-item--active',
           isSelected && 'panel-item--selected',
-          isOver && !isOverAsChild && 'page-item--drop-before',
-          isOverAsChild && 'page-item--drop-child',
+          dropMode === 'before' && 'page-item--drop-before',
+          dropMode === 'child' && 'page-item--drop-child',
+          dropMode === 'after' && 'page-item--drop-after',
         ].filter(Boolean).join(' ')}
-        style={{ paddingLeft: (depth * 12) + 'px' }}
+        style={{ paddingLeft: (10 + depth * 16) + 'px' }}
         draggable
         onMouseEnter={() => preloadPage(page)}
         onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
@@ -267,12 +267,14 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
             setActivePage(page.id);
           }
         }}
-        onDblClick={(e: MouseEvent) => {
-          e.stopPropagation();
-          onStartEditing(page.id);
-        }}
         onContextMenu={openPageContextMenu}
       >
+        {hasKids && open && (
+          <div class="tree-line" style={{
+            position: 'absolute', left: lineLeft + 'px', top: '50%', bottom: '-1px',
+            borderLeft: '1px solid rgba(0,0,0,0.22)', pointerEvents: 'none',
+          }} />
+        )}
         <span
           class="page-expand"
           style={{ visibility: hasKids ? 'visible' : 'hidden' }}
@@ -294,13 +296,30 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
         ) : (
           <span class="page-title-text">{page.title}</span>
         )}
-        {/* Eye toggle disabled for now — all pages public */}
       </div>
-      {hasKids && open && (
-        <div class="subpages">
-          {page.children.map(c => (
-            <PageItem key={c.id} page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={onStartEditing} selected={selected} onSelect={onSelect} onBulkDelete={onBulkDelete} />
-          ))}
+      {hasKids && (
+        <div class={'subpages-wrap' + (open ? '' : ' subpages-wrap--closed')}>
+          <div class="subpages">
+            {page.children.map((c, i) => {
+              const isLast = i === page.children.length - 1;
+              const childLineLeft = 10 + (depth + 1) * 16 + 8;
+              return (
+                <div key={c.id} class="tree-row">
+                  <div class="tree-line" style={{
+                    position: 'absolute', left: lineLeft + 'px', top: 0,
+                    bottom: isLast ? 'calc(100% - 12px)' : '0',
+                    borderLeft: '1px solid rgba(0,0,0,0.22)', pointerEvents: 'none',
+                  }} />
+                  <div class="tree-line" style={{
+                    position: 'absolute', left: lineLeft + 'px', top: '12px',
+                    width: (childLineLeft - lineLeft) + 'px',
+                    borderTop: '1px solid rgba(0,0,0,0.22)', pointerEvents: 'none',
+                  }} />
+                  <PageItem page={c} activeId={activeId} depth={depth + 1} dragState={dragState} onDragChange={onDragChange} editingId={editingId} onStartEditing={onStartEditing} selected={selected} onSelect={onSelect} onBulkDelete={onBulkDelete} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

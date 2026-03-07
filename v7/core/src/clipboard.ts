@@ -1,4 +1,5 @@
 import { addBlock, addImageFromFile, addImageFromUrl } from './store.ts';
+import type { Block } from './types.ts';
 
 interface CanvasPoint {
   x: number;
@@ -147,8 +148,10 @@ export function initPasteHandler({ getContainer, getView }: { getContainer: () =
         .map(img => img.src)
         .filter(src => src && !src.startsWith('data:'));
       if (srcs.length) {
+        e.preventDefault();
         const { x, y } = canvasCenter(getContainer(), getView());
         srcs.forEach((src, i) => addImageFromUrl(src, x + i * 20, y + i * 20));
+        return;
       }
     }
 
@@ -163,4 +166,29 @@ export function initPasteHandler({ getContainer, getView }: { getContainer: () =
 
   document.addEventListener('paste', onPaste);
   return () => document.removeEventListener('paste', onPaste);
+}
+
+// ── Block-level clipboard ────────────────────────────────
+
+let _copiedBlocks: Block[] | null = null;
+
+// Clear block clipboard when user copies/cuts text within a block
+if (typeof document !== 'undefined') {
+  document.addEventListener('copy', () => { _copiedBlocks = null; });
+  document.addEventListener('cut', () => { _copiedBlocks = null; });
+}
+
+export function copyBlocks(blocks: Block[]): void {
+  _copiedBlocks = structuredClone(blocks);
+  // Put text representation on system clipboard for cross-app paste
+  const text = blocks
+    .filter(b => b.type === 'text' || b.type === 'code')
+    .map(b => { const d = document.createElement('div'); d.innerHTML = b.html; return d.textContent || ''; })
+    .filter(Boolean)
+    .join('\n\n');
+  if (text) navigator.clipboard.writeText(text).catch(() => {});
+}
+
+export function getCopiedBlocks(): Block[] | null {
+  return _copiedBlocks;
 }
