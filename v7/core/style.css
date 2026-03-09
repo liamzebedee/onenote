@@ -147,10 +147,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   font-size: 14px;
   font-weight: 600;
   color: #333;
-  text-shadow: 0 1px 0 #fff;
   background: var(--tab-solid) var(--tab-grad);
   border-radius: 4px 4px 0 0;
-  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #d8d8d8;
 }
 
 /* ── Section tab colours (set as custom props so shell stays transparent for drop-shadow) */
