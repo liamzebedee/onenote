@@ -423,7 +423,7 @@ export function deleteBlock(blockId: string): void {
     const pg = getActivePage(s);
     if (pg) pg.blocks = pg.blocks.filter(b => b.id !== blockId);
   });
-  sendOp({ type: 'block-delete', pageId, blockId });
+  sendOp({ type: 'block-delete', pageId, blockId }); // pageId kept for backwards compat but handler uses blockId only
 }
 
 // Silent updates — block content/position changes don't re-render the sidebar

@@ -524,7 +524,7 @@ function _findBlockFast(state, pageId, blockId) {
   const idx = state._index;
   if (idx) {
     const entry = idx.blocks.get(blockId);
-    if (entry)
+    if (entry && entry.page.id === pageId)
       return entry;
     return null;
   }
@@ -535,6 +535,33 @@ function _findBlockFast(state, pageId, blockId) {
   if (!blk)
     return null;
   return { block: blk, page: result.page };
+}
+function _findBlockById(state, blockId) {
+  const idx = state._index;
+  if (idx) {
+    return idx.blocks.get(blockId) ?? null;
+  }
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) {
+      const found = _searchPagesForBlock(sec.pages, blockId);
+      if (found)
+        return found;
+    }
+  }
+  return null;
+}
+function _searchPagesForBlock(pages, blockId) {
+  for (const p of pages) {
+    const blk = (p.blocks || []).find((b) => b.id === blockId);
+    if (blk)
+      return { block: blk, page: p };
+    if (p.children?.length) {
+      const found = _searchPagesForBlock(p.children, blockId);
+      if (found)
+        return found;
+    }
+  }
+  return null;
 }
 function emptyState() {
   return { notebooks: [], ui: { notebookId: null, sectionId: null, pageId: null } };
@@ -884,18 +911,12 @@ function applyOp(state, op) {
       return state;
     }
     case "block-delete": {
-      if (idx) {
-        const entry = idx.blocks.get(op.blockId);
-        if (entry) {
-          entry.page.blocks = entry.page.blocks.filter((b) => b.id !== op.blockId);
-          idx.blocks.delete(op.blockId);
-        }
+      const entry = _findBlockById(state, op.blockId);
+      if (!entry)
         return state;
-      }
-      const result = findPageInState(state, op.pageId);
-      if (!result)
-        return state;
-      result.page.blocks = result.page.blocks.filter((b) => b.id !== op.blockId);
+      entry.page.blocks = entry.page.blocks.filter((b) => b.id !== op.blockId);
+      if (idx)
+        idx.blocks.delete(op.blockId);
       return state;
     }
     case "block-move": {

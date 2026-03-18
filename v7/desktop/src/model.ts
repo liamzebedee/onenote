@@ -72,7 +72,9 @@ function _findBlockFast(state: AppState, pageId: string, blockId: string): { blo
   const idx = state._index;
   if (idx) {
     const entry = idx.blocks.get(blockId);
-    if (entry) return entry;
+    // Verify the block is on the expected page — block IDs are globally unique
+    // but ops may carry a stale pageId from cross-device replay
+    if (entry && entry.page.id === pageId) return entry;
     return null;
   }
   const result = findPageInState(state, pageId);
@@ -80,6 +82,33 @@ function _findBlockFast(state: AppState, pageId: string, blockId: string): { blo
   const blk = result.page.blocks.find(b => b.id === blockId);
   if (!blk) return null;
   return { block: blk, page: result.page };
+}
+
+// Find a block by ID alone — searches index or all pages
+function _findBlockById(state: AppState, blockId: string): { block: Block; page: Page } | null {
+  const idx = state._index;
+  if (idx) {
+    return idx.blocks.get(blockId) ?? null;
+  }
+  for (const nb of state.notebooks) {
+    for (const sec of nb.sections) {
+      const found = _searchPagesForBlock(sec.pages, blockId);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function _searchPagesForBlock(pages: Page[], blockId: string): { block: Block; page: Page } | null {
+  for (const p of pages) {
+    const blk = (p.blocks || []).find(b => b.id === blockId);
+    if (blk) return { block: blk, page: p };
+    if (p.children?.length) {
+      const found = _searchPagesForBlock(p.children, blockId);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 // --- Default constructors ---
@@ -427,17 +456,10 @@ function applyOp(state: AppState, op: Op): AppState {
     }
 
     case 'block-delete': {
-      if (idx) {
-        const entry = idx.blocks.get(op.blockId as string);
-        if (entry) {
-          entry.page.blocks = entry.page.blocks.filter(b => b.id !== (op.blockId as string));
-          idx.blocks.delete(op.blockId as string);
-        }
-        return state;
-      }
-      const result = findPageInState(state, op.pageId as string);
-      if (!result) return state;
-      result.page.blocks = result.page.blocks.filter(b => b.id !== (op.blockId as string));
+      const entry = _findBlockById(state, op.blockId as string);
+      if (!entry) return state;
+      entry.page.blocks = entry.page.blocks.filter(b => b.id !== (op.blockId as string));
+      if (idx) idx.blocks.delete(op.blockId as string);
       return state;
     }
 
