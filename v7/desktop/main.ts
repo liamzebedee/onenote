@@ -136,6 +136,19 @@ function createWindow(): void {
   setupIPC(mainWindow, config.deviceId, userDataPath);
 
   mainWindow.on('close', shutdown);
+
+  // Suppress macOS native drag image (file thumbnails from Finder)
+  if (process.platform === 'darwin') {
+    mainWindow.webContents.on('did-finish-load', () => {
+      try {
+        const addon = require(path.join(__dirname, 'native', 'macos', 'build', 'Release', 'suppress_drag_image.node'));
+        addon.suppressDragImage(mainWindow!.getNativeWindowHandle());
+      } catch (e) {
+        console.log('[native] drag image suppression unavailable:', (e as Error).message);
+      }
+    });
+  }
+
   // Load the page first so the window appears immediately (shows spinner while notebook loads)
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
 
@@ -148,7 +161,30 @@ function createWindow(): void {
   }
 }
 
-app.whenReady().then(createWindow);
+// --headless-profile: open the saved notebook, print timing report, quit.
+// Usage: electron . -- --headless-profile
+if (process.argv.includes('--headless-profile')) {
+  app.whenReady().then(() => {
+    const configPath = path.join(app.getPath('userData'), 'config.json');
+    initConfig(configPath);
+    const notebookPath = config.notebookPath;
+    if (!notebookPath) {
+      console.error('[headless] No notebookPath in config. Launch the app once first.');
+      process.exit(1);
+    }
+    console.log('[headless] profiling:', notebookPath);
+    // Create a hidden window just to satisfy Electron's requirement
+    const win = new BrowserWindow({ show: false, webPreferences: { nodeIntegration: false, contextIsolation: true } });
+    setupIPC(win, config.deviceId, app.getPath('userData'));
+    const t0 = performance.now();
+    openDefault(win, notebookPath, config.deviceId, app.getPath('userData'));
+    const elapsed = performance.now() - t0;
+    console.log(`[headless] openDefault total: ${elapsed.toFixed(1)}ms`);
+    process.exit(0);
+  });
+} else {
+  app.whenReady().then(createWindow);
+}
 
 app.on('window-all-closed', () => {
   app.quit();

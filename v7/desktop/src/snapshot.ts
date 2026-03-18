@@ -9,6 +9,17 @@ import type { AppState, Snapshot } from '../../core/src/types';
 
 const MAX_SNAPSHOTS_PER_DEVICE = 3;
 
+// Sort snapshot filenames by timestamp (chars after the 36-char UUID + '-' prefix).
+// This mirrors WAL.listBatches() which does the same slice. Without this, lexicographic
+// sort on the device-UUID prefix corrupts order (e.g. 'd1...' < 'f5...' regardless of date).
+function sortByTimestamp(files: string[]): string[] {
+  return files.slice().sort((a, b) => {
+    const tsA = a.slice(37); // skip "{uuid}-"
+    const tsB = b.slice(37);
+    return tsA < tsB ? -1 : tsA > tsB ? 1 : 0;
+  });
+}
+
 // Create a snapshot of the current state
 function createSnapshot(
   state: AppState,
@@ -34,9 +45,9 @@ function createSnapshot(
 
   // Prune old snapshots -- keep only the latest MAX_SNAPSHOTS_PER_DEVICE
   try {
-    const allSnaps = fs.readdirSync(snapshotsDir)
-      .filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
-      .sort();
+    const allSnaps = sortByTimestamp(
+      fs.readdirSync(snapshotsDir).filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
+    );
     if (allSnaps.length > MAX_SNAPSHOTS_PER_DEVICE) {
       const toDelete = allSnaps.slice(0, allSnaps.length - MAX_SNAPSHOTS_PER_DEVICE);
       for (const f of toDelete) {
@@ -52,9 +63,9 @@ function createSnapshot(
 function loadLatestSnapshot(snapshotsDir: string): Snapshot | null {
   if (!fs.existsSync(snapshotsDir)) return null;
 
-  const files = fs.readdirSync(snapshotsDir)
-    .filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
-    .sort();
+  const files = sortByTimestamp(
+    fs.readdirSync(snapshotsDir).filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
+  );
 
   if (files.length === 0) return null;
 
@@ -69,8 +80,13 @@ function rebuildState(
   walDir: string,
   notebookId: string,
   notebookName: string,
-): { state: AppState; appliedBatches: Set<string> } {
+): { state: AppState; appliedBatches: Set<string>; newBatchesReplayed: number; timings: Record<string, number> } {
+  const t0 = performance.now();
+  const timings: Record<string, number> = {};
+
   const snapshot = loadLatestSnapshot(snapshotsDir);
+  timings.snapshotLoad = performance.now() - t0;
+
   let state: AppState;
   const appliedBatches = new Set<string>();
 
@@ -92,7 +108,13 @@ function rebuildState(
   buildIndex(state);
 
   // Replay all WAL batches not included in the snapshot
+  let newBatchesReplayed = 0;
+  let totalOpsReplayed = 0;
+  const t1 = performance.now();
   const batches = WAL.listBatches(walDir);
+  timings.walList = performance.now() - t1;
+
+  const t2 = performance.now();
   for (const batchFile of batches) {
     if (appliedBatches.has(batchFile)) continue;
     const batch = WAL.readBatch(path.join(walDir, batchFile));
@@ -100,12 +122,21 @@ function rebuildState(
       state = applyOp(state, op);
     }
     appliedBatches.add(batchFile);
+    newBatchesReplayed++;
+    totalOpsReplayed += batch.ops.length;
   }
+  timings.walReplay = performance.now() - t2;
+  timings.walBatchesReplayed = newBatchesReplayed;
+  timings.walOpsReplayed = totalOpsReplayed;
 
   // Finalize: serialize cached CRDTs, remove index
+  const t3 = performance.now();
   finalizeState(state);
+  timings.finalize = performance.now() - t3;
 
-  return { state, appliedBatches };
+  timings.total = performance.now() - t0;
+
+  return { state, appliedBatches, newBatchesReplayed, timings };
 }
 
 export { createSnapshot, loadLatestSnapshot, rebuildState };

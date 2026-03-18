@@ -111,9 +111,28 @@ class NotebookManager {
 
     // Rebuild state from snapshots + WAL
     const walDir = path.join(dirPath, 'wal');
+    const t0 = performance.now();
     const result = rebuildState(this.snapshotCacheDir, walDir, meta.notebookId, meta.name);
     this.state = result.state;
     this.appliedBatches = result.appliedBatches;
+
+    const t1 = performance.now();
+    // If we replayed any WAL batches (snapshot was missing or stale), write a snapshot now
+    // so the next open is fast regardless of whether the app closes cleanly.
+    if (result.newBatchesReplayed > 0) {
+      createSnapshot(this.state, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId!);
+    }
+    const t2 = performance.now();
+
+    // Emit timing report for profiling
+    const rt = result.timings;
+    console.log(
+      `[notebound] open timings — snapshotLoad:${rt.snapshotLoad.toFixed(1)}ms` +
+      ` walList:${rt.walList.toFixed(1)}ms walReplay:${rt.walReplay.toFixed(1)}ms` +
+      ` (${rt.walBatchesReplayed} batches, ${rt.walOpsReplayed} ops)` +
+      ` finalize:${rt.finalize.toFixed(1)}ms snapshotWrite:${(t2 - t1).toFixed(1)}ms` +
+      ` total:${(performance.now() - t0).toFixed(1)}ms`
+    );
 
     // Migration: normalize default text blocks to x=0
     this._migrateBlockPositions();
@@ -215,9 +234,8 @@ class NotebookManager {
       this.appliedBatches.add(filename);
     }
 
-    // Check if we should create a snapshot
-    const batchCount = WAL.listBatches(walDir).length;
-    if (batchCount > SNAPSHOT_THRESHOLD && this.snapshotCacheDir) {
+    // Check if we should create a snapshot (use appliedBatches.size — no need to re-read the dir)
+    if (this.appliedBatches.size > SNAPSHOT_THRESHOLD && this.snapshotCacheDir) {
       this._serializeCrdts();
       createSnapshot(this.state!, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId!);
     }

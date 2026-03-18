@@ -1,11 +1,10 @@
 import { createContext } from 'preact';
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from 'preact/hooks';
 import { Block } from './Block.tsx';
-import { appState, editingEnabled, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, findInTree, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH, uid } from './store.ts';
+import { appState, editingEnabled, addBlock, deleteBlock, updateBlockPos, updateBlockWidth, updateBlockSrc, updateBlockZ, addImageFromFile, addImageFromUrl, updatePageView, updatePageTitle, updatePageTitleAndRefresh, getActivePage, findInTree, startClaudeChat, preloadCache, savePageCaret, lastCaretPerPage, DEFAULT_BLOCK_WIDTH, uid, toggleSwitcher } from './store.ts';
 import { openContextMenu } from './ContextMenu.tsx';
 import { pushUndo, applyUndo, applyRedo } from './undo.ts';
 import { execFmt } from './editor.ts';
-import { initPasteHandler, copyBlocks, getCopiedBlocks } from './clipboard.ts';
 import type { Page, Block as BlockType, CanvasContext, MenuItem } from './types.ts';
 import type { JSX } from 'preact';
 
@@ -86,6 +85,8 @@ export function FormatToolbar(): JSX.Element {
         )}
       </div>
       <div id="format-toolbar">
+        <button class="fmt-btn fmt-btn--notebooks" title="Switch Notebook" onMouseDown={(e: MouseEvent) => { e.preventDefault(); toggleSwitcher(); }}>📚 Notebooks</button>
+        <span class="fmt-sep" />
         {btns.map((b, i) => b === null
           ? <span key={i} class="fmt-sep" />
           : <button key={b.cmd} class="fmt-btn" title={b.title} onMouseDown={(e: MouseEvent) => { e.preventDefault(); execFmt(b.cmd); }}>{b.node}</button>
@@ -245,26 +246,6 @@ function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
           const selText = window.getSelection()?.toString() || '';
           const items: MenuItem[] = [];
           if (selText) {
-            items.push({ label: 'Copy', action: () => document.execCommand('copy') });
-          } else {
-            items.push({ label: 'Copy', disabled: true, action: () => {} });
-          }
-          items.push({ label: 'Paste', action: () => {
-            const el = ref.current;
-            const s = window.getSelection();
-            const savedRange = s?.rangeCount ? s.getRangeAt(0).cloneRange() : null;
-            navigator.clipboard.readText().then(text => {
-              if (!text || !el) return;
-              el.focus();
-              if (savedRange) {
-                const sel = window.getSelection()!;
-                sel.removeAllRanges();
-                sel.addRange(savedRange);
-              }
-              document.execCommand('insertText', false, text);
-            });
-          }});
-          if (selText) {
             items.push({ type: 'separator' });
             const q = encodeURIComponent(selText);
             items.push({ label: 'Search with Google', action: () => {
@@ -334,6 +315,28 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
   // Selected block IDs
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const selectedRef = useRef<Set<string>>(selectedIds);
+
+  // File drag indicator — boolean state for show/hide, refs for position/rotation (no re-render on move)
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
+  const dragIndicatorRef = useRef<HTMLDivElement>(null);
+  const dragPaperRef    = useRef<HTMLDivElement>(null);
+  const lastDragClientX = useRef(0);
+  const flapDecayTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Suppress the browser's native drag-preview image for external file drags.
+  // setDragImage is spec'd for dragstart only, but Electron/Chromium honours it in dragenter too.
+  useEffect(() => {
+    const ghost = document.createElement('div');
+    ghost.style.cssText = 'position:fixed;pointer-events:none;opacity:0;width:1px;height:1px;top:-10px;left:-10px';
+    document.body.appendChild(ghost);
+    function onDragEnter(e: DragEvent): void {
+      if (e.dataTransfer?.types.includes('Files')) {
+        try { e.dataTransfer.setDragImage(ghost, 0, 0); } catch {}
+      }
+    }
+    document.addEventListener('dragenter', onDragEnter, true);
+    return () => { document.removeEventListener('dragenter', onDragEnter, true); ghost.remove(); };
+  }, []);
 
   // Keep pageRef current on every render
   useEffect(() => { pageRef.current = page; });
@@ -694,31 +697,10 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     if (!el) return;
 
     function onWheel(e: WheelEvent): void {
-      if (!e.ctrlKey && !e.metaKey) return; // native scroll handles pan
-      e.preventDefault();
-
-      const { zoom } = viewRef.current;
-      const rect = el!.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      const factor = e.deltaY < 0 ? 1.1 : 0.9;
-      const nz = Math.max(0.2, Math.min(4, zoom * factor));
-
-      // Canvas point under mouse — keep this fixed after zoom
-      const cx = (mx + el!.scrollLeft) / zoom;
-      const cy = (my + el!.scrollTop)  / zoom;
-      const newScrollLeft = Math.max(0, cx * nz - mx);
-      const newScrollTop  = Math.max(0, cy * nz - my);
-
-      viewRef.current = { zoom: nz };
-      innerRef.current!.style.transform = `scale(${nz})`;
-
-      // Resize sizer BEFORE setting scroll so browser doesn't clamp the position
-      updateSizer(newScrollLeft, newScrollTop);
-      el!.scrollLeft = newScrollLeft;
-      el!.scrollTop  = newScrollTop;
-
-      updatePageView(newScrollLeft / nz, newScrollTop / nz, nz);
+      // Block pinch-to-zoom (trackpad pinch fires ctrlKey=true wheel events on macOS)
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+      }
     }
 
     el.addEventListener('wheel', onWheel, { passive: false });
@@ -770,63 +752,6 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
       if (e.key === 'Escape' && !target.isContentEditable) {
         if (selectedRef.current.size) setSelected(new Set());
       }
-      // Ctrl+C — copy selected blocks
-      if (mod && e.key === 'c' && !target.isContentEditable && selectedRef.current.size) {
-        e.preventDefault();
-        const pg = getActivePage();
-        if (!pg) return;
-        const blocks = [...selectedRef.current].map(id => pg.blocks.find(b => b.id === id)).filter((b): b is BlockType => !!b);
-        copyBlocks(blocks);
-        // Single image block: also copy image to system clipboard
-        if (blocks.length === 1 && blocks[0].type === 'image') {
-          const imgEl = innerRef.current?.querySelector(`[data-block-id="${blocks[0].id}"] img`) as HTMLImageElement | null;
-          if (imgEl) {
-            try {
-              const c = document.createElement('canvas');
-              c.width = imgEl.naturalWidth;
-              c.height = imgEl.naturalHeight;
-              c.getContext('2d')!.drawImage(imgEl, 0, 0);
-              c.toBlob(blob => {
-                if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]).catch(() => {});
-              });
-            } catch {}
-          }
-        }
-      }
-      // Ctrl+X — cut selected blocks
-      if (mod && e.key === 'x' && !target.isContentEditable && selectedRef.current.size) {
-        e.preventDefault();
-        const pg = getActivePage();
-        if (!pg) return;
-        const toDelete = [...selectedRef.current];
-        const blocks = toDelete.map(id => pg.blocks.find(b => b.id === id)).filter((b): b is BlockType => !!b).map(b => ({ ...b }));
-        copyBlocks(blocks);
-        pushUndo(pg.id, { type: 'delete', blocks });
-        for (const id of toDelete) deleteBlock(id);
-        setSelected(new Set());
-      }
-      // Ctrl+V — paste copied blocks (when not in a text editor)
-      if (mod && e.key === 'v' && !target.isContentEditable) {
-        const blocks = getCopiedBlocks();
-        if (blocks?.length) {
-          e.preventDefault();
-          const pg = getActivePage();
-          if (!pg) return;
-          const newIds = new Set<string>();
-          for (const b of blocks) {
-            const nb = addBlock(b.x + 30, b.y + 30, b.w, b.type, {
-              html: b.html, src: b.src,
-              crop: b.crop ? { ...b.crop } : undefined,
-              caption: b.caption, border: b.border,
-              items: b.items?.map(i => ({ ...i, id: uid() })),
-              z: b.z,
-            });
-            newIds.add(nb.id);
-          }
-          pushUndo(pg.id, { type: 'deleteForward', ids: [...newIds] });
-          setSelected(newIds);
-        }
-      }
       // Ctrl+D — duplicate selected blocks
       if (mod && e.key === 'd' && !target.isContentEditable && selectedRef.current.size) {
         e.preventDefault();
@@ -856,14 +781,9 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     }
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
-    const cleanupPaste = initPasteHandler({
-      getContainer: () => containerRef.current,
-      getView: () => viewRef.current,
-    });
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       document.removeEventListener('keyup', onKeyUp);
-      cleanupPaste();
     };
   }, []);
 
@@ -885,8 +805,16 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
 
   const IMAGE_URL_RE = /\.(png|jpe?g|gif|webp|svg|bmp|ico|avif)(\?|$)/i;
 
+  function hideDragIndicator(): void {
+    setIsDraggingFile(false);
+    document.body.style.cursor = '';
+    if (flapDecayTimer.current) { clearTimeout(flapDecayTimer.current); flapDecayTimer.current = null; }
+    if (dragPaperRef.current) dragPaperRef.current.style.transform = 'translate(-8px,-8px) perspective(500px) rotateY(0deg)';
+  }
+
   function handleDrop(e: DragEvent): void {
     e.preventDefault();
+    hideDragIndicator();
 
     if (e.dataTransfer!.types.includes('application/x-notebound-claude')) {
       startClaudeChat(e.clientX - 180, e.clientY - 20);
@@ -906,6 +834,8 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     files.forEach((file, i) => {
       addImageFromFile(file, pos.x + i * 20, pos.y + i * 20);
     });
+    // Force local re-render so blocks appear immediately without requiring a click
+    setSelected(new Set());
   }
 
   // ── Context for blocks ───────────────────────────────────
@@ -954,7 +884,41 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
             id="canvas-container"
             onPointerDown={handlePointerDown}
             onScroll={handleScroll}
-            onDragOver={(e: DragEvent) => { if (e.dataTransfer!.types.includes('Files') || e.dataTransfer!.types.includes('application/x-notebound-claude')) e.preventDefault(); }}
+            onDragOver={(e: DragEvent) => {
+              const types = e.dataTransfer!.types;
+              const hasFiles  = types.includes('Files');
+              const hasClaude = types.includes('application/x-notebound-claude');
+              if (!hasFiles && !hasClaude) return;
+              e.preventDefault();
+              if (!hasFiles) return;
+
+              e.dataTransfer!.dropEffect = 'move'; // suppress green plus badge
+              document.body.style.cursor = 'none'; // hide OS cursor; only our paper shows
+
+              if (!isDraggingFile) setIsDraggingFile(true);
+
+              const rect = containerRef.current!.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const vx = e.clientX - lastDragClientX.current;
+              lastDragClientX.current = e.clientX;
+
+              if (dragIndicatorRef.current) {
+                dragIndicatorRef.current.style.left = `${x}px`;
+                dragIndicatorRef.current.style.top  = `${y}px`;
+              }
+              const flapDeg = Math.max(-24, Math.min(24, -vx * 1.8));
+              if (dragPaperRef.current) {
+                dragPaperRef.current.style.transform = `translate(-8px,-8px) perspective(500px) rotateY(${flapDeg}deg)`;
+              }
+              if (flapDecayTimer.current) clearTimeout(flapDecayTimer.current);
+              flapDecayTimer.current = setTimeout(() => {
+                if (dragPaperRef.current) dragPaperRef.current.style.transform = 'translate(-8px,-8px) perspective(500px) rotateY(0deg)';
+              }, 180);
+            }}
+            onDragLeave={(e: DragEvent) => {
+              if (!containerRef.current?.contains(e.relatedTarget as Node)) hideDragIndicator();
+            }}
             onDrop={handleDrop}
           >
             <div ref={sizerRef} id="canvas-sizer">
@@ -979,6 +943,42 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
             </div>
           </div>
           <div ref={marqueeRef} id="marquee-rect" />
+          {/* File drag indicator — always in DOM so refs are valid; visibility controlled by isDraggingFile */}
+          <div
+            ref={dragIndicatorRef}
+            style={{ position: 'absolute', pointerEvents: 'none', zIndex: 2000, display: isDraggingFile ? 'block' : 'none' }}
+          >
+            <div ref={dragPaperRef} class="drag-paper">
+              <svg width="86" height="106" viewBox="0 0 86 106" style={{ overflow: 'visible', display: 'block' }}>
+                <defs>
+                  <filter id="dp-shadow" x="-30%" y="-20%" width="170%" height="160%">
+                    <feDropShadow dx="2" dy="5" stdDeviation="7" flood-color="rgba(0,0,0,0.22)" flood-opacity="1"/>
+                  </filter>
+                  <linearGradient id="dp-paper" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#fefef9"/>
+                    <stop offset="100%" stop-color="#f5f3ec"/>
+                  </linearGradient>
+                  <linearGradient id="dp-fold" x1="1" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#d8d4c2"/>
+                    <stop offset="100%" stop-color="#e6e2d2"/>
+                  </linearGradient>
+                </defs>
+                {/* Paper body */}
+                <path d="M24 0 L86 0 L86 106 L0 106 L0 24 Z" fill="url(#dp-paper)" filter="url(#dp-shadow)" stroke="#d8d5c4" stroke-width="0.5"/>
+                {/* Fold underside (lifted corner, slightly shadowed) */}
+                <path d="M0 0 L24 0 L0 24 Z" fill="url(#dp-fold)"/>
+                {/* Fold crease */}
+                <path d="M24 0 L0 24" stroke="#bbb8a8" stroke-width="0.8"/>
+                {/* Ruled lines */}
+                <line x1="28" y1="42" x2="78" y2="42" stroke="#e0ddd0" stroke-width="0.8"/>
+                <line x1="8"  y1="56" x2="78" y2="56" stroke="#e0ddd0" stroke-width="0.8"/>
+                <line x1="8"  y1="70" x2="78" y2="70" stroke="#e0ddd0" stroke-width="0.8"/>
+                <line x1="8"  y1="84" x2="78" y2="84" stroke="#e0ddd0" stroke-width="0.8"/>
+                <line x1="8"  y1="98" x2="78" y2="98" stroke="#e0ddd0" stroke-width="0.8"/>
+              </svg>
+              <span class="drag-paper-hand">🤏</span>
+            </div>
+          </div>
         </div>
       </CanvasCtx.Provider>
     </>

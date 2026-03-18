@@ -5,7 +5,6 @@ import { openContextMenu } from './ContextMenu.tsx';
 import { editingEnabled, updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.ts';
 import { onBlockKeyDown, handleMarkdownInput } from './editor.ts';
 import { pushUndo } from './undo.ts';
-import { htmlToMarkdown } from './clipboard.ts';
 import type { Block as BlockType, Page, ChecklistItem, CropData, TextDiff, MenuItem, CanvasContext } from './types.ts';
 import type { JSX } from 'preact';
 
@@ -117,52 +116,6 @@ function linkifyText(text: string): string | null {
   return segments.join('');
 }
 
-// ─── HTML paste sanitizer ────────────────────────────────
-const PASTE_ALLOWED = new Set([
-  'p','br','h1','h2','h3','h4','h5','h6',
-  'ul','ol','li',
-  'b','strong','i','em','u','s','del','strike',
-  'code','pre','blockquote',
-  'a',
-]);
-
-function sanitizePastedHtml(html: string): string {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-
-  function walk(node: Node): Node | null {
-    if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.textContent || '');
-    if (node.nodeType !== Node.ELEMENT_NODE) return null;
-
-    const el = node as HTMLElement;
-    const tag = el.tagName.toLowerCase();
-    const children = document.createDocumentFragment();
-    for (const child of [...el.childNodes]) {
-      const r = walk(child);
-      if (r) children.appendChild(r);
-    }
-
-    if (!PASTE_ALLOWED.has(tag)) return children; // unwrap unknown tags
-
-    const out = document.createElement(
-      tag === 'strong' ? 'b' : tag === 'em' ? 'i' : tag === 'strike' ? 's' : tag
-    );
-    if (tag === 'a') {
-      const href = el.getAttribute('href');
-      if (href) out.setAttribute('href', href);
-    }
-    out.appendChild(children);
-    return out;
-  }
-
-  const frag = document.createDocumentFragment();
-  for (const child of [...doc.body.childNodes]) {
-    const r = walk(child);
-    if (r) frag.appendChild(r);
-  }
-  const div = document.createElement('div');
-  div.appendChild(frag);
-  return div.innerHTML;
-}
 
 interface BlockProps {
   block: BlockType;
@@ -355,33 +308,6 @@ export function Block({ block, page }: BlockProps): JSX.Element {
     const selText = window.getSelection()?.toString() || '';
     const items: MenuItem[] = [];
     if (selText) {
-      items.push({ label: 'Copy', action: () => document.execCommand('copy') });
-      const sel = window.getSelection();
-      const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
-      const div = document.createElement('div');
-      if (range) div.appendChild(range.cloneContents());
-      const md = htmlToMarkdown(div.innerHTML);
-      items.push({ label: 'Copy as Markdown', action: () => navigator.clipboard.writeText(md) });
-    } else {
-      items.push({ label: 'Copy', disabled: true, action: () => {} });
-      items.push({ label: 'Copy as Markdown', disabled: true, action: () => {} });
-    }
-    items.push({ label: 'Paste', action: () => {
-      const el = contentRef.current;
-      const sel = window.getSelection();
-      const savedRange = sel?.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
-      navigator.clipboard.readText().then(text => {
-        if (!text || !el) return;
-        el.focus();
-        if (savedRange) {
-          const s = window.getSelection()!;
-          s.removeAllRanges();
-          s.addRange(savedRange);
-        }
-        document.execCommand('insertText', false, text);
-      });
-    }});
-    if (selText) {
       items.push({ type: 'separator' });
       const q = encodeURIComponent(selText);
       items.push({ label: 'Search with Google', action: () => {
@@ -394,77 +320,6 @@ export function Block({ block, page }: BlockProps): JSX.Element {
     openContextMenu(e.clientX, e.clientY, items);
   };
 
-  const handleImageContextMenu = (e: MouseEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
-    const items: MenuItem[] = [
-      { label: 'Copy Image', action: () => {
-        const img = (e.target as HTMLElement).closest('.img-frame')?.querySelector('img');
-        if (!img) return;
-        try {
-          const canvas = document.createElement('canvas');
-          canvas.width = img.naturalWidth;
-          canvas.height = img.naturalHeight;
-          canvas.getContext('2d')!.drawImage(img, 0, 0);
-          canvas.toBlob(blob => {
-            if (blob) navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]).catch(() => {});
-          });
-        } catch {}
-      }},
-    ];
-    openContextMenu(e.clientX, e.clientY, items);
-  };
-
-  const handleCopy = (e: ClipboardEvent): void => {
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed) return;
-    const range = sel.getRangeAt(0);
-    const div = document.createElement('div');
-    div.appendChild(range.cloneContents());
-    const selectedHtml = div.innerHTML;
-    const markdown = htmlToMarkdown(selectedHtml);
-    if (!markdown) return;
-    e.preventDefault();
-    e.clipboardData!.setData('text/plain', sel.toString());
-    e.clipboardData!.setData('text/html', selectedHtml);
-    e.clipboardData!.setData('text/markdown', markdown);
-  };
-
-  const handlePaste = (e: ClipboardEvent): void => {
-    if ([...(e.clipboardData?.items || [])].some(i => i.type.startsWith('image/'))) return;
-    e.preventDefault();
-    const text = e.clipboardData?.getData('text/plain') || '';
-    const trimmed = text.trim();
-    const isPureUrl = /^https?:\/\/\S+$/.test(trimmed);
-
-    // Pure URL: check before HTML so clipboard HTML from the source doesn't bypass linkification
-    if (isPureUrl) {
-      const sel = window.getSelection();
-      if (sel && !sel.isCollapsed) {
-        // Wrap existing selection as a link
-        document.execCommand('createLink', false, trimmed);
-      } else {
-        const esc = trimmed.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        document.execCommand('insertHTML', false, `<a href="${esc}">${esc}</a>`);
-      }
-      return;
-    }
-
-    const html = e.clipboardData?.getData('text/html');
-    if (html) {
-      document.execCommand('insertHTML', false, sanitizePastedHtml(html));
-      return;
-    }
-
-    if (!text) return;
-    // Linkify any URLs in plain text, otherwise insert as-is
-    const linked = linkifyText(text);
-    if (linked) {
-      document.execCommand('insertHTML', false, linked);
-    } else {
-      document.execCommand('insertText', false, text);
-    }
-  };
 
   const handleBlur = (): void => {
     if (undoTimer.current !== null) clearTimeout(undoTimer.current);
@@ -742,7 +597,6 @@ export function Block({ block, page }: BlockProps): JSX.Element {
                 class="block-drag-overlay"
                 onPointerDown={(e: PointerEvent) => { e.stopPropagation(); ctx.onBlockDragStart(e, block.id); }}
                 onDblClick={handleImgDoubleClick}
-                onContextMenu={handleImageContextMenu}
               />
             )}
           </div>
@@ -796,8 +650,6 @@ export function Block({ block, page }: BlockProps): JSX.Element {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onClick={handleContentClick}
-          onCopy={handleCopy}
-          onPaste={handlePaste}
           onContextMenu={handleContentContextMenu}
           onPointerDown={(e: PointerEvent) => e.stopPropagation()}
         />

@@ -3,15 +3,29 @@ var __getProtoOf = Object.getPrototypeOf;
 var __defProp = Object.defineProperty;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+function __accessProp(key) {
+  return this[key];
+}
+var __toESMCache_node;
+var __toESMCache_esm;
 var __toESM = (mod, isNodeMode, target) => {
+  var canCache = mod != null && typeof mod === "object";
+  if (canCache) {
+    var cache = isNodeMode ? __toESMCache_node ??= new WeakMap : __toESMCache_esm ??= new WeakMap;
+    var cached = cache.get(mod);
+    if (cached)
+      return cached;
+  }
   target = mod != null ? __create(__getProtoOf(mod)) : {};
   const to = isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target;
   for (let key of __getOwnPropNames(mod))
     if (!__hasOwnProp.call(to, key))
       __defProp(to, key, {
-        get: () => mod[key],
+        get: __accessProp.bind(mod, key),
         enumerable: true
       });
+  if (canCache)
+    cache.set(mod, to);
   return to;
 };
 
@@ -1039,6 +1053,13 @@ function _finalizePages(pages) {
 var import_fs3 = __toESM(require("fs"));
 var import_path2 = __toESM(require("path"));
 var MAX_SNAPSHOTS_PER_DEVICE = 3;
+function sortByTimestamp(files) {
+  return files.slice().sort((a, b) => {
+    const tsA = a.slice(37);
+    const tsB = b.slice(37);
+    return tsA < tsB ? -1 : tsA > tsB ? 1 : 0;
+  });
+}
 function createSnapshot(state, snapshotsDir, includedBatches = [], deviceId) {
   import_fs3.default.mkdirSync(snapshotsDir, { recursive: true });
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -1053,7 +1074,7 @@ function createSnapshot(state, snapshotsDir, includedBatches = [], deviceId) {
   import_fs3.default.writeFileSync(tmpPath, JSON.stringify(snapshot));
   import_fs3.default.renameSync(tmpPath, filePath);
   try {
-    const allSnaps = import_fs3.default.readdirSync(snapshotsDir).filter((f) => f.endsWith(".json") && !f.endsWith(".tmp")).sort();
+    const allSnaps = sortByTimestamp(import_fs3.default.readdirSync(snapshotsDir).filter((f) => f.endsWith(".json") && !f.endsWith(".tmp")));
     if (allSnaps.length > MAX_SNAPSHOTS_PER_DEVICE) {
       const toDelete = allSnaps.slice(0, allSnaps.length - MAX_SNAPSHOTS_PER_DEVICE);
       for (const f of toDelete) {
@@ -1066,7 +1087,7 @@ function createSnapshot(state, snapshotsDir, includedBatches = [], deviceId) {
 function loadLatestSnapshot(snapshotsDir) {
   if (!import_fs3.default.existsSync(snapshotsDir))
     return null;
-  const files = import_fs3.default.readdirSync(snapshotsDir).filter((f) => f.endsWith(".json") && !f.endsWith(".tmp")).sort();
+  const files = sortByTimestamp(import_fs3.default.readdirSync(snapshotsDir).filter((f) => f.endsWith(".json") && !f.endsWith(".tmp")));
   if (files.length === 0)
     return null;
   const latest = files[files.length - 1];
@@ -1074,7 +1095,10 @@ function loadLatestSnapshot(snapshotsDir) {
   return JSON.parse(data);
 }
 function rebuildState(snapshotsDir, walDir, notebookId, notebookName) {
+  const t0 = performance.now();
+  const timings = {};
   const snapshot = loadLatestSnapshot(snapshotsDir);
+  timings.snapshotLoad = performance.now() - t0;
   let state;
   const appliedBatches = new Set;
   if (snapshot) {
@@ -1089,7 +1113,12 @@ function rebuildState(snapshotsDir, walDir, notebookId, notebookName) {
     state.notebooks.push({ id: notebookId, title: notebookName || "Notebook", sections: [] });
   }
   buildIndex(state);
+  let newBatchesReplayed = 0;
+  let totalOpsReplayed = 0;
+  const t1 = performance.now();
   const batches = WAL.listBatches(walDir);
+  timings.walList = performance.now() - t1;
+  const t2 = performance.now();
   for (const batchFile of batches) {
     if (appliedBatches.has(batchFile))
       continue;
@@ -1098,9 +1127,17 @@ function rebuildState(snapshotsDir, walDir, notebookId, notebookName) {
       state = applyOp(state, op);
     }
     appliedBatches.add(batchFile);
+    newBatchesReplayed++;
+    totalOpsReplayed += batch.ops.length;
   }
+  timings.walReplay = performance.now() - t2;
+  timings.walBatchesReplayed = newBatchesReplayed;
+  timings.walOpsReplayed = totalOpsReplayed;
+  const t3 = performance.now();
   finalizeState(state);
-  return { state, appliedBatches };
+  timings.finalize = performance.now() - t3;
+  timings.total = performance.now() - t0;
+  return { state, appliedBatches, newBatchesReplayed, timings };
 }
 
 // src/sync.ts
@@ -1239,9 +1276,17 @@ class NotebookManager {
     }
     import_fs5.default.mkdirSync(this.snapshotCacheDir, { recursive: true });
     const walDir = import_path4.default.join(dirPath, "wal");
+    const t0 = performance.now();
     const result = rebuildState(this.snapshotCacheDir, walDir, meta.notebookId, meta.name);
     this.state = result.state;
     this.appliedBatches = result.appliedBatches;
+    const t1 = performance.now();
+    if (result.newBatchesReplayed > 0) {
+      createSnapshot(this.state, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId);
+    }
+    const t2 = performance.now();
+    const rt = result.timings;
+    console.log(`[notebound] open timings — snapshotLoad:${rt.snapshotLoad.toFixed(1)}ms` + ` walList:${rt.walList.toFixed(1)}ms walReplay:${rt.walReplay.toFixed(1)}ms` + ` (${rt.walBatchesReplayed} batches, ${rt.walOpsReplayed} ops)` + ` finalize:${rt.finalize.toFixed(1)}ms snapshotWrite:${(t2 - t1).toFixed(1)}ms` + ` total:${(performance.now() - t0).toFixed(1)}ms`);
     this._migrateBlockPositions();
     this.wal = new WAL;
     this.wal.startAutoSeal(this.deviceId, walDir);
@@ -1328,8 +1373,7 @@ class NotebookManager {
     if (filename) {
       this.appliedBatches.add(filename);
     }
-    const batchCount = WAL.listBatches(walDir).length;
-    if (batchCount > SNAPSHOT_THRESHOLD && this.snapshotCacheDir) {
+    if (this.appliedBatches.size > SNAPSHOT_THRESHOLD && this.snapshotCacheDir) {
       this._serializeCrdts();
       createSnapshot(this.state, this.snapshotCacheDir, Array.from(this.appliedBatches), this.deviceId);
     }
@@ -2220,7 +2264,7 @@ function closeNotebook() {
 }
 
 // main.ts
-var __dirname = "/home/liam/Documents/projects/onenote/v7/desktop";
+var __dirname = "/Users/liamz/Documents/Projects/onenote/v7/desktop";
 var isMac = process.platform === "darwin";
 import_electron2.app.name = "notebound";
 if (process.platform === "linux") {
@@ -2361,6 +2405,16 @@ function createWindow() {
   const userDataPath = import_electron2.app.getPath("userData");
   setupIPC(mainWindow2, config.deviceId, userDataPath);
   mainWindow2.on("close", shutdown);
+  if (process.platform === "darwin") {
+    mainWindow2.webContents.on("did-finish-load", () => {
+      try {
+        const addon = require(import_path8.default.join(__dirname, "native", "macos", "build", "Release", "suppress_drag_image.node"));
+        addon.suppressDragImage(mainWindow2.getNativeWindowHandle());
+      } catch (e) {
+        console.log("[native] drag image suppression unavailable:", e.message);
+      }
+    });
+  }
   mainWindow2.loadFile(import_path8.default.join(__dirname, "app", "index.html"));
   console.log("[main] config.notebookPath:", config.notebookPath);
   if (config.notebookPath) {
@@ -2369,7 +2423,27 @@ function createWindow() {
     console.log("[main] no notebookPath in config, will show welcome screen");
   }
 }
-import_electron2.app.whenReady().then(createWindow);
+if (process.argv.includes("--headless-profile")) {
+  import_electron2.app.whenReady().then(() => {
+    const configPath = import_path8.default.join(import_electron2.app.getPath("userData"), "config.json");
+    initConfig(configPath);
+    const notebookPath = config.notebookPath;
+    if (!notebookPath) {
+      console.error("[headless] No notebookPath in config. Launch the app once first.");
+      process.exit(1);
+    }
+    console.log("[headless] profiling:", notebookPath);
+    const win = new import_electron2.BrowserWindow({ show: false, webPreferences: { nodeIntegration: false, contextIsolation: true } });
+    setupIPC(win, config.deviceId, import_electron2.app.getPath("userData"));
+    const t0 = performance.now();
+    openDefault(win, notebookPath, config.deviceId, import_electron2.app.getPath("userData"));
+    const elapsed = performance.now() - t0;
+    console.log(`[headless] openDefault total: ${elapsed.toFixed(1)}ms`);
+    process.exit(0);
+  });
+} else {
+  import_electron2.app.whenReady().then(createWindow);
+}
 import_electron2.app.on("window-all-closed", () => {
   import_electron2.app.quit();
 });

@@ -1,0 +1,1 @@
+cmd_Release/suppress_drag_image.node := c++ -bundle -framework Cocoa -undefined dynamic_lookup -Wl,-search_paths_first -mmacosx-version-min=10.15 -arch arm64 -L./Release -stdlib=libc++  -o Release/suppress_drag_image.node Release/obj.target/suppress_drag_image/suppress_drag_image.o 

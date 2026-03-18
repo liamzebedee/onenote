@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10× Tree Engineering — Achievement Tree</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0d14;
+  color: #c9d1d9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+#header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  height: 52px;
+  border-bottom: 1px solid #1e2430;
+  background: #0d1117;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+#header h1 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f0f6fc;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+#header .subtitle {
+  font-size: 11px;
+  color: #484f58;
+}
+
+.legend {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #6e7681;
+  white-space: nowrap;
+}
+
+.legend-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-cp-line {
+  width: 20px;
+  height: 2px;
+  background: #ff7b72;
+  border-radius: 1px;
+}
+
+.legend-dep-line {
+  width: 20px;
+  height: 1.5px;
+  background: #484f58;
+  border-radius: 1px;
+}
+
+/* ── Layout ── */
+#main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+#sidebar {
+  width: 220px;
+  border-right: 1px solid #1e2430;
+  background: #0d1117;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sb-search {
+  padding: 10px;
+  border-bottom: 1px solid #1e2430;
+}
+
+.sb-search input {
+  width: 100%;
+  background: #0a0d14;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: #c9d1d9;
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.sb-search input:focus { border-color: #388bfd; }
+
+.sb-filters {
+  padding: 6px 8px;
+  border-bottom: 1px solid #1e2430;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.filter-btn {
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 10px;
+  cursor: pointer;
+  background: transparent;
+  color: #6e7681;
+  transition: all 0.15s;
+  line-height: 1.6;
+}
+
+.filter-btn:hover { color: #c9d1d9; background: #1e2430; }
+.filter-btn.active { color: #fff; }
+
+#node-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+#node-list::-webkit-scrollbar { width: 4px; }
+#node-list::-webkit-scrollbar-track { background: transparent; }
+#node-list::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+
+.nl-item {
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1px;
+  transition: background 0.1s;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.nl-item:hover { background: #161b22; }
+.nl-item.selected { background: #1f6feb22; }
+.nl-item.hidden { display: none; }
+
+.nl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.nl-text { min-width: 0; }
+
+.nl-id {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.nl-title {
+  font-size: 10px;
+  color: #484f58;
+  line-height: 1.3;
+}
+
+/* ── Canvas ── */
+#canvas-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0a0d14;
+  cursor: grab;
+}
+
+#canvas-wrap.grabbing { cursor: grabbing; }
+
+#canvas-svg {
+  position: absolute;
+  top: 0; left: 0;
+  overflow: visible;
+}
+
+/* SVG node styles */
+.node-group { cursor: pointer; }
+
+.node-card {
+  transition: filter 0.12s;
+}
+
+.node-card:hover { filter: brightness(1.25); }
+
+.node-group.dimmed { opacity: 0.12; pointer-events: none; }
+.node-group.highlighted .node-card { filter: brightness(1.35); }
+
+.edge-path {
+  fill: none;
+  stroke: #2a3040;
+  stroke-width: 1.5;
+  transition: opacity 0.15s;
+}
+
+.edge-path.critical {
+  stroke: #ff7b7266;
+  stroke-width: 2;
+}
+
+.edge-path.highlighted {
+  stroke: #58a6ff;
+  stroke-width: 2;
+  opacity: 1 !important;
+}
+
+.edge-path.dimmed { opacity: 0.04; }
+
+/* Phase column labels */
+.phase-label {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: #2a3040;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* minimap */
+#minimap {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 140px;
+  height: 80px;
+  background: #0d1117dd;
+  border: 1px solid #1e2430;
+  border-radius: 6px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#minimap-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+#viewport-indicator {
+  position: absolute;
+  border: 1px solid #388bfd66;
+  background: #388bfd11;
+  pointer-events: none;
+  transition: none;
+}
+
+/* Zoom controls */
+#zoom-controls {
+  position: absolute;
+  bottom: 110px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.zoom-btn {
+  width: 28px;
+  height: 28px;
+  background: #0d1117;
+  border: 1px solid #1e2430;
+  border-radius: 5px;
+  color: #6e7681;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.zoom-btn:hover { background: #161b22; color: #c9d1d9; }
+
+#zoom-level {
+  font-size: 9px;
+  text-align: center;
+  color: #484f58;
+  font-family: monospace;
+}
+
+/* ── Detail panel ── */
+#detail {
+  width: 0;
+  border-left: 1px solid transparent;
+  background: #0d1117;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.2s, border-color 0.2s;
+}
+
+#detail.open {
+  width: 300px;
+  border-left-color: #1e2430;
+}
+
+#detail-inner {
+  width: 300px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+#detail-inner::-webkit-scrollbar { width: 4px; }
+#detail-inner::-webkit-scrollbar-track { background: transparent; }
+#detail-inner::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+
+.d-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e2430;
+  position: sticky;
+  top: 0;
+  background: #0d1117;
+  z-index: 1;
+}
+
+.d-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.d-id {
+  font-size: 10px;
+  font-weight: 800;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #484f58;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  line-height: 1;
+  transition: all 0.1s;
+}
+
+.close-btn:hover { background: #161b22; color: #c9d1d9; }
+
+.d-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f0f6fc;
+  line-height: 1.3;
+}
+
+.d-badges {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.badge-cp { background: #ff7b7222; color: #ff7b72; border-color: #ff7b7244; }
+.badge-weeks { background: #161b22; color: #6e7681; border-color: #30363d; }
+.badge-phase { color: #fff; }
+
+.d-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.d-section h4 {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #484f58;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.d-section p {
+  font-size: 11.5px;
+  color: #8b949e;
+  line-height: 1.55;
+}
+
+.d-section ul {
+  padding-left: 14px;
+}
+
+.d-section li {
+  font-size: 11px;
+  color: #8b949e;
+  line-height: 1.6;
+}
+
+.done-when-box {
+  background: #0f1a0f;
+  border: 1px solid #1e3a1e;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #58a358;
+  line-height: 1.5;
+}
+
+.dep-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.dep-chip {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-weight: 600;
+  background: #161b22;
+  color: #8b949e;
+  border: 1px solid #30363d;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.dep-chip:hover { background: #1e2430; color: #c9d1d9; }
+
+.candidate-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.candidate-tag {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  background: #161b22;
+  color: #6e7681;
+  border: 1px solid #21262d;
+  line-height: 1.5;
+}
+
+/* ── Scrollbar global ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #21262d; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>10× Tree Engineering</h1>
+  <span class="subtitle">Achievement Tree &amp; Critical Path</span>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-cp-line"></div> Critical path</div>
+    <div class="legend-item"><div class="legend-dep-line"></div> Dependency</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8b5cf6"></div> North-Star</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#3b82f6"></div> Measurement</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#06b6d4"></div> Biology</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#10b981"></div> Platform</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b"></div> Toolbox</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ef4444"></div> Core Bio</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ec4899"></div> Design Rules</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#22d3ee"></div> Manufacturing</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#84cc16"></div> Scale-Up</div>
+  </div>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+    <div class="sb-search">
+      <input type="text" id="search-input" placeholder="Search nodes…" autocomplete="off">
+    </div>
+    <div class="sb-filters" id="phase-filters">
+      <button class="filter-btn active" data-phase="all">All</button>
+    </div>
+    <div id="node-list"></div>
+  </div>
+
+  <div id="canvas-wrap">
+    <svg id="canvas-svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4"
+                markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#2a3040"/>
+        </marker>
+        <marker id="arrow-cp" viewBox="0 0 8 8" refX="7" refY="4"
+                markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#ff7b7266"/>
+        </marker>
+        <marker id="arrow-hl" viewBox="0 0 8 8" refX="7" refY="4"
+                markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#58a6ff"/>
+        </marker>
+      </defs>
+      <g id="viewport">
+        <g id="g-phase-labels"></g>
+        <g id="g-edges"></g>
+        <g id="g-nodes"></g>
+      </g>
+    </svg>
+    <div id="zoom-controls">
+      <button class="zoom-btn" id="zoom-in">+</button>
+      <div id="zoom-level">100%</div>
+      <button class="zoom-btn" id="zoom-out">−</button>
+      <button class="zoom-btn" id="zoom-fit" title="Fit to view" style="font-size:10px">⊡</button>
+    </div>
+    <div id="minimap">
+      <canvas id="minimap-canvas"></canvas>
+    </div>
+  </div>
+
+  <div id="detail">
+    <div id="detail-inner"></div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const PHASE_COLORS = {
+  0: '#8b5cf6',
+  1: '#3b82f6',
+  2: '#06b6d4',
+  3: '#10b981',
+  4: '#f59e0b',
+  5: '#ef4444',
+  6: '#ec4899',
+  7: '#22d3ee',
+  8: '#84cc16',
+};
+
+const PHASE_BG = {
+  0: '#1a1030',
+  1: '#0d1a2e',
+  2: '#061c24',
+  3: '#0a1f16',
+  4: '#1f1508',
+  5: '#200a0a',
+  6: '#1f0818',
+  7: '#071c24',
+  8: '#0e1a04',
+};
+
+const CRITICAL_PATH = new Set(["T0.1","T0.2","T1.1","T1.2","T1.3","T1.4","T2.1","T2.2","T3.1","T4.1","T4.2","T5.2","T5.3","T8.1"]);
+
+const NODES_RAW = [
+  { id:"T0.1", phase:0, phaseLabel:"North-Star Spec", title:"Metric + Baseline Lock",
+    description:"Choose 2–3 species (one fast model system, one forestry target), define baseline growth curves, and lock the exact KPI.",
+    doneWhen:"Species chosen; baseline growth curves defined; KPI locked (e.g. stem volume at 12 months in controlled greenhouse, or dry biomass over 120 days).",
+    candidates:[], estimatedWeeks:4, dependencies:[] },
+
+  { id:"T0.2", phase:0, phaseLabel:"North-Star Spec", title:"Assay Environment Lock",
+    description:"Establish a reproducible growth facility with standardised substrate, light, temperature, humidity, watering, and nutrient regimen.",
+    doneWhen:"Facility running; variance quantified (CV < 15% across replicates for chosen KPI).",
+    candidates:[], estimatedWeeks:6, dependencies:["T0.1"] },
+
+  { id:"T0.3", phase:0, phaseLabel:"North-Star Spec", title:"Safety / Regulatory Envelope",
+    description:"Define the containment and deployment class, gene flow strategy, and Australia regulatory pathway assumptions.",
+    doneWhen:"Containment class chosen; gene flow stance documented; regulatory pathway mapped.",
+    candidates:[], estimatedWeeks:8, dependencies:["T0.1"] },
+
+  { id:"T1.1", phase:1, phaseLabel:"Measurement Loop", title:"High-Throughput Phenotyping",
+    description:"Automate weekly per-plant metrics: imaging, height, leaf area, stem diameter, optionally NIR biomass proxy.",
+    doneWhen:"Time per plant < 1 min; data versioned; pipeline continuous.",
+    candidates:["RGB imaging rigs","LiDAR height","Structured-light leaf area","NIR reflectance"], estimatedWeeks:8, dependencies:["T0.1","T0.2"] },
+
+  { id:"T1.2", phase:1, phaseLabel:"Measurement Loop", title:"Root + Nutrient Uptake",
+    description:"Establish at least one scalable root proxy with repeatability.",
+    doneWhen:"Rhizotron imaging or destructive sampling protocol with quantified repeatability; ≥3 replicates validated.",
+    candidates:["Rhizotron imaging","Minirhizotron tubes","Destructive wash + scan","Isotope tracer uptake"], estimatedWeeks:10, dependencies:["T0.1","T0.2"] },
+
+  { id:"T1.3", phase:1, phaseLabel:"Measurement Loop", title:"Biomass / Wood Proxy",
+    description:"Calibrate a non-destructive proxy against destructive harvest.",
+    doneWhen:"Proxy R² > 0.90 vs destructive dry weight across ≥30 plants.",
+    candidates:["Stem diameter allometry","Micro-CT subset calibration","Near-IR biomass prediction","Acoustic velocity (wood density)"], estimatedWeeks:12, dependencies:["T0.1","T0.2"] },
+
+  { id:"T1.4", phase:1, phaseLabel:"Measurement Loop", title:"Build–Test–Learn Cadence",
+    description:"Bound cycle time from genetic perturbation to phenotype readout.",
+    doneWhen:"Cycle time ≤6–12 weeks in model system; 2 full cycles completed end-to-end.",
+    candidates:[], estimatedWeeks:14, dependencies:["T1.1","T1.2","T1.3"] },
+
+  { id:"T2.1", phase:2, phaseLabel:"Biology Decomposition", title:"Growth Equation Factorisation",
+    description:"Decompose growth rate into explicit multiplicative factors with candidate intervention points per factor.",
+    doneWhen:"Written model: growth = assimilation × allocation × cambium sink × stress losses; interventions listed per factor.",
+    candidates:[], estimatedWeeks:4, dependencies:["T0.1"] },
+
+  { id:"T2.2", phase:2, phaseLabel:"Biology Decomposition", title:"Bottleneck Ranking",
+    description:"Choose top 3 bottlenecks per species/environment, justified by literature and baseline measurements.",
+    doneWhen:"Top 3 bottlenecks documented with quantitative evidence; priority order set.",
+    candidates:[], estimatedWeeks:6, dependencies:["T2.1","T1.1"] },
+
+  { id:"T3.1", phase:3, phaseLabel:"Platform Choice", title:"Fast Model System",
+    description:"Stand up a fast-cycle plant; demonstrate transformation, expression, and phenotype readout.",
+    doneWhen:"Model system chosen; stable transformants produced; reporter / phenotype readout confirmed.",
+    candidates:["Arabidopsis (4–6 wk cycle)","N. benthamiana (agro-infiltration 5 d)","Fast-cycling poplar (8–12 wk)","Lemna minor (1 wk doubling)"], estimatedWeeks:16, dependencies:["T0.1","T1.4"] },
+
+  { id:"T3.2", phase:3, phaseLabel:"Platform Choice", title:"Forestry Target + Route",
+    description:"Pick target tree species and a realistic engineering method with a credible timeline.",
+    doneWhen:"Target species chosen; transformation method validated; vendor/lab plan with timeline.",
+    candidates:["Eucalyptus (fast, SE established)","Pinus radiata (commercial, harder)","Populus (easiest transformation)","Acacia (Australian relevance)"], estimatedWeeks:12, dependencies:["T3.1"] },
+
+  { id:"T4.1", phase:4, phaseLabel:"Engineering Toolbox", title:"Transformation + Regeneration",
+    description:"Achieve stable transformants and regeneration at acceptable efficiency in model system; at least one path for tree target.",
+    doneWhen:">20 independent stable transformants per construct in model system; one validated tree path.",
+    candidates:[], estimatedWeeks:20, dependencies:["T3.1"] },
+
+  { id:"T4.2", phase:4, phaseLabel:"Engineering Toolbox", title:"Promoters / Parts Library",
+    description:"Validate promoters for leaf (photosynthesis), cambium/xylem (wood), root (uptake), and one inducible.",
+    doneWhen:"2–3 validated promoters per tissue type; ≥1 inducible/stress-responsive promoter confirmed.",
+    candidates:["35S (constitutive)","RbcS (leaf)","IRX3/C4H (xylem)","LTP (phloem)","HSP (heat-inducible)","ANAC075 (cambium)"], estimatedWeeks:16, dependencies:["T4.1"] },
+
+  { id:"T4.3", phase:4, phaseLabel:"Engineering Toolbox", title:"Genome Editing Strategy",
+    description:"Decide CRISPR vs transgene stacking vs targeted insertion; demonstrate one edit with sequencing confirmation.",
+    doneWhen:"Strategy documented; ≥1 CRISPR edit or targeted integration confirmed by sequencing in model system.",
+    candidates:["CRISPR-Cas9 KO","CRISPR base editing","Prime editing","Targeted insertion (safe harbour)","Agro-mediated stacking"], estimatedWeeks:16, dependencies:["T4.1"] },
+
+  { id:"T4.4", phase:4, phaseLabel:"Engineering Toolbox", title:"Stacking + Versioning",
+    description:"Standardised construct assembly, naming, and barcode strategy for running 20–50 variants.",
+    doneWhen:"Assembly standard chosen; barcode/naming system in place; can track 20+ variants; LIMS or equivalent.",
+    candidates:["Golden Gate / MoClo","Gibson assembly + barcode tracking","Benchling LIMS"], estimatedWeeks:10, dependencies:["T4.3"] },
+
+  { id:"T5.1", phase:5, phaseLabel:"Core Biology", title:"Boost Carbon Input (Source)",
+    description:"Show statistically significant increase in net carbon assimilation or leaf area duration without catastrophic tradeoffs.",
+    doneWhen:"≥20% increase in net assimilation or canopy leaf area duration; no >10% penalty in other growth metrics; p < 0.05.",
+    candidates:["Rubisco specificity mutants","C4 pathway modules in C3","Photorespiration bypass (GCSL)","Stomatal density/aperture tuning","SBPase/FBPase overexpression"], estimatedWeeks:40, dependencies:["T4.1","T4.2","T2.2"] },
+
+  { id:"T5.2", phase:5, phaseLabel:"Core Biology", title:"Increase Wood Allocation",
+    description:"Increase fraction of fixed carbon ending up in stem/xylem at same or higher total assimilation.",
+    doneWhen:"Stem:leaf dry mass ratio +30% vs WT; total biomass not reduced; xylem fraction confirmed (Klason lignin + cellulose assay).",
+    candidates:["Auxin flux (PIN/AXR)","Gibberellin pathway (GA20ox, DELLA KO)","Sucrose transporter SUT overexpression","Strigolactone reduction","FT/TFL1 flowering-delay"], estimatedWeeks:40, dependencies:["T4.1","T4.2","T2.2"] },
+
+  { id:"T5.3", phase:5, phaseLabel:"Core Biology", title:"Expand Cambium Activity (Sink)",
+    description:"Increase cambial cell division markers and xylem deposition rate proxies.",
+    doneWhen:"Cambial zone width +50%; xylem deposition rate (ring width or tracheid count) +30%; no runaway uncontrolled growth.",
+    candidates:["WOX4/WOX14 cambium regulators","PXY/CLE41 signalling axis","CYCD3 + tissue-specific promoter","BES1/BZR1 brassinosteroid pathway"], estimatedWeeks:40, dependencies:["T4.1","T4.2","T2.2"] },
+
+  { id:"T5.4", phase:5, phaseLabel:"Core Biology", title:"Hydraulics + Nutrient Throughput",
+    description:"Sustain higher transpiration/uptake without hydraulic failure under high-demand regimes.",
+    doneWhen:"Transpiration maintained at 20% higher biomass; no increased wilting under equivalent VPD.",
+    candidates:["PIP/TIP aquaporin overexpression","Wider vessel diameter (MYB46 targets)","Root hair density (RSL4)","Mycorrhizal symbiosis (SYM pathway)","NRT2 nitrate transporters"], estimatedWeeks:36, dependencies:["T4.1","T4.2","T2.2"] },
+
+  { id:"T5.5", phase:5, phaseLabel:"Core Biology", title:"Stress Tolerance, No Growth Penalty",
+    description:"Maintain growth under heat/drought/pathogen pressure that normally depresses baseline.",
+    doneWhen:"Growth within 10% of unstressed controls under defined regime; WT loses ≥25% under same regime.",
+    candidates:["Inducible HSP chaperone systems","ROS scavenging (SOD/CAT/APX)","ABA signalling retuning","Pathogen PRR stack","Heat-stable Rubisco activase"], estimatedWeeks:36, dependencies:["T4.1","T4.2","T2.2"] },
+
+  { id:"T6.1", phase:6, phaseLabel:"Design Rules", title:"Causal Dataset",
+    description:"Compile interventions × phenotypes dataset with enough breadth to learn nontrivial structure.",
+    doneWhen:"≥200 plants across ≥20 genetic variants and ≥3 conditions; queryable intervention × phenotype matrix.",
+    candidates:[], estimatedWeeks:8, dependencies:["T5.1","T5.2","T5.3","T5.4","T5.5"] },
+
+  { id:"T6.2", phase:6, phaseLabel:"Design Rules", title:"Predictive Models (G→P)",
+    description:"Model predicts held-out growth metrics better than heuristics; used to prioritise constructs.",
+    doneWhen:"Model R² > 0.7 on held-out test set; ≥1 non-obvious prediction validated experimentally.",
+    candidates:["Gaussian Process regression","Gradient boosted trees (XGBoost)","Graph NNs on pathway structure","Mechanistic ODE + ML hybrid"], estimatedWeeks:12, dependencies:["T6.1"] },
+
+  { id:"T6.3", phase:6, phaseLabel:"Design Rules", title:"Control Policies",
+    description:"Program growth trajectories via inducible circuits and environmental schedules reproducibly.",
+    doneWhen:"≥1 inducible circuit controlling a growth parameter; environmental schedule shown to compound genetic gain.",
+    candidates:["Dex-inducible promoter systems","Optogenetics (PhyB/PIF)","Synthetic toggle switches","Nutrient-responsive promoters"], estimatedWeeks:20, dependencies:["T6.2","T4.3"] },
+
+  { id:"T7.1", phase:7, phaseLabel:"Manufacturing Track", title:"Wood-in-a-Vat Hypothesis",
+    description:"Define what 'manufacture' means and write a kill-criteria skeleton TEA.",
+    doneWhen:"Hypothesis chosen; order-of-magnitude TEA showing plausible path to target $/kg; kill criteria defined.",
+    candidates:["(A) Living trees grown faster","(B) Cambium tissue producing lignocellulose sheets ex vivo","(C) Cell-free enzymatic cellulose/lignin assembly","(D) Synthetic wood composite from cell outputs"], estimatedWeeks:4, dependencies:["T0.1"] },
+
+  { id:"T7.2", phase:7, phaseLabel:"Manufacturing Track", title:"Cell Culture → Lignocellulose",
+    description:"Establish callus/suspension cultures with measurable cellulose and lignin production; output rate quantified.",
+    doneWhen:"Culture producing ≥1 g/L/day dry cell weight; Klason lignin ≥5%; crystalline cellulose XRD-confirmed.",
+    candidates:["Cambium-derived callus","Xylogenic Zinnia mesophyll system","Poplar suspension cultures","Arabidopsis T87 cell line"], estimatedWeeks:24, dependencies:["T7.1","T4.1"] },
+
+  { id:"T7.3", phase:7, phaseLabel:"Manufacturing Track", title:"Directed Differentiation → Xylem",
+    description:"Induce tracheary element differentiation in culture with consistent markers and measurable deposition.",
+    doneWhen:"≥30% of cells showing TE markers (secondary wall thickening, VND7/NST expression, autofluorescence); deposition rate quantified.",
+    candidates:["VND7 induction (master TE regulator)","NAC secondary cell wall cascade","Zinnia xylogenic system optimisation","Organoid-style cambium slice culture"], estimatedWeeks:32, dependencies:["T7.2"] },
+
+  { id:"T7.4", phase:7, phaseLabel:"Manufacturing Track", title:"Scale + Bioprocess Economics",
+    description:"Rough TEA: $/kg dry lignocellulose vs alternatives; identify 1–2 parameters that must improve 10–100×.",
+    doneWhen:"TEA completed to ±50%; top 2 cost drivers identified; sensitivity analysis done.",
+    candidates:[], estimatedWeeks:8, dependencies:["T7.3"] },
+
+  { id:"T8.1", phase:8, phaseLabel:"Scale-Up", title:"Greenhouse Replication",
+    description:"Top genotype(s) replicate across batches/operators; effect size persists; failure modes characterised.",
+    doneWhen:"Top genotype retains ≥80% effect size across ≥3 batches by ≥2 operators; CV of KPI < 20%.",
+    candidates:[], estimatedWeeks:16, dependencies:["T5.2","T5.3","T1.4"] },
+
+  { id:"T8.2", phase:8, phaseLabel:"Scale-Up", title:"Field Pilot Pathway",
+    description:"Plan for contained trials, gene flow mitigation, monitoring, and stakeholder strategy.",
+    doneWhen:"Contained trial plan written; gene flow mitigation strategy; regulatory submission outline; stakeholder map.",
+    candidates:[], estimatedWeeks:24, dependencies:["T8.1","T0.3"] },
+
+  { id:"T8.3", phase:8, phaseLabel:"Scale-Up", title:"Manufacturing + QA for Genetics",
+    description:"Reproducible propagation method, genotyping QC, and trait stability across generations/time.",
+    doneWhen:"Propagation method chosen; genotyping QC ≥99% accuracy; trait stability confirmed across 2+ generations or 12 months.",
+    candidates:["Clonal propagation via cuttings","Somatic embryogenesis at scale","Seed + marker-assisted selection","Tissue culture micropropagation"], estimatedWeeks:20, dependencies:["T8.1"] },
+
+  { id:"T8.4", phase:8, phaseLabel:"Scale-Up", title:"Moat",
+    description:"Build defensibility via proprietary parts/datasets/models, process IP, or regulatory/field head start.",
+    doneWhen:"≥1 of: (a) filed IP on novel parts + datasets, (b) documented unique bioprocess know-how, (c) first contained field trial underway.",
+    candidates:["Proprietary promoter + construct IP","Phenomics dataset as training moat","Unique transformation process IP","First-mover field trial regulatory approval"], estimatedWeeks:12, dependencies:["T8.1","T6.2","T8.3"] },
+];
+
+// ── Layout ────────────────────────────────────────────────────────────────────
+
+const NODE_W = 190;
+const NODE_H = 82;
+const COL_GAP = 280;
+const ROW_GAP = 20;
+const PAD_X = 60;
+const PAD_Y = 60;
+const LABEL_H = 28;
+
+// Group by phase
+const byPhase = {};
+NODES_RAW.forEach(n => {
+  if (!byPhase[n.phase]) byPhase[n.phase] = [];
+  byPhase[n.phase].push(n);
+});
+
+const phases = Object.keys(byPhase).map(Number).sort((a, b) => a - b);
+const maxNodesInPhase = Math.max(...phases.map(p => byPhase[p].length));
+const canvasH = PAD_Y * 2 + LABEL_H + maxNodesInPhase * NODE_H + (maxNodesInPhase - 1) * ROW_GAP;
+const canvasW = PAD_X * 2 + phases.length * COL_GAP;
+
+// Assign positions
+const nodeMap = {};
+NODES_RAW.forEach(n => {
+  const col = n.phase;
+  const nodesInPhase = byPhase[n.phase];
+  const idx = nodesInPhase.indexOf(n);
+  const count = nodesInPhase.length;
+  const totalH = count * NODE_H + (count - 1) * ROW_GAP;
+  const startY = PAD_Y + LABEL_H + (canvasH - PAD_Y * 2 - LABEL_H - totalH) / 2;
+  n.x = PAD_X + col * COL_GAP;
+  n.y = startY + idx * (NODE_H + ROW_GAP);
+  n.cx = n.x + NODE_W / 2;
+  n.cy = n.y + NODE_H / 2;
+  nodeMap[n.id] = n;
+});
+
+// ── Render SVG ────────────────────────────────────────────────────────────────
+
+const svg = document.getElementById('canvas-svg');
+const gViewport = document.getElementById('viewport');
+const gPhaseLabels = document.getElementById('g-phase-labels');
+const gEdges = document.getElementById('g-edges');
+const gNodes = document.getElementById('g-nodes');
+
+svg.setAttribute('width', window.innerWidth);
+svg.setAttribute('height', window.innerHeight);
+
+// Phase column labels + backgrounds
+phases.forEach(p => {
+  const nodes = byPhase[p];
+  const x = PAD_X + p * COL_GAP - 8;
+  const colW = NODE_W + 16;
+  const colY = PAD_Y;
+  const colH = canvasH - PAD_Y * 2;
+
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x);
+  rect.setAttribute('y', colY);
+  rect.setAttribute('width', colW);
+  rect.setAttribute('height', colH);
+  rect.setAttribute('rx', 8);
+  rect.setAttribute('fill', PHASE_BG[p]);
+  rect.setAttribute('opacity', '0.5');
+  gPhaseLabels.appendChild(rect);
+
+  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  text.setAttribute('x', x + colW / 2);
+  text.setAttribute('y', colY + 18);
+  text.setAttribute('text-anchor', 'middle');
+  text.setAttribute('class', 'phase-label');
+  text.setAttribute('fill', PHASE_COLORS[p]);
+  text.textContent = nodes[0].phaseLabel;
+  gPhaseLabels.appendChild(text);
+});
+
+// Build edges index (for highlighting)
+const edgeEls = {}; // key: `${srcId}-${dstId}` -> SVG path
+
+// Edges
+NODES_RAW.forEach(n => {
+  n.dependencies.forEach(depId => {
+    const src = nodeMap[depId];
+    const dst = n;
+    if (!src || !dst) return;
+
+    const isCp = CRITICAL_PATH.has(depId) && CRITICAL_PATH.has(n.id);
+
+    const sx = src.x + NODE_W;
+    const sy = src.cy;
+    const dx = dst.x;
+    const dy = dst.cy;
+    const cx1 = sx + (dx - sx) * 0.45;
+    const cx2 = sx + (dx - sx) * 0.55;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${sx},${sy} C${cx1},${sy} ${cx2},${dy} ${dx},${dy}`);
+    path.setAttribute('class', `edge-path${isCp ? ' critical' : ''}`);
+    path.setAttribute('marker-end', `url(#${isCp ? 'arrow-cp' : 'arrow'})`);
+    path.dataset.src = depId;
+    path.dataset.dst = n.id;
+    gEdges.appendChild(path);
+    edgeEls[`${depId}-${n.id}`] = path;
+  });
+});
+
+// Word-wrap helper
+function wrapText(text, maxChars) {
+  const words = text.split(' ');
+  const lines = [];
+  let cur = '';
+  for (const w of words) {
+    const next = cur ? cur + ' ' + w : w;
+    if (next.length > maxChars) {
+      if (cur) lines.push(cur);
+      cur = w;
+    } else {
+      cur = next;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+// Node groups
+const nodeEls = {};
+NODES_RAW.forEach(n => {
+  const color = PHASE_COLORS[n.phase];
+  const isCp = CRITICAL_PATH.has(n.id);
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('class', 'node-group');
+  g.setAttribute('transform', `translate(${n.x},${n.y})`);
+  g.dataset.id = n.id;
+
+  // Drop shadow filter
+  const filterId = `shadow-${n.id}`;
+
+  // Card background
+  const card = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  card.setAttribute('class', 'node-card');
+
+  // Main rect
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('width', NODE_W);
+  rect.setAttribute('height', NODE_H);
+  rect.setAttribute('rx', 7);
+  rect.setAttribute('fill', '#131920');
+  rect.setAttribute('stroke', isCp ? color + '66' : '#1e2430');
+  rect.setAttribute('stroke-width', isCp ? 1.5 : 1);
+  card.appendChild(rect);
+
+  // Left accent bar
+  const accent = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  accent.setAttribute('width', 3);
+  accent.setAttribute('height', NODE_H - 14);
+  accent.setAttribute('x', 0);
+  accent.setAttribute('y', 7);
+  accent.setAttribute('rx', 1.5);
+  accent.setAttribute('fill', color);
+  accent.setAttribute('opacity', '0.9');
+  card.appendChild(accent);
+
+  // ID badge
+  const idBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  idBg.setAttribute('x', 10);
+  idBg.setAttribute('y', 10);
+  idBg.setAttribute('width', 32);
+  idBg.setAttribute('height', 14);
+  idBg.setAttribute('rx', 3);
+  idBg.setAttribute('fill', color + '22');
+  card.appendChild(idBg);
+
+  const idText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  idText.setAttribute('x', 26);
+  idText.setAttribute('y', 20);
+  idText.setAttribute('text-anchor', 'middle');
+  idText.setAttribute('font-size', '8');
+  idText.setAttribute('font-weight', '800');
+  idText.setAttribute('font-family', "'SF Mono','Fira Code',monospace");
+  idText.setAttribute('fill', color);
+  idText.textContent = n.id;
+  card.appendChild(idText);
+
+  // CP badge
+  if (isCp) {
+    const cpBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    cpBg.setAttribute('x', NODE_W - 26);
+    cpBg.setAttribute('y', 10);
+    cpBg.setAttribute('width', 18);
+    cpBg.setAttribute('height', 12);
+    cpBg.setAttribute('rx', 3);
+    cpBg.setAttribute('fill', '#ff7b7222');
+    card.appendChild(cpBg);
+
+    const cpText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    cpText.setAttribute('x', NODE_W - 17);
+    cpText.setAttribute('y', 19);
+    cpText.setAttribute('text-anchor', 'middle');
+    cpText.setAttribute('font-size', '7');
+    cpText.setAttribute('font-weight', '800');
+    cpText.setAttribute('fill', '#ff7b72');
+    cpText.textContent = 'CP';
+    card.appendChild(cpText);
+  }
+
+  // Weeks badge (bottom right)
+  const wkText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  wkText.setAttribute('x', NODE_W - 8);
+  wkText.setAttribute('y', NODE_H - 9);
+  wkText.setAttribute('text-anchor', 'end');
+  wkText.setAttribute('font-size', '8');
+  wkText.setAttribute('fill', '#484f58');
+  wkText.textContent = `~${n.estimatedWeeks}w`;
+  card.appendChild(wkText);
+
+  // Title text (word wrapped)
+  const lines = wrapText(n.title, 20);
+  const lineH = 13;
+  const totalTextH = lines.length * lineH;
+  const textStartY = (NODE_H - totalTextH) / 2 + lineH / 2 + 5;
+
+  lines.forEach((line, i) => {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', 14);
+    t.setAttribute('y', textStartY + i * lineH);
+    t.setAttribute('font-size', '11');
+    t.setAttribute('font-weight', '600');
+    t.setAttribute('fill', '#c9d1d9');
+    t.setAttribute('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    t.textContent = line;
+    card.appendChild(t);
+  });
+
+  g.appendChild(card);
+  gNodes.appendChild(g);
+  nodeEls[n.id] = g;
+});
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+
+const nodeList = document.getElementById('node-list');
+const phaseFilters = document.getElementById('phase-filters');
+let activePhase = 'all';
+let searchQuery = '';
+
+// Phase filter buttons
+phases.forEach(p => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.dataset.phase = p;
+  btn.textContent = `P${p}`;
+  btn.style.borderColor = PHASE_COLORS[p] + '44';
+  phaseFilters.appendChild(btn);
+});
+
+phaseFilters.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.style.color = btn.dataset.phase !== 'all' ? PHASE_COLORS[btn.dataset.phase] : '';
+  btn.addEventListener('click', () => {
+    activePhase = btn.dataset.phase;
+    phaseFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (btn.dataset.phase !== 'all') {
+      btn.style.background = PHASE_COLORS[btn.dataset.phase] + '22';
+    } else {
+      phaseFilters.querySelectorAll('.filter-btn[data-phase]').forEach(b => {
+        if (b.dataset.phase !== 'all') b.style.background = '';
+      });
+    }
+    updateNodeList();
+  });
+});
+
+function updateNodeList() {
+  document.querySelectorAll('.nl-item').forEach(el => {
+    const id = el.dataset.id;
+    const n = nodeMap[id];
+    const phaseMatch = activePhase === 'all' || n.phase === Number(activePhase);
+    const searchMatch = !searchQuery || n.id.toLowerCase().includes(searchQuery) || n.title.toLowerCase().includes(searchQuery);
+    el.classList.toggle('hidden', !phaseMatch || !searchMatch);
+  });
+}
+
+NODES_RAW.forEach(n => {
+  const item = document.createElement('div');
+  item.className = 'nl-item';
+  item.dataset.id = n.id;
+  const color = PHASE_COLORS[n.phase];
+
+  item.innerHTML = `
+    <div class="nl-dot" style="background:${color}"></div>
+    <div class="nl-text">
+      <div class="nl-id" style="color:${color}">${n.id}</div>
+      <div class="nl-title">${n.title}</div>
+    </div>
+  `;
+  item.addEventListener('click', () => selectNode(n.id));
+  nodeList.appendChild(item);
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  updateNodeList();
+});
+
+// ── Selection + Highlighting ──────────────────────────────────────────────────
+
+let selectedId = null;
+
+function getConnected(id) {
+  const deps = nodeMap[id].dependencies;
+  const rdeps = NODES_RAW.filter(n => n.dependencies.includes(id)).map(n => n.id);
+  return new Set([id, ...deps, ...rdeps]);
+}
+
+function selectNode(id) {
+  selectedId = id;
+  const n = nodeMap[id];
+  const connected = getConnected(id);
+
+  // Highlight nodes
+  NODES_RAW.forEach(node => {
+    const el = nodeEls[node.id];
+    if (connected.has(node.id)) {
+      el.classList.remove('dimmed');
+      el.classList.toggle('highlighted', node.id === id);
+    } else {
+      el.classList.add('dimmed');
+      el.classList.remove('highlighted');
+    }
+  });
+
+  // Highlight edges
+  Object.values(edgeEls).forEach(path => {
+    const src = path.dataset.src;
+    const dst = path.dataset.dst;
+    const isConnected = (src === id || dst === id) ||
+                        (connected.has(src) && connected.has(dst));
+    path.classList.remove('highlighted', 'dimmed');
+    if (src === id || dst === id) {
+      path.classList.add('highlighted');
+      path.setAttribute('marker-end', 'url(#arrow-hl)');
+    } else if (isConnected) {
+      // leave normal
+    } else {
+      path.classList.add('dimmed');
+    }
+  });
+
+  // Sidebar
+  document.querySelectorAll('.nl-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
+  });
+
+  showDetail(n);
+  drawMinimap();
+}
+
+function clearSelection() {
+  selectedId = null;
+  NODES_RAW.forEach(n => {
+    nodeEls[n.id].classList.remove('dimmed', 'highlighted');
+  });
+  Object.entries(edgeEls).forEach(([key, path]) => {
+    path.classList.remove('highlighted', 'dimmed');
+    const isCp = CRITICAL_PATH.has(path.dataset.src) && CRITICAL_PATH.has(path.dataset.dst);
+    path.setAttribute('marker-end', `url(#${isCp ? 'arrow-cp' : 'arrow'})`);
+  });
+  document.querySelectorAll('.nl-item').forEach(el => el.classList.remove('selected'));
+  hideDetail();
+  drawMinimap();
+}
+
+// Click node
+gNodes.addEventListener('click', e => {
+  const g = e.target.closest('.node-group');
+  if (g) {
+    const id = g.dataset.id;
+    if (id === selectedId) {
+      clearSelection();
+    } else {
+      selectNode(id);
+    }
+  }
+});
+
+// Click canvas background
+svg.addEventListener('click', e => {
+  if (e.target === svg || e.target.id === 'viewport' || e.target.id === 'g-edges' || e.target.tagName === 'path') {
+    if (!e.target.closest('.node-group')) clearSelection();
+  }
+});
+
+// ── Detail Panel ──────────────────────────────────────────────────────────────
+
+const detail = document.getElementById('detail');
+const detailInner = document.getElementById('detail-inner');
+
+function showDetail(n) {
+  const color = PHASE_COLORS[n.phase];
+  const isCp = CRITICAL_PATH.has(n.id);
+
+  const depsHtml = n.dependencies.length
+    ? n.dependencies.map(d => `<span class="dep-chip" data-id="${d}">${d}</span>`).join('')
+    : '<span style="font-size:11px;color:#484f58">None</span>';
+
+  const candidatesHtml = n.candidates.length
+    ? n.candidates.map(c => `<span class="candidate-tag">${c}</span>`).join('')
+    : '<span style="font-size:11px;color:#484f58">—</span>';
+
+  // Find what this unlocks
+  const unlocks = NODES_RAW.filter(x => x.dependencies.includes(n.id));
+  const unlocksHtml = unlocks.length
+    ? unlocks.map(x => `<span class="dep-chip" data-id="${x.id}">${x.id}</span>`).join('')
+    : '<span style="font-size:11px;color:#484f58">None (leaf node)</span>';
+
+  detailInner.innerHTML = `
+    <div class="d-header">
+      <div class="d-header-top">
+        <span class="d-id" style="background:${color}22;color:${color}">${n.id}</span>
+        <button class="close-btn" id="detail-close">✕</button>
+      </div>
+      <div class="d-title">${n.title}</div>
+      <div class="d-badges">
+        ${isCp ? '<span class="badge badge-cp">Critical Path</span>' : ''}
+        <span class="badge badge-weeks">~${n.estimatedWeeks} weeks</span>
+        <span class="badge badge-phase" style="background:${color}22;color:${color};border-color:${color}44">${n.phaseLabel}</span>
+      </div>
+    </div>
+    <div class="d-body">
+      <div class="d-section">
+        <h4>Description</h4>
+        <p>${n.description}</p>
+      </div>
+      <div class="d-section">
+        <h4>Done When</h4>
+        <div class="done-when-box">${n.doneWhen}</div>
+      </div>
+      ${n.candidates.length ? `<div class="d-section">
+        <h4>Approaches / Candidates</h4>
+        <div class="candidate-grid">${candidatesHtml}</div>
+      </div>` : ''}
+      <div class="d-section">
+        <h4>Depends On</h4>
+        <div class="dep-chips">${depsHtml}</div>
+      </div>
+      <div class="d-section">
+        <h4>Unlocks</h4>
+        <div class="dep-chips">${unlocksHtml}</div>
+      </div>
+    </div>
+  `;
+
+  detail.classList.add('open');
+
+  document.getElementById('detail-close').addEventListener('click', clearSelection);
+
+  detailInner.querySelectorAll('.dep-chip[data-id]').forEach(chip => {
+    chip.addEventListener('click', () => selectNode(chip.dataset.id));
+  });
+}
+
+function hideDetail() {
+  detail.classList.remove('open');
+}
+
+// ── Pan + Zoom ────────────────────────────────────────────────────────────────
+
+let panX = 0, panY = 0, scale = 1;
+let dragging = false, dragStartX = 0, dragStartY = 0, dragPanX = 0, dragPanY = 0;
+
+function applyTransform() {
+  gViewport.setAttribute('transform', `translate(${panX},${panY}) scale(${scale})`);
+  document.getElementById('zoom-level').textContent = Math.round(scale * 100) + '%';
+  drawMinimap();
+}
+
+function fitView() {
+  const wrap = document.getElementById('canvas-wrap');
+  const ww = wrap.clientWidth;
+  const wh = wrap.clientHeight;
+  const scaleX = ww / canvasW;
+  const scaleY = wh / canvasH;
+  scale = Math.min(scaleX, scaleY) * 0.92;
+  panX = (ww - canvasW * scale) / 2;
+  panY = (wh - canvasH * scale) / 2;
+  applyTransform();
+}
+
+// Initial fit
+setTimeout(fitView, 50);
+
+// Zoom wheel
+document.getElementById('canvas-wrap').addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect = document.getElementById('canvas-wrap').getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const delta = -e.deltaY * 0.001;
+  const newScale = Math.max(0.1, Math.min(3, scale * (1 + delta)));
+  panX = mx - (mx - panX) * (newScale / scale);
+  panY = my - (my - panY) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+}, { passive: false });
+
+// Pan drag
+const canvasWrap = document.getElementById('canvas-wrap');
+canvasWrap.addEventListener('mousedown', e => {
+  if (e.button !== 0) return;
+  if (e.target.closest('.node-group')) return;
+  dragging = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  dragPanX = panX;
+  dragPanY = panY;
+  canvasWrap.classList.add('grabbing');
+});
+
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  panX = dragPanX + (e.clientX - dragStartX);
+  panY = dragPanY + (e.clientY - dragStartY);
+  applyTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  dragging = false;
+  canvasWrap.classList.remove('grabbing');
+});
+
+// Zoom buttons
+document.getElementById('zoom-in').addEventListener('click', () => {
+  const ww = document.getElementById('canvas-wrap').clientWidth;
+  const wh = document.getElementById('canvas-wrap').clientHeight;
+  const cx = ww / 2, cy = wh / 2;
+  const newScale = Math.min(3, scale * 1.2);
+  panX = cx - (cx - panX) * (newScale / scale);
+  panY = cy - (cy - panY) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+});
+
+document.getElementById('zoom-out').addEventListener('click', () => {
+  const ww = document.getElementById('canvas-wrap').clientWidth;
+  const wh = document.getElementById('canvas-wrap').clientHeight;
+  const cx = ww / 2, cy = wh / 2;
+  const newScale = Math.max(0.1, scale / 1.2);
+  panX = cx - (cx - panX) * (newScale / scale);
+  panY = cy - (cy - panY) * (newScale / scale);
+  scale = newScale;
+  applyTransform();
+});
+
+document.getElementById('zoom-fit').addEventListener('click', fitView);
+
+// ── Minimap ───────────────────────────────────────────────────────────────────
+
+function drawMinimap() {
+  const mm = document.getElementById('minimap');
+  const canvas = document.getElementById('minimap-canvas');
+  canvas.width = mm.clientWidth * 2;
+  canvas.height = mm.clientHeight * 2;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(2, 2);
+  const mw = mm.clientWidth;
+  const mh = mm.clientHeight;
+  const sx = mw / canvasW;
+  const sy = mh / canvasH;
+  const s = Math.min(sx, sy) * 0.9;
+  const ox = (mw - canvasW * s) / 2;
+  const oy = (mh - canvasH * s) / 2;
+
+  ctx.clearRect(0, 0, mw, mh);
+
+  // Draw phase columns
+  phases.forEach(p => {
+    const x = PAD_X + p * COL_GAP;
+    const mx2 = ox + x * s;
+    const my2 = oy + PAD_Y * s;
+    ctx.fillStyle = PHASE_BG[p];
+    ctx.fillRect(mx2 - 4 * s, my2, (NODE_W + 8) * s, (canvasH - PAD_Y * 2) * s);
+  });
+
+  // Draw edges
+  NODES_RAW.forEach(n => {
+    n.dependencies.forEach(depId => {
+      const src = nodeMap[depId];
+      const dst = n;
+      const isCp = CRITICAL_PATH.has(depId) && CRITICAL_PATH.has(n.id);
+      ctx.beginPath();
+      ctx.strokeStyle = isCp ? '#ff7b7255' : '#2a304088';
+      ctx.lineWidth = isCp ? 1 : 0.5;
+      ctx.moveTo(ox + (src.x + NODE_W) * s, oy + src.cy * s);
+      ctx.lineTo(ox + dst.x * s, oy + dst.cy * s);
+      ctx.stroke();
+    });
+  });
+
+  // Draw nodes
+  NODES_RAW.forEach(n => {
+    const color = PHASE_COLORS[n.phase];
+    const isSelected = n.id === selectedId;
+    ctx.fillStyle = isSelected ? color + '88' : color + '44';
+    ctx.fillRect(ox + n.x * s, oy + n.y * s, NODE_W * s, NODE_H * s);
+  });
+
+  // Viewport rect
+  const wrap = document.getElementById('canvas-wrap');
+  const vw = wrap.clientWidth;
+  const vh = wrap.clientHeight;
+  const vx = (-panX / scale) * s + ox;
+  const vy = (-panY / scale) * s + oy;
+  const vww = (vw / scale) * s;
+  const vhh = (vh / scale) * s;
+  ctx.strokeStyle = '#388bfd88';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(vx, vy, vww, vhh);
+  ctx.fillStyle = '#388bfd11';
+  ctx.fillRect(vx, vy, vww, vhh);
+}
+
+// ── Keyboard ──────────────────────────────────────────────────────────────────
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') clearSelection();
+  if (e.key === '/' && !e.target.matches('input')) {
+    e.preventDefault();
+    document.getElementById('search-input').focus();
+  }
+  if (e.key === 'f' && !e.target.matches('input')) fitView();
+});
+
+// SVG resize
+window.addEventListener('resize', () => {
+  svg.setAttribute('width', window.innerWidth);
+  svg.setAttribute('height', window.innerHeight);
+  drawMinimap();
+});
+
+// Initial draw
+applyTransform();
+drawMinimap();
+</script>
+</body>
+</html>

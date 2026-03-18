@@ -550,6 +550,25 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   z-index: 1000;
 }
 
+/* Skeuomorphic paper drag indicator */
+.drag-paper {
+  transform: translate(-8px, -8px) perspective(500px) rotateY(0deg);
+  transform-origin: 8px 8px; /* rotation axis = cursor / grip point */
+  transition: transform 0.14s ease-out;
+  position: relative;
+  display: inline-block;
+}
+.drag-paper-hand {
+  position: absolute;
+  top: -20px;
+  left: -18px;
+  font-size: 26px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  transform: scaleX(-1); /* flip so thumb grips the corner naturally */
+}
+
 /* ── Blocks ───────────────────────────────────────── */
 
 .block {
@@ -1023,60 +1042,115 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 /* ── Notebook Switcher Popup ─────────────────────── */
 
-.notebook-switcher {
+/* ── Notebook picker modal ───────────────────────── */
+
+.nb-picker-overlay {
   position: fixed;
-  bottom: 40px;
-  left: 4px;
-  width: 280px;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  box-shadow: 0 6px 20px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.08);
-  padding: 4px 0;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
   z-index: 9000;
-  font-size: 13px;
-  max-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nb-picker-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.1);
+  padding: 24px 28px 20px;
+  min-width: 380px;
+  max-width: 680px;
+  max-height: 80vh;
   overflow-y: auto;
 }
 
-.notebook-switcher-header {
-  padding: 6px 12px 4px;
-  font-size: 11px;
+.nb-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.nb-picker-title {
+  font-size: 17px;
   font-weight: 600;
+  color: var(--text);
+}
+
+.nb-picker-close {
+  background: none;
+  border: none;
+  font-size: 14px;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.notebook-switcher-item {
-  padding: 7px 12px;
   cursor: pointer;
-  border-radius: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
 }
-.notebook-switcher-item:hover { background: var(--hover-bg); }
+.nb-picker-close:hover { background: var(--hover-bg); color: var(--text); }
 
-.notebook-switcher-item-name {
+.nb-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.nb-picker-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.12s, background 0.12s;
+}
+.nb-picker-card:hover { border-color: var(--active-color); background: var(--active-bg); }
+.nb-picker-card--active { border-color: var(--active-color); background: var(--active-bg); }
+
+.nb-picker-icon {
+  width: 52px;
+  height: 52px;
+  color: #888;
+  margin-bottom: 10px;
+}
+.nb-picker-card:hover .nb-picker-icon,
+.nb-picker-card--active .nb-picker-icon { color: var(--active-color); }
+
+.nb-picker-name {
+  font-size: 13px;
   font-weight: 500;
   color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
-.notebook-switcher-item-path {
-  font-size: 11px;
+.nb-picker-empty {
+  font-size: 13px;
   color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 1px;
+  margin-bottom: 20px;
 }
 
-.notebook-switcher-sep {
-  height: 1px;
-  background: var(--border);
-  margin: 4px 8px;
+.nb-picker-footer {
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
 }
+
+.nb-picker-action {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+}
+.nb-picker-action:hover { background: var(--hover-bg); }
 
 /* ── Link Context Menu ───────────────────────────── */
 
