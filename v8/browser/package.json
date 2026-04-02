@@ -1,0 +1,9 @@
+{
+  "name": "notebound-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run dev.ts",
+    "build": "bun run build.ts"
+  }
+}

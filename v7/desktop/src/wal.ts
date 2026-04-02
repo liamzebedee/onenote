@@ -57,11 +57,12 @@ class WAL {
     return fs.readdirSync(walDir)
       .filter(f => f.endsWith('.json') && !f.endsWith('.tmp'))
       .sort((a, b) => {
-        // Extract timestamp portion after the device UUID prefix
-        // Filename format: <deviceId>-<ISO timestamp>.json
-        // Device ID is a UUID (36 chars), followed by a dash, then the timestamp
-        const tsA = a.slice(37);
-        const tsB = b.slice(37);
+        // Extract ISO timestamp from filename.
+        // Standard format: <uuid>-<ISO timestamp>.json  (UUID is 36 chars)
+        // Non-standard:    restore-<id>-<ISO timestamp>.json
+        // Match the ISO date portion directly to handle any prefix.
+        const tsA = a.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || a;
+        const tsB = b.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || b;
         return tsA < tsB ? -1 : tsA > tsB ? 1 : a < b ? -1 : a > b ? 1 : 0;
       });
   }

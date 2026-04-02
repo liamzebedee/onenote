@@ -25,13 +25,13 @@
   "build": {
     "appId": "com.notebound",
     "productName": "Notebound",
-    "icon": "icon.png",
+    "icon": "assets/icon.png",
     "files": [
       "main.js",
       "src/preload.js",
       "app/**/*",
       "!app/src/**/*",
-      "icon.png"
+      "assets/**/*"
     ],
     "directories": {
       "output": "out"

@@ -1,0 +1,35 @@
+#!/usr/bin/env bun
+// Build the browser bundle — outputs a self-contained static site to dist/
+import { copyFileSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
+
+const outDir: string = join(dirname(import.meta.path), 'dist');
+mkdirSync(outDir, { recursive: true });
+
+// Bundle entry.ts (includes shim + core app)
+const result = await Bun.build({
+  entrypoints: [join(dirname(import.meta.path), 'src', 'entry.ts')],
+  outdir: outDir,
+  minify: true,
+  naming: 'bundle.js',
+});
+
+if (!result.success) {
+  console.error('Build failed:');
+  for (const log of result.logs) console.error(log);
+  process.exit(1);
+}
+
+// Copy index.html (browser version)
+const indexSrc: string = join(dirname(import.meta.path), 'index.html');
+copyFileSync(indexSrc, join(outDir, 'index.html'));
+
+// Copy style.css from core
+const cssSrc: string = join(dirname(import.meta.path), '..', 'core', 'style.css');
+copyFileSync(cssSrc, join(outDir, 'style.css'));
+
+// Copy icon.svg from desktop
+const iconSrc: string = join(dirname(import.meta.path), '..', 'desktop', 'icon.svg');
+copyFileSync(iconSrc, join(outDir, 'icon.svg'));
+
+console.log('Browser build complete → dist/');

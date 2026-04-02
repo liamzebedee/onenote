@@ -9,13 +9,12 @@ import type { AppState, Snapshot } from '../../core/src/types';
 
 const MAX_SNAPSHOTS_PER_DEVICE = 3;
 
-// Sort snapshot filenames by timestamp (chars after the 36-char UUID + '-' prefix).
-// This mirrors WAL.listBatches() which does the same slice. Without this, lexicographic
-// sort on the device-UUID prefix corrupts order (e.g. 'd1...' < 'f5...' regardless of date).
+// Sort filenames by embedded ISO timestamp.
+// Handles both standard "{uuid}-{timestamp}.json" and non-standard prefixes like "restore-".
 function sortByTimestamp(files: string[]): string[] {
   return files.slice().sort((a, b) => {
-    const tsA = a.slice(37); // skip "{uuid}-"
-    const tsB = b.slice(37);
+    const tsA = a.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || a;
+    const tsB = b.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || b;
     return tsA < tsB ? -1 : tsA > tsB ? 1 : 0;
   });
 }

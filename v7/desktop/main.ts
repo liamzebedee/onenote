@@ -119,7 +119,7 @@ function createWindow(): void {
     } : {
       frame: false,
     }),
-    icon: nativeImage.createFromPath(path.join(__dirname, process.platform === 'darwin' ? 'icon.icns' : 'app/icon-256.png')),
+    icon: nativeImage.createFromPath(path.join(__dirname, process.platform === 'darwin' ? 'assets/icon.icns' : 'assets/icon-256.png')),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

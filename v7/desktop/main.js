@@ -123,8 +123,8 @@ class WAL {
     if (!import_fs2.default.existsSync(walDir))
       return [];
     return import_fs2.default.readdirSync(walDir).filter((f) => f.endsWith(".json") && !f.endsWith(".tmp")).sort((a, b) => {
-      const tsA = a.slice(37);
-      const tsB = b.slice(37);
+      const tsA = a.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || a;
+      const tsB = b.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || b;
       return tsA < tsB ? -1 : tsA > tsB ? 1 : a < b ? -1 : a > b ? 1 : 0;
     });
   }
@@ -480,7 +480,11 @@ function findInTree(pages, id) {
   return null;
 }
 function removeFromTree(pages, id) {
-  return pages.filter((p) => p.id !== id).map((p) => ({ ...p, children: removeFromTree(p.children ?? [], id) }));
+  for (const p of pages) {
+    if (p.children?.length)
+      p.children = removeFromTree(p.children, id);
+  }
+  return pages.filter((p) => p.id !== id);
 }
 function findPageInState(state, pageId) {
   const idx = state._index;
@@ -524,7 +528,7 @@ function _findBlockFast(state, pageId, blockId) {
   const idx = state._index;
   if (idx) {
     const entry = idx.blocks.get(blockId);
-    if (entry && entry.page.id === pageId)
+    if (entry)
       return entry;
     return null;
   }
@@ -535,33 +539,6 @@ function _findBlockFast(state, pageId, blockId) {
   if (!blk)
     return null;
   return { block: blk, page: result.page };
-}
-function _findBlockById(state, blockId) {
-  const idx = state._index;
-  if (idx) {
-    return idx.blocks.get(blockId) ?? null;
-  }
-  for (const nb of state.notebooks) {
-    for (const sec of nb.sections) {
-      const found = _searchPagesForBlock(sec.pages, blockId);
-      if (found)
-        return found;
-    }
-  }
-  return null;
-}
-function _searchPagesForBlock(pages, blockId) {
-  for (const p of pages) {
-    const blk = (p.blocks || []).find((b) => b.id === blockId);
-    if (blk)
-      return { block: blk, page: p };
-    if (p.children?.length) {
-      const found = _searchPagesForBlock(p.children, blockId);
-      if (found)
-        return found;
-    }
-  }
-  return null;
 }
 function emptyState() {
   return { notebooks: [], ui: { notebookId: null, sectionId: null, pageId: null } };
@@ -911,12 +888,18 @@ function applyOp(state, op) {
       return state;
     }
     case "block-delete": {
-      const entry = _findBlockById(state, op.blockId);
-      if (!entry)
+      if (idx) {
+        const entry = idx.blocks.get(op.blockId);
+        if (entry && entry.page.id === op.pageId) {
+          entry.page.blocks = entry.page.blocks.filter((b) => b.id !== op.blockId);
+          idx.blocks.delete(op.blockId);
+        }
         return state;
-      entry.page.blocks = entry.page.blocks.filter((b) => b.id !== op.blockId);
-      if (idx)
-        idx.blocks.delete(op.blockId);
+      }
+      const result = findPageInState(state, op.pageId);
+      if (!result)
+        return state;
+      result.page.blocks = result.page.blocks.filter((b) => b.id !== op.blockId);
       return state;
     }
     case "block-move": {
@@ -1076,8 +1059,8 @@ var import_path2 = __toESM(require("path"));
 var MAX_SNAPSHOTS_PER_DEVICE = 3;
 function sortByTimestamp(files) {
   return files.slice().sort((a, b) => {
-    const tsA = a.slice(37);
-    const tsB = b.slice(37);
+    const tsA = a.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || a;
+    const tsB = b.match(/(\d{4}-\d{2}-\d{2}T[\w-]+)\.json$/)?.[1] || b;
     return tsA < tsB ? -1 : tsA > tsB ? 1 : 0;
   });
 }
@@ -2285,7 +2268,7 @@ function closeNotebook() {
 }
 
 // main.ts
-var __dirname = "/Users/liamz/Documents/Projects/onenote/v7/desktop";
+var __dirname = "/Users/liamz/Documents/Ongoing projects/onenote/v7/desktop";
 var isMac = process.platform === "darwin";
 import_electron2.app.name = "notebound";
 if (process.platform === "linux") {
@@ -2412,7 +2395,7 @@ function createWindow() {
     } : {
       frame: false
     },
-    icon: import_electron2.nativeImage.createFromPath(import_path8.default.join(__dirname, process.platform === "darwin" ? "icon.icns" : "app/icon-256.png")),
+    icon: import_electron2.nativeImage.createFromPath(import_path8.default.join(__dirname, process.platform === "darwin" ? "assets/icon.icns" : "assets/icon-256.png")),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

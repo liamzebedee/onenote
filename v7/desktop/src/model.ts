@@ -24,7 +24,10 @@ function findInTree(pages: Page[], id: string): Page | null {
 }
 
 function removeFromTree(pages: Page[], id: string): Page[] {
-  return pages.filter(p => p.id !== id).map(p => ({ ...p, children: removeFromTree(p.children ?? [], id) }));
+  for (const p of pages) {
+    if (p.children?.length) p.children = removeFromTree(p.children, id);
+  }
+  return pages.filter(p => p.id !== id);
 }
 
 function findPageInState(state: AppState, pageId: string): { page: Page; section: Section; notebook: Notebook } | null {
@@ -72,9 +75,7 @@ function _findBlockFast(state: AppState, pageId: string, blockId: string): { blo
   const idx = state._index;
   if (idx) {
     const entry = idx.blocks.get(blockId);
-    // Verify the block is on the expected page — block IDs are globally unique
-    // but ops may carry a stale pageId from cross-device replay
-    if (entry && entry.page.id === pageId) return entry;
+    if (entry) return entry;
     return null;
   }
   const result = findPageInState(state, pageId);
@@ -456,10 +457,19 @@ function applyOp(state: AppState, op: Op): AppState {
     }
 
     case 'block-delete': {
-      const entry = _findBlockById(state, op.blockId as string);
-      if (!entry) return state;
-      entry.page.blocks = entry.page.blocks.filter(b => b.id !== (op.blockId as string));
-      if (idx) idx.blocks.delete(op.blockId as string);
+      // Only delete if block is on the specified page — prevents cross-page deletion
+      // when a stale op references a block that has since moved.
+      if (idx) {
+        const entry = idx.blocks.get(op.blockId as string);
+        if (entry && entry.page.id === (op.pageId as string)) {
+          entry.page.blocks = entry.page.blocks.filter(b => b.id !== (op.blockId as string));
+          idx.blocks.delete(op.blockId as string);
+        }
+        return state;
+      }
+      const result = findPageInState(state, op.pageId as string);
+      if (!result) return state;
+      result.page.blocks = result.page.blocks.filter(b => b.id !== (op.blockId as string));
       return state;
     }
 

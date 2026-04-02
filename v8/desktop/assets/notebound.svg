@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Brown leather background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#6b3a1f"/>
+      <stop offset="40%" stop-color="#5a2d14"/>
+      <stop offset="100%" stop-color="#3d1e0c"/>
+    </linearGradient>
+    <!-- Inner shadow for background -->
+    <radialGradient id="bgVignette" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.06)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.3)"/>
+    </radialGradient>
+    <!-- Book cover — rich dark leather -->
+    <linearGradient id="cover" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0%" stop-color="#5c3520"/>
+      <stop offset="30%" stop-color="#4a2815"/>
+      <stop offset="70%" stop-color="#3e2210"/>
+      <stop offset="100%" stop-color="#2e1808"/>
+    </linearGradient>
+    <!-- Cover highlight (top-left light source) -->
+    <linearGradient id="coverHighlight" x1="0" y1="0" x2="0.5" y2="0.6">
+      <stop offset="0%" stop-color="rgba(255,220,170,0.15)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+    <!-- Page gradient — warm parchment -->
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffef6"/>
+      <stop offset="50%" stop-color="#f8f2e6"/>
+      <stop offset="100%" stop-color="#efe8d8"/>
+    </linearGradient>
+    <!-- Page inner shadow -->
+    <linearGradient id="pageEdge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="rgba(80,50,20,0.15)"/>
+      <stop offset="8%" stop-color="rgba(80,50,20,0)"/>
+      <stop offset="92%" stop-color="rgba(80,50,20,0)"/>
+      <stop offset="100%" stop-color="rgba(80,50,20,0.08)"/>
+    </linearGradient>
+    <!-- Gold gradient for embossed text -->
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0d080"/>
+      <stop offset="25%" stop-color="#dab44a"/>
+      <stop offset="50%" stop-color="#c89e38"/>
+      <stop offset="75%" stop-color="#dab44a"/>
+      <stop offset="100%" stop-color="#f0d080"/>
+    </linearGradient>
+    <!-- Gold for border — slightly different sheen -->
+    <linearGradient id="goldBorder" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8c868"/>
+      <stop offset="50%" stop-color="#b8892e"/>
+      <stop offset="100%" stop-color="#d4a44a"/>
+    </linearGradient>
+    <!-- Spine dark -->
+    <linearGradient id="spine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2e1808"/>
+      <stop offset="40%" stop-color="#3e2210"/>
+      <stop offset="70%" stop-color="#4a2815"/>
+      <stop offset="100%" stop-color="#3a2010"/>
+    </linearGradient>
+    <!-- Drop shadow filter for the book -->
+    <filter id="bookShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="4" dy="6" stdDeviation="10" flood-color="rgba(0,0,0,0.45)"/>
+    </filter>
+    <!-- Emboss filter for gold text -->
+    <filter id="emboss" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+    <!-- Subtle inner glow for page -->
+    <filter id="pageGlow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="rgba(0,0,0,0.12)"/>
+    </filter>
+    <!-- Leather grain texture pattern -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" seed="2" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="grained"/>
+      <feComposite in="grained" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <!-- Background leather grain -->
+    <filter id="bgGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" seed="5" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="grained"/>
+      <feComposite in="grained" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <!-- Stitching pattern -->
+    <pattern id="stitch" x="0" y="0" width="4" height="16" patternUnits="userSpaceOnUse">
+      <rect x="1" y="2" width="2" height="8" rx="1" fill="rgba(212,164,74,0.5)"/>
+    </pattern>
+    <!-- Corner ornament clip -->
+    <clipPath id="pageClip">
+      <rect x="134" y="88" width="274" height="336" rx="3"/>
+    </clipPath>
+  </defs>
+
+  <!-- === BACKGROUND — rich brown leather === -->
+  <rect width="512" height="512" rx="100" fill="url(#bg)" filter="url(#bgGrain)"/>
+  <rect width="512" height="512" rx="100" fill="url(#bgVignette)"/>
+
+  <!-- === BOOK GROUP with drop shadow === -->
+  <g filter="url(#bookShadow)">
+
+    <!-- Book cover — dark leather with grain -->
+    <rect x="88" y="68" width="336" height="376" rx="12" fill="url(#cover)" filter="url(#grain)"/>
+    <!-- Cover highlight overlay -->
+    <rect x="88" y="68" width="336" height="376" rx="12" fill="url(#coverHighlight)"/>
+
+    <!-- Gold decorative double border on cover -->
+    <rect x="100" y="80" width="312" height="352" rx="7" fill="none" stroke="url(#goldBorder)" stroke-width="2"/>
+    <rect x="106" y="86" width="300" height="340" rx="5" fill="none" stroke="url(#goldBorder)" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Gold corner ornaments -->
+    <g stroke="url(#goldBorder)" stroke-width="1.5" fill="none" opacity="0.7">
+      <!-- Top-left -->
+      <path d="M108,100 L108,92 Q108,88 112,88 L120,88"/>
+      <path d="M112,96 L112,92 Q112,90 114,90 L118,90" stroke-width="1"/>
+      <!-- Top-right -->
+      <path d="M404,100 L404,92 Q404,88 400,88 L392,88"/>
+      <path d="M400,96 L400,92 Q400,90 398,90 L394,90" stroke-width="1"/>
+      <!-- Bottom-left -->
+      <path d="M108,418 L108,426 Q108,430 112,430 L120,430"/>
+      <path d="M112,422 L112,426 Q112,428 114,428 L118,428" stroke-width="1"/>
+      <!-- Bottom-right -->
+      <path d="M404,418 L404,426 Q404,430 400,430 L392,430"/>
+      <path d="M400,422 L400,426 Q400,428 398,428 L394,428" stroke-width="1"/>
+    </g>
+
+    <!-- === SPINE with ridges and stitching === -->
+    <rect x="88" y="68" width="46" height="376" rx="12" fill="url(#spine)" filter="url(#grain)"/>
+    <!-- Spine highlight edge -->
+    <line x1="134" y1="72" x2="134" y2="440" stroke="rgba(255,220,170,0.1)" stroke-width="1"/>
+    <!-- Gold spine line -->
+    <line x1="113" y1="68" x2="113" y2="444" stroke="rgba(212,164,74,0.3)" stroke-width="1.5"/>
+    <!-- Spine ridges — raised bands -->
+    <g stroke="rgba(180,140,60,0.4)" stroke-width="2.5" stroke-linecap="round">
+      <line x1="91" y1="108" x2="131" y2="108"/>
+      <line x1="91" y1="148" x2="131" y2="148"/>
+      <line x1="91" y1="366" x2="131" y2="366"/>
+      <line x1="91" y1="406" x2="131" y2="406"/>
+    </g>
+    <!-- Ridge highlights -->
+    <g stroke="rgba(255,220,170,0.15)" stroke-width="1" stroke-linecap="round">
+      <line x1="91" y1="106" x2="131" y2="106"/>
+      <line x1="91" y1="146" x2="131" y2="146"/>
+      <line x1="91" y1="364" x2="131" y2="364"/>
+      <line x1="91" y1="404" x2="131" y2="404"/>
+    </g>
+    <!-- Stitching along spine -->
+    <rect x="120" y="68" width="4" height="376" fill="url(#stitch)" opacity="0.6"/>
+
+    <!-- === PAGES — layered for depth === -->
+    <!-- Page shadow edges (multiple pages visible) -->
+    <rect x="132" y="90" width="278" height="338" rx="3" fill="#e8e0d0" />
+    <rect x="131" y="89" width="278" height="338" rx="3" fill="#ece4d4"/>
+    <rect x="130" y="88" width="278" height="338" rx="3" fill="#f0e8d8"/>
+
+    <!-- Main page -->
+    <rect x="134" y="88" width="274" height="336" rx="3" fill="url(#page)" filter="url(#pageGlow)"/>
+    <!-- Page edge shadow overlay -->
+    <rect x="134" y="88" width="274" height="336" rx="3" fill="url(#pageEdge)"/>
+
+    <!-- Ruled lines on page -->
+    <g clip-path="url(#pageClip)">
+      <!-- Red margin line -->
+      <line x1="170" y1="88" x2="170" y2="424" stroke="rgba(200,100,100,0.2)" stroke-width="1"/>
+      <!-- Horizontal rules -->
+      <g stroke="#ddd4c4" stroke-width="0.8">
+        <line x1="150" y1="145" x2="400" y2="145"/>
+        <line x1="150" y1="172" x2="400" y2="172"/>
+        <line x1="150" y1="199" x2="400" y2="199"/>
+        <line x1="150" y1="226" x2="400" y2="226"/>
+        <line x1="150" y1="253" x2="400" y2="253"/>
+        <line x1="150" y1="280" x2="400" y2="280"/>
+        <line x1="150" y1="307" x2="400" y2="307"/>
+        <line x1="150" y1="334" x2="400" y2="334"/>
+        <line x1="150" y1="361" x2="400" y2="361"/>
+        <line x1="150" y1="388" x2="400" y2="388"/>
+      </g>
+      <!-- Faux handwriting -->
+      <g stroke="#c0b8a4" stroke-width="1.8" stroke-linecap="round" opacity="0.6">
+        <line x1="175" y1="158" x2="260" y2="158"/>
+        <line x1="175" y1="185" x2="320" y2="185"/>
+        <line x1="175" y1="212" x2="290" y2="212"/>
+        <line x1="175" y1="239" x2="340" y2="239"/>
+        <line x1="175" y1="266" x2="270" y2="266"/>
+      </g>
+    </g>
+
+  </g>
+
+  <!-- === "NB" MONOGRAM — embossed gold on cover === -->
+  <!-- Shadow layer -->
+  <text x="270" y="295" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="155" font-weight="bold" fill="rgba(0,0,0,0.4)" letter-spacing="-8"
+        transform="translate(1.5,2.5)">NB</text>
+  <!-- Main gold text -->
+  <text x="270" y="295" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="155" font-weight="bold" fill="url(#gold)" letter-spacing="-8"
+        filter="url(#emboss)">NB</text>
+  <!-- Highlight on text (emboss effect) -->
+  <text x="270" y="295" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="155" font-weight="bold" fill="rgba(255,240,200,0.15)" letter-spacing="-8"
+        transform="translate(-0.5,-1)">NB</text>
+
+  <!-- === Bottom label — "NOTEBOUND" in small gold caps === -->
+  <text x="270" y="418" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="18" fill="url(#goldBorder)" letter-spacing="6" opacity="0.7">NOTEBOUND</text>
+
+  <!-- Subtle specular highlight on whole icon (gloss) -->
+  <rect width="512" height="250" rx="100" fill="url(#coverHighlight)" opacity="0.08"/>
+</svg>

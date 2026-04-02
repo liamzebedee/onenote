@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Notebound
+Comment=A notebook app
+Exec=INSTALL_DIR/run.sh
+Icon=notebound
+Type=Application
+Categories=Office;
+Terminal=false
+StartupWMClass=notebound
