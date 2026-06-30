@@ -135,7 +135,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   cursor: default;
   user-select: none;
   margin-bottom: -1px;
-  margin-right: 2px;
+  margin-right: 0;
   white-space: nowrap;
   z-index: 1;
   /* filter: drop-shadow traces the single clip-path tab silhouette — one solid
@@ -164,33 +164,21 @@ body { height: 100vh; overflow: hidden; background: #fff; }
     drop-shadow(0 -1px 0 #a8a8a8);
 }
 
-/* ── Tab = ONE solid clip-path shape. No sub-shapes, so no internal seam can
-      bleed through — even mid-animation. Flare room lives in the padding;
-      negative margins cancel it so layout width = the visible rectangle. ── */
+/* ── Tab = ONE solid clip-path shape (no internal seam can bleed through).
+      Straight left edge, always-slanted right edge, 4px chamfered top. The
+      shape is STATIC — identical for every tab, active or not. The right slant
+      overlaps the next tab; default stacking lets the next tab tuck over it,
+      and the active tab's higher z-index pops its slant out on top. ── */
 .sec-tab-body {
-  padding: 7px 34px 7px 26px;   /* text 16/20 + flare room 10 left / 14 right */
-  margin: 0 -14px 0 -10px;      /* cancel flare room; lets flares overlap neighbours */
+  padding: 7px 34px 7px 16px;   /* text 16/20 + 14px slant room on the right */
+  margin: 0 -14px 0 0;          /* cancel slant room so the slant overlaps the next tab */
   font-size: 14px;
   font-weight: 600;
   color: #333;
   background: var(--tab-solid) var(--tab-grad);
-  /* inactive: upright rectangle, 4px chamfered top (≈ the old 4px radius) */
   clip-path: polygon(
-    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
-    calc(100% - 14px) 100%, 10px 100%);
-  transition: clip-path 250ms ease-out;
-}
-/* active: same top edge, base flares out to full width — animates via clip-path */
-.sec-tab--active .sec-tab-body {
-  clip-path: polygon(
-    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
+    0 4px, 4px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
     100% 100%, 0 100%);
-}
-/* first tab keeps a straight left edge (no left flare), as before */
-.sec-tab--active:first-child .sec-tab-body {
-  clip-path: polygon(
-    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
-    100% 100%, 10px 100%);
 }
 
 /* ── Section tab colours (set as custom props so shell stays transparent for drop-shadow) */
