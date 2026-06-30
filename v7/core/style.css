@@ -109,6 +109,9 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   display: flex;
   align-items: flex-end;
   height: 46px;
+  /* sit above the notebook body so the active tab's solid fill covers the row seam */
+  position: relative;
+  z-index: 1;
   padding: 0 4px 0 36px;
   gap: 0;
   overflow-x: auto;
@@ -135,20 +138,59 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   margin-right: 2px;
   white-space: nowrap;
   z-index: 1;
-  /* filter: drop-shadow traces the full composite shape (body + corner spans) — no border artifacts */
-  filter: drop-shadow(0 0 0.5px #b8b8b8) drop-shadow(0 1px 2px #e0e0e0);
+  /* filter: drop-shadow traces the single clip-path tab silhouette — one solid
+     shape, so no internal seam exists for the background to bleed through.
+     Stacked 0-blur shadows = crisp 1px outline around the angled shape. */
+  filter:
+    drop-shadow(1px 0 0 #a8a8a8)
+    drop-shadow(-1px 0 0 #a8a8a8)
+    drop-shadow(0 -1px 0 #a8a8a8)
+    drop-shadow(0 1px 0 #9a9a9a);
 }
-.sec-tab:hover { filter: drop-shadow(0 0 0.5px #a0a0a0) drop-shadow(0 1px 2px #d5d5d5) brightness(0.96); }
-.sec-tab--active { z-index: 2; }
+.sec-tab:hover {
+  filter:
+    drop-shadow(1px 0 0 #8c8c8c)
+    drop-shadow(-1px 0 0 #8c8c8c)
+    drop-shadow(0 -1px 0 #8c8c8c)
+    drop-shadow(0 1px 0 #808080)
+    brightness(0.96);
+}
+/* Active tab merges into the notebook body: keep side + top outline, drop the bottom line. */
+.sec-tab--active {
+  z-index: 2;
+  filter:
+    drop-shadow(1px 0 0 #a8a8a8)
+    drop-shadow(-1px 0 0 #a8a8a8)
+    drop-shadow(0 -1px 0 #a8a8a8);
+}
 
-/* ── Tab visual chrome lives here, not on the shell ─ */
+/* ── Tab = ONE solid clip-path shape. No sub-shapes, so no internal seam can
+      bleed through — even mid-animation. Flare room lives in the padding;
+      negative margins cancel it so layout width = the visible rectangle. ── */
 .sec-tab-body {
-  padding: 7px 20px 7px 16px;
+  padding: 7px 34px 7px 26px;   /* text 16/20 + flare room 10 left / 14 right */
+  margin: 0 -14px 0 -10px;      /* cancel flare room; lets flares overlap neighbours */
   font-size: 14px;
   font-weight: 600;
   color: #333;
   background: var(--tab-solid) var(--tab-grad);
-  border-radius: 4px 4px 0 0;
+  /* inactive: upright rectangle, 4px chamfered top (≈ the old 4px radius) */
+  clip-path: polygon(
+    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
+    calc(100% - 14px) 100%, 10px 100%);
+  transition: clip-path 250ms ease-out;
+}
+/* active: same top edge, base flares out to full width — animates via clip-path */
+.sec-tab--active .sec-tab-body {
+  clip-path: polygon(
+    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
+    100% 100%, 0 100%);
+}
+/* first tab keeps a straight left edge (no left flare), as before */
+.sec-tab--active:first-child .sec-tab-body {
+  clip-path: polygon(
+    10px 4px, 14px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
+    100% 100%, 10px 100%);
 }
 
 /* ── Section tab colours (set as custom props so shell stays transparent for drop-shadow) */
@@ -160,20 +202,6 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .sec-tab:nth-child(8n+6) { --tab-grad: linear-gradient(to bottom, #fff0d0, #f0d8b0); --tab-solid: #f0d8b0; }
 .sec-tab:nth-child(8n+7) { --tab-grad: linear-gradient(to bottom, #d4f4f4, #b8e0e0); --tab-solid: #b8e0e0; }
 .sec-tab:nth-child(8n+8) { --tab-grad: linear-gradient(to bottom, #fde4f4, #f0c8e0); --tab-solid: #f0c8e0; }
-
-/* ── Corner spans: inherit gradient from shell ────── */
-.sec-tab-left-corner,
-.sec-tab-right-corner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background: var(--tab-solid) var(--tab-grad);
-  pointer-events: none;
-}
-.sec-tab-left-corner  { left: -10px; width: 10px; clip-path: polygon(100% 0, 0 100%, 100% 100%); transform: scaleX(0); transform-origin: right center; transition: transform 250ms ease-out; }
-.sec-tab-right-corner { right: -14px; width: 16px; margin-left: -2px; clip-path: polygon(0 0, 0 100%, 100% 100%); transform: scaleX(0); transform-origin: left center; transition: transform 250ms ease-out; }
-.sec-tab--active .sec-tab-left-corner  { transform: scaleX(1); }
-.sec-tab--active .sec-tab-right-corner { transform: scaleX(1); }
 
 .sec-add {
   padding: 2px 8px;
@@ -196,6 +224,11 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   flex: 1;
   overflow: hidden;
   min-height: 0;
+  /* pull up 1px under the tab row and stack below it, so the body's solid
+     fill backs the join — no window background line bleeds through the seam */
+  position: relative;
+  z-index: 0;
+  margin-top: -1px;
 }
 
 /* ── Notebook tabs (vertical, left side) ─────────── */
@@ -284,6 +317,11 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   min-height: 0;
   padding-top: .25em;
   padding-left: .25em;
+  /* same crisp 1px line as the section tabs, wrapping the notebook body.
+     Open at the top so the tabs connect into it (no horizontal line cutting across). */
+  border: 1px solid #a8a8a8;
+  border-top: none;
+  border-bottom-color: #9a9a9a;
 }
 
 /* ── Pages panel — right sidebar ─────────────────── */

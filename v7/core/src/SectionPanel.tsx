@@ -48,9 +48,7 @@ export function SectionPanel(): JSX.Element {
             dragId.current = null;
           }}
         >
-          {i > 0 && <span class="sec-tab-left-corner" />}
           <div class="sec-tab-body">{sec.title}</div>
-          <span class="sec-tab-right-corner" />
         </div>
       ))}
       <button class="sec-add" onClick={() => nb && addSection(nb.id)} title="New section">+</button>
