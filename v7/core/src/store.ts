@@ -704,6 +704,13 @@ export async function openNotebook(notebookPath: string): Promise<void> {
       };
     }
 
+    // NOTE: We deliberately do NOT bulk-migrate block HTML through ProseMirror
+    // on open. PM's schema only knows a fixed set of marks/nodes, so
+    // re-serializing every block would silently drop any unsupported markup
+    // (colors, alignment, spans, …) — including on blocks the user never edits.
+    // PM parses each block's existing HTML fine when the block is rendered, and
+    // only the blocks the user actually edits get re-serialized (on blur).
+
     _log('openNotebook setting appState — ui:', JSON.stringify(state.ui));
     appState.value = state;
     connected.value = true;

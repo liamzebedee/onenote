@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "build:frontend": "bun build ../core/src/main.tsx --outfile app/bundle.js --minify",
+    "build:frontend": "bun build ../core/src/main.tsx --outfile app/bundle.js",
     "build:main": "bun build main.ts --outfile main.js --target=node --format=cjs --external electron --packages=external && bun build src/preload.ts --outfile src/preload.js --target=node --format=cjs --external electron --packages=external",
     "watch:frontend": "bun build --watch ../core/src/main.tsx --outfile app/bundle.js --sourcemap=inline",
     "start": "bun run build:frontend && bun run build:main && electron .",

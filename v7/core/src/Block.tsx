@@ -1,9 +1,10 @@
 import { useRef, useEffect, useLayoutEffect, useContext, useState } from 'preact/hooks';
 import { signal } from '@preact/signals';
 import { CanvasCtx } from './Canvas.tsx';
+import { BlockEditor } from './BlockEditor.tsx';
+import { removeLinkAtDOM, setLinkHrefAtDOM } from './pm.ts';
 import { openContextMenu } from './ContextMenu.tsx';
 import { editingEnabled, updateBlockHtml, updateBlockHtmlLocal, updateBlockTextDiff, updateBlockType, deleteBlock, getActivePage, updateBlockCrop, updateBlockCaption, updateBlockBorder, updateChecklistItems, updateChecklistItemsSilent, uid } from './store.ts';
-import { onBlockKeyDown, handleMarkdownInput } from './editor.ts';
 import { pushUndo } from './undo.ts';
 import type { Block as BlockType, Page, ChecklistItem, CropData, TextDiff, MenuItem, CanvasContext } from './types.ts';
 import type { JSX } from 'preact';
@@ -49,25 +50,16 @@ export function LinkContextMenu(): JSX.Element | null {
 
   const editLink = (): void => {
     const url = prompt('Edit URL:', m.href);
-    if (url != null) {
-      m.anchorEl.href = url;
-      // persist html change
-      const blockEl = m.anchorEl.closest('.block-content') as HTMLElement | null;
-      if (blockEl) {
-        updateBlockHtml(m.blockId, blockEl.innerHTML);
-      }
+    if (url != null && url.trim() !== '') {
+      const newHtml = setLinkHrefAtDOM(m.blockId, m.anchorEl, url.trim());
+      if (newHtml != null) updateBlockHtml(m.blockId, newHtml);
     }
     close();
   };
 
   const removeLink = (): void => {
-    const parent = m.anchorEl.parentNode!;
-    while (m.anchorEl.firstChild) parent.insertBefore(m.anchorEl.firstChild, m.anchorEl);
-    parent.removeChild(m.anchorEl);
-    const blockEl = (parent as HTMLElement).closest('.block-content') as HTMLElement | null;
-    if (blockEl) {
-      updateBlockHtml(m.blockId, blockEl.innerHTML);
-    }
+    const newHtml = removeLinkAtDOM(m.blockId, m.anchorEl);
+    if (newHtml != null) updateBlockHtml(m.blockId, newHtml);
     close();
   };
 
@@ -124,7 +116,6 @@ interface BlockProps {
 
 export function Block({ block, page }: BlockProps): JSX.Element {
   const ctx = useContext(CanvasCtx)!;
-  const contentRef = useRef<HTMLDivElement>(null);
   const isImage     = block.type === 'image';
   const isLoading   = block.type === 'loading';
   const isChecklist = block.type === 'checklist';
@@ -148,6 +139,10 @@ export function Block({ block, page }: BlockProps): JSX.Element {
 
   // Checklist item DOM refs (itemId → span element)
   const itemRefs = useRef<Record<string, HTMLSpanElement>>({});
+
+  // Track HTML at focus time for undo (ProseMirror edition)
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const htmlAtFocus = useRef<string | null>(null);
 
   const toggleBorder = (): void => {
     const next = !borderOn;
@@ -229,73 +224,51 @@ export function Block({ block, page }: BlockProps): JSX.Element {
     }
   }, [rawSrc, isImage]);
 
-  // Sync content when block.html changes externally (undo/page-switch)
-  useLayoutEffect(() => {
-    const el = contentRef.current;
-    if (el && el.innerHTML !== block.html) {
-      el.innerHTML = block.html;
-      prevTextRef.current = el.innerText || '';
-    }
-  }, [block.html]);
+  // Handle BlockEditor updates
+  const handleEditorUpdate = (newHtml: string): void => {
+    updateBlockHtmlLocal(block.id, newHtml);
 
-  // Track HTML at focus time for undo deltas
-  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const htmlAtFocus = useRef<string | null>(null);
-  const prevTextRef = useRef<string | null>(null);
-
-  const handleInput = (): void => {
-    const el = contentRef.current;
-    if (!el) return;
-
-    // Try markdown shortcuts — returns 'code' if block converted
-    const result = handleMarkdownInput(el);
-    if (result === 'code') updateBlockType(block.id, 'code');
-
-    // Compute character-level diff for CRDT sync
-    const newText = el.innerText || '';
-    const oldText = prevTextRef.current ?? '';
-    const diffs = computeTextDiff(oldText, newText);
-    prevTextRef.current = newText;
-    updateBlockHtmlLocal(block.id, el.innerHTML);
-    updateBlockTextDiff(block.id, diffs);
-
-    // Debounced undo snapshot while typing (every ~1.5 s of inactivity)
+    // Debounced undo snapshot while typing
     if (undoTimer.current !== null) clearTimeout(undoTimer.current);
     undoTimer.current = setTimeout(() => {
-      if (htmlAtFocus.current != null && htmlAtFocus.current !== el.innerHTML) {
+      if (htmlAtFocus.current != null && htmlAtFocus.current !== newHtml) {
         pushUndo(page.id, { type: 'html', id: block.id, html: htmlAtFocus.current });
-        htmlAtFocus.current = el.innerHTML;
+        htmlAtFocus.current = newHtml;
       }
     }, 1500);
   };
 
-  const handleKeyDown = (e: KeyboardEvent): void => {
-    const mod = e.ctrlKey || e.metaKey;
-
-    // Undo / redo
-    if (mod && e.key === 'z') {
-      e.preventDefault();
-      e.shiftKey ? ctx.redo() : ctx.undo();
-      return;
-    }
-
-    onBlockKeyDown(e, contentRef.current!);
-  };
-
-  const handleFocus = (): void => {
+  const handleEditorFocus = (): void => {
     htmlAtFocus.current = block.html;
-    prevTextRef.current = contentRef.current?.innerText || '';
     ctx.onBlockFocus?.(block.id);
   };
 
-  const handleContentClick = (e: MouseEvent): void => {
+  const handleEditorBlur = (html: string): void => {
+    if (undoTimer.current !== null) clearTimeout(undoTimer.current);
+
+    const isEmpty = !html || html === '<p></p>' || html.trim() === '';
+
+    if (htmlAtFocus.current != null && htmlAtFocus.current !== html) {
+      pushUndo(page.id, { type: 'html', id: block.id, html: htmlAtFocus.current });
+    }
+    htmlAtFocus.current = null;
+
+    if (isEmpty) {
+      deleteBlock(block.id);
+    } else {
+      updateBlockHtml(block.id, html);
+    }
+    ctx.onBlockBlur?.(block.id);
+  };
+
+  const handleEditorClick = (e: MouseEvent): void => {
     const anchor = (e.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
     if (!anchor) return;
     e.preventDefault();
     if (window.notebook?.openExternal) window.notebook.openExternal(anchor.href);
   };
 
-  const handleContentContextMenu = (e: MouseEvent): void => {
+  const handleEditorContextMenu = (e: MouseEvent): void => {
     const anchor = (e.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
     if (anchor) {
       e.preventDefault();
@@ -318,29 +291,6 @@ export function Block({ block, page }: BlockProps): JSX.Element {
       }});
     }
     openContextMenu(e.clientX, e.clientY, items);
-  };
-
-
-  const handleBlur = (): void => {
-    if (undoTimer.current !== null) clearTimeout(undoTimer.current);
-    const el = contentRef.current;
-    if (!el) return;
-
-    const html = el.innerHTML;
-    const isEmpty = !html || html === '<br>' || html.trim() === '';
-
-    // Push undo delta if content changed during this edit session
-    if (htmlAtFocus.current != null && htmlAtFocus.current !== html) {
-      pushUndo(page.id, { type: 'html', id: block.id, html: htmlAtFocus.current });
-    }
-    htmlAtFocus.current = null;
-
-    if (isEmpty) {
-      deleteBlock(block.id);
-    } else {
-      updateBlockHtml(block.id, html);
-    }
-    ctx.onBlockBlur?.(block.id);
   };
 
   // ── Image crop ───────────────────────────────────────────
@@ -639,19 +589,15 @@ export function Block({ block, page }: BlockProps): JSX.Element {
           ))}
         </div>
       ) : (
-        <div
-          ref={contentRef}
-          class={['block-content', block.type === 'code' && 'code-block'].filter(Boolean).join(' ')}
-          contentEditable="true"
-          data-placeholder="Start typing…"
-          data-code={block.type === 'code' ? '1' : undefined}
-          onKeyDown={handleKeyDown}
-          onInput={handleInput}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onClick={handleContentClick}
-          onContextMenu={handleContentContextMenu}
-          onPointerDown={(e: PointerEvent) => e.stopPropagation()}
+        <BlockEditor
+          blockId={block.id}
+          html={block.html}
+          onUpdate={handleEditorUpdate}
+          onFocus={handleEditorFocus}
+          onBlur={handleEditorBlur}
+          onClick={handleEditorClick}
+          onContextMenu={handleEditorContextMenu}
+          blockType={block.type}
         />
       )}
     </div>

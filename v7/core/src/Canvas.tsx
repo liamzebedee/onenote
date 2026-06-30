@@ -64,7 +64,7 @@ export function FormatToolbar(): JSX.Element {
     null,
     { cmd: 'ul', node: '• List', title: 'Bullet list' },
     { cmd: 'ol', node: '1. List', title: 'Numbered list' },
-    { cmd: 'link', node: '⌘K', title: 'Insert link' },
+    { cmd: 'link', node: '🔗 Link', title: 'Link / Unlink selection (Ctrl/Cmd+K)' },
   ];
   return (
     <>
