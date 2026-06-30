@@ -2406,12 +2406,23 @@ function createWindow() {
     });
   }
   mainWindow2.loadFile(import_path8.default.join(__dirname, "app", "index.html"));
-  console.log("[main] config.notebookPath:", config.notebookPath);
-  if (config.notebookPath) {
-    setImmediate(() => openDefault(mainWindow2, config.notebookPath, config.deviceId, userDataPath));
+  const startupPath = notebookPathFromArgv(process.argv) || config.notebookPath;
+  console.log("[main] startup notebookPath:", startupPath, "(argv override:", notebookPathFromArgv(process.argv), ")");
+  if (startupPath) {
+    setImmediate(() => openDefault(mainWindow2, startupPath, config.deviceId, userDataPath));
   } else {
-    console.log("[main] no notebookPath in config, will show welcome screen");
+    console.log("[main] no notebookPath, will show welcome screen");
   }
+}
+function notebookPathFromArgv(argv) {
+  for (const a of argv.slice(1)) {
+    if (a.startsWith("-"))
+      continue;
+    if (a.endsWith(".notebound") || a.endsWith(".notebound/")) {
+      return import_path8.default.resolve(a.replace(/\/$/, ""));
+    }
+  }
+  return null;
 }
 if (process.argv.includes("--headless-profile")) {
   import_electron2.app.whenReady().then(() => {
@@ -2431,7 +2442,19 @@ if (process.argv.includes("--headless-profile")) {
     console.log(`[headless] openDefault total: ${elapsed.toFixed(1)}ms`);
     process.exit(0);
   });
+} else if (!import_electron2.app.requestSingleInstanceLock()) {
+  import_electron2.app.quit();
 } else {
+  import_electron2.app.on("second-instance", (_event, argv) => {
+    const p = notebookPathFromArgv(argv);
+    if (mainWindow2) {
+      if (mainWindow2.isMinimized())
+        mainWindow2.restore();
+      mainWindow2.focus();
+      if (p)
+        openDefault(mainWindow2, p, config.deviceId, import_electron2.app.getPath("userData"));
+    }
+  });
   import_electron2.app.whenReady().then(createWindow);
 }
 import_electron2.app.on("window-all-closed", () => {

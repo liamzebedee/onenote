@@ -152,13 +152,28 @@ function createWindow(): void {
   // Load the page first so the window appears immediately (shows spinner while notebook loads)
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
 
-  // Defer notebook open so the renderer can start painting before synchronous I/O begins
-  console.log('[main] config.notebookPath:', config.notebookPath);
-  if (config.notebookPath) {
-    setImmediate(() => openDefault(mainWindow!, config.notebookPath!, config.deviceId, userDataPath));
+  // Defer notebook open so the renderer can start painting before synchronous I/O begins.
+  // A notebook path passed on the command line (e.g. from the file manager / .desktop
+  // file's %f) takes priority over the last-opened notebook in config.
+  const startupPath = notebookPathFromArgv(process.argv) || config.notebookPath;
+  console.log('[main] startup notebookPath:', startupPath, '(argv override:', notebookPathFromArgv(process.argv), ')');
+  if (startupPath) {
+    setImmediate(() => openDefault(mainWindow!, startupPath, config.deviceId, userDataPath));
   } else {
-    console.log('[main] no notebookPath in config, will show welcome screen');
+    console.log('[main] no notebookPath, will show welcome screen');
   }
+}
+
+// Extract a *.notebound notebook path passed on the command line (skipping flags
+// and Electron's app-directory argument).
+function notebookPathFromArgv(argv: string[]): string | null {
+  for (const a of argv.slice(1)) {
+    if (a.startsWith('-')) continue;
+    if (a.endsWith('.notebound') || a.endsWith('.notebound/')) {
+      return path.resolve(a.replace(/\/$/, ''));
+    }
+  }
+  return null;
 }
 
 // --headless-profile: open the saved notebook, print timing report, quit.
@@ -182,7 +197,21 @@ if (process.argv.includes('--headless-profile')) {
     console.log(`[headless] openDefault total: ${elapsed.toFixed(1)}ms`);
     process.exit(0);
   });
+} else if (!app.requestSingleInstanceLock()) {
+  // Another instance is already running. It will receive our argv (including any
+  // notebook path) via the 'second-instance' event below; we just exit.
+  app.quit();
 } else {
+  // When a second launch happens (e.g. opening another .notebound from the file
+  // manager), focus the existing window and switch it to the requested notebook.
+  app.on('second-instance', (_event, argv) => {
+    const p = notebookPathFromArgv(argv);
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+      if (p) openDefault(mainWindow, p, config.deviceId, app.getPath('userData'));
+    }
+  });
   app.whenReady().then(createWindow);
 }
 
