@@ -2204,3 +2204,67 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   border: 1px solid rgba(0,0,0,.18);
 }
 .nbp-section-name { overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Tree caret icon (pages panel) ─────────────────────────── */
+.page-expand { display: inline-flex; align-items: center; justify-content: center; }
+.page-caret { display: block; opacity: .55; transition: transform .12s; }
+.page-caret--closed { transform: rotate(-90deg); }
+.context-menu-rename-ok { display: inline-flex; align-items: center; justify-content: center; }
+.context-menu-arrow img { display: block; }
+
+/* ── Styles gallery (OneNote stacked heading previews) ─────── */
+.rbn-style-gallery {
+  display: flex;
+  flex-direction: column;
+  width: 130px;
+  height: 68px;
+  border: 1px solid #cfd1d4;
+  border-radius: 2px;
+  background: #fff;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.rbn-style-gallery::-webkit-scrollbar { width: 5px; }
+.rbn-style-gallery::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 3px; }
+.rbn-style-item {
+  text-align: left;
+  padding: 3px 8px;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+  background: none;
+  cursor: default;
+  white-space: nowrap;
+  color: #2b2f33;
+  line-height: 1.3;
+}
+.rbn-style-item:last-child { border-bottom: none; }
+.rbn-style-item:hover { background: #eaf1fb; }
+.rbn-style-item.is-active { background: #dce8fb; }
+.rbn-style-item--h1 { font-size: 15px; font-weight: 700; color: #1f4e79; }
+.rbn-style-item--h2 { font-size: 13px; font-weight: 700; color: #2e6da4; }
+.rbn-style-item--h3 { font-size: 12px; font-weight: 600; color: #4a7fb5; }
+.rbn-style-item--p  { font-size: 12px; font-weight: 400; }
+
+/* ── Tags gallery (OneNote stacked tags) ───────────────────── */
+.rbn-tag-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  justify-content: center;
+}
+.rbn-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px 2px 5px;
+  font-size: 12px;
+  color: #2b2f33;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: default;
+  white-space: nowrap;
+  text-align: left;
+}
+.rbn-tag-item:hover { background: #fff4d0; border-color: #e5c766; }
+.rbn-tag-item img { display: block; flex-shrink: 0; }

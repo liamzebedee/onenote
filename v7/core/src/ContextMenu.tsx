@@ -99,7 +99,9 @@ export function ContextMenu(): JSX.Element | null {
                   if (e.key === 'Escape') closeContextMenu();
                 }}
               />
-              <button class="context-menu-rename-ok" onClick={() => handleRenameSubmit(item)}>✓</button>
+              <button class="context-menu-rename-ok" onClick={() => handleRenameSubmit(item)}>
+                <img src="assets/icons/check.svg" width="14" height="14" alt="OK" />
+              </button>
             </div>
           );
         }
@@ -126,7 +128,7 @@ export function ContextMenu(): JSX.Element | null {
           return (
             <div key={i} class="context-menu-item context-menu-submenu">
               <span>{submenuItem.label}</span>
-              <span class="context-menu-arrow">▸</span>
+              <span class="context-menu-arrow"><img src="assets/icons/chevron-right.svg" width="12" height="12" alt="" /></span>
               <div class="context-menu-sub">
                 {submenuItem.children.map((child, j) => (
                   <div key={j} class="context-menu-item" onClick={() => { child.action(); closeContextMenu(); }}>

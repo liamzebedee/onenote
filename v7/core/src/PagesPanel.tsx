@@ -279,7 +279,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
           class="page-expand"
           style={{ visibility: hasKids ? 'visible' : 'hidden' }}
           onClick={(e: MouseEvent) => { e.stopPropagation(); setOpen(o => !o); }}
-        >{open ? '▾' : '▸'}</span>
+        ><img src="assets/icons/caret-down.svg" width="9" height="9" alt="" class={open ? 'page-caret' : 'page-caret page-caret--closed'} /></span>
         {isEditing ? (
           <input
             ref={editRef}

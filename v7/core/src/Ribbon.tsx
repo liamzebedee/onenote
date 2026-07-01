@@ -320,14 +320,32 @@ function HomeTab({ fileInputRef }: { fileInputRef: preact.RefObject<HTMLInputEle
       </Group>
 
       <Group label="Styles">
-        <RBtn title="Heading 1" active={f.heading === 1} onClick={() => execFmt('h1')}><span class="rbn-style rbn-style--h1">Heading 1</span></RBtn>
-        <RBtn title="Heading 2" active={f.heading === 2} onClick={() => execFmt('h2')}><span class="rbn-style rbn-style--h2">Heading 2</span></RBtn>
-        <RBtn title="Heading 3" active={f.heading === 3} onClick={() => execFmt('h3')}><span class="rbn-style rbn-style--h3">Heading 3</span></RBtn>
-        <RBtn title="Normal text" active={f.active && f.heading === null} onClick={() => execFmt('p')}><span class="rbn-style rbn-style--p">Normal</span></RBtn>
+        <div class="rbn-style-gallery">
+          <button class={'rbn-style-item rbn-style-item--h1' + (f.heading === 1 ? ' is-active' : '')}
+            title="Heading 1" onMouseDown={(e: MouseEvent) => { e.preventDefault(); execFmt('h1'); }}>Heading 1</button>
+          <button class={'rbn-style-item rbn-style-item--h2' + (f.heading === 2 ? ' is-active' : '')}
+            title="Heading 2" onMouseDown={(e: MouseEvent) => { e.preventDefault(); execFmt('h2'); }}>Heading 2</button>
+          <button class={'rbn-style-item rbn-style-item--h3' + (f.heading === 3 ? ' is-active' : '')}
+            title="Heading 3" onMouseDown={(e: MouseEvent) => { e.preventDefault(); execFmt('h3'); }}>Heading 3</button>
+          <button class={'rbn-style-item rbn-style-item--p' + (f.active && f.heading === null ? ' is-active' : '')}
+            title="Normal text" onMouseDown={(e: MouseEvent) => { e.preventDefault(); execFmt('p'); }}>Normal</button>
+        </div>
       </Group>
 
       <Group label="Tags">
-        <LBtn icon="tag-todo" label="To Do" title="To Do (checklist)" onClick={insertChecklist} />
+        <div class="rbn-tag-gallery">
+          {/* To Do inserts a checklist. Important/Question are visual placeholders
+              until per-block tag markers land (Phase 4); they insert a checklist for now. */}
+          <button class="rbn-tag-item" title="To Do (Ctrl+1)" onMouseDown={(e: MouseEvent) => { e.preventDefault(); insertChecklist(); }}>
+            <Icon name="tag-todo" /><span>To Do</span>
+          </button>
+          <button class="rbn-tag-item" title="Important (Ctrl+2)" onMouseDown={(e: MouseEvent) => { e.preventDefault(); insertChecklist(); }}>
+            <Icon name="tag-important" /><span>Important</span>
+          </button>
+          <button class="rbn-tag-item" title="Question (Ctrl+3)" onMouseDown={(e: MouseEvent) => { e.preventDefault(); insertChecklist(); }}>
+            <Icon name="tag-question" /><span>Question</span>
+          </button>
+        </div>
       </Group>
 
       <Group label="Notebound">
