@@ -163,6 +163,14 @@ body { height: 100vh; overflow: hidden; background: #fff; }
     drop-shadow(-1px 0 0 #a8a8a8)
     drop-shadow(0 -1px 0 #a8a8a8);
 }
+/* OneNote-2010 lift: active tab grows taller, rising above the others
+   (bottom stays anchored to the body via flex-end). */
+/* Active lift is symmetric (equal top/bottom) so the text stays centred while
+   the tab grows taller — bottom is anchored to the body, so it rises ~6px. */
+.sec-tab--active .sec-tab-body {
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
 
 /* ── Tab = ONE solid clip-path shape (no internal seam can bleed through).
       Straight left edge, always-slanted right edge, 4px chamfered top. The
@@ -170,14 +178,16 @@ body { height: 100vh; overflow: hidden; background: #fff; }
       overlaps the next tab; default stacking lets the next tab tuck over it,
       and the active tab's higher z-index pops its slant out on top. ── */
 .sec-tab-body {
-  padding: 7px 34px 7px 16px;   /* text 16/20 + 14px slant room on the right */
-  margin: 0 -14px 0 0;          /* cancel slant room so the slant overlaps the next tab */
+  padding: 6px 29px 6px 16px;   /* equal top/bottom → vertically-centred text; 9px slant room on the right */
+  margin: 0 -9px 0 0;           /* cancel slant room so the slant overlaps the next tab */
   font-size: 14px;
   font-weight: 600;
+  line-height: 1;               /* tight box so the text sits centred, not high */
   color: #333;
   background: var(--tab-solid) var(--tab-grad);
+  /* straight left edge, shallow right slant (~9px run), 2px chamfered top */
   clip-path: polygon(
-    0 4px, 4px 0, calc(100% - 18px) 0, calc(100% - 14px) 4px,
+    0 2px, 2px 0, calc(100% - 11px) 0, calc(100% - 9px) 2px,
     100% 100%, 0 100%);
 }
 
