@@ -183,9 +183,10 @@ function hasNonEmptyBlocks(page: Page): boolean {
 interface PageTitleProps {
   page: Page | null;
   onEnter: () => void;
+  onAreaClick: (clientX: number, clientY: number) => void;
 }
 
-function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
+function PageTitle({ page, onEnter, onAreaClick }: PageTitleProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
   const titleEditing = useRef<boolean>(false);
 
@@ -230,7 +231,17 @@ function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
     : null;
 
   return (
-    <div id="page-title-bar" onClick={() => editing && ref.current?.focus()}>
+    <div
+      id="page-title-bar"
+      onClick={(e: MouseEvent) => {
+        if (!editing) return;
+        const target = e.target as HTMLElement;
+        // Clicking the title box itself edits it; clicking the surrounding area
+        // drops a new text block on the canvas at that spot (like the canvas).
+        if (target === ref.current || ref.current?.contains(target)) return;
+        onAreaClick(e.clientX, e.clientY);
+      }}
+    >
       <div
         ref={ref}
         id="page-title"
@@ -865,6 +876,23 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     });
   }
 
+  // Clicking the empty page-title area drops a text block at that spot (top of
+  // the canvas, at the click's x) — the whole page acts like the canvas.
+  function createBlockFromTitleArea(clientX: number): void {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const { zoom } = viewRef.current;
+    const x = Math.max(0, (clientX - rect.left + el.scrollLeft) / zoom);
+    const y = el.scrollTop / zoom;
+    const blk = addBlock(x, y);
+    setSelected(new Set());
+    requestAnimationFrame(() => {
+      const bel = innerRef.current?.querySelector(`[data-block-id="${blk.id}"] .block-content`) as HTMLElement | null;
+      bel?.focus();
+    });
+  }
+
   const ctx: CanvasContext = {
     selectedIds,
     onBlockDragStart,
@@ -885,7 +913,7 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
 
   return (
     <>
-      <PageTitle page={page} onEnter={focusFirstBlock} />
+      <PageTitle page={page} onEnter={focusFirstBlock} onAreaClick={(cx) => createBlockFromTitleArea(cx)} />
       <CanvasCtx.Provider value={ctx}>
         <div id="canvas-wrapper">
           <div

@@ -108,12 +108,14 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 #section-tabs {
   display: flex;
   align-items: flex-end;
-  height: 46px;
+  height: 40px;
   /* sit above the notebook body so the active tab's solid fill covers the row seam */
   position: relative;
   z-index: 1;
   padding: 0 4px 0 10px;
   gap: 0;
+  /* neutral chrome background (OneNote), not white */
+  background: linear-gradient(to bottom, #edeef0, #e1e3e6);
   overflow-x: auto;
   overflow-y: hidden;
   flex-shrink: 0;
@@ -313,7 +315,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   flex: 1;
   overflow: hidden;
   min-height: 0;
-  padding-top: .25em;
+  padding-top: 6px;
   padding-left: .25em;
   /* same crisp 1px line as the section tabs, wrapping the notebook body.
      Open at the top so the tabs connect into it (no horizontal line cutting across).
@@ -321,6 +323,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   border: 1px solid #a8a8a8;
   border-top: none;
   border-right: none;
+  /* left divider is the notebook panel's border-right — avoid a 2px double line */
+  border-left: none;
   border-bottom-color: #9a9a9a;
 }
 
@@ -505,6 +509,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   min-width: 0;
   min-height: 0;
   padding-left: 24px;
+  /* subtle top shadow so the coloured section strip reads with contrast against the white page */
+  box-shadow: inset 0 3px 4px -2px rgba(0,0,0,0.16);
 }
 
 /* ── Page title ───────────────────────────────────── */
@@ -1676,7 +1682,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   border-color: #b6b8bb;
   border-bottom: 1px solid #eceef1;
   margin-bottom: -1px;
-  font-weight: 600;
+  /* NB: no font-weight change — bolding the active tab reflows the whole strip */
   color: #16599a;
 }
 .ribbon-tab--file {
@@ -1704,8 +1710,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .ribbon-body {
   display: flex;
   align-items: stretch;
-  height: 76px;
-  padding: 3px 2px 0;
+  height: 90px;
+  padding: 6px 2px 0;
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: thin;
@@ -1728,7 +1734,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   flex-wrap: wrap;
   gap: 2px;
   align-content: center;
-  min-height: 56px;
+  min-height: 68px;
 }
 /* Stacked-row groups (Basic Text): rows go top-to-bottom, group sizes to content */
 .rbn-group-body--col {
@@ -1742,7 +1748,8 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   text-align: center;
   font-size: 10px;
   color: #7a7d80;
-  padding: 1px 0 2px;
+  padding: 4px 0 2px;
+  flex-shrink: 0;
 }
 
 .rbn-btn {
@@ -2268,3 +2275,32 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 }
 .rbn-tag-item:hover { background: #fff4d0; border-color: #e5c766; }
 .rbn-tag-item img { display: block; flex-shrink: 0; }
+
+/* ── Search box relocated to the page-panel header (OneNote position) ── */
+.pages-search-row {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  flex-shrink: 0;
+  /* neutral chrome (matches the section-tab row) so the coloured panel starts at New Page */
+  background: linear-gradient(to bottom, #edeef0, #e1e3e6);
+  border-bottom: 1px solid #c4c6c9;
+}
+.pages-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 24px;
+  padding: 0 8px;
+  background: #fff;
+  border: 1px solid #b7b9bc;
+  border-radius: 3px;
+  color: #8a8d90;
+  cursor: text;
+  font-size: 12px;
+}
+.pages-search:hover { border-color: #7aa7e0; }
+.pages-search img { flex-shrink: 0; opacity: .65; }
+.pages-search-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

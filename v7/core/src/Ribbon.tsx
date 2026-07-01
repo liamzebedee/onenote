@@ -1,6 +1,6 @@
 import { signal } from '@preact/signals';
 import { useRef, useEffect } from 'preact/hooks';
-import { appState, getActivePage, addBlock, addImageFromFile, DEFAULT_BLOCK_WIDTH, uid, toggleSwitcher, findInTree, showQuickJump } from './store.ts';
+import { appState, getActivePage, addBlock, addImageFromFile, DEFAULT_BLOCK_WIDTH, uid, toggleSwitcher, findInTree } from './store.ts';
 import { execFmt, setMarkAttr, setBlockAttr, indentBlocks, selectionFormat } from './editor.ts';
 import type { JSX } from 'preact';
 
@@ -142,15 +142,6 @@ function Titlebar(): JSX.Element {
   return (
     <div id="titlebar">
       <span class="toolbar-title">Notebound</span>
-      <button
-        class="chrome-search"
-        title="Search all notebooks (Ctrl+E)"
-        onMouseDown={(e: MouseEvent) => { e.preventDefault(); showQuickJump.value = true; }}
-      >
-        <Icon name="search" size={13} />
-        <span class="chrome-search-label">Search All Notebooks</span>
-        <span class="chrome-search-kbd">Ctrl+E</span>
-      </button>
       {!isMac && (
         <div class="window-controls">
           <button class="wc-btn wc-minimize" onClick={() => window.windowControls!.minimize()} title="Minimize">
@@ -238,14 +229,14 @@ function FontCombo(): JSX.Element {
 
 // OneNote-style font-size combo.
 function SizeCombo(): JSX.Element {
-  const cur = selectionFormat.value.fontSize;
+  const cur = selectionFormat.value.fontSize ?? '11px';
   const open = openPicker.value === 'size';
   return (
     <div
       class={'rbn-combo rbn-combo--size' + (open ? ' rbn-combo--open' : '')}
       onMouseDown={(e: MouseEvent) => { e.preventDefault(); togglePop('size', e); }}
     >
-      <span class="rbn-combo-val">{cur ? parseInt(cur) : ''}</span>
+      <span class="rbn-combo-val">{parseInt(cur)}</span>
       <span class="rbn-combo-caret"><Caret /></span>
       {open && (
         <div class="rbn-combo-pop rbn-combo-pop--size" style={popStyle()} onMouseDown={(e: MouseEvent) => e.stopPropagation()}>

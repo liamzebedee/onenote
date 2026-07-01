@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'preact/hooks';
-import { appState, editingEnabled, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage, togglePageVisibility } from './store.ts';
+import { appState, editingEnabled, setActivePage, addPage, renamePage, deletePage, movePage, findInTree, updatePageTree, preloadPage, togglePageVisibility, showQuickJump } from './store.ts';
 import type { Page, MenuItem, MenuItemNormal } from './types.ts';
 import type { JSX } from 'preact';
 
@@ -391,6 +391,13 @@ export function PagesPanel({ bg }: { bg?: string } = {}): JSX.Element {
 
   return (
     <div id="pages-panel" style={bg ? { background: bg } : undefined}>
+      {/* Search sits at the top-right (section-tab level); New Page falls below it. */}
+      <div class="pages-search-row">
+        <button class="pages-search" title="Search all notebooks (Ctrl+E)" onClick={() => { showQuickJump.value = true; }}>
+          <img src="assets/icons/search.svg" width="13" height="13" alt="" />
+          <span class="pages-search-label">Search All Notebooks</span>
+        </button>
+      </div>
       <div class="panel-header">
         <button class="add-btn" onClick={() => addPage()}>+ New Page</button>
       </div>
