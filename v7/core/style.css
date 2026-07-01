@@ -515,10 +515,11 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 /* ── Page title ───────────────────────────────────── */
 
+/* Title now lives inside the canvas content (see .canvas-title-zone) */
 #page-title-bar {
-  padding: 16px 0 10px;
-  flex-shrink: 0;
+  padding: 14px 0 10px;
   cursor: text;
+  white-space: nowrap;
 }
 
 #page-title {
@@ -674,9 +675,9 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .block-content {
   cursor: text;
   outline: none;
-  line-height: 1.6;
+  line-height: 1.45;
   font-size: 14px;
-  min-height: 1.6em;
+  min-height: 1.45em;
   word-wrap: break-word;
   overflow-wrap: break-word;
   caret-color: var(--text);

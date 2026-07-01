@@ -183,10 +183,9 @@ function hasNonEmptyBlocks(page: Page): boolean {
 interface PageTitleProps {
   page: Page | null;
   onEnter: () => void;
-  onAreaClick: (clientX: number, clientY: number) => void;
 }
 
-function PageTitle({ page, onEnter, onAreaClick }: PageTitleProps): JSX.Element {
+function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
   const titleEditing = useRef<boolean>(false);
 
@@ -231,21 +230,12 @@ function PageTitle({ page, onEnter, onAreaClick }: PageTitleProps): JSX.Element 
     : null;
 
   return (
-    <div
-      id="page-title-bar"
-      onClick={(e: MouseEvent) => {
-        if (!editing) return;
-        const target = e.target as HTMLElement;
-        // Clicking the title box itself edits it; clicking the surrounding area
-        // drops a new text block on the canvas at that spot (like the canvas).
-        if (target === ref.current || ref.current?.contains(target)) return;
-        onAreaClick(e.clientX, e.clientY);
-      }}
-    >
+    <div id="page-title-bar">
       <div
         ref={ref}
         id="page-title"
         contentEditable
+        onPointerDown={(e: PointerEvent) => e.stopPropagation()}
         onFocus={() => { titleEditing.current = true; }}
         onBlur={(e: FocusEvent) => {
           titleEditing.current = false;
@@ -278,6 +268,11 @@ function PageTitle({ page, onEnter, onAreaClick }: PageTitleProps): JSX.Element 
 }
 
 // ─── Canvas ──────────────────────────────────────────────
+
+// The page title lives INSIDE the canvas content (scrolls & zooms with it),
+// occupying a reserved zone at the top. Blocks are shifted down by this amount
+// so they sit below the title; toCanvas subtracts it back out.
+const HEADER_H = 92;
 
 interface CanvasProps {
   page: Page | null;
@@ -376,9 +371,10 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     const rect = containerRef.current.getBoundingClientRect();
     const sl = targetScrollLeft ?? containerRef.current.scrollLeft;
     const st = targetScrollTop  ?? containerRef.current.scrollTop;
-    // Total world size must accommodate: all blocks + enough to scroll to target position
+    // Total world size must accommodate: title header + all blocks (shifted down
+    // by HEADER_H) + enough to scroll to target position
     const totalW = Math.max(maxX + 200, (sl + rect.width)  / zoom + 200);
-    const totalH = Math.max(maxY + 200, (st + rect.height) / zoom + 200);
+    const totalH = Math.max(maxY + HEADER_H + 200, (st + rect.height) / zoom + 200);
     sizerRef.current.style.width  = (totalW * zoom) + 'px';
     sizerRef.current.style.height = (totalH * zoom) + 'px';
   }
@@ -454,7 +450,7 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     const { zoom } = viewRef.current;
     return {
       x: (clientX - rect.left + containerRef.current!.scrollLeft) / zoom,
-      y: (clientY - rect.top  + containerRef.current!.scrollTop)  / zoom,
+      y: (clientY - rect.top  + containerRef.current!.scrollTop)  / zoom - HEADER_H,
     };
   }
 
@@ -681,7 +677,7 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
       if (!marqueeActive && editingEnabled.value) {
         setSelected(new Set());
         const pos = toCanvas(startX, startY);
-        addBlock(pos.x, pos.y);
+        addBlock(Math.max(0, pos.x), Math.max(0, pos.y));
         requestAnimationFrame(() => {
           const pg = getActivePage();
           if (!pg) return;
@@ -876,23 +872,6 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
     });
   }
 
-  // Clicking the empty page-title area drops a text block at that spot (top of
-  // the canvas, at the click's x) — the whole page acts like the canvas.
-  function createBlockFromTitleArea(clientX: number): void {
-    const el = containerRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const { zoom } = viewRef.current;
-    const x = Math.max(0, (clientX - rect.left + el.scrollLeft) / zoom);
-    const y = el.scrollTop / zoom;
-    const blk = addBlock(x, y);
-    setSelected(new Set());
-    requestAnimationFrame(() => {
-      const bel = innerRef.current?.querySelector(`[data-block-id="${blk.id}"] .block-content`) as HTMLElement | null;
-      bel?.focus();
-    });
-  }
-
   const ctx: CanvasContext = {
     selectedIds,
     onBlockDragStart,
@@ -912,8 +891,6 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
   };
 
   return (
-    <>
-      <PageTitle page={page} onEnter={focusFirstBlock} onAreaClick={(cx) => createBlockFromTitleArea(cx)} />
       <CanvasCtx.Provider value={ctx}>
         <div id="canvas-wrapper">
           <div
@@ -960,22 +937,29 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
           >
             <div ref={sizerRef} id="canvas-sizer">
               <div ref={innerRef} id="canvas-inner" style={{ transformOrigin: '0 0' }}>
-                {cachedPages.map(p => {
-                  let style: { opacity: number; pointerEvents: string } | undefined;
-                  if (transition) {
-                    // Only the incoming page at phase='in' is visible (opacity:1, transitions from 0)
-                    // Everything else: opacity:0 (outgoing transitions 1→0, others stay hidden)
-                    const showing = p.id === transition.inId && transition.phase === 'in';
-                    style = showing ? undefined : { opacity: 0, pointerEvents: 'none' };
-                  } else {
-                    style = p.id !== page?.id ? { opacity: 0, pointerEvents: 'none' } : undefined;
-                  }
-                  return (
-                    <div key={p.id} class="page-layer" style={style}>
-                      {p.blocks.map(b => <Block key={b.id} block={b} page={p} />)}
-                    </div>
-                  );
-                })}
+                {/* Title lives at the top of the canvas content and scrolls/zooms with it */}
+                <div class="canvas-title-zone" style={{ position: 'absolute', top: '0', left: '0' }}>
+                  <PageTitle page={page} onEnter={focusFirstBlock} />
+                </div>
+                {/* Blocks sit below the title zone (shifted down by HEADER_H) */}
+                <div class="canvas-blocks-origin" style={{ position: 'absolute', top: HEADER_H + 'px', left: '0' }}>
+                  {cachedPages.map(p => {
+                    let style: { opacity: number; pointerEvents: string } | undefined;
+                    if (transition) {
+                      // Only the incoming page at phase='in' is visible (opacity:1, transitions from 0)
+                      // Everything else: opacity:0 (outgoing transitions 1→0, others stay hidden)
+                      const showing = p.id === transition.inId && transition.phase === 'in';
+                      style = showing ? undefined : { opacity: 0, pointerEvents: 'none' };
+                    } else {
+                      style = p.id !== page?.id ? { opacity: 0, pointerEvents: 'none' } : undefined;
+                    }
+                    return (
+                      <div key={p.id} class="page-layer" style={style}>
+                        {p.blocks.map(b => <Block key={b.id} block={b} page={p} />)}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -1018,6 +1002,5 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
           </div>
         </div>
       </CanvasCtx.Provider>
-    </>
   );
 }
