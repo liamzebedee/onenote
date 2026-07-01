@@ -25,12 +25,12 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 
 #titlebar {
   position: relative;
-  height: 38px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 80px; /* clear traffic lights */
-  padding-right: 80px;
+  padding-left: 78px; /* clear traffic lights */
+  padding-right: 78px;
   background: #f5f5f5;
   flex-shrink: 0;
   -webkit-app-region: drag;
@@ -50,15 +50,15 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   position: absolute;
   right: 4px;
   top: 0;
-  height: 38px;
+  height: 26px;
   display: flex;
   align-items: center;
   gap: 4px;
   -webkit-app-region: no-drag;
 }
 .wc-btn {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border: none;
   border-radius: 50%;
   background: transparent;
@@ -112,7 +112,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   /* sit above the notebook body so the active tab's solid fill covers the row seam */
   position: relative;
   z-index: 1;
-  padding: 0 4px 0 36px;
+  padding: 0 4px 0 10px;
   gap: 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -316,9 +316,11 @@ body { height: 100vh; overflow: hidden; background: #fff; }
   padding-top: .25em;
   padding-left: .25em;
   /* same crisp 1px line as the section tabs, wrapping the notebook body.
-     Open at the top so the tabs connect into it (no horizontal line cutting across). */
+     Open at the top so the tabs connect into it (no horizontal line cutting across).
+     Open on the right too — the page-tabs panel sits flush against it. */
   border: 1px solid #a8a8a8;
   border-top: none;
+  border-right: none;
   border-bottom-color: #9a9a9a;
 }
 
@@ -327,7 +329,7 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 #pages-panel {
   display: flex;
   flex-direction: column;
-  border-left: 1px solid rgba(0,0,0,0.12);
+  border-left: 1px solid #a8a8a8;
   background: transparent;
   flex-shrink: 0;
   overflow: hidden;
@@ -1612,3 +1614,593 @@ body { height: 100vh; overflow: hidden; background: #fff; }
 .page-item:hover .page-eye { opacity: 0.7; }
 .page-eye:hover { opacity: 1 !important; }
 .page-eye--hidden { opacity: 0.7; }
+
+/* ══ Ribbon (OneNote-2010-style command surface) ══════════════ */
+
+/* Chrome search box in the titlebar (top-right, Ctrl+E) */
+.chrome-search {
+  position: absolute;
+  right: 92px;
+  top: 3px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  color: #888;
+  cursor: text;
+  -webkit-app-region: no-drag;
+  max-width: 260px;
+}
+.chrome-search:hover { border-color: #9ab7e0; }
+.chrome-search-label { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chrome-search-kbd { font-size: 10px; color: #b0b0b0; margin-left: 4px; flex-shrink: 0; }
+
+/* Ribbon container */
+#ribbon {
+  flex-shrink: 0;
+  background: linear-gradient(to bottom, #f5f6f8, #e9ebee);
+  border-bottom: 1px solid #b6b8bb;
+}
+
+/* Tab strip */
+.ribbon-tabstrip {
+  display: flex;
+  align-items: stretch;
+  height: 26px;
+  padding: 0 4px;
+  gap: 1px;
+  background: linear-gradient(to bottom, #e4e6e9, #d7d9dd);
+  border-bottom: 1px solid #b6b8bb;
+}
+.ribbon-tab {
+  padding: 0 12px;
+  font-size: 12px;
+  color: #33373b;
+  background: none;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  cursor: default;
+  white-space: nowrap;
+  align-self: flex-end;
+  height: 22px;
+  line-height: 20px;
+}
+.ribbon-tab:hover { background: rgba(255,255,255,.55); border-color: #c8cacd; }
+.ribbon-tab--active {
+  background: linear-gradient(to bottom, #f5f6f8, #eceef1);
+  border-color: #b6b8bb;
+  border-bottom: 1px solid #eceef1;
+  margin-bottom: -1px;
+  font-weight: 600;
+  color: #16599a;
+}
+.ribbon-tab--file {
+  background: #1a73e8;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 3px;
+  align-self: center;
+  height: 20px;
+  line-height: 18px;
+}
+.ribbon-tab--file:hover { background: #1565c8; border-color: transparent; }
+.ribbon-collapse {
+  align-self: center;
+  background: none;
+  border: none;
+  color: #8a8d90;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.ribbon-collapse:hover { color: #333; }
+
+/* Ribbon body — grouped controls */
+.ribbon-body {
+  display: flex;
+  align-items: stretch;
+  height: 76px;
+  padding: 3px 2px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+.ribbon-body::-webkit-scrollbar { height: 5px; }
+.ribbon-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 3px; }
+
+.rbn-group {
+  display: flex;
+  flex-direction: column;
+  padding: 1px 5px 0;
+  border-right: 1px solid #d3d5d8;
+  flex-shrink: 0;
+}
+.rbn-group-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2px;
+  align-content: center;
+  min-height: 56px;
+}
+/* Stacked-row groups (Basic Text): rows go top-to-bottom, group sizes to content */
+.rbn-group-body--col {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1px;
+}
+.rbn-group-caption {
+  text-align: center;
+  font-size: 10px;
+  color: #7a7d80;
+  padding: 1px 0 2px;
+}
+
+.rbn-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: default;
+  line-height: 1.35;
+  white-space: nowrap;
+  color: #2b2f33;
+}
+.rbn-btn:hover:not(:disabled) { background: #fff4d0; border-color: #e5c766; }
+.rbn-btn:active:not(:disabled) { background: #ffe9a8; }
+.rbn-btn:disabled { color: #b4b6b9; cursor: default; }
+.rbn-btn--active { background: #ffe9a8; border-color: #e5c766; }
+.rbn-btn--large {
+  flex-direction: column;
+  justify-content: center;
+  min-width: 52px;
+  height: 56px;
+  gap: 3px;
+  padding: 4px 8px;
+}
+.rbn-btn--large .rbn-ico { font-size: 22px; line-height: 1; }
+.rbn-btn--large .rbn-lbl { font-size: 11px; }
+.rbn-col { display: flex; flex-direction: column; gap: 1px; }
+.rbn-col .rbn-btn { justify-content: flex-start; }
+.rbn-sep { width: 1px; align-self: stretch; background: #d3d5d8; margin: 1px 3px; }
+
+.rbn-empty {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 12px;
+  color: #9a9d9f;
+  font-style: italic;
+}
+
+/* ── Ribbon Basic Text: rows, selects, colour pickers ──────── */
+.rbn-row { display: flex; align-items: center; gap: 2px; }
+
+.rbn-select {
+  height: 22px;
+  font-size: 12px;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  background: #fff;
+  padding: 0 2px;
+  cursor: pointer;
+  color: #2b2f33;
+}
+.rbn-select:hover { border-color: #9ab7e0; }
+.rbn-select--font { width: 108px; }
+.rbn-select--size { width: 46px; }
+
+.rbn-color-wrap { position: relative; display: inline-flex; }
+.rbn-color-a {
+  display: inline-block;
+  font-weight: 700;
+  line-height: 11px;
+  border-bottom: 3px solid #e11d48;
+  padding: 0 1px;
+}
+.rbn-hl-a {
+  display: inline-block;
+  line-height: 13px;
+  padding: 0 2px;
+  border-radius: 2px;
+  background: #fff3a3;
+}
+
+.rbn-color-pop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 4000;
+  margin-top: 2px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #b6b8bb;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+}
+.rbn-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 16px);
+  gap: 3px;
+}
+.rbn-swatch {
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(0,0,0,.25);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0;
+}
+.rbn-swatch:hover { outline: 2px solid #1a73e8; outline-offset: 0; }
+.rbn-swatch--none {
+  background: #fff;
+  background-image: linear-gradient(45deg, transparent 45%, #e11d48 45%, #e11d48 55%, transparent 55%);
+}
+.rbn-color-clear {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 3px;
+  font-size: 11px;
+  background: #f3f4f6;
+  border: 1px solid #d3d5d8;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.rbn-color-clear:hover { background: #e8eaed; }
+
+/* ── Notebook navigation panel (OneNote 2010 expanded) ─────── */
+#notebook-panel {
+  display: flex;
+  flex-direction: column;
+  width: 172px;
+  flex-shrink: 0;
+  background: #eceef1;
+  border-right: 1px solid #b6b8bb;
+  overflow: hidden;
+}
+.nbp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 4px 5px 10px;
+  font-size: 11px;
+  color: #5f6368;
+  border-bottom: 1px solid #d3d5d8;
+  flex-shrink: 0;
+}
+.nbp-header-label { font-weight: 600; letter-spacing: .02em; }
+.nbp-header-btn {
+  background: none; border: none; cursor: pointer;
+  color: #7a7d80; font-size: 14px; line-height: 1; padding: 2px 6px; border-radius: 3px;
+}
+.nbp-header-btn:hover { background: rgba(0,0,0,.08); color: #333; }
+
+.nbp-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3px 0;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.nbp-list:hover { scrollbar-color: rgba(0,0,0,.25) transparent; }
+.nbp-list::-webkit-scrollbar { width: 5px; }
+.nbp-list:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 3px; }
+
+.nbp-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 4px 6px 10px;
+  cursor: default;
+  user-select: none;
+  font-size: 12px;
+  color: #2b2f33;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
+}
+.nbp-item:hover { background: rgba(255,255,255,.6); }
+.nbp-item--active {
+  background: #fff;
+  border-color: #d3d5d8;
+  border-left: 3px solid #1a73e8;
+  font-weight: 600;
+}
+.nbp-icon { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 16px; }
+.nbp-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nbp-sync { flex-shrink: 0; display: flex; align-items: center; opacity: .9; }
+.nbp-chevron {
+  flex-shrink: 0;
+  background: none; border: none; cursor: pointer;
+  color: #8a8d90; font-size: 11px; line-height: 1; padding: 2px 4px; border-radius: 3px;
+  opacity: 0;
+}
+.nbp-item:hover .nbp-chevron { opacity: 1; }
+.nbp-chevron:hover { background: rgba(0,0,0,.08); color: #333; }
+
+.nbp-add-row, .nbp-unfiled {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #5f6368;
+  background: none;
+  border: none;
+  border-top: 1px solid #d3d5d8;
+  cursor: pointer;
+  text-align: left;
+  flex-shrink: 0;
+}
+.nbp-add-row:hover, .nbp-unfiled:hover { background: rgba(255,255,255,.6); color: #333; }
+.nbp-add-row .nbp-icon { font-size: 14px; color: #7a7d80; }
+
+/* Collapsed-spine expand button */
+.nb-expand {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6a6a6a;
+  font-size: 14px;
+  line-height: 1;
+  padding: 5px 0;
+  flex-shrink: 0;
+}
+.nb-expand:hover { background: #bbb; color: #222; }
+
+/* ── Main row: full-height notebook panel + content column ── */
+#main-row {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+#content-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Ribbon icon assets ────────────────────────────────────── */
+.rbn-ico-img { display: block; flex-shrink: 0; pointer-events: none; }
+.rbn-btn--large .rbn-ico-img { margin-bottom: 1px; }
+.rbn-lbl-inline { margin-left: 1px; }
+.rbn-caret { margin-left: 1px; flex-shrink: 0; opacity: .75; pointer-events: none; }
+.ribbon-collapse { display: flex; align-items: center; justify-content: center; }
+.rbn-collapse-ico { display: block; transition: transform .1s; }
+.rbn-collapse-ico.is-collapsed { transform: rotate(180deg); }
+
+/* Icon-only formatting buttons: square, centered */
+.rbn-btn .rbn-ico-img + .rbn-lbl-inline { margin-left: 3px; }
+
+/* Styles gallery previews */
+.rbn-style { display: inline-block; line-height: 1.05; color: #2b2f33; }
+.rbn-style--h1 { font-size: 14px; font-weight: 700; }
+.rbn-style--h2 { font-size: 13px; font-weight: 700; }
+.rbn-style--h3 { font-size: 12px; font-weight: 600; }
+.rbn-style--p  { font-size: 12px; font-weight: 400; }
+
+/* Notebook panel chevron/caret images */
+.nbp-header-btn img, .nb-expand img, .nbp-chevron img { display: block; }
+.nbp-chevron img { opacity: .8; }
+
+/* Typography selector polish */
+.rbn-select { color: #2b2f33; }
+.rbn-select--font { width: 112px; }
+
+/* ── OneNote-style font combo boxes (typography selector) ──── */
+.rbn-combo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  border: 1px solid #abadb3;
+  border-radius: 1px;
+  background: #fff;
+  cursor: default;
+  user-select: none;
+}
+.rbn-combo:hover { border-color: #5a8fd6; box-shadow: inset 0 0 0 1px rgba(90,143,214,.25); }
+.rbn-combo--open { border-color: #3d7ad0; box-shadow: inset 0 0 0 1px rgba(61,122,208,.35); }
+.rbn-combo--font { width: 118px; }
+.rbn-combo--size { width: 44px; }
+.rbn-combo-val {
+  flex: 1;
+  padding: 0 4px 0 6px;
+  font-size: 13px;
+  color: #202124;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 20px;
+}
+/* OneNote: a plain gray triangle at the right edge — no divider, no button cell */
+.rbn-combo-caret {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 100%;
+  padding-right: 2px;
+  flex-shrink: 0;
+}
+.rbn-combo-pop {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  z-index: 4000;
+  margin-top: 1px;
+  min-width: calc(100% + 2px);
+  max-height: 264px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #a9abae;
+  box-shadow: 0 5px 16px rgba(0,0,0,.2);
+}
+.rbn-combo-pop--size { min-width: 50px; }
+.rbn-combo-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 4px 10px;
+  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: default;
+  white-space: nowrap;
+  color: #2b2f33;
+}
+.rbn-combo-opt:hover { background: #eaf1fb; }
+.rbn-combo-opt.is-sel { background: #dce8fb; }
+.rbn-combo-pop--size .rbn-combo-opt { text-align: left; }
+
+/* ── Notebook switcher (OneNote "Open Notebook" style) ─────── */
+.nbsw-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.nbsw-panel {
+  width: 440px;
+  max-height: 76vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #b6b8bb;
+  border-radius: 5px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+  overflow: hidden;
+}
+.nbsw-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 16px;
+  background: #1a73e8;
+  color: #fff;
+}
+.nbsw-title { font-size: 14px; font-weight: 600; }
+.nbsw-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.nbsw-close:hover { background: rgba(255,255,255,.22); }
+
+.nbsw-label {
+  padding: 10px 16px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: #8a8d90;
+}
+.nbsw-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 6px;
+}
+.nbsw-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.nbsw-item:hover { background: #eaf1fb; }
+.nbsw-item--active { background: #f2f6fc; }
+.nbsw-icon { flex-shrink: 0; }
+.nbsw-text { flex: 1; min-width: 0; }
+.nbsw-name { font-size: 13px; font-weight: 600; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nbsw-path { font-size: 11px; color: #7a7d80; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.nbsw-current {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: #1a73e8;
+  background: #e5eefb;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+.nbsw-empty { padding: 16px; font-size: 13px; color: #9a9d9f; font-style: italic; text-align: center; }
+
+.nbsw-actions {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e2e4e7;
+  padding: 6px;
+  gap: 2px;
+}
+.nbsw-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: #202124;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+}
+.nbsw-action:hover { background: #eaf1fb; }
+
+/* ── Notebook panel: sections nested under the open notebook ── */
+.nbp-sections {
+  padding: 1px 0 3px;
+}
+.nbp-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 26px;
+  font-size: 12px;
+  color: #3a3d40;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.nbp-section:hover { background: rgba(255,255,255,.55); }
+.nbp-section--active {
+  background: #fff;
+  font-weight: 600;
+  color: #202124;
+}
+.nbp-section-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,.18);
+}
+.nbp-section-name { overflow: hidden; text-overflow: ellipsis; }

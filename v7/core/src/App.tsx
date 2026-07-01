@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'preact/hooks';
-import { appState, connected, initializing, editingEnabled, getActivePage, findInTree, setActiveSection, setActivePage, preloadPages, getPreloadCandidates } from './store.ts';
+import { useEffect } from 'preact/hooks';
+import { appState, connected, initializing, editingEnabled, getActivePage, findInTree, setActiveSection, setActivePage, preloadPages, getPreloadCandidates, showQuickJump } from './store.ts';
 import { NotebookBar } from './NotebookBar.tsx';
 import { SectionPanel } from './SectionPanel.tsx';
 import { PagesPanel } from './PagesPanel.tsx';
-import { Canvas, FormatToolbar } from './Canvas.tsx';
+import { Canvas } from './Canvas.tsx';
+import { Ribbon } from './Ribbon.tsx';
 import { ContextMenu } from './ContextMenu.tsx';
 import { WelcomeScreen } from './WelcomeScreen.tsx';
 import { NotebookSwitcher } from './NotebookSwitcher.tsx';
@@ -42,8 +43,6 @@ function BrandHeader(): JSX.Element {
 }
 
 export function App(): JSX.Element | null {
-  const [showJump, setShowJump] = useState<boolean>(false);
-
   // Preload neighbouring pages once the app is idle after initial render
   useEffect(() => {
     const id = requestIdleCallback(() => preloadPages(getPreloadCandidates()), { timeout: 2000 });
@@ -60,7 +59,13 @@ export function App(): JSX.Element | null {
       // Cmd+K / Ctrl+Shift+K: quick jump (works even when editing is false)
       if (!editing && isNavMod(e) && (e.key === 'k' || e.key === 'K')) {
         e.preventDefault();
-        setShowJump(v => !v);
+        showQuickJump.value = !showQuickJump.value;
+        return;
+      }
+      // Ctrl+E / Cmd+E: focus chrome search (opens quick jump)
+      if (!editing && (e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key === 'e' || e.key === 'E')) {
+        e.preventDefault();
+        showQuickJump.value = true;
         return;
       }
 
@@ -120,23 +125,27 @@ export function App(): JSX.Element | null {
 
   return (
     <>
-      {editing && <FormatToolbar />}
-      <SectionPanel />
-      <div id="body-row">
-        {/* {editing && <NotebookBar />} */}
-        <div id="section-desk" style={{ background: sectionColor }}>
-          <div id="canvas-area">
-            <Canvas page={page} />
+      {editing && <Ribbon />}
+      <div id="main-row">
+        {editing && <NotebookBar />}
+        <div id="content-col">
+          <SectionPanel />
+          <div id="body-row">
+            <div id="section-desk" style={{ background: sectionColor }}>
+              <div id="canvas-area">
+                <Canvas page={page} />
+              </div>
+            </div>
           </div>
-          <PagesPanel />
         </div>
+        <PagesPanel bg={sectionColor} />
       </div>
       <ContextMenu />
       {editing && <NotebookSwitcher />}
       <LinkContextMenu />
       {editing && <ClaudeChat />}
       {editing && <DisplayPanel />}
-      {showJump && <QuickJump onClose={() => setShowJump(false)} />}
+      {showQuickJump.value && <QuickJump onClose={() => { showQuickJump.value = false; }} />}
     </>
   );
 }

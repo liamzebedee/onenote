@@ -2406,6 +2406,25 @@ function createWindow() {
     });
   }
   mainWindow2.loadFile(import_path8.default.join(__dirname, "app", "index.html"));
+  if (process.env.NB_CAPTURE) {
+    mainWindow2.webContents.on("did-finish-load", () => {
+      setTimeout(async () => {
+        try {
+          if (process.env.NB_CAPTURE_JS) {
+            const res = await mainWindow2.webContents.executeJavaScript(process.env.NB_CAPTURE_JS);
+            if (res !== undefined)
+              console.log("[main] JS result:", res);
+            await new Promise((r) => setTimeout(r, 400));
+          }
+          const img = await mainWindow2.webContents.capturePage();
+          require("fs").writeFileSync(process.env.NB_CAPTURE, img.toPNG());
+          console.log("[main] captured page to", process.env.NB_CAPTURE);
+        } catch (e) {
+          console.error("[main] capture failed", e);
+        }
+      }, 2500);
+    });
+  }
   const startupPath = notebookPathFromArgv(process.argv) || config.notebookPath;
   console.log("[main] startup notebookPath:", startupPath, "(argv override:", notebookPathFromArgv(process.argv), ")");
   if (startupPath) {

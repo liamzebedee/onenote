@@ -10,3 +10,8 @@ export function execFmt(cmd: string): void {
   if (cmd === 'link') { toggleLink(); return; }
   applyFormat(cmd);
 }
+
+// Parameterised formatting (colour, highlight, font, alignment, indent) + the
+// live selection-format signal the ribbon reads to light up active buttons.
+export { setMarkAttr, setBlockAttr, indentBlocks, selectionFormat } from './pm';
+export type { SelectionFormat } from './pm';

@@ -50,6 +50,7 @@ export const appState = signal<AppState>(defaultState());
 export const connected = signal<boolean>(false);
 export const initializing = signal<boolean>(true); // true until we know whether a notebook will load
 export const showSwitcher = signal<boolean>(false);
+export const showQuickJump = signal<boolean>(false); // chrome search / Cmd+K quick jump
 export const recentNotebooks = signal<RecentNotebook[]>([]);
 const isDesktop: boolean = hasIPC && !window.notebook._browserShim;
 function checkEditParam(): boolean {

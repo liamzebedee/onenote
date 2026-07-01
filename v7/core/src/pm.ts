@@ -4,6 +4,25 @@ import {
   inputRules, wrappingInputRule, textblockTypeInputRule,
   smartQuotes, ellipsis, emDash, InputRule,
 } from 'prosemirror-inputrules';
+import { signal } from '@preact/signals';
+
+// ─── Block-level attr helpers (alignment + indent) ──────────
+// Alignment + indent live as node attrs on paragraph/heading so they survive
+// the HTML round-trip through the schema (raw <p style> would be dropped).
+const INDENT_STEP = 24; // px per indent level
+
+function blockStyle(attrs: { align?: string | null; indent?: number }): string | null {
+  const parts: string[] = [];
+  if (attrs.align) parts.push(`text-align: ${attrs.align}`);
+  if (attrs.indent) parts.push(`margin-left: ${attrs.indent * INDENT_STEP}px`);
+  return parts.length ? parts.join('; ') : null;
+}
+
+function parseBlockAttrs(dom: any): { align: string | null; indent: number } {
+  const align = dom.style?.textAlign || null;
+  const ml = parseInt(dom.style?.marginLeft || '0');
+  return { align: align || null, indent: ml ? Math.round(ml / INDENT_STEP) : 0 };
+}
 
 // ─── ProseMirror Schema ──────────────────────────────────────
 export const schema = new Schema({
@@ -12,20 +31,24 @@ export const schema = new Schema({
     paragraph: {
       group: 'block',
       content: 'inline*',
-      parseDOM: [{ tag: 'p' }, { tag: 'div', priority: 10 }],
-      toDOM() { return ['p', 0]; },
+      attrs: { align: { default: null }, indent: { default: 0 } },
+      parseDOM: [
+        { tag: 'p', getAttrs: (dom: any) => parseBlockAttrs(dom) },
+        { tag: 'div', priority: 10 },
+      ],
+      toDOM(node) { const s = blockStyle(node.attrs); return s ? ['p', { style: s }, 0] : ['p', 0]; },
     },
     heading: {
       group: 'block',
       content: 'inline*',
-      attrs: { level: { default: 1 } },
+      attrs: { level: { default: 1 }, align: { default: null }, indent: { default: 0 } },
       parseDOM: [
-        { tag: 'h1', getAttrs() { return { level: 1 }; } },
-        { tag: 'h2', getAttrs() { return { level: 2 }; } },
-        { tag: 'h3', getAttrs() { return { level: 3 }; } },
-        { tag: 'h4', getAttrs() { return { level: 4 }; } },
+        { tag: 'h1', getAttrs: (dom: any) => ({ level: 1, ...parseBlockAttrs(dom) }) },
+        { tag: 'h2', getAttrs: (dom: any) => ({ level: 2, ...parseBlockAttrs(dom) }) },
+        { tag: 'h3', getAttrs: (dom: any) => ({ level: 3, ...parseBlockAttrs(dom) }) },
+        { tag: 'h4', getAttrs: (dom: any) => ({ level: 4, ...parseBlockAttrs(dom) }) },
       ],
-      toDOM(node) { return [`h${node.attrs.level}`, 0]; },
+      toDOM(node) { const s = blockStyle(node.attrs); return [`h${node.attrs.level}`, s ? { style: s } : {}, 0]; },
     },
     code_block: {
       group: 'block',
@@ -93,6 +116,39 @@ export const schema = new Schema({
       inclusive: false,
       parseDOM: [{ tag: 'a[href]', getAttrs: (dom: any) => ({ href: dom.getAttribute('href') }) }],
       toDOM(mark) { return ['a', { href: mark.attrs.href }, 0]; },
+    },
+    fontColor: {
+      attrs: { color: {} },
+      parseDOM: [{ style: 'color', getAttrs: (v: any) => ({ color: v }) }],
+      toDOM(mark) { return ['span', { style: `color: ${mark.attrs.color}` }, 0]; },
+    },
+    highlight: {
+      attrs: { color: {} },
+      parseDOM: [
+        { tag: 'mark', getAttrs: () => ({ color: '#fff3a3' }) },
+        { style: 'background-color', getAttrs: (v: any) => (v && v !== 'transparent' ? { color: v } : false) },
+      ],
+      toDOM(mark) { return ['span', { style: `background-color: ${mark.attrs.color}` }, 0]; },
+    },
+    fontFamily: {
+      attrs: { family: {} },
+      parseDOM: [{ style: 'font-family', getAttrs: (v: any) => ({ family: v }) }],
+      toDOM(mark) { return ['span', { style: `font-family: ${mark.attrs.family}` }, 0]; },
+    },
+    fontSize: {
+      attrs: { size: {} },
+      parseDOM: [{ style: 'font-size', getAttrs: (v: any) => ({ size: v }) }],
+      toDOM(mark) { return ['span', { style: `font-size: ${mark.attrs.size}` }, 0]; },
+    },
+    subscript: {
+      excludes: 'subscript superscript',
+      parseDOM: [{ tag: 'sub' }, { style: 'vertical-align=sub' }],
+      toDOM() { return ['sub', 0]; },
+    },
+    superscript: {
+      excludes: 'subscript superscript',
+      parseDOM: [{ tag: 'sup' }, { style: 'vertical-align=super' }],
+      toDOM() { return ['sup', 0]; },
     },
   },
 });
@@ -311,6 +367,8 @@ const FORMAT_COMMANDS: Record<string, Command> = {
   ul: wrapInList(schema.nodes.bullet_list),
   ol: wrapInList(schema.nodes.ordered_list),
   blockquote: wrapIn(schema.nodes.blockquote),
+  subscript: toggleMark(schema.marks.subscript),
+  superscript: toggleMark(schema.marks.superscript),
 };
 
 /**
@@ -324,6 +382,131 @@ export function applyFormat(cmd: string): boolean {
   if (!command) return false;
   view.focus();
   return command(view.state, view.dispatch, view);
+}
+
+// ─── Parameterised mark commands (colour / highlight / font) ─
+//
+// These marks carry a value, so they can't use the nullary FORMAT_COMMANDS
+// map. Passing attrs === null clears the mark instead of setting it.
+
+export function setMarkAttr(markName: string, attrs: Record<string, unknown> | null): boolean {
+  const view = _activeView;
+  if (!view) return false;
+  const markType = schema.marks[markName as keyof typeof schema.marks];
+  if (!markType) return false;
+  view.focus();
+  const { state } = view;
+  const { from, to, empty } = state.selection;
+  let tr = state.tr;
+  if (empty) {
+    // No selection: set/clear the stored mark so the next typed text uses it.
+    tr = attrs ? tr.addStoredMark(markType.create(attrs)) : tr.removeStoredMark(markType);
+  } else {
+    tr = tr.removeMark(from, to, markType);
+    if (attrs) tr = tr.addMark(from, to, markType.create(attrs));
+  }
+  view.dispatch(tr);
+  return true;
+}
+
+/** Set a block-level attr (align) on every textblock in the selection. */
+export function setBlockAttr(attr: 'align', value: string | null): boolean {
+  const view = _activeView;
+  if (!view) return false;
+  view.focus();
+  const { state } = view;
+  const { from, to } = state.selection;
+  let tr = state.tr;
+  let changed = false;
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.isTextblock && attr in node.attrs) {
+      tr = tr.setNodeMarkup(pos, undefined, { ...node.attrs, [attr]: value });
+      changed = true;
+    }
+  });
+  if (changed) view.dispatch(tr);
+  return changed;
+}
+
+/** Increase/decrease indent (delta = +1 / -1) on every textblock in the selection. */
+export function indentBlocks(delta: number): boolean {
+  const view = _activeView;
+  if (!view) return false;
+  view.focus();
+  const { state } = view;
+  const { from, to } = state.selection;
+  let tr = state.tr;
+  let changed = false;
+  state.doc.nodesBetween(from, to, (node, pos) => {
+    if (node.isTextblock && 'indent' in node.attrs) {
+      const cur = (node.attrs.indent as number) || 0;
+      const next = Math.max(0, Math.min(10, cur + delta));
+      if (next !== cur) { tr = tr.setNodeMarkup(pos, undefined, { ...node.attrs, indent: next }); changed = true; }
+    }
+  });
+  if (changed) view.dispatch(tr);
+  return changed;
+}
+
+// ─── Selection format state (drives ribbon active states) ────
+
+export interface SelectionFormat {
+  active: boolean;
+  bold: boolean; italic: boolean; underline: boolean; strikethrough: boolean;
+  subscript: boolean; superscript: boolean; link: boolean;
+  heading: number | null;   // 1-4, or null for paragraph/other
+  align: string | null;
+  fontColor: string | null;
+  highlight: string | null;
+  fontFamily: string | null;
+  fontSize: string | null;
+}
+
+const EMPTY_FORMAT: SelectionFormat = {
+  active: false, bold: false, italic: false, underline: false, strikethrough: false,
+  subscript: false, superscript: false, link: false, heading: null, align: null,
+  fontColor: null, highlight: null, fontFamily: null, fontSize: null,
+};
+
+export const selectionFormat = signal<SelectionFormat>(EMPTY_FORMAT);
+
+function markActive(state: EditorState, markName: keyof typeof schema.marks): boolean {
+  const type = schema.marks[markName];
+  const { from, to, empty, $from } = state.selection;
+  if (empty) return !!type.isInSet(state.storedMarks || $from.marks());
+  return state.doc.rangeHasMark(from, to, type);
+}
+
+function markValue(state: EditorState, markName: keyof typeof schema.marks, attr: string): string | null {
+  const type = schema.marks[markName];
+  const { empty, $from } = state.selection;
+  const marks = empty ? (state.storedMarks || $from.marks()) : $from.marksAcross(state.selection.$to) || $from.marks();
+  const m = (marks || []).find(mk => mk.type === type);
+  return m ? (m.attrs[attr] as string) : null;
+}
+
+/** Recompute the selection-format signal from a view's current state. */
+export function updateSelectionFormat(view: EditorView | null): void {
+  if (!view) { selectionFormat.value = EMPTY_FORMAT; return; }
+  const { state } = view;
+  const { $from } = state.selection;
+  const parent = $from.parent;
+  selectionFormat.value = {
+    active: true,
+    bold: markActive(state, 'strong'),
+    italic: markActive(state, 'em'),
+    underline: markActive(state, 'underline'),
+    strikethrough: markActive(state, 'strikethrough'),
+    subscript: markActive(state, 'subscript'),
+    superscript: markActive(state, 'superscript'),
+    link: markActive(state, 'link'),
+    heading: parent.type === schema.nodes.heading ? (parent.attrs.level as number) : null,
+    align: (parent.attrs.align as string) ?? null,
+    fontColor: markValue(state, 'fontColor', 'color'),
+    highlight: markValue(state, 'highlight', 'color'),
+    fontFamily: markValue(state, 'fontFamily', 'family'),
+    fontSize: markValue(state, 'fontSize', 'size'),
+  };
 }
 
 // ─── Link helpers ───────────────────────────────────────────

@@ -326,7 +326,7 @@ function PageItem({ page, activeId, depth = 0, dragState, onDragChange, editingI
   );
 }
 
-export function PagesPanel(): JSX.Element {
+export function PagesPanel({ bg }: { bg?: string } = {}): JSX.Element {
   const { notebooks, ui } = appState.value;
   const nb  = notebooks.find(n => n.id === ui.notebookId);
   const sec = nb?.sections.find(s => s.id === ui.sectionId);
@@ -390,7 +390,7 @@ export function PagesPanel(): JSX.Element {
   const dragState: DragState = { over: dragOver.id, mode: dragOver.mode };
 
   return (
-    <div id="pages-panel">
+    <div id="pages-panel" style={bg ? { background: bg } : undefined}>
       <div class="panel-header">
         <button class="add-btn" onClick={() => addPage()}>+ New Page</button>
       </div>

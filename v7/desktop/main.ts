@@ -152,6 +152,25 @@ function createWindow(): void {
   // Load the page first so the window appears immediately (shows spinner while notebook loads)
   mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
 
+  // Dev-only: capture the window contents to a PNG so screenshots don't depend
+  // on window stacking. Enable with NB_CAPTURE=/path/to/out.png.
+  if (process.env.NB_CAPTURE) {
+    mainWindow.webContents.on('did-finish-load', () => {
+      setTimeout(async () => {
+        try {
+          if (process.env.NB_CAPTURE_JS) {
+            const res = await mainWindow!.webContents.executeJavaScript(process.env.NB_CAPTURE_JS);
+            if (res !== undefined) console.log('[main] JS result:', res);
+            await new Promise(r => setTimeout(r, 400));
+          }
+          const img = await mainWindow!.webContents.capturePage();
+          require('fs').writeFileSync(process.env.NB_CAPTURE!, img.toPNG());
+          console.log('[main] captured page to', process.env.NB_CAPTURE);
+        } catch (e) { console.error('[main] capture failed', e); }
+      }, 2500);
+    });
+  }
+
   // Defer notebook open so the renderer can start painting before synchronous I/O begins.
   // A notebook path passed on the command line (e.g. from the file manager / .desktop
   // file's %f) takes priority over the last-opened notebook in config.

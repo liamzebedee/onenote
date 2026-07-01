@@ -202,7 +202,10 @@ function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
         requestAnimationFrame(() => {
           const el = document.querySelector(`[data-block-id="${saved.blockId}"] .block-content`) as HTMLElement | null;
           if (el) {
-            el.focus();
+            // preventScroll: the Canvas useLayoutEffect has already restored the
+            // saved pan position — focusing must NOT scroll the caret into view,
+            // or the page visibly jumps after it first paints at the right spot.
+            el.focus({ preventScroll: true });
             setCaretOffset(el, saved.offset);
           }
         });
@@ -212,7 +215,7 @@ function PageTitle({ page, onEnter }: PageTitleProps): JSX.Element {
     // Empty page — focus title at end
     const el = ref.current;
     if (el) {
-      el.focus();
+      el.focus({ preventScroll: true });
       const sel = window.getSelection()!;
       sel.selectAllChildren(el);
       sel.collapseToEnd();
@@ -405,7 +408,13 @@ export function Canvas({ page }: CanvasProps): JSX.Element {
       applyZoom(nz);
     }
     window.notebook?.onCanvasZoom(onZoom);
-    return () => window.notebook?.offCanvasZoom();
+    // Ribbon View-tab zoom buttons dispatch this event
+    const onZoomEvent = (e: Event): void => onZoom((e as CustomEvent).detail as 'in' | 'out' | 'reset');
+    window.addEventListener('notebound:zoom', onZoomEvent);
+    return () => {
+      window.notebook?.offCanvasZoom();
+      window.removeEventListener('notebound:zoom', onZoomEvent);
+    };
   }, []);
 
   // ── Sync view when page changes ──────────────────────────

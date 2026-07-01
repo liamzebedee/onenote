@@ -5,7 +5,7 @@ import { undo, redo, history } from 'prosemirror-history';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark, chainCommands, exitCode } from 'prosemirror-commands';
 import { splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
-import { schema, parseHTML, serializeToHTML, buildInputRules, linkifierPlugin, setActiveView, registerView, unregisterView, toggleLink } from './pm';
+import { schema, parseHTML, serializeToHTML, buildInputRules, linkifierPlugin, setActiveView, registerView, unregisterView, toggleLink, updateSelectionFormat, selectionFormat } from './pm';
 import type { JSX } from 'preact';
 
 interface BlockEditorProps {
@@ -56,6 +56,8 @@ export function BlockEditor({
           'Mod-i': toggleMark(schema.marks.em),
           'Mod-u': toggleMark(schema.marks.underline),
           'Mod-`': toggleMark(schema.marks.code),
+          'Mod-.': toggleMark(schema.marks.superscript),
+          'Mod-,': toggleMark(schema.marks.subscript),
           'Mod-k': (_s, _d, view) => toggleLink(view ?? null),
           // List editing
           'Enter': splitListItem(listItem),
@@ -84,6 +86,11 @@ export function BlockEditor({
         const newState = view.state.apply(tr);
         view.updateState(newState);
 
+        // Keep the ribbon's active-state in sync with the caret/selection.
+        if (view.hasFocus() && (tr.docChanged || tr.selectionSet || tr.storedMarksSet)) {
+          updateSelectionFormat(view);
+        }
+
         if (!tr.docChanged) return;
 
         // Debounce HTML serialization while typing.
@@ -97,9 +104,10 @@ export function BlockEditor({
         }, 50);
       },
       handleDOMEvents: {
-        focus: () => { setActiveView(view); onFocus?.(); return false; },
+        focus: () => { setActiveView(view); updateSelectionFormat(view); onFocus?.(); return false; },
         blur: () => {
           if (updateTimerRef.current) { clearTimeout(updateTimerRef.current); updateTimerRef.current = null; }
+          selectionFormat.value = { ...selectionFormat.value, active: false };
           const out = serializeToHTML(view.state.doc);
           htmlRef.current = out;
           onBlur?.(out);

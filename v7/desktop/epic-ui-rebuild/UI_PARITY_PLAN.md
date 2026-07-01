@@ -26,34 +26,35 @@ Replace the single `#format-toolbar` with a **tabbed ribbon**: a tab strip, labe
 groups with captions underneath, and a collapse chevron.
 
 ### Ribbon shell
-- [ ] **Ribbon tab strip** — File, Home, Insert, Share, Draw, Review, View, Add-Ins
-- [ ] **File backstage** (coloured accent tab → full-screen backstage view)
+- [x] **Ribbon tab strip** — File, Home, Insert, Share, Draw, Review, View, Add-Ins
+- [ ] **File backstage** (coloured accent tab → full-screen backstage view) — File tab exists
+      as a simple panel, not a full backstage
 - [ ] **Contextual tabs** — "Table Tools ▸ Layout" appears only when a table is selected
       (yellow-tinted contextual header)
-- [ ] **Ribbon collapse/expand** chevron (minimise to tab strip)
-- [ ] **Grouped layout** — each group boxed with a caption label underneath
+- [x] **Ribbon collapse/expand** chevron (minimise to tab strip)
+- [x] **Grouped layout** — each group boxed with a caption label underneath
 
 ### Home tab — Clipboard group
-- [ ] **Paste** (large split button + paste-options)
-- [ ] **Cut**
-- [ ] **Copy**
-- [ ] **Format Painter**
+- [ ] **Paste** (large split button + paste-options) — button present, best-effort execCommand
+- [x] **Cut** (execCommand)
+- [x] **Copy** (execCommand)
+- [ ] **Format Painter** (button present, disabled)
 
 ### Home tab — Basic Text group
-- [ ] **Font family** combo (Calibri default)
-- [ ] **Font size** combo (11 default) + grow/shrink
-- [x] **Bold / Italic / Underline / Strikethrough**
-- [ ] **Subscript / Superscript**
-- [ ] **Text highlight color** (with palette dropdown)
-- [ ] **Font color** (with palette dropdown)
-- [ ] **Decrease / increase indent**
-- [ ] **Text alignment** (left / center / right)
+- [x] **Font family** combo (curated family list)
+- [x] **Font size** combo + grow/shrink (A▲/A▼)
+- [x] **Bold / Italic / Underline / Strikethrough** (with active-state reflection)
+- [x] **Subscript / Superscript** (Ctrl+, / Ctrl+.)
+- [x] **Text highlight color** (palette dropdown)
+- [x] **Font color** (palette dropdown)
+- [x] **Decrease / increase indent**
+- [x] **Text alignment** (left / center / right)
 - [x] **Bullets** list
 - [x] **Numbering** list
 
 ### Home tab — Styles group
-- [ ] **Styles gallery** — named-style list (Heading 1 / Heading 2 / Heading 3 …) with a
-      scrollable gallery + dropdown (currently individual H1–H4 buttons exist as building blocks)
+- [ ] **Styles gallery** — named-style list with scrollable gallery + dropdown
+      (currently individual H1–H4/P buttons with active-state reflection)
 - [x] Heading levels applied to blocks (H1–H6 supported in editor)
 
 ### Home tab — Tags group
@@ -88,7 +89,7 @@ groups with captions underneath, and a collapse chevron.
 
 - [x] Vertical notebook tabs component built (`NotebookBar.tsx`) — active state, `+` add,
       drag-reorder, rename, delete
-- [ ] **Re-enable `NotebookBar` in `App.tsx`** (currently commented out — biggest visible gap)
+- [x] **Re-enabled `NotebookBar` in `App.tsx`** — the rail is back on the left
 - [ ] "Notebooks:" **header label** + collapse chevron for the rail
 - [ ] Per-notebook **colour icon**
 - [ ] Per-notebook **sync-status glyph** (green circular-arrows when synced)
@@ -154,8 +155,8 @@ groups with captions underneath, and a collapse chevron.
 
 - [x] **QuickJump** fuzzy page finder (Cmd+K) — title + section match, keyboard nav
 - [x] Keyboard section/page navigation (Cmd/Ctrl+Shift + arrows)
-- [ ] Persistent **Search box in the chrome** (top-right, "Search All Notebooks (Ctrl+E)")
-      with a scope dropdown + magnifier
+- [x] Persistent **Search box in the chrome** (top-right, "Search All Notebooks", Ctrl+E) —
+      opens the quick-jump finder; scope dropdown + magnifier styling still to refine
 - [ ] **Full-text** search across block content (currently title-only)
 - [ ] **Cross-notebook** search scope (currently active notebook only)
 
